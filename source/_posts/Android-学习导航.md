@@ -76,28 +76,28 @@ categories:
 # 3.公众号
 
 ## 3.1 鸿洋
-<img src=hongyang.png>
+<img src=hongyang.jpeg>
 		
 ## 3.2 郭霖
-<img src=guolin.png>
+<img src=guolin.jpeg>
 		
 ## 3.3 Carson
-<img src=carson.png>
+<img src=carson.jpeg>
 		
 ## 3.4 JsonChao
-<img src=jsonchao.png>
+<img src=jsonchao.jpeg>
 		
 ## 3.5 Android群英传
-<img src=qunyingzhuan.png>
+<img src=qunyingzhuan.jpeg>
 		
 ## 3.6 Android编程精选
-<img src=bianchengjingxuan.png>
+<img src=bianchengjingxuan.jpeg>
 		
 ## 3.7 Android技术专家
-<img src=jishuzhuanjia.png>
+<img src=jishuzhuanjia.jpeg>
 		
 ## 3.8 Android技术圈
-<img src=jishuquan.png>
+<img src=jishuquan.jpeg>
 		
 
 # 4.大神博客
