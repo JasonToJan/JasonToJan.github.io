@@ -47,6 +47,12 @@ categories:
 
 ### 3.1 iOS开发
 <img src=iOSkaifa.jpeg>
+[https://open.weixin.qq.com/qr/code?username=DS3589](https://open.weixin.qq.com/qr/code?username=DS3589)
+
+### 3.2 移动端Android和iOS开发技术分享
+<img src=mobile_tech_share.jpeg>
+[https://open.weixin.qq.com/qr/code?username=mobile_tech_share](https://open.weixin.qq.com/qr/code?username=mobile_tech_share)
+
 
 ## 4 大神博客
 

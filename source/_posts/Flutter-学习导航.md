@@ -27,6 +27,15 @@ categories:
 
 ## 3 公众号
 
+### 3.1 西江悦
+<img src=blog_520lee_com.jpeg>
+
+### 3.2 Flutter社区
+<img src=FlutterDevs.jpeg>
+
+### 3.3 Flutter开发精选
+<img src=Study_Knowledge.jpeg>
+
 ## 4 大神博客
 
 ### 4.1 crazyCodeBoy
