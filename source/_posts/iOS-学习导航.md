@@ -1,7 +1,7 @@
 ---
 title: iOS 学习导航
-date: 2023-01-22 07:38:41
-top: false
+date: 2023-01-23 07:38:41
+top: true
 cover: false
 toc: true
 mathjax: true
@@ -71,6 +71,9 @@ categories:
 
 ### 5.3 AFnetworking
 > [https://github.com/AFNetworking/AFNetworking](https://github.com/AFNetworking/AFNetworking)
+
+### 5.4 RxSwift
+> 参考博客《麻烦给我的爱人来一杯RxSwift》 [https://juejin.cn/post/6844904191161286670](https://juejin.cn/post/6844904191161286670)
 
 
 ## 6 项目推荐
