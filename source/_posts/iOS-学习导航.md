@@ -16,6 +16,9 @@ categories:
 ### 1.1 Swift相关
 > [https://github.com/CocoaChina-editors/Welcome-to-Swift](https://github.com/CocoaChina-editors/Welcome-to-Swift)
 
+### 1.2 SwiftUI自学站点
+> [https://www.openswiftui.com/](https://www.openswiftui.com/)
+
 ## 2 优秀站点
 
 ### 2.1 国外世界级iOS讨论
