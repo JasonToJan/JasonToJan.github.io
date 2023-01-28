@@ -73,6 +73,15 @@ categories:
 ### 2.9.1 Github每日开源
 > [https://p.codekk.com/](https://p.codekk.com/)
 
+## 2.10 github相关
+
+### 2.10.1 关于kotlin每日趋势增长
+> [https://github.com/trending/kotlin?since=daily](https://github.com/trending/kotlin?since=weekly)
+
+## 2.10.2 关于Android的话题
+> [https://github.com/topics/android](https://github.com/topics/android)
+
+
 # 3.公众号
 
 ## 3.1 鸿洋

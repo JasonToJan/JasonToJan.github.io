@@ -45,6 +45,12 @@ categories:
 ### 2.8 Bbsmax
 > [https://www.bbsmax.com/search/IOS/](https://www.bbsmax.com/search/IOS/)
 
+### 2.9 github 上swift每周趋势
+> [https://github.com/trending/swift?since=daily](https://github.com/trending/swift?since=weekly)
+
+### 2.10 github 上iOS话题
+> [https://github.com/topics/ios](https://github.com/topics/ios)
+
 
 ## 3 公众号
 
@@ -69,14 +75,15 @@ categories:
 ### 5.1 常用三方库，插件，知名博客
 > [https://github.com/Tim9Liu9/TimLiu-iOS](https://github.com/Tim9Liu9/TimLiu-iOS)
 
-### 5.2 动态修复Jspatch
-> [https://github.com/bang590/JSPatch/blob/master/README-CN.md](https://github.com/bang590/JSPatch/blob/master/README-CN.md)
+### 5.2 awesome-ios
+> 记录了很多关于iOS的三方库 [https://github.com/vsouza/awesome-ios](https://github.com/vsouza/awesome-ios)
 
 ### 5.3 AFnetworking
 > [https://github.com/AFNetworking/AFNetworking](https://github.com/AFNetworking/AFNetworking)
 
 ### 5.4 RxSwift
 > 参考博客《麻烦给我的爱人来一杯RxSwift》 [https://juejin.cn/post/6844904191161286670](https://juejin.cn/post/6844904191161286670)
+
 
 
 ## 6 项目推荐
