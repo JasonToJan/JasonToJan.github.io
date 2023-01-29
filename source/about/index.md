@@ -8,8 +8,8 @@ mathjax: true
 
 
 ## CV
-[中文版](/medias/files/cv-zh.pdf)
-[English Version](/medias/files/cv-en.pdf)
+<!-- [中文版](/medias/files/cv-zh.pdf)
+[English Version](/medias/files/cv-en.pdf) -->
 
 ## 教育背景
 * <b>本科 广州大学 软件工程</b>
