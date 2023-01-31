@@ -204,7 +204,7 @@ class GMLocationPickerLocationResult: NSObject {
 }
 ```
 
-这个用了一个convenience关键字来声明init，主要是覆写的作用，重载。可以参考这篇文章：[https://www.jianshu.com/p/09c6c88ed61e]()。这里面初始化已经用了高德的实体类AMapGeoPoint,这个包含了经纬度；AMapReGeocode，这个是逆地址编码；然后还有一个自定义实体，这个是Info，上面那个是result，info如下定义：
+这个用了一个convenience关键字来声明init，主要是覆写的作用，重载。可以参考这篇文章：[https://www.jianshu.com/p/09c6c88ed61e](https://www.jianshu.com/p/09c6c88ed61e)。这里面初始化已经用了高德的实体类AMapGeoPoint,这个包含了经纬度；AMapReGeocode，这个是逆地址编码；然后还有一个自定义实体，这个是Info，上面那个是result，info如下定义：
 
 ```
 

@@ -52,6 +52,7 @@ categories:
 > [https://github.com/topics/ios](https://github.com/topics/ios)
 
 
+
 ## 3 公众号
 
 ### 3.1 iOS开发
@@ -67,7 +68,8 @@ categories:
 
 ## 4 大神博客
 
-### 4.1 慕课网免费Swift教程
+### 4.1 学良大哥
+> [https://ficowshen.com/](https://ficowshen.com/)
 
 
 ## 5 优秀三方库
@@ -90,6 +92,9 @@ categories:
 
 ### 6.1 NextCloud
 > [https://github.com/nextcloud/ios](https://github.com/nextcloud/ios)
+
+### 6.2 github 开源项目
+> [https://github.com/panbin/panbin-ios/blob/master/Swift.md](https://github.com/panbin/panbin-ios/blob/master/Swift.md)
 
 ## 7 其它
 
