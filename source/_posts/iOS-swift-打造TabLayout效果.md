@@ -25,7 +25,8 @@ categories:
 [JXsegementedView](https://github.com/pujiaxin33/JXSegmentedView)，github上面有2千多个stars，想必是深受大家喜欢，所以我们也可以考虑用起来。
 
 > 它的特点是：
-A powerful and easy to use segmented view (segmentedcontrol, pagingview, pagerview, pagecontrol, categoryview) (腾讯新闻、今日头条、QQ音乐、网易云音乐、京东、爱奇艺、腾讯视频、淘宝、天猫、简书、微博等所有主流APP分类切换滚动视图) 
+腾讯新闻、今日头条、QQ音乐、网易云音乐、京东、爱奇艺、腾讯视频、淘宝、天猫、简书、微博等
+所有主流APP分类切换滚动视图
 与其他的同类三方库对比的优点：
 指示器逻辑面向协议编程(Protocol Oriented Programming)，可以为所欲为的扩展指示器效果；
 提供更加全面丰富效果，几乎支持所有主流APP效果；
@@ -43,8 +44,7 @@ A powerful and easy to use segmented view (segmentedcontrol, pagingview, pagervi
 
 这里其实可以远程依赖，但我们考虑到自身一些需求，直接拖进项目里面，将github上的source文件，拷贝到项目里面。
 
-![](./iOS-swift-%E6%89%93%E9%80%A0TabLayout%E6%95%88%E6%9E%9C/segment1.png)
-<src img=segment1.png>
+<img src=segment1.png>
 
 注意这个Personal文件夹里面主要放的是JXPagingView相关代码。
 
