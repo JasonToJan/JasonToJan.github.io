@@ -69,8 +69,7 @@
         })();
     </script>
 
-<meta name="generator" content="Hexo 6.3.0"><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css">
-<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
+<meta name="generator" content="Hexo 6.3.0"></head>
 
 <body>
 
@@ -513,7 +512,7 @@
                 <blockquote>
 <p>玩Android(compose版本)项目地址：<a target="_blank" rel="noopener" href="https://github.com/yellowhai/PlayAndroid">https://github.com/yellowhai/PlayAndroid</a></p>
 </blockquote>
-<h3 id="1-项目settings-gradle"><a href="#1-项目settings-gradle" class="headerlink" title="1.项目settings.gradle"></a>1.项目settings.gradle</h3><pre><code>dependencyResolutionManagement &#123;
+<h3 id="1-项目settings-gradle"><a href="#1-项目settings-gradle" class="headerlink" title="1.项目settings.gradle"></a>1.项目settings.gradle</h3><pre><code class="line-numbers language-groovy">dependencyResolutionManagement &#123;
     /**
      * 原文中说默认情况下，项目中的存储库会覆盖设置中的存储库 ，可以通过设置模式来更改这种行为
      设置存储库的方法：
@@ -546,7 +545,7 @@ include &#39;:toolkit&#39;
 </code></pre>
 <p>还是很容易理解的，repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)这个是新增的，简单看下就行。<br>引入了app模块(主模块)，common模块（通用模块，用于通用组件相关）,h_mine模块（我的模块，可以单独编译）。</p>
 <h3 id="2-config-gradle"><a href="#2-config-gradle" class="headerlink" title="2.config.gradle"></a>2.config.gradle</h3><p>这个文件相信大家都有用过的，配置远程依赖的一个文件，统一管理。</p>
-<pre><code>ext&#123;
+<pre><code class="line-numbers language-groovy">ext&#123;
     isRelease = true
 
     //android构建配置
@@ -642,7 +641,7 @@ include &#39;:toolkit&#39;
 <p>层次还是比较清晰，对于同一组单独建立数组存储，模块中只需要引入一个就将这组全部引入进去了。</p>
 <h3 id="3-app模块下的build-gradle"><a href="#3-app模块下的build-gradle" class="headerlink" title="3.app模块下的build.gradle"></a>3.app模块下的build.gradle</h3><p>显示引入com.android.application+kotlin-android的插件。<br>下面配置android闭包，很简单。</p>
 <p>其它关于compose的也需要配置下：</p>
-<pre><code> compileOptions &#123;
+<pre><code class="line-numbers language-groovy"> compileOptions &#123;
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     &#125;
@@ -655,7 +654,7 @@ include &#39;:toolkit&#39;
     &#125;
 </code></pre>
 <p>然后是远程依赖：</p>
-<pre><code>dependencies &#123;
+<pre><code class="line-numbers language-groovy">dependencies &#123;
     // 如果是release模式，就把我的模块加进来
     if(isRelease)&#123;
         implementation project(&#39;:h_mine&#39;)
@@ -679,7 +678,7 @@ include &#39;:toolkit&#39;
 <h3 id="4-app模块的AndroidManifest-xml"><a href="#4-app模块的AndroidManifest-xml" class="headerlink" title="4.app模块的AndroidManifest.xml"></a>4.app模块的AndroidManifest.xml</h3><ul>
 <li>配置Application</li>
 <li>配置主页</li>
-<li>配置provider，用于初始化sdk<pre><code>  &lt;!--  用provider初始化sdk--&gt;
+<li>配置provider，用于初始化sdk<pre><code class="line-numbers language-xml">  &lt;!--  用provider初始化sdk--&gt;
     &lt;provider
         android:name=&quot;androidx.startup.InitializationProvider&quot;
         android:authorities=&quot;$&#123;applicationId&#125;.androidx-startup&quot;
@@ -695,7 +694,7 @@ include &#39;:toolkit&#39;
 <h3 id="5-自定义Application"><a href="#5-自定义Application" class="headerlink" title="5.自定义Application"></a>5.自定义Application</h3><pre><code>class HhfApp : YshhApplication()
 </code></pre>
 <p> 依赖common模块：</p>
-<pre><code>open class YshhApplication : Application() &#123;
+<pre><code class="line-numbers language-Kotlin">open class YshhApplication : Application() &#123;
 
    lateinit var okbuilder: OkHttpClient
 
@@ -717,7 +716,7 @@ include &#39;:toolkit&#39;
    &#125;
 </code></pre>
 <p> 这里懒加载OkHttpClient<br> 定义了全局的协程，静态变量。</p>
-<pre><code>  override fun onCreate() &#123;
+<pre><code class="line-numbers language-Kotlin">  override fun onCreate() &#123;
        super.onCreate()
        context = applicationContext
        instance = this
@@ -725,7 +724,7 @@ include &#39;:toolkit&#39;
    &#125;
 </code></pre>
 <p> 初始化Retrofit：</p>
-<pre><code> /**
+<pre><code class="line-numbers language-Kotlin"> /**
     * 初始化Retrofit
     */
    private fun initRetrofit(token : String = &quot;&quot;): OkHttpClient &#123;
@@ -771,7 +770,7 @@ include &#39;:toolkit&#39;
    &#125;
 </code></pre>
 <h3 id="6-首页-MainActivity"><a href="#6-首页-MainActivity" class="headerlink" title="6.首页 MainActivity"></a>6.首页 MainActivity</h3><p> 继承BaseActivity:</p>
-<pre><code>
+<pre><code class="line-numbers language-Kotlin">
 /**
 * 基类Activity 设置非沉浸式，因为要设置导航栏和状态栏颜色
 */
@@ -785,7 +784,7 @@ abstract class BaseActivity : AppCompatActivity() &#123;
 &#125;
 </code></pre>
 <p>onCreate生命周期：</p>
-<pre><code> @Suppress(&quot;DEPRECATED_IDENTITY_EQUALS&quot;)
+<pre><code class="line-numbers language-Kotlin"> @Suppress(&quot;DEPRECATED_IDENTITY_EQUALS&quot;)
     @OptIn(ExperimentalAnimationApi::class)
     override fun onCreate(savedInstanceState: Bundle?) &#123;
         super.onCreate(savedInstanceState)
@@ -829,7 +828,7 @@ abstract class BaseActivity : AppCompatActivity() &#123;
     &#125;
 </code></pre>
 <p>因为这个app就一个Activity，setContent中的内容就是展现给用户可以看到的所有东西了。<br>顶层是一个自定义主题：</p>
-<pre><code>@Composable
+<pre><code class="line-numbers language-Kotlin">@Composable
 fun HhfTheme(
     theme: HhfTheme.Theme = HhfTheme.Theme.Light,
     colorTheme: Color? = null,
@@ -889,7 +888,7 @@ fun HhfTheme(
 <h3 id="7-闪屏ui-gt-SplashView"><a href="#7-闪屏ui-gt-SplashView" class="headerlink" title="7.闪屏ui -&gt; SplashView"></a>7.闪屏ui -&gt; SplashView</h3><p>看下效果先：<br><img src=%E9%97%AA%E5%B1%8F%E9%A1%B5.gif width = 50%></p>
 <p>可以看到进入app后有个启动页面，中间是logo。<br>那这个页面有个渐变动画，淡入淡出效果。</p>
 <p>具体ui是这样的：</p>
-<pre><code>@Composable
+<pre><code class="line-numbers language-Kotlin">@Composable
 fun SplashView(startMain: () -&gt; Unit) &#123;
     /**
      * 辅助文字颜色变化 建立的一个mutableState包装的变量，实际上就是bool值
@@ -937,12 +936,12 @@ fun SplashView(startMain: () -&gt; Unit) &#123;
 <p>然后这里开启了2s延迟，怎么开延迟的，调用LaunchedEffect方法里面的delay，可以实现延迟效果。然后执行startMain回调。</p>
 <p>这个回调很简单：viewModel.isSplash &#x3D; false</p>
 <p>虽然很简单，但实际上走了很多流程的。</p>
-<pre><code>class MainViewModel : ViewModel() &#123;
+<pre><code class="line-numbers language-Kotlin">class MainViewModel : ViewModel() &#123;
     var isSplash by mutableStateOf(true)
 &#125;
 </code></pre>
 <p>这里使用mutableStateOf包装了一个布尔值。 上面触发这改变时，会刷新composable注解声明的方法体。这里应该就是刷新MainActivity整个内容区了。</p>
-<h3 id="8-主页面外部架构"><a href="#8-主页面外部架构" class="headerlink" title="8.主页面外部架构"></a>8.主页面外部架构</h3><pre><code>@ExperimentalAnimationApi
+<h3 id="8-主页面外部架构"><a href="#8-主页面外部架构" class="headerlink" title="8.主页面外部架构"></a>8.主页面外部架构</h3><pre><code class="line-numbers language-Kotlin">@ExperimentalAnimationApi
 @OptIn(ExperimentalPagerApi::class)
 @Composable
 fun HhfNavigation() &#123;
@@ -972,7 +971,7 @@ fun HhfNavigation() &#123;
 <p>这里使用了一个AnimatedNavHost，这个类是官方提供的。<br>这个类里面定义了所有我们需要跳转的页面和初始页。<br>然后这个 需要传一个参数，也就是控制器：<br><code> CpNavigation.navHostController = rememberAnimatedNavController()</code><br>这里也是官方提供的remember包装的一个控制器。</p>
 <p>这里的初始页为：<code>  startDestination = ModelPath.Main.route,</code><br>本质上就是一个string，首页的路由。</p>
 <p>这样会默认展示首页，怎么展示首页呢？</p>
-<pre><code>composable(ModelPath.Main.route) &#123;
+<pre><code class="line-numbers language-Kotlin">composable(ModelPath.Main.route) &#123;
             MainContent()
         &#125;
 </code></pre>
@@ -982,7 +981,7 @@ fun HhfNavigation() &#123;
 <ul>
 <li>首先在这个AnimatedNavHost里面定义一个composable闭包</li>
 </ul>
-<pre><code> composable(ModelPath.Setting.route) &#123;
+<pre><code class="line-numbers language-Kotlin"> composable(ModelPath.Setting.route) &#123;
             CpSetting(Modifier.fillMaxSize())
         &#125;
 </code></pre>
@@ -991,7 +990,7 @@ fun HhfNavigation() &#123;
 </ul>
 <h3 id="9-主页内部架构框"><a href="#9-主页内部架构框" class="headerlink" title="9.主页内部架构框"></a>9.主页内部架构框</h3><p>首先看下主页效果图<br><img src=%E9%A6%96%E9%A1%B5.jpeg width=50%><br>轮播图+中间列表+底部bar<br>轮播图+中间列表可以看成一个整体，那就是内容区+底部bar</p>
 <p>架构怎么搭建呢？</p>
-<pre><code>   Scaffold(bottomBar = &#123;
+<pre><code class="line-numbers language-Kotlin">   Scaffold(bottomBar = &#123;
         AnimatedVisibility(
             visible = bottomSwitch,
             enter = expandVertically() + fadeIn(), // 操作符重载了，第一个为空，就用第二个
@@ -1010,7 +1009,7 @@ fun HhfNavigation() &#123;
 </code></pre>
 <p>最外层一个Scafffold脚手架包裹，有点像Flutter了啊。<br>然后是一个AnimatedVisibility，这个控制显示隐藏的动画组件。重点看里面的MainBottomBar，就找到了我们的底部bar了。</p>
 <p>这个看起来像自定义的，具体怎么实现的呢？</p>
-<pre><code>/**
+<pre><code class="line-numbers language-Kotlin">/**
  * App底部bar
  */
 @OptIn(ExperimentalPagerApi::class)
@@ -1072,7 +1071,7 @@ private fun MainBottomBar(
 &#125;
 </code></pre>
 <p>这里看出底部bar就是用了官方的BottomAppBar。<br>里面具体内容是我们开发者自行设定的，这里遍历了bottomList，这个集合就是我们自己定义的一个集合：</p>
-<pre><code>/**
+<pre><code class="line-numbers language-Kotlin">/**
  * 底部List集合 这里定义了4块
  * 首页，项目，公众号，我的
  */
@@ -1098,7 +1097,7 @@ val bottomList = listOf(
 <p>就这几个模块。</p>
 <p>底部bar的item就是 BottomNavigationitem里面的了，可以看到是一个icon+label构成。有个onClick的参数就是点击事件回调了，这里调用了 回调函数，传递给上层了，传出去的参数就一个int，表示第几页。</p>
 <p>回调到哪里呢？</p>
-<pre><code> // 实际的底部bar 高度使用 固有特性测量 可以参考：https://juejin.cn/post/7068164264363556872
+<pre><code class="line-numbers language-Kotlin"> // 实际的底部bar 高度使用 固有特性测量 可以参考：https://juejin.cn/post/7068164264363556872
             MainBottomBar(
                 Modifier
                     .fillMaxWidth()
@@ -1108,7 +1107,7 @@ val bottomList = listOf(
 </code></pre>
 <p>这里通过调用rememberPagerState这个对象的<code>  pagerState.reenableScrolling(coroutineScope, it)</code>这个方法实现滚动到目标tab下。也就实现了页面切换。<br>最为关键的就是这个pagerState，同步页面数据和底部bar。</p>
 <p>等下分析内容区也会用到。</p>
-<pre><code> // 水平分页
+<pre><code class="line-numbers language-Kotlin"> // 水平分页
             HorizontalPager(
                 count = bottomList.size,
                 modifier.weight(1f), pagerState, userScrollEnabled = true
@@ -1162,7 +1161,7 @@ val bottomList = listOf(
 <li>我的Tab 对应 Mine</li>
 </ul>
 <h3 id="10-首页Tab-HomeView"><a href="#10-首页Tab-HomeView" class="headerlink" title="10.首页Tab-HomeView"></a>10.首页Tab-HomeView</h3><p>首页效果图就是上面的那个效果。<br>这里再拆分下，就是轮播图+列表。<br>对应 HomeView。</p>
-<pre><code>@Composable
+<pre><code class="line-numbers language-Kotlin">@CompoKotlinsable
 fun HomeView(modifier: Modifier = Modifier) &#123;
     val viewModel: HomeViewModel = viewModel()
     ColumnTopBarMain(modifier
@@ -1175,7 +1174,7 @@ fun HomeView(modifier: Modifier = Modifier) &#123;
 </code></pre>
 <p>最外层是由顶部bar+内容区构成。</p>
 <p>ColumnTabBarMain是自定义通用的一个App的组件，用于上面展示toolbar，中间区域自定义。</p>
-<pre><code>@Composable
+<pre><code class="line-numbers language-Kotlin">@Composable
 fun ColumnTopBarMain(
     modifier: Modifier = Modifier,
     title: String,
@@ -1203,7 +1202,7 @@ fun ColumnTopBarMain(
 </code></pre>
 <p>这里具体是一个Column+CpTopBar构成</p>
 <p>CpTopBar是这样的：</p>
-<pre><code>
+<pre><code class="line-numbers language-Kotlin">
 @Composable
 fun CpTopBar(
     modifier: Modifier = Modifier,
@@ -1236,7 +1235,7 @@ fun CpTopBar(
 &#125;
 </code></pre>
 <p>里面还有自定义的HhTopAppBar</p>
-<pre><code>
+<pre><code class="line-numbers language-Kotlin">
 @Composable
 fun HhTopAppBar(
     title: @Composable () -&gt; Unit,
@@ -1264,7 +1263,7 @@ fun HhTopAppBar(
 &#125;
 </code></pre>
 <p>竟然还有自定义层：Surface是官方提供的了</p>
-<pre><code>@Composable
+<pre><code class="line-numbers language-Kotlin">@Composable
 fun TopAppBarSurface(
     modifier: Modifier = Modifier,
     backgroundColor: Color = MaterialTheme.colors.primarySurface,
@@ -1282,7 +1281,7 @@ fun TopAppBarSurface(
 &#125;
 </code></pre>
 <p>还有标题栏内容区： 这个TopAppBar是官方提供的了</p>
-<pre><code>@Composable
+<pre><code class="line-numbers language-Kotlin">@Composable
 fun TopAppBarContent(
     title: @Composable () -&gt; Unit,
     modifier: Modifier = Modifier,
@@ -1300,7 +1299,7 @@ fun TopAppBarContent(
 &#125;
 </code></pre>
 <p>标题栏看完了，那就到内容区了。</p>
-<pre><code>
+<pre><code class="line-numbers language-Kotlin">
 /**
  * 首页内容区
  */
@@ -1378,7 +1377,7 @@ fun HomeContent(modifier: Modifier = Modifier, viewModel: HomeViewModel) &#123;
 </code></pre>
 <p>list 是专门用于懒加载列表，这个是存放可视区的列表。</p>
 <p>数据来源是ViewModel层的viewStates实例。</p>
-<pre><code>/**
+<pre><code class="line-numbers language-Kotlin">/**
  * 首页状态，包装首页需要的数据
  */
 data class HomeState(
@@ -1401,7 +1400,7 @@ data class HomeState(
 )
 </code></pre>
 <p>这个是存放到ViewModel层的首页动态数据。</p>
-<pre><code> // 首页数据监听 通过 mutableStateOf包装 HomeState
+<pre><code class="line-numbers language-Kotlin"> // 首页数据监听 通过 mutableStateOf包装 HomeState
     var viewStates by mutableStateOf(
         HomeState(
             homeList = Pager(
@@ -1411,7 +1410,7 @@ data class HomeState(
 </code></pre>
 <p>这里用一个mutableStateof包装下。</p>
 <p>下面继续回到首页内容区：<br>然后是一个SwipeRefresh组件,官方提供的。</p>
-<pre><code>    SwipeRefresh(
+<pre><code class="line-numbers language-Kotlin">    SwipeRefresh(
         /**
          * 状态，是否正在刷新
          */
@@ -1427,7 +1426,7 @@ data class HomeState(
 <p>定义好下拉刷新触发事件。<br>注意这个list，实际上走的是LazyPagingItems里面的一个refresh方法。<br>我们在HomeState中定义的homeList是一个Flow包装列表集合。通过调用Flow中扩展的一个collectAsLazyPagingItems函数，就变成LazyPagingItems对象了。</p>
 <p>这个list我们放在PagingItem里面。</p>
 <p>然后首页内容区里面用了一个 LazyColumn，应该也是配合懒加载和复用官方实现的一个类。<br>然后里面第一个item就是我们的轮播图了。</p>
-<pre><code>/**
+<pre><code class="line-numbers language-Kotlin">/**
  * 顶部轮播图
  */
 @OptIn(ExperimentalPagerApi::class)
@@ -1487,7 +1486,7 @@ fun BannerPager(modifier: Modifier = Modifier, viewModel: HomeViewModel) &#123;
 &#125;
 </code></pre>
 <p>这个轮播图里面开了个协程去获取轮播图数据，只会走一次。<br>然后一个水平分页里面存放所有轮播图，轮播item为BannerItem,这个是自定义的</p>
-<pre><code>@Composable
+<pre><code class="line-numbers language-Kotlin">@Composable
 fun BannerItem(modifier: Modifier = Modifier, data: BannerResponse) &#123;
     data.apply &#123;
         Box(modifier.clickable &#123;
@@ -1516,7 +1515,7 @@ fun BannerItem(modifier: Modifier = Modifier, data: BannerResponse) &#123;
 &#125;
 </code></pre>
 <p>轮播完了，就是文章item了。<br>主要是为了实现这种效果<br><img src="/./%E7%8E%A9Android-Compose%E7%89%88%E6%9C%AC-%E9%A1%B9%E7%9B%AE%E5%88%86%E6%9E%90/home_item.jpeg"></p>
-<pre><code> /**
+<pre><code class="line-numbers language-Kotlin"> /**
    * items集合
    */
 items(it) &#123; homeBean -&gt;
@@ -1539,7 +1538,7 @@ items(it) &#123; homeBean -&gt;
 &#125;
 </code></pre>
 <p>这里用了items，然后遍历了 list,每个item对应一个 HomeListItem<br>这里定义了一个函数，说明了点击收藏图标后的逻辑。</p>
-<pre><code>  /**
+<pre><code class="line-numbers language-Kotlin">  /**
      * 是否收藏了，用remember包装一下bool值
      */
     var isCollect by remember&#123; mutableStateOf(homeBean.collect)&#125;
@@ -1568,7 +1567,7 @@ items(it) &#123; homeBean -&gt;
 </code></pre>
 <p>这里外层是用了Card,定义了点击item的逻辑。</p>
 <p>里面是这样的：</p>
-<pre><code> Column(Modifier.padding(8.dp)) &#123;
+<pre><code class="line-numbers language-Kotlin"> Column(Modifier.padding(8.dp)) &#123;
                 /**
                  * 第一行 水平布局
                  */
@@ -1705,7 +1704,7 @@ items(it) &#123; homeBean -&gt;
 </code></pre>
 <h3 id="11-我的Tab-Mine"><a href="#11-我的Tab-Mine" class="headerlink" title="11.我的Tab-Mine"></a>11.我的Tab-Mine</h3><p>因为项目和公众号和首页基本一样，这里就不重复分析了。<br>看下我的页面的效果图：<br><img src=mine.jpeg width=50%><br>要实现这样的效果，怎么处理呢？</p>
 <p>首先开启一个协程，获取用户sp数据，转成UserInfo对象</p>
-<pre><code>   /**
+<pre><code class="line-numbers language-Kotlin">   /**
      * 开启协程，只走一次
      */
     LaunchedEffect(CacheUtils.userInfo) &#123;
@@ -1729,7 +1728,7 @@ items(it) &#123; homeBean -&gt;
     &#125;
 </code></pre>
 <p>这里获取积分和排名是需要走接口的<br>这里会走到ViewModel层这个函数：</p>
-<pre><code>    private fun getIntegral() &#123;
+<pre><code class="line-numbers language-Kotlin">    private fun getIntegral() &#123;
         viewModelScope.launch &#123;
             flow &#123;
                 emit(
@@ -1751,7 +1750,7 @@ items(it) &#123; homeBean -&gt;
     &#125;
 </code></pre>
 <p>这个retrofit中是这样定义的：</p>
-<pre><code>interface ApiService &#123;
+<pre><code class="line-numbers language-Kotlin">interface ApiService &#123;
     /**
      * 获取当前账户的个人积分
      */
@@ -1760,7 +1759,7 @@ items(it) &#123; homeBean -&gt;
 </code></pre>
 <p>这个就是一个suspend挂起函数。</p>
 <p>顶层为Column:</p>
-<pre><code>    /**
+<pre><code class="line-numbers language-Kotlin">    /**
      * 顶层为列表视图
      */
     Column(modifier) &#123;
@@ -1778,7 +1777,7 @@ items(it) &#123; homeBean -&gt;
         ) &#123;
 </code></pre>
 <p>头像区域，点击后可以弹pop，但是需要先获取权限，这样获取：</p>
-<pre><code>// 图片点击事件 会去申请下权限
+<pre><code class="line-numbers language-Kotlin">// 图片点击事件 会去申请下权限
             XXPermissions
                 .with(context)
                 .permission(Permission.CAMERA)
@@ -1816,7 +1815,7 @@ items(it) &#123; homeBean -&gt;
 </code></pre>
 <p>用了一个三方库实现。</p>
 <p>中间操作栏这样实现：</p>
-<pre><code>  // 操作栏 有个外边框，包裹菜单项，底部有阴影
+<pre><code class="line-numbers language-Kotlin">  // 操作栏 有个外边框，包裹菜单项，底部有阴影
         Surface(
             Modifier
                 .padding(start = 20.dp, end = 20.dp)
@@ -1828,7 +1827,7 @@ items(it) &#123; homeBean -&gt;
         ) &#123;
 </code></pre>
 <p>具体的菜单项也是用懒加载实现：</p>
-<pre><code>LazyColumn(Modifier.background(HhfTheme.colors.listItem)) &#123;
+<pre><code class="line-numbers language-Kotlin">LazyColumn(Modifier.background(HhfTheme.colors.listItem)) &#123;
                 itemsIndexed(list) &#123; i, bean -&gt;
 
                     /**
@@ -1859,7 +1858,7 @@ items(it) &#123; homeBean -&gt;
             &#125;
 </code></pre>
 <p>具体的菜单item,有图标+文字+右侧箭头实现：</p>
-<pre><code>
+<pre><code class="line-numbers language-Kotlin">
 @Composable
 fun MineItem(
     modifier: Modifier = Modifier, textName: String, iconColor: Color, icon: ImageVector
@@ -1895,7 +1894,7 @@ fun MineItem(
 <p>UI搞定了，跳转逻辑怎么处理呢？<br>答案是viewModel层实现。</p>
 <p>这里有个clickable点击闭包：<br><code> mineViewModel.dispatch(MineViewEvent.ToComposable(bean.id))</code></p>
 <p>会委托给mineViewModel处理：</p>
-<pre><code>    /**
+<pre><code class="line-numbers language-Kotlin">    /**
      * 分发开发者行为
      */
     fun dispatch(action: MineViewEvent) &#123;
@@ -1916,7 +1915,7 @@ fun MineItem(
 </code></pre>
 <p>这里分发开发者行为，其实更像用户行为，有可能不是用户触发，所以我这里称之为开发者行为。</p>
 <p>点击菜单项继续分发：</p>
-<pre><code>private fun toComposable(type: Int) &#123;
+<pre><code class="line-numbers language-Kotlin">private fun toComposable(type: Int) &#123;
         if(isLogin)&#123;
             when (type) &#123;
                 0 -&gt; CpNavigation.to(ModelPath.Integral)
@@ -2822,6 +2821,10 @@ googe samples之 nowinandroid项目地址：https://github.com/android/nowinandr
     }/*因为建站时间还没有一年，就将之注释掉了。需要的可以取消*/
     siteTime();
 </script>
+
+<link rel="stylesheet" href="/css/prism.css">
+<script src="/js/prism.js" async></script>
+
 
     <!-- 搜索遮罩框 -->
 <div id="searchModal" class="modal">

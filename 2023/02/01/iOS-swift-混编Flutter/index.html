@@ -67,8 +67,7 @@
         })();
     </script>
 
-<meta name="generator" content="Hexo 6.3.0"><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css">
-<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
+<meta name="generator" content="Hexo 6.3.0"></head>
 
 <body>
 
@@ -546,7 +545,7 @@ target &#39;GreeSalesSystem&#39; do
     end
 end
 </code></pre>
-<h2 id="4-原生项目配置Flutter"><a href="#4-原生项目配置Flutter" class="headerlink" title="4 原生项目配置Flutter"></a>4 原生项目配置Flutter</h2><h3 id="4-1-自定义FlutterBoostDelegate"><a href="#4-1-自定义FlutterBoostDelegate" class="headerlink" title="4.1 自定义FlutterBoostDelegate"></a>4.1 自定义FlutterBoostDelegate</h3><pre><code>// Flutter Boost 架构Delegate
+<h2 id="4-原生项目配置Flutter"><a href="#4-原生项目配置Flutter" class="headerlink" title="4 原生项目配置Flutter"></a>4 原生项目配置Flutter</h2><h3 id="4-1-自定义FlutterBoostDelegate"><a href="#4-1-自定义FlutterBoostDelegate" class="headerlink" title="4.1 自定义FlutterBoostDelegate"></a>4.1 自定义FlutterBoostDelegate</h3><pre><code class="line-numbers language-Swift">// Flutter Boost 架构Delegate
 // 参考： https://github.com/alibaba/flutter_boost/blob/master/docs/install.md
 class GMFlutterBoostDelegate : NSObject, FlutterBoostDelegate &#123;
     
@@ -630,7 +629,7 @@ class GMFlutterBoostDelegate : NSObject, FlutterBoostDelegate &#123;
 </code></pre>
 <p>Flutter 跳转 原生 主要用这个：pushNativeRoute 方法<br>原生 跳转 Flutter 主要用这个： pushFlutterRoute 方法</p>
 <h3 id="4-2-承载Flutter的容器"><a href="#4-2-承载Flutter的容器" class="headerlink" title="4.2 承载Flutter的容器"></a>4.2 承载Flutter的容器</h3><p>其实说白了，Flutter页面本质上还是Controller。<br>我们调整到任何一个Flutter，其实都是先跳自己的Controller。<br>如下：</p>
-<pre><code>class DisPromotionChooseShopStoreViewController: FBFlutterViewContainer &#123;
+<pre><code class="line-numbers language-Swift">class DisPromotionChooseShopStoreViewController: FBFlutterViewContainer &#123;
     
     static var pageName = &quot;disPromotionChooseShopStore&quot;
     
@@ -644,7 +643,7 @@ class GMFlutterBoostDelegate : NSObject, FlutterBoostDelegate &#123;
 <p>这里就是跳转到Flutter的某个页面。<br>因为它继承了FBFlutterViewContainer，这个是阿里提供的。</p>
 <p>实际上就是一个Controller呀。</p>
 <h3 id="4-3-应用启动初始化"><a href="#4-3-应用启动初始化" class="headerlink" title="4.3 应用启动初始化"></a>4.3 应用启动初始化</h3><p>这个需要再AppDelegate中完成。<br>可以搞个扩展方法：</p>
-<pre><code>extension AppDelegate &#123;
+<pre><code class="line-numbers language-Swift">extension AppDelegate &#123;
     /// 设置flutter
     func configFlutterBoost(_ application: UIApplication) &#123;
         //创建代理，做初始化操作
@@ -1558,6 +1557,10 @@ moya是对Alamofire的再次封
     }/*因为建站时间还没有一年，就将之注释掉了。需要的可以取消*/
     siteTime();
 </script>
+
+<link rel="stylesheet" href="/css/prism.css">
+<script src="/js/prism.js" async></script>
+
 
     <!-- 搜索遮罩框 -->
 <div id="searchModal" class="modal">

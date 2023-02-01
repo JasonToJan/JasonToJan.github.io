@@ -66,8 +66,7 @@
         })();
     </script>
 
-<meta name="generator" content="Hexo 6.3.0"><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css">
-<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
+<meta name="generator" content="Hexo 6.3.0"></head>
 
 <body>
 
@@ -512,7 +511,7 @@
 <p>目标就是完成这样的效果：<br><img src=scan1.png><br><img src=scan2.png></p>
 <h2 id="2-分析需求"><a href="#2-分析需求" class="headerlink" title="2 分析需求"></a>2 分析需求</h2><p>要具备扫码功能，肯定离不开相机，调用相机会设计到权限。<br>所以我们得考虑是否有相机权限。<br>其次，得考虑如何来识别条形码。<br>重复识别到的问题。<br>页面退出，相机资源怎么处理。<br>光线太暗了，是否需要打开手电筒。<br>条码太小，是否需要放大。<br>等等，这些事先都得考虑到。</p>
 <h2 id="3-打造页面"><a href="#3-打造页面" class="headerlink" title="3 打造页面"></a>3 打造页面</h2><h3 id="3-1-构建UI"><a href="#3-1-构建UI" class="headerlink" title="3.1 构建UI"></a>3.1 构建UI</h3><p>首先把材料上齐。</p>
-<pre><code>lazy var squareImgView: UIImageView = &#123;
+<pre><code class="line-numbers language-Swift">lazy var squareImgView: UIImageView = &#123;
         let imgv = UIImageView()
         imgv.isUserInteractionEnabled = false
         imgv.image = UIImage(named: &quot;扫码框&quot;)
@@ -577,7 +576,7 @@
 </code></pre>
 <p>打开需要这几个View。</p>
 <h3 id="3-2-全局变量声明"><a href="#3-2-全局变量声明" class="headerlink" title="3.2 全局变量声明"></a>3.2 全局变量声明</h3><p>想要具备扫码能力，有几个类是必须的。</p>
-<pre><code>// AVC 相关  相机硬件接口相关
+<pre><code class="line-numbers language-Swift">// AVC 相关  相机硬件接口相关
     private var videoDataOutput: AVCaptureVideoDataOutput?
     private var output: AVCaptureMetadataOutput?
     private var session: AVCaptureSession?
@@ -586,7 +585,7 @@
 <p>其它成员不着急，后续需要再加上去。</p>
 <h3 id="3-3-生命周期之loadView"><a href="#3-3-生命周期之loadView" class="headerlink" title="3.3 生命周期之loadView"></a>3.3 生命周期之loadView</h3><p>loadView执行时机为：访问视图控制器的view时候，如何view为nil，或者还没有加载完成就会调用loadView方法来创建view。可以理解成先于viewDidLoad，一般走一次，一般用于视图初始化。</p>
 <p>这里就负责 添加子View 的工作。</p>
-<pre><code>private func setupUI() &#123;
+<pre><code class="line-numbers language-Swift">private func setupUI() &#123;
         view.addSubview(layerView)
         view.addSubview(squareImgView)
         view.addSubview(torchButton)
@@ -636,7 +635,7 @@
 </code></pre>
 <p>可以看到，这里把架子搭上去了。</p>
 <h3 id="3-4-生命周期之-viewDidLoad"><a href="#3-4-生命周期之-viewDidLoad" class="headerlink" title="3.4 生命周期之 viewDidLoad"></a>3.4 生命周期之 viewDidLoad</h3><p>看下这里做了什么：</p>
-<pre><code> override func viewDidLoad() &#123;
+<pre><code class="line-numbers language-Swift"> override func viewDidLoad() &#123;
         super.viewDidLoad()
         // 标题文字大小
         navigationController?.navigationBar.navBarBackGroundColor(.black, image: UIImage(), isOpaque: false)
@@ -661,13 +660,13 @@
     &#125;
 </code></pre>
 <p>如何添加手势呢？</p>
-<pre><code>private func addGesture() &#123;
+<pre><code class="line-numbers language-Swift">private func addGesture() &#123;
         let prinGesture = UIPinchGestureRecognizer(target: self, action: #selector(pinch(gesture:)))
         layerView.addGestureRecognizer(prinGesture)
     &#125;
 </code></pre>
 <p>操作后会触发：</p>
-<pre><code>@objc func pinch(gesture: UIPinchGestureRecognizer) &#123;
+<pre><code class="line-numbers language-Swift">@objc func pinch(gesture: UIPinchGestureRecognizer) &#123;
         guard let device = AVCaptureDevice.default(for: AVMediaType.video) else &#123;
             print(&quot;get front video AVCaptureDeviceInput  failed!&quot;)
             return
@@ -698,7 +697,7 @@
 </code></pre>
 <p>其它的没啥了。</p>
 <h3 id="3-5-生命周期之viewWillAppear"><a href="#3-5-生命周期之viewWillAppear" class="headerlink" title="3.5 生命周期之viewWillAppear"></a>3.5 生命周期之viewWillAppear</h3><p>这个是将要显示，一般做轻量级操作。</p>
-<pre><code>override func viewWillAppear(_ animated: Bool) &#123;
+<pre><code class="line-numbers language-Swift">override func viewWillAppear(_ animated: Bool) &#123;
         super.viewWillAppear(animated)
         setupRealWhiteClickCallBack()
         setupBlackNavWhiteTitleBarColor()
@@ -707,7 +706,7 @@
 </code></pre>
 <p>主要实现了状态栏和标题栏相关的。</p>
 <h3 id="3-6-生命周期之viewDidAppear"><a href="#3-6-生命周期之viewDidAppear" class="headerlink" title="3.6 生命周期之viewDidAppear"></a>3.6 生命周期之viewDidAppear</h3><p>这里是已经显示了，这里可以做稍微重量级代码。</p>
-<pre><code>override func viewDidAppear(_ animated: Bool) &#123;
+<pre><code class="line-numbers language-Swift">override func viewDidAppear(_ animated: Bool) &#123;
         super.viewDidAppear(animated)
         if self.session == nil &#123;
             self.scanQRCodePermission()
@@ -720,7 +719,7 @@
 </code></pre>
 <p>很明显这里判断了下session是否为null。</p>
 <p>如果session为nil，则先判断是否有相机权限：</p>
-<pre><code>func scanQRCodePermission() &#123;
+<pre><code class="line-numbers language-Swift">func scanQRCodePermission() &#123;
         // 判断摄像头是否可用
         let available = UIImagePickerController.isSourceTypeAvailable(.camera)
         if available &#123;
@@ -771,7 +770,7 @@
 </code></pre>
 <p>上面的代码讲述了如何申请权限，权限被拒绝如何跳转设置。</p>
 <p>如果有权限了会走 initCaptureSession 来初始化session:</p>
-<pre><code>func initCaptureSession() &#123;
+<pre><code class="line-numbers language-Swift">func initCaptureSession() &#123;
         //创建会话对象
         let `session` = AVCaptureSession()
         self.session = session
@@ -844,16 +843,16 @@
     &#125;
 </code></pre>
 <p>回到 生命周期 中，如果 session 不为空，会走上面的startScan 函数，这里就是让session继续工作的意思：</p>
-<pre><code>func startScan() &#123;
+<pre><code class="line-numbers language-Swift">func startScan() &#123;
         session?.startRunning()
     &#125;
 </code></pre>
 <p>在viewDidAppear中还做了什么呢？</p>
-<pre><code>UIApplication.shared.isIdleTimerDisabled = true
+<pre><code class="line-numbers language-Swift">UIApplication.shared.isIdleTimerDisabled = true
 setNeedsStatusBarAppearanceUpdate()
 </code></pre>
 <p>第一行：禁止该页面进入睡眠；<br>第二行：如果在viewController已经显示在当前页面，你可能还要在当前页面不时的更改statusBar的前景色，那么，你首先需要调用下面的setNeedsStatusBarAppearanceUpdate方法(这个方法会通知系统去调用当前UIViewController的preferredStatusBarStyle方法)，从而改变statusBar的statusBarStyle。</p>
-<h3 id="3-7-生命周期之viewDidDisappear"><a href="#3-7-生命周期之viewDidDisappear" class="headerlink" title="3.7 生命周期之viewDidDisappear"></a>3.7 生命周期之viewDidDisappear</h3><pre><code> override func viewDidDisappear(_ animated: Bool) &#123;
+<h3 id="3-7-生命周期之viewDidDisappear"><a href="#3-7-生命周期之viewDidDisappear" class="headerlink" title="3.7 生命周期之viewDidDisappear"></a>3.7 生命周期之viewDidDisappear</h3><pre><code class="line-numbers language-Swift"> override func viewDidDisappear(_ animated: Bool) &#123;
         super.viewDidDisappear(animated)
         stopScan()
         UIApplication.shared.isIdleTimerDisabled = false
@@ -861,20 +860,20 @@ setNeedsStatusBarAppearanceUpdate()
     &#125;
 </code></pre>
 <p>这里停止扫描，应该是停止session:</p>
-<pre><code>func stopScan() &#123;
+<pre><code class="line-numbers language-Swift">func stopScan() &#123;
         session?.stopRunning()
     &#125;
 </code></pre>
 <p>其它上面讲过，不必多言了。</p>
 <h3 id="3-8-设置output代理"><a href="#3-8-设置output代理" class="headerlink" title="3.8 设置output代理"></a>3.8 设置output代理</h3><p>回到初始化session的部分代码中：</p>
-<pre><code>//创建元数据输出流
+<pre><code class="line-numbers language-Swift">//创建元数据输出流
 let `output` = AVCaptureMetadataOutput()
 self.output = output
 output.setMetadataObjectsDelegate(self, queue: DispatchQueue.main)
 </code></pre>
 <p>这里设置了一个metadata的代理，所以这个controller必然扩展了这个代理。</p>
 <p>具体如下：</p>
-<pre><code>extension GMBaseScanViewController: AVCaptureMetadataOutputObjectsDelegate &#123;
+<pre><code class="line-numbers language-Swift">extension GMBaseScanViewController: AVCaptureMetadataOutputObjectsDelegate &#123;
     func metadataOutput(_ output: AVCaptureMetadataOutput, didOutput metadataObjects: [AVMetadataObject], from connection: AVCaptureConnection) &#123;
         if isCanScan &#123;
             let isAchieve: Bool = metadataObjects.count == 1
@@ -923,7 +922,7 @@ output.setMetadataObjectsDelegate(self, queue: DispatchQueue.main)
 &#125;
 </code></pre>
 <p>这里覆写了这协议方法，表示识别到内容了。然后会回调metadateOutput，原因是前面session里面设置了Output的代理为self,也就是这里，这里就关联起来了。<br>前面是这样的：</p>
-<pre><code> let `output` = AVCaptureMetadataOutput()
+<pre><code class="line-numbers language-Swift"> let `output` = AVCaptureMetadataOutput()
         self.output = output
         output.setMetadataObjectsDelegate(self, queue: DispatchQueue.main)
                 
@@ -932,7 +931,7 @@ output.setMetadataObjectsDelegate(self, queue: DispatchQueue.main)
 </code></pre>
 <p>就是因为这个self，当session开始running后，就会走协议的回调方法，在那里面我们间隔3.5才让它进行下次扫描，也是在这里面分析这个条码是否正常之类的。</p>
 <h3 id="3-9-设置videoDataOuput代理"><a href="#3-9-设置videoDataOuput代理" class="headerlink" title="3.9 设置videoDataOuput代理"></a>3.9 设置videoDataOuput代理</h3><p>这个代理，目的是为了识别光线强弱。</p>
-<pre><code>extension GMBaseScanViewController: AVCaptureVideoDataOutputSampleBufferDelegate &#123;
+<pre><code class="line-numbers language-Swift">extension GMBaseScanViewController: AVCaptureVideoDataOutputSampleBufferDelegate &#123;
     
     func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) &#123;
         // 获取光照亮度
@@ -967,7 +966,7 @@ output.setMetadataObjectsDelegate(self, queue: DispatchQueue.main)
 <p>在代理 captureOutput的回调方法中可以获取光线强弱信息。</p>
 <p>也是在初始化session的时候设置了这个代理。</p>
 <h3 id="3-10-识别到后播放声音"><a href="#3-10-识别到后播放声音" class="headerlink" title="3.10 识别到后播放声音"></a>3.10 识别到后播放声音</h3><p>这里我们额外增加一个方法，主要给外面调用，因为我们会提供一个代理，如果识别到后，通过代理内部方法将识别的条码给外面。这时候外面要震动或声音效果，只需要调用我们内部的一个方法即可。</p>
-<pre><code>func playAudio(success code: Int) &#123;
+<pre><code class="line-numbers language-Swift">func playAudio(success code: Int) &#123;
         if isPlay == false &#123;
             return
         &#125;
@@ -1869,6 +1868,10 @@ output.setMetadataObjectsDelegate(self, queue: DispatchQueue.main)
     }/*因为建站时间还没有一年，就将之注释掉了。需要的可以取消*/
     siteTime();
 </script>
+
+<link rel="stylesheet" href="/css/prism.css">
+<script src="/js/prism.js" async></script>
+
 
     <!-- 搜索遮罩框 -->
 <div id="searchModal" class="modal">

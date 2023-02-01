@@ -70,8 +70,7 @@ googe samples之 nowinandroid项目地址：https://github.com/android/nowinandr
         })();
     </script>
 
-<meta name="generator" content="Hexo 6.3.0"><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css">
-<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
+<meta name="generator" content="Hexo 6.3.0"></head>
 
 <body>
 
@@ -514,7 +513,7 @@ googe samples之 nowinandroid项目地址：https://github.com/android/nowinandr
                 <blockquote>
 <p>googe samples之 nowinandroid项目地址：<a target="_blank" rel="noopener" href="https://github.com/android/nowinandroid">https://github.com/android/nowinandroid</a></p>
 </blockquote>
-<h3 id="1-app模块build-gradle文件配置"><a href="#1-app模块build-gradle文件配置" class="headerlink" title="1.app模块build.gradle文件配置"></a>1.app模块build.gradle文件配置</h3><pre><code>plugins &#123;
+<h3 id="1-app模块build-gradle文件配置"><a href="#1-app模块build-gradle文件配置" class="headerlink" title="1.app模块build.gradle文件配置"></a>1.app模块build.gradle文件配置</h3><pre><code class="line-numbers language-Groovy">plugins &#123;
     id(&quot;nowinandroid.android.application&quot;)
     id(&quot;nowinandroid.android.application.compose&quot;)
     id(&quot;nowinandroid.android.application.jacoco&quot;)
@@ -525,7 +524,7 @@ googe samples之 nowinandroid项目地址：https://github.com/android/nowinandr
 </code></pre>
 <p>引入了application插件，compose插件，jacoco插件，hilt插件，firebase插件</p>
 <p>依赖项：</p>
-<pre><code>    implementation(project(&quot;:feature:interests&quot;))
+<pre><code class="line-numbers language-Groovy">    implementation(project(&quot;:feature:interests&quot;))
     implementation(project(&quot;:feature:foryou&quot;))
     implementation(project(&quot;:feature:bookmarks&quot;))
     implementation(project(&quot;:feature:topic&quot;))
@@ -542,7 +541,7 @@ googe samples之 nowinandroid项目地址：https://github.com/android/nowinandr
 <p>feature文件夹下是app模块的界面上拆分组件。<br>如feature_interests 就是兴趣tab<br>feature_foryou 就是第一个tab<br>feature_bookmarks 是书签模块<br>等等</p>
 <p>下面的core就是核心模块了，有通用组件，ui组件，设计系统，数据区</p>
 <p>然后sync_work是一些工具module了。</p>
-<h3 id="2-清单文件"><a href="#2-清单文件" class="headerlink" title="2.清单文件"></a>2.清单文件</h3><pre><code>    &lt;application
+<h3 id="2-清单文件"><a href="#2-清单文件" class="headerlink" title="2.清单文件"></a>2.清单文件</h3><pre><code class="line-numbers language-xml">    &lt;application
         android:name=&quot;.NiaApplication&quot;
         android:allowBackup=&quot;true&quot;
         android:enableOnBackInvokedCallback=&quot;true&quot;
@@ -569,7 +568,7 @@ googe samples之 nowinandroid项目地址：https://github.com/android/nowinandr
 <h3 id="3-自定义Application"><a href="#3-自定义Application" class="headerlink" title="3.自定义Application"></a>3.自定义Application</h3><p>这里App开始启动了。<br>首先是用了一个HiltAndroidApp的注解。<br>这个是类似Dragger的依赖注解框架，这里要求在Application用这个注解。<br>关于Hilt用法可参考：<a target="_blank" rel="noopener" href="https://developer.android.com/training/dependency-injection/hilt-android?hl=zh-cn">https://developer.android.com/training/dependency-injection/hilt-android?hl=zh-cn</a></p>
 <p>这里在Application里面初始化了一个东西：<br><code>Sync.initialize(context = this)</code><br>作用就是初始化Sync三方库。</p>
 <p>里面是这样走的：</p>
-<pre><code>  AppInitializer.getInstance(context)
+<pre><code class="line-numbers language-Kotlin">  AppInitializer.getInstance(context)
             .initializeComponent(SyncInitializer::class.java)
 </code></pre>
 <p>AppInitializer是google的Jetpack下的startup中的类成员，关于这个用法可以参考下郭霖的博客：<a target="_blank" rel="noopener" href="https://blog.csdn.net/guolin_blog/article/details/108026357">https://blog.csdn.net/guolin_blog&#x2F;article&#x2F;details&#x2F;108026357</a></p>
@@ -591,7 +590,7 @@ googe samples之 nowinandroid项目地址：https://github.com/android/nowinandr
 </li>
 </ol>
 <p>然后声明了两个注入的变量：</p>
-<pre><code>/**
+<pre><code class="line-numbers language-Kotlin">/**
      * Lazily inject [JankStats], which is used to track jank throughout the app.
      * JankStats 是首个专为在用户设备上检测及报告应用的性能问题而构建的 AndroidX 库。
      * JankStats 是占用空间相对较小的 API，主要有三大目标: 捕获每帧的性能信息、在用户设备 (不仅是开发设备) 上运行、以及在应用出现性能问题时启用检测，并报告所发生的情况
@@ -611,7 +610,7 @@ googe samples之 nowinandroid项目地址：https://github.com/android/nowinandr
     lateinit var networkMonitor: NetworkMonitor
 </code></pre>
 <p> 关于lazyStats怎么初始化的？在项目di文件夹下有个JankStatsModule</p>
-<pre><code>/**
+<pre><code class="line-numbers language-Kotlin">/**
  * 这里的目标是生产一个JankStats对象
  *
  * 怎么生产呢，需要2个构造参数
@@ -651,7 +650,7 @@ object JankStatsModule &#123;
 </code></pre>
 <p>这里生产了  一个JankStats对象。</p>
 <p>关于网络监视器如何初始化的呢？<br>这个网络监视器是一个接口来的：</p>
-<pre><code>/**
+<pre><code class="line-numbers language-Kotlin">/**
  * Utility for reporting app connectivity status
  */
 interface NetworkMonitor &#123;
@@ -659,7 +658,7 @@ interface NetworkMonitor &#123;
 &#125;
 </code></pre>
 <p>一直没找到如何实例化的地方。<br>不过再其它模块，core下的data.di文件夹下发现了另外一个DataModule下有如下代码：</p>
-<pre><code>
+<pre><code class="line-numbers language-Kotlin">
     @Binds
     fun bindsNetworkMonitor(
         networkMonitor: ConnectivityManagerNetworkMonitor
@@ -670,7 +669,7 @@ interface NetworkMonitor &#123;
 <p>第三个变量是viewModel<br><code> val viewModel: MainActivityViewModel by viewModels()</code><br>这个用法类似：<br><code>ViewModelProvider(this).get(MainActivityViewModel::class.java)</code></p>
 <h3 id="5-首页生命周期-onCreate"><a href="#5-首页生命周期-onCreate" class="headerlink" title="5.首页生命周期-onCreate"></a>5.首页生命周期-onCreate</h3><p>继续走，第一行是 适配闪屏页 installSplashScreen()<br>关于闪屏页可参考文档：<a target="_blank" rel="noopener" href="https://blog.csdn.net/guolin_blog/article/details/120275319">https://blog.csdn.net/guolin_blog&#x2F;article&#x2F;details&#x2F;120275319</a>（郭霖）</p>
 <p>然后这里监听了一个密封接口中的 Loading 状态，<br>密封接口定义如下：</p>
-<pre><code>/**
+<pre><code class="line-numbers language-Kotlin">/**
  * 首页ui 状态的密封类，有加载中和成功的状态
  * 密封接口 类似枚举类型，说明有Loading状态和成功状态
  * 表示受限制的类层次结构
@@ -682,7 +681,7 @@ sealed interface MainActivityUiState &#123;
 </code></pre>
 <p>很明显这里Loading实现了这个接口，Success也实现了这个接口。</p>
 <p>在onCreate监听了这个Loading类：</p>
-<pre><code>
+<pre><code class="line-numbers language-Kotlin">
         /**
          * mutableStateOf 表明某个变量是有状态的，对变量进行监听，当状态改变时，触发重绘。
          * remember --- 记录变量的值，使得下次使用改变量时不进行初始化。
@@ -693,7 +692,7 @@ sealed interface MainActivityUiState &#123;
         var uiState: MainActivityUiState by mutableStateOf(Loading)
 </code></pre>
 <p>然后开启一个携程，拿用户数据：</p>
-<pre><code> // Activity生命周期内使用携程
+<pre><code class="line-numbers language-Kotlin"> // Activity生命周期内使用携程
         lifecycleScope.launch &#123;
             // Lifecycle.State.STARTED: 表示只有在Activity处于Started状态的情况下，协程中的代码才会执行。
             lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) &#123;
@@ -708,7 +707,7 @@ sealed interface MainActivityUiState &#123;
 <p>拿到数据后，才回去更新uiState对象。</p>
 <p>就是说uiState会有上面密封接口定义的两种类型。</p>
 <p>当监听到uiState变化后会走：</p>
-<pre><code> /**
+<pre><code class="line-numbers language-Kotlin"> /**
          * 如果网络请求正在请求loading状态，就还是显示闪屏，如果拿到数据了就不需要闪屏了
          */
         splashScreen.setKeepOnScreenCondition &#123;
@@ -720,28 +719,28 @@ sealed interface MainActivityUiState &#123;
 </code></pre>
 <p>闪屏会去除掉。</p>
 <p>下面开启沉浸式状态栏：</p>
-<pre><code>  /**
+<pre><code class="line-numbers language-Kotlin">  /**
          * 第二参数decorFitsSystemWindows表示是否沉浸，false 表示沉浸，true表示不沉浸
          */
         WindowCompat.setDecorFitsSystemWindows(window, false)
 </code></pre>
 <p>然后就是内容区，compose设置内容区了<br>一个setContent的函数，太长了，就不全部贴图，挨个分析。</p>
 <p>1.首先获取一个systemUIController</p>
-<pre><code> /**
+<pre><code class="line-numbers language-Kotlin"> /**
              * 开发者若想在 Compose 布局中控制 System UI，就必须获取 SystemUiController 对象。
              * 通过该库提供 rememberSystemUiController 函数，开发者可以获取当前操作系统（目前仅支持 Android 系统）的  SystemUiController 对象。
              */
             val systemUiController = rememberSystemUiController()
 </code></pre>
 <p>2.是否使用深色主题，用户可以自己选</p>
-<pre><code> /**
+<pre><code class="line-numbers language-Kotlin"> /**
              * 是否使用深色主题，入参当前ui状态
              */
             val darkTheme = shouldUseDarkTheme(uiState)
             
 </code></pre>
 <p>内部实现：</p>
-<pre><code>/**
+<pre><code class="line-numbers language-Kotlin">/**
  * Returns `true` if dark theme should be used, as a function of the [uiState] and the
  * current system context.
  * 调用@Composable 函数的函数必须用@Composable 注解标记
@@ -765,7 +764,7 @@ private fun shouldUseDarkTheme(
 &#125;
 </code></pre>
 <p>然后开启一个DisposableEffect来关联上面这两个对象：</p>
-<pre><code>  /**
+<pre><code class="line-numbers language-Kotlin">  /**
              * disposable，顾名思义，这就是一个自带清理作用的Effect
              */
             DisposableEffect(systemUiController, darkTheme) &#123;
@@ -775,7 +774,7 @@ private fun shouldUseDarkTheme(
             &#125;
 </code></pre>
 <p>最后，开始设置App主题了：</p>
-<pre><code>  /**
+<pre><code class="line-numbers language-Kotlin">  /**
              * 主题配置，是否暗色，判断用户是否有自己选择
              * 是否用Android主题
              * 下面这些代码才是内容区的布局，上面MainActivityUiState 这个只是拿用户的持久化数据，槽了
@@ -798,7 +797,7 @@ private fun shouldUseDarkTheme(
             &#125;
 </code></pre>
 <p>里面的闭包 NiaApp也就是开启了我们的App。</p>
-<h3 id="6-首页其它生命周期"><a href="#6-首页其它生命周期" class="headerlink" title="6.首页其它生命周期"></a>6.首页其它生命周期</h3><pre><code>  override fun onResume() &#123;
+<h3 id="6-首页其它生命周期"><a href="#6-首页其它生命周期" class="headerlink" title="6.首页其它生命周期"></a>6.首页其它生命周期</h3><pre><code class="line-numbers language-Kotlin">  override fun onResume() &#123;
         super.onResume()
         /**
          * 跟踪性能
@@ -818,7 +817,7 @@ private fun shouldUseDarkTheme(
 <p>其它对象初始化交给hilt处理了。</p>
 <p>主要就只开了个协程获取用户数据，而且优化闪屏页和loading的显示。</p>
 <h3 id="7-NiaTheme主题设置"><a href="#7-NiaTheme主题设置" class="headerlink" title="7.NiaTheme主题设置"></a>7.NiaTheme主题设置</h3><p>先是主题颜色：</p>
-<pre><code> // 主题颜色
+<pre><code class="line-numbers language-Kotlin"> // 主题颜色
     val colorScheme = when &#123;
         // 判断当前 android主题是暗色还是浅色
         androidTheme -&gt; if (darkTheme) DarkAndroidColorScheme else LightAndroidColorScheme
@@ -832,7 +831,7 @@ private fun shouldUseDarkTheme(
     &#125;
 </code></pre>
 <p>渐变色:</p>
-<pre><code>    // Gradient colors 渐变色
+<pre><code class="line-numbers language-Kotlin">    // Gradient colors 渐变色
     // 空渐变色
     val emptyGradientColors = GradientColors(container = colorScheme.surfaceColorAtElevation(2.dp))
     // 默认渐变色
@@ -849,7 +848,7 @@ private fun shouldUseDarkTheme(
     &#125;
 </code></pre>
 <p>最终设置到MaterialTheme里面：</p>
-<pre><code>   // Composition locals
+<pre><code class="line-numbers language-Kotlin">   // Composition locals
     CompositionLocalProvider(
         LocalGradientColors provides gradientColors,
         LocalBackgroundTheme provides backgroundTheme
@@ -862,7 +861,7 @@ private fun shouldUseDarkTheme(
     &#125;
 </code></pre>
 <h3 id="8-NiaApp状态定义"><a href="#8-NiaApp状态定义" class="headerlink" title="8.NiaApp状态定义"></a>8.NiaApp状态定义</h3><p>首先创建一个NiaApp实例。<br>入参：窗口大小类，网络监视器</p>
-<pre><code> NiaApp(
+<pre><code class="line-numbers language-Kotlin"> NiaApp(
                     /**
                      * 窗口大小类，获取一个WindowSizeClass 这个实例
                      */
@@ -876,7 +875,7 @@ private fun shouldUseDarkTheme(
 <p>这里是App首页ui样式。</p>
 <p>这里用到的状态作为第三个参数，作为app状态记录。</p>
 <p>函数定义如下：</p>
-<pre><code>@OptIn(
+<pre><code class="line-numbers language-Kotlin">@OptIn(
     ExperimentalMaterial3Api::class,
     ExperimentalLayoutApi::class,
     ExperimentalComposeUiApi::class,
@@ -897,7 +896,7 @@ fun NiaApp(
 </code></pre>
 <p>这里第三个参数已经默认实现了。</p>
 <p>就是用于app状态记录，调用了一个自定义的rememberNiaAppState方法。</p>
-<pre><code>@Composable
+<pre><code class="line-numbers language-Kotlin">@Composable
 fun rememberNiaAppState(
     windowSizeClass: WindowSizeClass,
     networkMonitor: NetworkMonitor,
@@ -919,7 +918,7 @@ fun rememberNiaAppState(
 <p>这里默认实现了协程作用域，导航控制器，需要返回一个NiaAppState变量。</p>
 <p>这里通过remember闭包来返回这个变量。</p>
 <p>这个NiaAppState定义如下：</p>
-<pre><code>/**
+<pre><code class="line-numbers language-Kotlin">/**
  * 主要用于类似LiveData保存的数据
  * App状态记录，需要传入导航控制器，携程作用范围，window窗口大小
  */
@@ -932,14 +931,14 @@ class NiaAppState(
 ) &#123;
 </code></pre>
 <p>类似LiveData，保存了首页必要的一些数据。</p>
-<pre><code> /**
+<pre><code class="line-numbers language-Kotlin"> /**
      * 当前在那个tab
      */
     val currentDestination: NavDestination?
         @Composable get() = navController
             .currentBackStackEntryAsState().value?.destination
 </code></pre>
-<pre><code> /**
+<pre><code class="line-numbers language-Kotlin"> /**
      * 通过在哪个tab，决定用哪个枚举类， TopLevelDestination是自己定义的枚举类
      */
     val currentTopLevelDestination: TopLevelDestination?
@@ -950,26 +949,26 @@ class NiaAppState(
             else -&gt; null
         &#125;
 </code></pre>
-<pre><code> /**
+<pre><code class="line-numbers language-Kotlin"> /**
      * 是否展示设置弹框
      */
     var shouldShowSettingsDialog by mutableStateOf(false)
         private set
 </code></pre>
-<pre><code> /**
+<pre><code class="line-numbers language-Kotlin"> /**
      * 是否展示底部bar
      */
     val shouldShowBottomBar: Boolean
         get() = windowSizeClass.widthSizeClass == WindowWidthSizeClass.Compact ||
             windowSizeClass.heightSizeClass == WindowHeightSizeClass.Compact
 </code></pre>
-<pre><code>  /**
+<pre><code class="line-numbers language-Kotlin">  /**
      * 是否展示水平左侧导航
      */
     val shouldShowNavRail: Boolean
         get() = !shouldShowBottomBar
 </code></pre>
-<pre><code> /**
+<pre><code class="line-numbers language-Kotlin"> /**
      * 监控网络，是否断网
      */
     val isOffline = networkMonitor.isOnline
@@ -980,14 +979,14 @@ class NiaAppState(
             initialValue = false
         )
 </code></pre>
-<pre><code>   /**
+<pre><code class="line-numbers language-Kotlin">   /**
      * 这里是一个枚举类，表示底部tab集合
      * Map of top level destinations to be used in the TopBar, BottomBar and NavRail. The key is the
      * route.
      */
     val topLevelDestinations: List&lt;TopLevelDestination&gt; = TopLevelDestination.values().asList()
 </code></pre>
-<pre><code> /**
+<pre><code class="line-numbers language-Kotlin"> /**
      * 点击tab事件传递
      *
      * @param topLevelDestination: The destination the app needs to navigate to.
@@ -1017,7 +1016,7 @@ class NiaAppState(
     &#125;
 </code></pre>
 <p>然后定义了一些方法：</p>
-<pre><code> /**
+<pre><code class="line-numbers language-Kotlin"> /**
      * 返回点击
      */
     fun onBackClick() &#123;
@@ -1032,7 +1031,7 @@ class NiaAppState(
     &#125;
 </code></pre>
 <h3 id="9-NiaApp内容区"><a href="#9-NiaApp内容区" class="headerlink" title="9.NiaApp内容区"></a>9.NiaApp内容区</h3><p>App背景色</p>
-<pre><code>@Composable
+<pre><code class="line-numbers language-Kotlin">@Composable
 fun NiaBackground(
     modifier: Modifier = Modifier,
     content: @Composable () -&gt; Unit
@@ -1052,7 +1051,7 @@ fun NiaBackground(
 </code></pre>
 <p>数据源使用 LocalBackgroundTheme.current.color</p>
 <p>内容区继续渐变背景：</p>
-<pre><code>@Composable
+<pre><code class="line-numbers language-Kotlin">@Composable
 fun NiaGradientBackground(
     modifier: Modifier = Modifier,
     gradientColors: GradientColors = LocalGradientColors.current,
@@ -1119,11 +1118,11 @@ fun NiaGradientBackground(
 &#125;
 </code></pre>
 <p>这里在上面0到0.724区间设置了topGradient<br>在0.2552f到1设置了 bottomGradient</p>
-<h3 id="10-业务内容区"><a href="#10-业务内容区" class="headerlink" title="10.业务内容区"></a>10.业务内容区</h3><pre><code>   // 记录下snackbar状态，后续可能会刷新
+<h3 id="10-业务内容区"><a href="#10-业务内容区" class="headerlink" title="10.业务内容区"></a>10.业务内容区</h3><pre><code class="line-numbers language-Kotlin">   // 记录下snackbar状态，后续可能会刷新
             val snackbarHostState = remember &#123; SnackbarHostState() &#125;
 </code></pre>
 <p>这个用于网络监听，如果没有网络，底部会常驻一个snackbar</p>
-<pre><code>            // 是否离线
+<pre><code class="line-numbers language-Kotlin">            // 是否离线
             val isOffline by appState.isOffline.collectAsStateWithLifecycle()
 
             // If user is not connected to the internet show a snack bar to inform them.
@@ -1137,15 +1136,12 @@ fun NiaGradientBackground(
                 )
             &#125;
 </code></pre>
-<pre><code>            // 是否应该展示设置弹框，当点击右上角设置后，会弹出设置弹框
-            if (appState.shouldShowSettingsDialog) &#123;
-                SettingsDialog(
-                    onDismiss = &#123; appState.setShowSettingsDialog(false) &#125;
-                )
-            &#125;
-</code></pre>
-<p>然后就是脚手架了：<br>Scaffold，这里可以配置底部bar</p>
-<pre><code>  Scaffold(
+<p>Kotlin<br>            &#x2F;&#x2F; 是否应该展示设置弹框，当点击右上角设置后，会弹出设置弹框<br>            if (appState.shouldShowSettingsDialog) {<br>                SettingsDialog(<br>                    onDismiss &#x3D; { appState.setShowSettingsDialog(false) }<br>                )<br>            }</p>
+<pre><code>
+然后就是脚手架了：
+Scaffold，这里可以配置底部bar
+```Kotlin
+  Scaffold(
                 modifier = Modifier.semantics &#123;
                     testTagsAsResourceId = true
                 &#125;,
@@ -1168,7 +1164,7 @@ fun NiaGradientBackground(
 </code></pre>
 <p>这里snackbarHost也是脚手架里面的内容。</p>
 <p>然后里面是一个Row，为什么是一个水平布局，因为考虑到兼容电视，平板，这里将导航页设置了一个水平的左侧导航。</p>
-<pre><code>  // 平板 水平布局 左侧导航
+<pre><code class="line-numbers language-Kotlin">  // 平板 水平布局 左侧导航
                     if (appState.shouldShowNavRail) &#123;
                         NiaNavRail(
                             destinations = appState.topLevelDestinations,
@@ -1181,7 +1177,7 @@ fun NiaGradientBackground(
                     &#125;
 </code></pre>
 <p>然后就是实际内容区域了：<br>设置+主页构成。</p>
-<pre><code>// 垂直布局，状态栏+内容区
+<pre><code class="line-numbers language-Kotlin">// 垂直布局，状态栏+内容区
                     /**
                      * 以前，我们在布局中去设置一个控件的大小，间距，点击事件，宽高，背景等属性值。
                      * 而在Compose中我们是通过Modifie去设置，Modifie相当于一个控件的属性配置的工具类。
@@ -1215,7 +1211,7 @@ fun NiaGradientBackground(
 </code></pre>
 <p>NiaTopAppBar是自定义顶部标题栏<br>NiaNavHost是主页面</p>
 <p>主页面也是在App模块下的navigation文件夹中定义。</p>
-<pre><code>@Composable
+<pre><code class="line-numbers language-Kotlin">@Composable
 fun NiaNavHost(
     /**
      * 导航控制器
@@ -2125,6 +2121,10 @@ googe samples之 nowinandroid项目地址：https://github.com/android/nowinandr
     }/*因为建站时间还没有一年，就将之注释掉了。需要的可以取消*/
     siteTime();
 </script>
+
+<link rel="stylesheet" href="/css/prism.css">
+<script src="/js/prism.js" async></script>
+
 
     <!-- 搜索遮罩框 -->
 <div id="searchModal" class="modal">

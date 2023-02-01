@@ -71,8 +71,7 @@ moya是对Alamofire的再次封">
         })();
     </script>
 
-<meta name="generator" content="Hexo 6.3.0"><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css">
-<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
+<meta name="generator" content="Hexo 6.3.0"></head>
 
 <body>
 
@@ -538,7 +537,7 @@ moya是对Alamofire的再次封">
 </ul>
 <h2 id="3-实例分析"><a href="#3-实例分析" class="headerlink" title="3 实例分析"></a>3 实例分析</h2><p>这里我们考虑用一个真实案例，来深入分析这个封装框架如何实现网络请求的。<br>这里就以登录接口为案例吧。</p>
 <p>可以建立一个登录相关接口，比如修改密码啥的，跟登录有关的统一用一个Manager。<br>如下：</p>
-<pre><code>import Foundation
+<pre><code class="line-numbers language-swift">import Foundation
 import Moya
 
 // MARK: - 用户登录信息请求
@@ -687,7 +686,7 @@ extension UserLoginAPIManagerService : MyServerType &#123;
 <p>这个接口基本就写好了。<br>请求头可配置，参数可配置，接口路径可配置，后端怎么改都不怕了。</p>
 <p>然后就是我们调用的地方了。</p>
 <p>在登录的地方这样用：</p>
-<pre><code> loginApiRequest.requestJson(.userAccountLogin(userName: userName, passWord: safePassWord)) &#123;result in
+<pre><code class="line-numbers language-swift"> loginApiRequest.requestJson(.userAccountLogin(userName: userName, passWord: safePassWord)) &#123;result in
     let json = JSON.init(rawValue: result)
     if json?[&quot;code&quot;].intValue == 1000 &#123;
         MBProgressHUD.hide()
@@ -714,7 +713,7 @@ extension UserLoginAPIManagerService : MyServerType &#123;
 <blockquote>
 <p>原来就是我们定义的泛型类，MyServerType，这里.userAccountLogin是一个枚举也是一个MyServerType，我们可以在这里面添加请求参数，这样就关联起来了。</p>
 </blockquote>
-<pre><code>enum UserLoginAPIManagerService &#123;
+<pre><code class="line-numbers language-swift">enum UserLoginAPIManagerService &#123;
     /// 账号密码登录
     case userAccountLogin(userName:String, passWord:String)
     /// 是否显示注册
@@ -735,7 +734,7 @@ extension UserLoginAPIManagerService : MyServerType &#123;
 <p>果然就是第一个“账号密码登录”。</p>
 <p>所有对于使用还是相当方便的，只需要写一个Manager，就可以很方便请求接口了。</p>
 <h2 id="4-细节分析"><a href="#4-细节分析" class="headerlink" title="4 细节分析"></a>4 细节分析</h2><p>继续上面的案例，当我们发送json请求时，走了一个框架封装好的方法，看下：</p>
-<pre><code>@discardableResult
+<pre><code class="line-numbers language-swift">@discardableResult
     public func requestJson(_ target: T,
                             callbackQueue: DispatchQueue? = DispatchQueue.main,
                             progress: ProgressBlock? = .none,
@@ -771,7 +770,7 @@ extension UserLoginAPIManagerService : MyServerType &#123;
 </code></pre>
 <p>这里继续走了内部的self.request方法，T就是我们自定义的MyServerType。<br>里面回调是我们自己的逻辑，就是解析了下Json，然后就是403或401的时候，跳转了登录页，这里的逻辑不需要关注。</p>
 <p>看下内部的request方法吧：</p>
-<pre><code>@discardableResult
+<pre><code class="line-numbers language-swift">@discardableResult
     public func request(_ target: T,
                         callbackQueue: DispatchQueue? = DispatchQueue.main,
                         progress: ProgressBlock? = .none,
@@ -807,7 +806,7 @@ extension UserLoginAPIManagerService : MyServerType &#123;
 <p>这里的回调队列，进度，都有默认实例，当然可以自由传递。<br>另外就是成功和失败的逃逸闭包了。</p>
 <p>其实内部继续走了self.provider.request才是重中之重。</p>
 <h3 id="4-1-生产Moya-Provider"><a href="#4-1-生产Moya-Provider" class="headerlink" title="4.1 生产Moya Provider"></a>4.1 生产Moya Provider</h3><p>首先看下provider怎么来的：</p>
-<pre><code>public struct Networking&lt;T: MyServerType&gt; &#123;
+<pre><code class="line-numbers language-swift">public struct Networking&lt;T: MyServerType&gt; &#123;
     public let provider: MoyaProvider&lt;T&gt;
     
     public init(provider: MoyaProvider&lt;T&gt; = newDefaultProvider()) &#123;
@@ -862,7 +861,7 @@ static var plugins: [PluginType] &#123;
 </code></pre>
 <p>这里创建的时候，就默认传了一个默认的Provider，这个是Moya官方的哦。</p>
 <p>另外新建这个MoyaProvider的时候还需要3个闭包，我们通过Networking来生产：</p>
-<pre><code>static func endpointsClosure&lt;T&gt;() -&gt; (T) -&gt; Endpoint where T: MyServerType &#123;
+<pre><code class="line-numbers language-swift">static func endpointsClosure&lt;T&gt;() -&gt; (T) -&gt; Endpoint where T: MyServerType &#123;
     return &#123; target in
         var headers: [String: String] = target.headers ?? [:]
         if apiEnvironment == .product &#123;
@@ -908,7 +907,7 @@ static func APIKeysBasedStubBehaviour&lt;T&gt;(_ target: T) -&gt; Moya.StubBehav
     &#125;
 </code></pre>
 <p>这里我们自己生产了3个闭包给moya，也是moya需要的3个闭包。</p>
-<h3 id="4-2-继续走Provider的request"><a href="#4-2-继续走Provider的request" class="headerlink" title="4.2 继续走Provider的request"></a>4.2 继续走Provider的request</h3><pre><code>/// Designated request-making method. Returns a `Cancellable` token to cancel the request later.
+<h3 id="4-2-继续走Provider的request"><a href="#4-2-继续走Provider的request" class="headerlink" title="4.2 继续走Provider的request"></a>4.2 继续走Provider的request</h3><pre><code class="line-numbers language-swift">/// Designated request-making method. Returns a `Cancellable` token to cancel the request later.
     @discardableResult
     open func request(_ target: Target,
                       callbackQueue: DispatchQueue? = .none,
@@ -921,7 +920,7 @@ static func APIKeysBasedStubBehaviour&lt;T&gt;(_ target: T) -&gt; Moya.StubBehav
 </code></pre>
 <p>这个是moya三方库里面的代码了，简单看下就好，不是我们这期重点。</p>
 <h3 id="4-3-如何封装MyServerType"><a href="#4-3-如何封装MyServerType" class="headerlink" title="4.3 如何封装MyServerType"></a>4.3 如何封装MyServerType</h3><p>个人感觉这个也是非常关键，我们外部使用，需要建立一个枚举，同时也是一个MyServerType，这个携带了请求参数，请求方法之类的，总之它包装了一切我们请求需要的东西。</p>
-<pre><code>import Foundation
+<pre><code class="line-numbers language-swift">import Foundation
 import Moya
 
 public typealias HTTPMethod = Moya.Method
@@ -939,7 +938,7 @@ public protocol MyServerType: TargetType &#123;
 &#125;
 </code></pre>
 <p>首先，它这个继承了Moya自己的TargetType，还增加了自己额外的一些协议。</p>
-<pre><code>extension MyServerType &#123;
+<pre><code class="line-numbers language-swift">extension MyServerType &#123;
     public var base: String &#123; return WebService.shared.rootUrl&#125;
     
     public var baseURL: URL &#123; return URL(string: base)! &#125;
@@ -996,7 +995,7 @@ public protocol MyServerType: TargetType &#123;
 &#125;
 </code></pre>
 <p>这里应该是实现了默认值的设定。<br>当然我们是可以更改的。</p>
-<pre><code>func myBaseUrl(_ path: String) -&gt; String &#123;
+<pre><code class="line-numbers language-swift">func myBaseUrl(_ path: String) -&gt; String &#123;
     if path.isCompleteUrl &#123; return path &#125;
     return WebService.shared.rootUrl;
 &#125;
@@ -1016,7 +1015,7 @@ extension String &#123;
 </code></pre>
 <p>然后是其它工具方法。</p>
 <p>这里有用到一个WebService类，这里面存放的也是一些默认值设定：</p>
-<pre><code>import Foundation
+<pre><code class="line-numbers language-swift">import Foundation
 import UIKit
 import AdSupport
 import Alamofire
@@ -1857,6 +1856,25 @@ class WebService: NSObject &#123;
 </main>
 
 
+<script src="https://cdn.bootcss.com/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script>
+    MathJax.Hub.Config({
+        tex2jax: {inlineMath: [['$', '$'], ['\(', '\)']]}
+    });
+</script>
+
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+<!-- 代码语言 -->
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+<!-- 代码块复制 -->
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+<script type="text/javascript" src="/libs/codeBlock/clipboard.min.js"></script>
+<!-- 代码块收缩 -->
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script> 
+<!-- 代码块折行 -->
+<style type="text/css">code[class*="language-"], pre[class*="language-"] { white-space: pre !important; }</style>
+
+
     <footer class="page-footer bg-color">
     <div class="container row center-align">
         <div class="col s12 m8 l8 copy-right">
@@ -1982,6 +2000,10 @@ class WebService: NSObject &#123;
     }/*因为建站时间还没有一年，就将之注释掉了。需要的可以取消*/
     siteTime();
 </script>
+
+<link rel="stylesheet" href="/css/prism.css">
+<script src="/js/prism.js" async></script>
+
 
     <!-- 搜索遮罩框 -->
 <div id="searchModal" class="modal">

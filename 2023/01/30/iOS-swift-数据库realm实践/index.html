@@ -67,8 +67,7 @@
         })();
     </script>
 
-<meta name="generator" content="Hexo 6.3.0"><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css">
-<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
+<meta name="generator" content="Hexo 6.3.0"></head>
 
 <body>
 
@@ -524,7 +523,7 @@
 <p>如何分析真机里面的realm数据库呢？<br>可以参考下：<a target="_blank" rel="noopener" href="https://blog.csdn.net/asfasnjn/article/details/124714242">https://blog.csdn.net/asfasnjn/article/details/124714242</a> 很简单，打开XCode的window下的设备和模拟器，再 点击更多图标，再下载Container，然后下载后，查看包内容，就可以看到这个应用的realm文件了。然后可以右键，用我们下载好的Realm Studio来查看这个文件，文件以表格形式展示，清晰直观。</p>
 <h2 id="4-初始化配置数据库"><a href="#4-初始化配置数据库" class="headerlink" title="4 初始化配置数据库"></a>4 初始化配置数据库</h2><p>这里需要在AppDelegate中配置下realm数据库。<br>很简单的。<br>不过我们没有在AppDelegate初始化，因为我们这个绑定了userId，等用户登录后才初始化，当然也是可以的。</p>
 <p>重点是初始化这个动作要先于使用就行了。</p>
-<pre><code>func configRealm(userID: String?,
+<pre><code class="line-numbers language-Swift">func configRealm(userID: String?,
                         keyWord: String? = nil,
                         schemaVersion: UInt64 = 2, migrationBlock: MigrationBlock? = nil) &#123;
     // 加密串128位结果为：464e5774625e64306771702463336e316a4074487442325145766477335e21346b715169364c406c6a4976346d695958396245346e356f6a62256d2637566126
@@ -566,7 +565,7 @@
 </code></pre>
 <p>这个realm实际上以userId为名称了。<br>这样就有个弊端了，切换用户后，需要重新下载数据库，特别是数据库特别大的情况下，这对用户体验不是特别好。</p>
 <h2 id="5-走接口拿数据"><a href="#5-走接口拿数据" class="headerlink" title="5 走接口拿数据"></a>5 走接口拿数据</h2><p>这里就是拿商品数据了，这里服务端提供的接口，返回的是加密后的字符串。<br>类似这样：</p>
-<pre><code>&#123;
+<pre><code class="line-numbers language-Json">&#123;
   &quot;message&quot; : &quot;请求成功&quot;,
   &quot;code&quot; : 1000,
   &quot;data&quot; : &quot;H4sIAAAAAAAAAKtWSiwoCCjKTylNLglKzQnz98ksLlGyio7VQZJAFk3OzytJzQ
@@ -574,7 +573,7 @@
 &#125;
 </code></pre>
 <p>比如我们接口是这样请求的，这里我们先扩展了一个方法给控制器：</p>
-<pre><code>extension GMBaseViewController &#123;
+<pre><code class="line-numbers language-Swift">extension GMBaseViewController &#123;
     
     open func updateOfflinePackageData(tips: String = &quot;&quot;, successful: @escaping Handler) &#123;
         MBProgressHUD.showMessage(tips)
@@ -607,7 +606,7 @@
 </code></pre>
 <p>这里我们的OfflinePackageManager就是我们封装好的专门去下载离线库的工具类。<br>成功后走successful的逃逸闭包，失败弹一个弹框。</p>
 <p>继续走进去：</p>
-<pre><code>class OfflinePackageManager: NSObject &#123;
+<pre><code class="line-numbers language-Swift">class OfflinePackageManager: NSObject &#123;
     
     open class func update(
         updateTime: String = Defaults[key: DefaultsKeys.updateTime] ?? &quot;&quot;,
@@ -656,7 +655,7 @@
     &#125;
 </code></pre>
 <h2 id="6-解压缩字符串"><a href="#6-解压缩字符串" class="headerlink" title="6 解压缩字符串"></a>6 解压缩字符串</h2><p>这里服务端返回的一段加密后的字符串：</p>
-<pre><code>&#123;
+<pre><code class="line-numbers language-Json">&#123;
   &quot;message&quot; : &quot;请求成功&quot;,
   &quot;code&quot; : 1000,
   &quot;data&quot; : &quot;H4sIAAAAAAAAAKtWSiwoCCjKTylNLglKzQnz98ksLlGyio7VQZJAFk3OzytJzQNyDA2NdJRKC1IS\nS1JDMnNTlayUjAyMjHUNDHWNLBUMTaxMzaxMDJVqAQ0XaZphAAAA&quot;
@@ -668,7 +667,7 @@
 <p>这个框架地址为：<a target="_blank" rel="noopener" href="https://github.com/1024jp/GzipSwift">https://github.com/1024jp/GzipSwift</a> 还是有挺多人star的。</p>
 <p>具体细节就不讲解了。</p>
 <p>这里我们自己给String做了一个扩展，这样直接能拿到解压缩后的字符串：</p>
-<pre><code>extension String &#123;
+<pre><code class="line-numbers language-Swift">extension String &#123;
     var gunzip: String? &#123;
         if let data = Data(base64Encoded: self, options: .ignoreUnknownCharacters) &#123;
             if data.isGzipped &#123;
@@ -682,7 +681,7 @@
 &#125;
 </code></pre>
 <p>这里解析后的字符串为：</p>
-<pre><code>&#123;
+<pre><code class="line-numbers language-Json">&#123;
     &quot;appProductRelVOList&quot;:[],
     &quot;appProductVOList&quot;:[],
     &quot;content&quot;:112,
@@ -690,11 +689,11 @@
 &#125;
 </code></pre>
 <p>同样也是一个json数组哦。<br>所以我们还是得用Json解析下：</p>
-<pre><code>guard let model = try? JSONDecoder().decode(StageOfflinePackageData.self, from: data)
+<pre><code class="line-numbers language-Swift">guard let model = try? JSONDecoder().decode(StageOfflinePackageData.self, from: data)
                 else &#123; return &#125;
 </code></pre>
 <p>这时候我们需要一个实体来接收下：</p>
-<pre><code>class StageOfflinePackageData:Codable&#123;
+<pre><code class="line-numbers language-Swift">class StageOfflinePackageData:Codable&#123;
     
     var appProductVOList: [StageGoodsPackgeModelData] = []
     
@@ -720,7 +719,7 @@
 <p>为啥要继承Codable呢？<br>Codable 协议在 Swift4.0 开始被引入，目标是取代现有的 NSCoding 协议，它对结构体，枚举和类都支持。Codable 的引入简化了JSON 和 Swift 类型之间相互转换的难度，能够把 JSON 这种弱类型数据转换成代码中使用的强类型数据。具体可以看这篇文章：<a target="_blank" rel="noopener" href="https://juejin.cn/post/6971997599725256734">https://juejin.cn/post/6971997599725256734</a>。</p>
 <p>解析后就拿到服务端的数据了，可能是增量数据，可能是全量数据。后面我们具体分析下。</p>
 <h2 id="7-数据处理"><a href="#7-数据处理" class="headerlink" title="7 数据处理"></a>7 数据处理</h2><p>解析完毕后，我们有一段逻辑是这样的：</p>
-<pre><code>if endTimeStr != nil &amp;&amp; (model.appProductVOList.count &gt;= 1000 || model.appProductRelVOList.count &gt;= 1000) &#123;
+<pre><code class="line-numbers language-Swift">if endTimeStr != nil &amp;&amp; (model.appProductVOList.count &gt;= 1000 || model.appProductRelVOList.count &gt;= 1000) &#123;
                     Defaults[key:DefaultsKeys.updateTime] = nil
                     OfflinePackageManager.update(updateTime: &quot;&quot;, successful: successful, failure: failure)
                 &#125; else &#123;
@@ -737,7 +736,7 @@
 <h3 id="7-1-Model层定义"><a href="#7-1-Model层定义" class="headerlink" title="7.1 Model层定义"></a>7.1 Model层定义</h3><p>这里是定义的Realm的基础模型。</p>
 <p>我们需要定义两个实体，一个是商品模型，一个是关系模型。</p>
 <p>商品模型为：</p>
-<pre><code>
+<pre><code class="line-numbers language-Swift">
 class StageGoodsPackgeModelData: Object,Codable&#123;
     
     @objc dynamic var barcode: String = &quot;&quot;
@@ -931,7 +930,7 @@ class StageGoodsPackgeModelData: Object,Codable&#123;
 &#125;
 </code></pre>
 <p>另外一个为：</p>
-<pre><code>
+<pre><code class="line-numbers language-Swift">
 class StageGoodsSuitPackgeModelData: Object,Codable&#123;
 
     @objc dynamic var groupNum: Int = 0
@@ -983,7 +982,7 @@ class StageGoodsSuitPackgeModelData: Object,Codable&#123;
     override required init()&#123;&#125;
 &#125;
 </code></pre>
-<h3 id="7-2-全量更新"><a href="#7-2-全量更新" class="headerlink" title="7.2 全量更新"></a>7.2 全量更新</h3><pre><code>private class func fullUpdate(model: StageOfflinePackageData) &#123;
+<h3 id="7-2-全量更新"><a href="#7-2-全量更新" class="headerlink" title="7.2 全量更新"></a>7.2 全量更新</h3><pre><code class="line-numbers language-Swift">private class func fullUpdate(model: StageOfflinePackageData) &#123;
         let suitResult = objectWithAll(objct: StageGoodsPackgeModelData.self)
         if suitResult.count != 0 &#123;
             deleteList(suitResult) &#123;
@@ -1007,7 +1006,7 @@ class StageGoodsSuitPackgeModelData: Object,Codable&#123;
 </code></pre>
 <p>如果是全量更新就比较简单了。<br>先把之前的那两个删除掉，然后新增新的model就好了。</p>
 <h3 id="7-3-增量更新"><a href="#7-3-增量更新" class="headerlink" title="7.3 增量更新"></a>7.3 增量更新</h3><p>先声明一下sql</p>
-<pre><code>    private class func incrementalUpdate(model: StageOfflinePackageData) &#123;
+<pre><code class="line-numbers language-Swift">    private class func incrementalUpdate(model: StageOfflinePackageData) &#123;
         print(&quot;增量处理开始时间----&gt;&quot;, Date().currentTime(0))
         var addGoodsArr: [StageGoodsPackgeModelData] = []
         var addRelationsArr: [StageGoodsSuitPackgeModelData] = []
@@ -1019,7 +1018,7 @@ class StageGoodsSuitPackgeModelData: Object,Codable&#123;
         var deleteRelationSql = &quot;&quot;
 </code></pre>
 <p>遍历下服务端返回的增量数据库：</p>
-<pre><code>for (_,suitModel) in model.appProductVOList.enumerated() &#123;
+<pre><code class="line-numbers language-Swift">for (_,suitModel) in model.appProductVOList.enumerated() &#123;
     // delFlag为0表示，不是删除哦，这里是新增商品
     if suitModel.delFlag == 0 &#123;
         if goodsSql == &quot;&quot; &#123;
@@ -1054,7 +1053,7 @@ class StageGoodsSuitPackgeModelData: Object,Codable&#123;
 <p>有个一个delFlag变量，就是表示是否删除的意思。<br>如果是删除的话，将sql组合一下，就成为 id &#x3D; ‘12’ || id &#x3D; ‘13’ || id &#x3D; ‘14’ 这种。关系表就是 productId &#x3D; ‘12’ || productId &#x3D; ‘14’ 这种。</p>
 <p>这里就知道哪些商品要删除，哪些要加。哪些关系表要删除，哪些要加。</p>
 <p>这里先处理下新增的商品：</p>
-<pre><code>if goodsSql != &quot;&quot; &#123;
+<pre><code class="line-numbers language-Swift">if goodsSql != &quot;&quot; &#123;
     let predicate = NSPredicate(format:goodsSql)
     let suitArr = objectsWithPredicate(object: StageGoodsPackgeModelData.self, predicate: predicate)
     // 这里需要把可能之前存在相同的去掉
@@ -1070,7 +1069,7 @@ class StageGoodsSuitPackgeModelData: Object,Codable&#123;
 </code></pre>
 <p>这里用了系统的NSPredicate类来组合sql语句。它其实是用来过滤数据的类。<br>使用方法可以参考这篇文章：<a target="_blank" rel="noopener" href="https://juejin.cn/post/6844903540805074951">https://juejin.cn/post/6844903540805074951</a>。</p>
 <p>然后处理下要删除的商品：</p>
-<pre><code> if deleteGoodsSql != &quot;&quot; &#123;
+<pre><code class="line-numbers language-Swift"> if deleteGoodsSql != &quot;&quot; &#123;
     // NSPredicate是swift 过滤数据的类，类似数据库中的where字段
     let predicate = NSPredicate(format:deleteGoodsSql)
     let suitArr = objectsWithPredicate(object: StageGoodsPackgeModelData.self, predicate: predicate)
@@ -1081,7 +1080,7 @@ class StageGoodsSuitPackgeModelData: Object,Codable&#123;
 </code></pre>
 <p>商品处理完成，剩下就是关系表了。</p>
 <p>这里先处理要新增的关系：</p>
-<pre><code>// 这里是新增的关系表
+<pre><code class="line-numbers language-Swift">// 这里是新增的关系表
 for idStr in relationidArr &#123;
     for relationModel in model.appProductRelVOList&#123;
         if idStr == relationModel.productId &#123;
@@ -1105,7 +1104,7 @@ if relationSql != &quot;&quot; &#123;
 &#125;
 </code></pre>
 <p>然后处理下要删除的关系表：</p>
-<pre><code> if deleteRelationSql != &quot;&quot; &#123;
+<pre><code class="line-numbers language-Swift"> if deleteRelationSql != &quot;&quot; &#123;
     let relationPredicate = NSPredicate(format:deleteRelationSql)
     let relationArr = objectsWithPredicate(object: StageGoodsSuitPackgeModelData.self, predicate: relationPredicate)
     deleteList(relationArr)&#123;
@@ -1992,6 +1991,10 @@ if relationSql != &quot;&quot; &#123;
     }/*因为建站时间还没有一年，就将之注释掉了。需要的可以取消*/
     siteTime();
 </script>
+
+<link rel="stylesheet" href="/css/prism.css">
+<script src="/js/prism.js" async></script>
+
 
     <!-- 搜索遮罩框 -->
 <div id="searchModal" class="modal">

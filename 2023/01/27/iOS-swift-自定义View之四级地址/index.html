@@ -67,8 +67,7 @@
         })();
     </script>
 
-<meta name="generator" content="Hexo 6.3.0"><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css">
-<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
+<meta name="generator" content="Hexo 6.3.0"></head>
 
 <body>
 
@@ -523,7 +522,7 @@
 <li>AddressSelectorCell 底部Cell</li>
 <li>AddressModel 数据层</li>
 </ul>
-<h2 id="3-AddressView-实现逻辑"><a href="#3-AddressView-实现逻辑" class="headerlink" title="3 AddressView 实现逻辑"></a>3 AddressView 实现逻辑</h2><h3 id="3-1-全局变量定义"><a href="#3-1-全局变量定义" class="headerlink" title="3.1 全局变量定义"></a>3.1 全局变量定义</h3><pre><code>class AddressView: UIView &#123;
+<h2 id="3-AddressView-实现逻辑"><a href="#3-AddressView-实现逻辑" class="headerlink" title="3 AddressView 实现逻辑"></a>3 AddressView 实现逻辑</h2><h3 id="3-1-全局变量定义"><a href="#3-1-全局变量定义" class="headerlink" title="3.1 全局变量定义"></a>3.1 全局变量定义</h3><pre><code class="line-numbers language-Swift">class AddressView: UIView &#123;
     
     typealias selectAddressBlock = (Array&lt;RegionModel&gt;)-&gt;()
     var selectAddressHandle: selectAddressBlock?
@@ -539,7 +538,7 @@
 <p>addressArray是记录底部列表数据的数组。</p>
 <p>selectedIndex是记录顶部选择了第几项的全局变量记录。</p>
 <p>然后是2个懒加载的UITableView，看下哈：</p>
-<pre><code>/// 顶部视图列表
+<pre><code class="line-numbers language-Swift">/// 顶部视图列表
 private lazy var tblView: UITableView = &#123;
     let tableView = UITableView.init(frame: CGRect(x: 0, y: 196, width: ScreenWidth, height: ScreenHeight - 196), style: .grouped)
     tableView.register(AddressCell.self, forCellReuseIdentifier: AddressCell.identifier)
@@ -556,7 +555,7 @@ private lazy var tblView: UITableView = &#123;
 &#125;()
 </code></pre>
 <p>还有一个底部的列表：</p>
-<pre><code>/// 底部视图列表
+<pre><code class="line-numbers language-Swift">/// 底部视图列表
 private lazy var addressTblView: UITableView = &#123;
     let tableView = UITableView.init(frame: CGRect.zero, style: .grouped)
     tableView.register(AddressSelectorCell.self, forCellReuseIdentifier: AddressSelectorCell.identifier)
@@ -571,7 +570,7 @@ private lazy var addressTblView: UITableView = &#123;
 </code></pre>
 <p>虽然是两个UITableView，但可以共享同一个代理和数据源，需要在里面另外加if else判断下。</p>
 <h3 id="3-2-生命周期函数"><a href="#3-2-生命周期函数" class="headerlink" title="3.2 生命周期函数"></a>3.2 生命周期函数</h3><p>这里只有一个初始化，但其实没有做什么，也没有把那两个UITableView加进去，这里应该就是空白的区域。</p>
-<pre><code>  override init(frame: CGRect) &#123;
+<pre><code class="line-numbers language-Swift">  override init(frame: CGRect) &#123;
         super.init(frame: frame)
         self.backgroundColor = UIColor.init(red: 0, green: 0, blue: 0, alpha: 0.6)
     &#125;
@@ -581,7 +580,7 @@ private lazy var addressTblView: UITableView = &#123;
     &#125;
 </code></pre>
 <h3 id="3-3-初始化数据"><a href="#3-3-初始化数据" class="headerlink" title="3.3 初始化数据"></a>3.3 初始化数据</h3><p>这里是另外提供的函数，来初始化，所以需要调用方额外调用这个方法。<br>也正是这个方法，才会去加载ui的。</p>
-<pre><code>func traverse(province: String, city: String, area: String, street: String)&#123;
+<pre><code class="line-numbers language-Swift">func traverse(province: String, city: String, area: String, street: String)&#123;
         modelArray.removeAll()
         let dataArr: [RegionModel] = globalAddressModel?.data ?? AddressModel.init().data
         self.recursive(dataArr: dataArr, province: province, city: city, area: area, street: street)
@@ -612,7 +611,7 @@ private lazy var addressTblView: UITableView = &#123;
 </code></pre>
 <p>globalAddressModel 实际上再AppDelegate初始化的时候就去异步加载json文件了，这个应该就是保存的所有的四级地址信息了。</p>
 <p>然后这里用到了一个函数 recursive函数，是递归来寻找目标四级地址。</p>
-<pre><code>/// 递归获取目标地址
+<pre><code class="line-numbers language-Swift">/// 递归获取目标地址
 func recursive(dataArr: [RegionModel], province: String, city: String, area: String, street: String)&#123;
     for model in dataArr&#123;
         if model.name.contains(province) ||
@@ -629,7 +628,7 @@ func recursive(dataArr: [RegionModel], province: String, city: String, area: Str
 <p>找到后，会将实体append到这个数组中。</p>
 <p>然后上面初始化数据还用到一个函数：setData，作用是设置底部数据，因为这里底部自始至终都是同一个UITableView，会经常需要刷新数据。这里就是刷新底部数据的意思吧。</p>
 <p>看下这个setData函数哈：</p>
-<pre><code>func setData(data: Any)&#123;
+<pre><code class="line-numbers language-Swift">func setData(data: Any)&#123;
         var dataArr: [RegionModel] = []
         if data is AddressModel &#123;
             let tmpData = data as! AddressModel
@@ -674,7 +673,7 @@ func recursive(dataArr: [RegionModel], province: String, city: String, area: Str
 <p>这里代码虽然长，但实际上具体还是挺简单的，主要是生成一个字典的映射关系，key存放首字母，value存放同一个首字母下对应的地址列表。大概意思就是这个tmpDic是一个key value形式的map集合，key是这些比如省份首字母为G，那么value就对应广东省，甘肃省，广西，贵州省等下的所有地址。这里就对应tableView里面的每一组的数据了。然后处理下第二个首字母排序的问题。</p>
 <p>好的，这里打住了，回到第一个函数 traverse方法中，里面根据modelArray的长度去决定刷新哪一个列表，因为调用方给的地址不一定是四级，可能是1级或2级或3级，这里也是需要考虑到的。能在哪个层级搜索到，就定位到哪个层级，那么最后一个层级这里使用 append一个“请选择”，这里说明如果是字符串了，那么这里就是最后一层级。感觉这还可以优化下，比较用字符串来判断到哪一层级不太合适的。</p>
 <p>traverse最后一个方法是加载UI。</p>
-<pre><code>func loadUI()&#123;
+<pre><code class="line-numbers language-Swift">func loadUI()&#123;
         /// 先加顶部
         self.addSubview(tblView)
         /// 顶部布局
@@ -704,7 +703,7 @@ func updateUI()&#123;
 </code></pre>
 <p>大概意思就是把那两个UITableView加给父View。</p>
 <p>然后需要用的扩展方法有下面这个：</p>
-<pre><code>extension AddressView&#123;
+<pre><code class="line-numbers language-Swift">extension AddressView&#123;
     
     /// 找到中文对应的第一个字符对应的第一个字母拼音
     func findFirstLetterFromString(aString: String, isSecond : Bool = false) -&gt; String &#123;
@@ -743,7 +742,7 @@ func updateUI()&#123;
 </code></pre>
 <p>这里主要是一个工具方法，内部使用，无需多讲。</p>
 <p>好了，前面的ui基本就这些。<br>下面主要是讲解下UITableView的代理方法和数据源配置。</p>
-<pre><code>/// 设置顶部tableView 代理和数据
+<pre><code class="line-numbers language-Swift">/// 设置顶部tableView 代理和数据
 extension AddressView: UITableViewDelegate,UITableViewDataSource&#123;
     func numberOfSections(in tableView: UITableView) -&gt; Int &#123;
         if tableView == tblView &#123;
@@ -754,7 +753,7 @@ extension AddressView: UITableViewDelegate,UITableViewDataSource&#123;
     &#125;
 </code></pre>
 <p>这里扩展AddressView，去实现UITableViewDelegate和UITableViewDataSource协议。<br>这是第一个方法，numberOfSections，返回有多少组。这里因为顶部只有一种类型，也就只有一组，底部用了一个数组记录，组数就是数组的长度。</p>
-<pre><code>func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -&gt; Int &#123;
+<pre><code class="line-numbers language-Swift">func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -&gt; Int &#123;
         if tableView == tblView &#123;
             /// 顶部，如果没有 历史地址，则为0，有则显示 一组多少个
             if modelArray.count == 1 &amp;&amp; (modelArray.last is String) &#123;
@@ -771,7 +770,7 @@ extension AddressView: UITableViewDelegate,UITableViewDataSource&#123;
     &#125;
 </code></pre>
 <p>这是第二个方法，numberOfRowsInSection，意思就是这个组下有多少行。</p>
-<pre><code> func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -&gt; CGFloat &#123;
+<pre><code class="line-numbers language-Swift"> func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -&gt; CGFloat &#123;
         /// 上面下面都是48
         if tableView == tblView &#123;
             return 48
@@ -781,7 +780,7 @@ extension AddressView: UITableViewDelegate,UITableViewDataSource&#123;
     &#125;
 </code></pre>
 <p>这里是每行的高度。</p>
-<pre><code>/// 每个cell怎么显示
+<pre><code class="line-numbers language-Swift">/// 每个cell怎么显示
 func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -&gt; UITableViewCell &#123;
     /// 如果是顶部
     if tblView == tableView &#123;
@@ -852,7 +851,7 @@ func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -&gt
 </code></pre>
 <p>这个方法就比较关键了，就是每行怎么展现的。<br>用哪个Cell，是否要高亮，指示剂怎么展示，这里有点像Android的adpter里面的bindAdapter实现逻辑。这里需要按照需求在item里面自行处理逻辑。</p>
 <p>如果是底部，就需要考虑是否显示字母，是否高亮这些了。</p>
-<pre><code>/// 标题和单元格间隔
+<pre><code class="line-numbers language-Swift">/// 标题和单元格间隔
 func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -&gt; CGFloat &#123;
     /// 顶部头部预留48dp显示标题“请选择所在地区”
     if tableView == tblView &#123;
@@ -863,7 +862,7 @@ func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) 
 &#125;
 </code></pre>
 <p>顶部预留高度，用来展示自己的标题。</p>
-<pre><code>/// 和上面对应，预留48个dp怎么显示
+<pre><code class="line-numbers language-Swift">/// 和上面对应，预留48个dp怎么显示
 func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -&gt; UIView? &#123;
     if tableView == tblView &#123;
         let view = UIView.init(frame: CGRect.init(x: 0, y: 0, width: ScreenWidth, height: 48))
@@ -902,7 +901,7 @@ func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -&
 &#125;
 </code></pre>
 <p>标题和取消按钮显示逻辑。</p>
-<pre><code>/// 单元格尾巴怎么显示
+<pre><code class="line-numbers language-Swift">/// 单元格尾巴怎么显示
 func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -&gt; CGFloat &#123;
     /// 如果是顶部tableView，预留48个dp
     if tableView == tblView &#123;
@@ -913,7 +912,7 @@ func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) 
 &#125;
 </code></pre>
 <p>这里顶部有效，有48个单位长度，用来显示底部标题。</p>
-<pre><code>/// 尾部显示 选择下级地址
+<pre><code class="line-numbers language-Swift">/// 尾部显示 选择下级地址
 func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -&gt; UIView? &#123;
     if tableView == tblView &#123;
         let view = UIView.init(frame: CGRect.init(x: 0, y: 0, width: ScreenWidth, height: 48))
@@ -955,7 +954,7 @@ func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -&
 &#125;
 </code></pre>
 <p>这里就是确定底部标题的怎么显示的。</p>
-<pre><code>/// 点击了单元格
+<pre><code class="line-numbers language-Swift">/// 点击了单元格
 func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) &#123;
     if tblView == tableView &#123;
         /// 顶部点击了哪个单元格
@@ -1028,7 +1027,7 @@ func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) &#
 <p>上面的代码逻辑，主要就是处理点击顶部单元格，和底部单元格的逻辑。<br>顶部点击会调用setData,会同步刷新底部。</p>
 <p>底部点击也会setData,刷新底部数据，如果全部选择，则会走闭包回调，将用户选择的四级地址回调出去。</p>
 <p>然后还有一些其它扩展方法，简单看下哈。</p>
-<pre><code>/// 扩展给外部
+<pre><code class="line-numbers language-Swift">/// 扩展给外部
 extension AddressView&#123;
     /// 通知调用者当有一个或者多个手指触摸到了视图或者窗口时触发此方法。
     /// touches是UITouch的集合，通过UITouch我们可以检测触摸事件的属性，是单拍还是双拍，还有触摸的位置等。
@@ -1050,7 +1049,7 @@ extension AddressView&#123;
 </code></pre>
 <p>这里actionForClose是UiButton设置的一个action，上面哪个是覆写的官方方法，应该是触摸到蒙层自动关闭弹框。</p>
 <h2 id="4-AddressCell-实现逻辑"><a href="#4-AddressCell-实现逻辑" class="headerlink" title="4 AddressCell 实现逻辑"></a>4 AddressCell 实现逻辑</h2><p>这个可以理解成Android中的Adapter了。也就是item怎么显示。</p>
-<pre><code>/// 顶部cell
+<pre><code class="line-numbers language-Swift">/// 顶部cell
 class AddressCell: UITableViewCell &#123;
     
     enum LinePosition &#123;
@@ -1062,7 +1061,7 @@ class AddressCell: UITableViewCell &#123;
     static var identifier: String = &quot;AddressCell&quot;
 </code></pre>
 <p>这里需要继承UITableViewCell，必须要有一个identifier，这个主要是为了复用，因为列表可能会很长，为了合理复用，这里一般都需要一个标识符。</p>
-<h3 id="4-1-子View定义"><a href="#4-1-子View定义" class="headerlink" title="4.1 子View定义"></a>4.1 子View定义</h3><pre><code> /// 安徽省
+<h3 id="4-1-子View定义"><a href="#4-1-子View定义" class="headerlink" title="4.1 子View定义"></a>4.1 子View定义</h3><pre><code class="line-numbers language-Swift"> /// 安徽省
 lazy var titleLb: UILabel = &#123;
     let label = UILabel()
     label.font = .pingFangMedium(size: 16)
@@ -1102,7 +1101,7 @@ lazy private var rightImgView: UIImageView = &#123;
 &#125;()
 </code></pre>
 <p>这里是顶部item用的一些零部件。<br>比如上下线图，右侧箭头，中间文字。实心圆。<br>这里变空心，实际上只是设置了中间颜色为纯白。</p>
-<h3 id="4-2-数据定义"><a href="#4-2-数据定义" class="headerlink" title="4.2 数据定义"></a>4.2 数据定义</h3><pre><code>/// 监听数据变化 数据填充
+<h3 id="4-2-数据定义"><a href="#4-2-数据定义" class="headerlink" title="4.2 数据定义"></a>4.2 数据定义</h3><pre><code class="line-numbers language-Swift">/// 监听数据变化 数据填充
 var model: Any?&#123;
     didSet&#123;
         guard let _model = model else&#123;return&#125;
@@ -1168,7 +1167,7 @@ var position: LinePosition?&#123;
 </code></pre>
 <p>这里定义了2个数据，1个是具体显示什么的数据，一个是线条怎么展示，什么时候展示实心和空心圆的逻辑。</p>
 <h3 id="4-3-生命周期函数"><a href="#4-3-生命周期函数" class="headerlink" title="4.3 生命周期函数"></a>4.3 生命周期函数</h3><p>首先看下初始化。</p>
-<pre><code>override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) &#123;
+<pre><code class="line-numbers language-Swift">override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) &#123;
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         self.selectionStyle = .none
@@ -1207,7 +1206,7 @@ var position: LinePosition?&#123;
     &#125;
 </code></pre>
 <p>这里就加了3个视图，并且布局了。</p>
-<h3 id="4-4-其它扩展方法"><a href="#4-4-其它扩展方法" class="headerlink" title="4.4 其它扩展方法"></a>4.4 其它扩展方法</h3><pre><code>extension AddressCell&#123;
+<h3 id="4-4-其它扩展方法"><a href="#4-4-其它扩展方法" class="headerlink" title="4.4 其它扩展方法"></a>4.4 其它扩展方法</h3><pre><code class="line-numbers language-Swift">extension AddressCell&#123;
     func updateUI(indexPath: IndexPath)&#123;
         if indexPath.row == 1 &#123;
             titleLb.text = &quot;请选择城市&quot;
@@ -1223,13 +1222,13 @@ var position: LinePosition?&#123;
 </code></pre>
 <p>这里就是显示item特殊情况的文案。</p>
 <h2 id="5-AddressSelectorCell-实现逻辑"><a href="#5-AddressSelectorCell-实现逻辑" class="headerlink" title="5 AddressSelectorCell 实现逻辑"></a>5 AddressSelectorCell 实现逻辑</h2><p>这里也同上面的Cell，有一个标识符。</p>
-<pre><code>/// 底部Cell
+<pre><code class="line-numbers language-Swift">/// 底部Cell
 class AddressSelectorCell: UITableViewCell &#123;
     
     static var identifier: String = &quot;UITableViewCell&quot;
 </code></pre>
 <h3 id="5-1-子View"><a href="#5-1-子View" class="headerlink" title="5.1 子View"></a>5.1 子View</h3><p>这里需要哪些子View呢？</p>
-<pre><code>//索引 eg: A字母
+<pre><code class="line-numbers language-Swift">//索引 eg: A字母
 lazy var indexLb: UILabel = &#123;
     let label = UILabel()
     label.font = .pingFangMedium(size: 12)
@@ -1255,7 +1254,7 @@ lazy var checkImgView: UIImageView = &#123;
 </code></pre>
 <p>这里非常简单，只有3个子视图，字母，中间名称，是否勾选。</p>
 <h3 id="5-2-生命周期函数"><a href="#5-2-生命周期函数" class="headerlink" title="5.2 生命周期函数"></a>5.2 生命周期函数</h3><p>看下初始化吧。</p>
-<pre><code>override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) &#123;
+<pre><code class="line-numbers language-Swift">override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) &#123;
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         self.selectionStyle = .none
         
@@ -1293,7 +1292,7 @@ lazy var checkImgView: UIImageView = &#123;
 </code></pre>
 <p>也是非常简单，添加了3个子视图，并且确定位置了。</p>
 <h2 id="6-AddressModel-实现逻辑"><a href="#6-AddressModel-实现逻辑" class="headerlink" title="6 AddressModel 实现逻辑"></a>6 AddressModel 实现逻辑</h2><p>这个是四级地址的数据模型，可以看下：</p>
-<pre><code>import Foundation
+<pre><code class="line-numbers language-Swift">import Foundation
 import HandyJSON
 
 class AddressModel: HandyJSON &#123;
@@ -1311,13 +1310,13 @@ class RegionModel: HandyJSON &#123;
 <p>继承了HandyJSON，方便解析。<br>这里AddressModel实际上内部也是由 RegionModel数组构成的。<br>这个AddressModel用来存放省列表比较合适。</p>
 <p>RegionModel可以存放市，区，街道，都没问题。</p>
 <p>封装四级地址基本上就这些了。</p>
-<h2 id="7-外部调用方式"><a href="#7-外部调用方式" class="headerlink" title="7 外部调用方式"></a>7 外部调用方式</h2><h3 id="7-1-先声明一个四级地址View"><a href="#7-1-先声明一个四级地址View" class="headerlink" title="7.1 先声明一个四级地址View"></a>7.1 先声明一个四级地址View</h3><pre><code>lazy private var addressView: AddressView = &#123;
+<h2 id="7-外部调用方式"><a href="#7-外部调用方式" class="headerlink" title="7 外部调用方式"></a>7 外部调用方式</h2><h3 id="7-1-先声明一个四级地址View"><a href="#7-1-先声明一个四级地址View" class="headerlink" title="7.1 先声明一个四级地址View"></a>7.1 先声明一个四级地址View</h3><pre><code class="line-numbers language-Swift">lazy private var addressView: AddressView = &#123;
         let tmpview = AddressView(frame: CGRect.init(x: 0, y: 0, width: ScreenWidth, height: ScreenHeight))
         return tmpview
     &#125;()
 </code></pre>
 <p>这里设定了它的frame，也就是大小位置。</p>
-<h3 id="7-2-弹出四级地址"><a href="#7-2-弹出四级地址" class="headerlink" title="7.2  弹出四级地址"></a>7.2  弹出四级地址</h3><pre><code>func showAddressSelector()&#123;
+<h3 id="7-2-弹出四级地址"><a href="#7-2-弹出四级地址" class="headerlink" title="7.2  弹出四级地址"></a>7.2  弹出四级地址</h3><pre><code class="line-numbers language-Swift">func showAddressSelector()&#123;
         self.view.addSubview(self.addressView)
         self.addressView.traverse(province: self.orderAddressModel?.province ?? &quot;&quot;, city: self.orderAddressModel?.city ?? &quot;&quot;, area: self.orderAddressModel?.region ?? &quot;&quot;, street: self.orderAddressModel?.street ?? &quot;&quot;)
         addressView.selectAddressHandle = &#123;[weak self] (arr)in
@@ -2220,6 +2219,10 @@ class RegionModel: HandyJSON &#123;
     }/*因为建站时间还没有一年，就将之注释掉了。需要的可以取消*/
     siteTime();
 </script>
+
+<link rel="stylesheet" href="/css/prism.css">
+<script src="/js/prism.js" async></script>
+
 
     <!-- 搜索遮罩框 -->
 <div id="searchModal" class="modal">
