@@ -15,7 +15,7 @@ categories:
 
 ### 1.gradle.properties
 这里面配置了 android.useAndroidX等常用的配置，这里应该耳熟能详了，这里就不过多介绍。下面这里有一块不是特别熟悉：
-```
+```groovy
 # Disable build features that are enabled by default,
 # https://developer.android.com/studio/releases/gradle-plugin#buildFeatures
 android.defaults.buildfeatures.buildconfig=false
@@ -30,7 +30,7 @@ android.defaults.buildfeatures.shaders=false
 
 ### 2.项目settings.gradle.kts
 这里首先是一个pluginManagement闭包：
-```
+```groovy
 pluginManagement {
     includeBuild("build-logic") // 多模块共享模块
     repositories {
@@ -49,7 +49,7 @@ pluginManagement {
 然后gradlePluginProtal() 远程插件仓库，是google推荐的。
 
 第二块代码是这样的：
-```
+```groovy
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
@@ -67,7 +67,7 @@ dependencyResolutionManagement {
 
 ### 3.项目级build.gradle.kts
 首先是一个buildscript闭包：
-```
+```groovy
 buildscript {
     repositories {
         maven { url = uri("https://maven.aliyun.com/repository/public") }
@@ -95,7 +95,7 @@ buildscript {
 这里说明buildScript里面的仓库主要用于Gradle脚本自身执行，因为这里一直超时，我把阿里云镜像加进去就没问题了，估计是下载Gradle脚本自身相关依赖导致超时了。
 
 然后下面还有一部分是plugins闭包：
-```
+```groovy
 plugins {
     alias(libs.plugins.android.application) apply false
     alias(libs.plugins.kotlin.jvm) apply false
@@ -112,7 +112,7 @@ plugins {
 `import com.google.samples.apps.nowinandroid.NiaBuildType`
 这里可以引用自己编写的类，
 这个类定义再build-logic模块中，是一个枚举类，看一下吧：
-```
+```groovy
 package com.google.samples.apps.nowinandroid
 
 /**
@@ -130,7 +130,7 @@ enum class NiaBuildType(val applicationIdSuffix: String? = null) {
 
 然后继续回到build.gradle.kts文件下，
 这里引入插件了：
-```
+```groovy
 plugins {
     id("nowinandroid.android.application")
     id("nowinandroid.android.application.compose")
@@ -145,7 +145,7 @@ plugins {
 首先看下第一个：noewinandroid.android.application
 
 当然还是先全局搜索下，发现在build-logic模块下注册了：
-```
+```groovy
 gradlePlugin {
     plugins {
         register("androidApplicationCompose") {
@@ -158,7 +158,7 @@ gradlePlugin {
         }
 ```
 实现类为：AndroidApplicationConventionPlugin
-```
+```groovy
 class AndroidApplicationConventionPlugin : Plugin<Project> {
     override fun apply(target: Project) {
         with(target) {
@@ -186,7 +186,7 @@ class AndroidApplicationConventionPlugin : Plugin<Project> {
 
 重点来看下引入的compose，说实话我还没用过google的jetpack compose工具包。
 依然在build-logic下注册了这个插件：
-```
+```groovy
 gradlePlugin {
     plugins {
         register("androidApplicationCompose") {
@@ -195,7 +195,7 @@ gradlePlugin {
         }
 ```
 实现类：AndroidApplicationComposeConventionPlugin
-```
+```groovy
 class AndroidApplicationComposeConventionPlugin : Plugin<Project> {
     override fun apply(target: Project) {
         with(target) {
@@ -209,7 +209,7 @@ class AndroidApplicationComposeConventionPlugin : Plugin<Project> {
 ```
 非常简单，先apply了com.android.application
 然后调用了一个 configureAndroidCompose 方法，这是一个扩展方法，也是在build-logic下的一个kt文件中对Project进行了扩展。
-```
+```groovy
 /**
  * Configure Compose-specific options
  */
@@ -244,14 +244,14 @@ internal fun Project.configureAndroidCompose(
 再回到app模块下的build.gradle.kts文件，
 还有一个插件是：nowinandroid.android.application.jacoco
 这个是自定义的一个代码覆盖率的一个插件，基于jacoco的。
-```
+```groovy
  register("androidApplicationJacoco") {
             id = "nowinandroid.android.application.jacoco"
             implementationClass = "AndroidApplicationJacocoConventionPlugin"
         }
 ```
 先注册，再看下实现类：
-```
+```groovy
 
 class AndroidApplicationJacocoConventionPlugin : Plugin<Project> {
     override fun apply(target: Project) {
@@ -275,7 +275,7 @@ class AndroidApplicationJacocoConventionPlugin : Plugin<Project> {
 这里继续看app模块引入的自定义插件：hilt
 这个想必大家都不陌生了，是一个依赖注入的插件，基于Dragger，但比Dragger简洁很多了。
 实现类为：
-```
+```groovy
 class AndroidHiltConventionPlugin : Plugin<Project> {
     override fun apply(target: Project) {
         with(target) {
@@ -312,7 +312,7 @@ android层级下基本没啥大问题，配置applicationId版本号之类的。
 
 看下这里做了啥：
 可以看到这个路径下是在testing模块下的，那应该就是测试相关的了。这里主要是用于单元测试的。这个NiaTestRunner继承了AndroidJunitRunner，这里代码如下：
-```
+```groovy
 class NiaTestRunner : AndroidJUnitRunner() {
     override fun newApplication(cl: ClassLoader?, name: String?, context: Context?): Application {
         return super.newApplication(cl, HiltTestApplication::class.java.name, context)
@@ -323,7 +323,7 @@ class NiaTestRunner : AndroidJUnitRunner() {
 这个hilt居然还有做单元测试的注入，还是不错，收藏了。
 
 看下buildTypes里面的配置：
-```
+```groovy
    buildTypes {
         val debug by getting {
             applicationIdSuffix = NiaBuildType.DEBUG.applicationIdSuffix
@@ -331,7 +331,7 @@ class NiaTestRunner : AndroidJUnitRunner() {
 ```
 这里val debug by gettting为啥这样写？
 这里其实分了2步：
-```
+```groovy
 val release = getByName("release")
     release.apply {
 ```
@@ -340,7 +340,7 @@ val release = getByName("release")
 ` val release by getting`
 
 继续下面：
-```
+```groovy
    packagingOptions {
         resources {
             excludes.add("/META-INF/{AL2.0,LGPL2.1}")
@@ -351,7 +351,7 @@ val release = getByName("release")
 打包配置，需要移除这个文件。
 
 继续下面：
-```
+```groovy
   testOptions {
         unitTests {
             isIncludeAndroidResources = true
@@ -379,7 +379,7 @@ val release = getByName("release")
 每个 Android 模块都有一个命名空间，此命名空间用作其生成的 R 和 BuildConfig 类的 Java 或 Kotlin 软件包名称。命名空间由模块的 build.gradle 文件中的 namespace 属性定义，如以下代码段所示。namespace 最初会设为您在创建项目时选择的软件包名称。
 
 最下面就是我们熟悉的dependencies了，可以看到这里非常简练，没有任何版本号，全是通过lis引入的，看着很舒服。
-```
+```groovy
 
 dependencies {
     implementation(project(":feature:interests"))
@@ -427,7 +427,7 @@ dependencies {
 ```
 
 最下面是强制使用某个依赖：
-```
+```groovy
 // androidx.test is forcing JUnit, 4.12. This forces it to use 4.13
 configurations.configureEach {
     resolutionStrategy {
@@ -443,7 +443,7 @@ configurations.configureEach {
 
 首先看下这个模块的setttings.gradle.kts文件
 很简单：
-```
+```groovy
 dependencyResolutionManagement {
     repositories {
         google()
@@ -463,7 +463,7 @@ include(":convention")
 这里最为关键的是用了一个 versionCatelogs，这里定义了我们所有三方依赖的地方。然后引入了这个模块下的convention的具体模块，这个模块就是编写自定义插件的地方。
 
 简单看下这个libs.version.toml文件吧，它放在项目级下的gradle文件夹中了：
-```
+```groovy
 [versions]
 accompanist = "0.28.0"
 androidDesugarJdkLibs = "1.2.2"
@@ -489,7 +489,7 @@ androidxProfileinstaller = "1.2.1"
 
 看下build-logic 模块下的build.gradle.kts文件：
 首先引入了 kotlin-dsl 插件：
-```
+```groovy
 plugins {
     `kotlin-dsl`
 }
@@ -497,7 +497,7 @@ plugins {
 这样就能写 java 闭包了，还有一些 compileOnly方法等。具体关于dsl使用方法可以参考这篇文章：[https://www.jianshu.com/p/461d4a249b71](https://www.jianshu.com/p/461d4a249b71)
 
 下面配置了执行build-logic需要依赖的一些东西：
-```
+```groovy
 java {
     sourceCompatibility = JavaVersion.VERSION_1_8
     targetCompatibility = JavaVersion.VERSION_1_8

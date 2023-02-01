@@ -46,7 +46,7 @@ categories:
 ## 3 AddressView 实现逻辑
 
 ### 3.1 全局变量定义
-```
+```Swift
 class AddressView: UIView {
     
     typealias selectAddressBlock = (Array<RegionModel>)->()
@@ -68,7 +68,7 @@ addressArray是记录底部列表数据的数组。
 selectedIndex是记录顶部选择了第几项的全局变量记录。
 
 然后是2个懒加载的UITableView，看下哈：
-```
+```Swift
 /// 顶部视图列表
 private lazy var tblView: UITableView = {
     let tableView = UITableView.init(frame: CGRect(x: 0, y: 196, width: ScreenWidth, height: ScreenHeight - 196), style: .grouped)
@@ -87,7 +87,7 @@ private lazy var tblView: UITableView = {
 ```
 
 还有一个底部的列表：
-```
+```Swift
 /// 底部视图列表
 private lazy var addressTblView: UITableView = {
     let tableView = UITableView.init(frame: CGRect.zero, style: .grouped)
@@ -105,7 +105,7 @@ private lazy var addressTblView: UITableView = {
 
 ### 3.2 生命周期函数
 这里只有一个初始化，但其实没有做什么，也没有把那两个UITableView加进去，这里应该就是空白的区域。
-```
+```Swift
   override init(frame: CGRect) {
         super.init(frame: frame)
         self.backgroundColor = UIColor.init(red: 0, green: 0, blue: 0, alpha: 0.6)
@@ -120,7 +120,7 @@ private lazy var addressTblView: UITableView = {
 这里是另外提供的函数，来初始化，所以需要调用方额外调用这个方法。
 也正是这个方法，才会去加载ui的。
 
-```
+```Swift
 func traverse(province: String, city: String, area: String, street: String){
         modelArray.removeAll()
         let dataArr: [RegionModel] = globalAddressModel?.data ?? AddressModel.init().data
@@ -153,7 +153,7 @@ func traverse(province: String, city: String, area: String, street: String){
 globalAddressModel 实际上再AppDelegate初始化的时候就去异步加载json文件了，这个应该就是保存的所有的四级地址信息了。
 
 然后这里用到了一个函数 recursive函数，是递归来寻找目标四级地址。
-```
+```Swift
 /// 递归获取目标地址
 func recursive(dataArr: [RegionModel], province: String, city: String, area: String, street: String){
     for model in dataArr{
@@ -173,7 +173,7 @@ func recursive(dataArr: [RegionModel], province: String, city: String, area: Str
 然后上面初始化数据还用到一个函数：setData，作用是设置底部数据，因为这里底部自始至终都是同一个UITableView，会经常需要刷新数据。这里就是刷新底部数据的意思吧。
 
 看下这个setData函数哈：
-```
+```Swift
 func setData(data: Any){
         var dataArr: [RegionModel] = []
         if data is AddressModel {
@@ -221,7 +221,7 @@ func setData(data: Any){
 好的，这里打住了，回到第一个函数 traverse方法中，里面根据modelArray的长度去决定刷新哪一个列表，因为调用方给的地址不一定是四级，可能是1级或2级或3级，这里也是需要考虑到的。能在哪个层级搜索到，就定位到哪个层级，那么最后一个层级这里使用 append一个“请选择”，这里说明如果是字符串了，那么这里就是最后一层级。感觉这还可以优化下，比较用字符串来判断到哪一层级不太合适的。
 
 traverse最后一个方法是加载UI。
-```
+```Swift
 func loadUI(){
         /// 先加顶部
         self.addSubview(tblView)
@@ -253,7 +253,7 @@ func updateUI(){
 大概意思就是把那两个UITableView加给父View。
 
 然后需要用的扩展方法有下面这个：
-```
+```Swift
 extension AddressView{
     
     /// 找到中文对应的第一个字符对应的第一个字母拼音
@@ -296,7 +296,7 @@ extension AddressView{
 好了，前面的ui基本就这些。
 下面主要是讲解下UITableView的代理方法和数据源配置。
 
-```
+```Swift
 /// 设置顶部tableView 代理和数据
 extension AddressView: UITableViewDelegate,UITableViewDataSource{
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -310,7 +310,7 @@ extension AddressView: UITableViewDelegate,UITableViewDataSource{
 这里扩展AddressView，去实现UITableViewDelegate和UITableViewDataSource协议。
 这是第一个方法，numberOfSections，返回有多少组。这里因为顶部只有一种类型，也就只有一组，底部用了一个数组记录，组数就是数组的长度。
 
-```
+```Swift
 func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if tableView == tblView {
             /// 顶部，如果没有 历史地址，则为0，有则显示 一组多少个
@@ -329,7 +329,7 @@ func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> 
 ```
 这是第二个方法，numberOfRowsInSection，意思就是这个组下有多少行。
 
-```
+```Swift
  func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         /// 上面下面都是48
         if tableView == tblView {
@@ -341,7 +341,7 @@ func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> 
 ```
 这里是每行的高度。
 
-```
+```Swift
 /// 每个cell怎么显示
 func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     /// 如果是顶部
@@ -416,7 +416,7 @@ func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> U
 
 如果是底部，就需要考虑是否显示字母，是否高亮这些了。
 
-```
+```Swift
 /// 标题和单元格间隔
 func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
     /// 顶部头部预留48dp显示标题“请选择所在地区”
@@ -429,7 +429,7 @@ func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) 
 ```
 顶部预留高度，用来展示自己的标题。
 
-```
+```Swift
 /// 和上面对应，预留48个dp怎么显示
 func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
     if tableView == tblView {
@@ -470,7 +470,7 @@ func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) ->
 ```
 标题和取消按钮显示逻辑。
 
-```
+```Swift
 /// 单元格尾巴怎么显示
 func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
     /// 如果是顶部tableView，预留48个dp
@@ -483,7 +483,7 @@ func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) 
 ```
 这里顶部有效，有48个单位长度，用来显示底部标题。
 
-```
+```Swift
 /// 尾部显示 选择下级地址
 func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
     if tableView == tblView {
@@ -527,7 +527,7 @@ func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) ->
 ```
 这里就是确定底部标题的怎么显示的。
 
-```
+```Swift
 /// 点击了单元格
 func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     if tblView == tableView {
@@ -604,7 +604,7 @@ func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 底部点击也会setData,刷新底部数据，如果全部选择，则会走闭包回调，将用户选择的四级地址回调出去。
 
 然后还有一些其它扩展方法，简单看下哈。
-```
+```Swift
 /// 扩展给外部
 extension AddressView{
     /// 通知调用者当有一个或者多个手指触摸到了视图或者窗口时触发此方法。
@@ -629,7 +629,7 @@ extension AddressView{
 
 ## 4 AddressCell 实现逻辑
 这个可以理解成Android中的Adapter了。也就是item怎么显示。
-```
+```Swift
 /// 顶部cell
 class AddressCell: UITableViewCell {
     
@@ -644,7 +644,7 @@ class AddressCell: UITableViewCell {
 这里需要继承UITableViewCell，必须要有一个identifier，这个主要是为了复用，因为列表可能会很长，为了合理复用，这里一般都需要一个标识符。
 
 ### 4.1 子View定义
-```
+```Swift
  /// 安徽省
 lazy var titleLb: UILabel = {
     let label = UILabel()
@@ -689,7 +689,7 @@ lazy private var rightImgView: UIImageView = {
 这里变空心，实际上只是设置了中间颜色为纯白。
 
 ### 4.2 数据定义
-```
+```Swift
 /// 监听数据变化 数据填充
 var model: Any?{
     didSet{
@@ -758,7 +758,7 @@ var position: LinePosition?{
 
 ### 4.3 生命周期函数
 首先看下初始化。
-```
+```Swift
 override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
@@ -800,7 +800,7 @@ override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
 这里就加了3个视图，并且布局了。
 
 ### 4.4 其它扩展方法
-```
+```Swift
 extension AddressCell{
     func updateUI(indexPath: IndexPath){
         if indexPath.row == 1 {
@@ -819,7 +819,7 @@ extension AddressCell{
 
 ## 5 AddressSelectorCell 实现逻辑
 这里也同上面的Cell，有一个标识符。
-```
+```Swift
 /// 底部Cell
 class AddressSelectorCell: UITableViewCell {
     
@@ -828,7 +828,7 @@ class AddressSelectorCell: UITableViewCell {
 
 ### 5.1 子View
 这里需要哪些子View呢？
-```
+```Swift
 //索引 eg: A字母
 lazy var indexLb: UILabel = {
     let label = UILabel()
@@ -857,7 +857,7 @@ lazy var checkImgView: UIImageView = {
 
 ### 5.2 生命周期函数
 看下初始化吧。
-```
+```Swift
 override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         self.selectionStyle = .none
@@ -898,7 +898,7 @@ override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
 
 ## 6 AddressModel 实现逻辑
 这个是四级地址的数据模型，可以看下：
-```
+```Swift
 import Foundation
 import HandyJSON
 
@@ -925,7 +925,7 @@ RegionModel可以存放市，区，街道，都没问题。
 ## 7 外部调用方式
 
 ### 7.1 先声明一个四级地址View
-```
+```Swift
 lazy private var addressView: AddressView = {
         let tmpview = AddressView(frame: CGRect.init(x: 0, y: 0, width: ScreenWidth, height: ScreenHeight))
         return tmpview
@@ -934,7 +934,7 @@ lazy private var addressView: AddressView = {
 这里设定了它的frame，也就是大小位置。
 
 ### 7.2  弹出四级地址
-```
+```Swift
 func showAddressSelector(){
         self.view.addSubview(self.addressView)
         self.addressView.traverse(province: self.orderAddressModel?.province ?? "", city: self.orderAddressModel?.city ?? "", area: self.orderAddressModel?.region ?? "", street: self.orderAddressModel?.street ?? "")

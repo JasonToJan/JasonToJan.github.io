@@ -24,7 +24,7 @@ categories:
 
 ### 2.1 类外声明
 
-```
+```Swift
 /// 定义一个闭包，主要是需要暴露里面的数字给外面，可以理解成定义一个接口类型
 public typealias ResultClosure = (_ number: String)->()
 ```
@@ -32,7 +32,7 @@ public typealias ResultClosure = (_ number: String)->()
 这个主要是给调用步进器的地方使用，当用户行为导致数量变更，肯定要通知外部处理自己逻辑，这是封装自定义View的基本常识，一定要给外部一定的可操作空间。
 
 ### 2.2 创建步进器类
-```
+```Swift
 /// 这里是自定义步进器了  @IBDesignable关键字用来声明一个类是可以被设计的，可以实时渲染在interface builder 上
 /// @IBInspectable关键字用来声明一个属性，可以在interface builder上修改该属性，就可以实时渲染border的变化
 /// open 修饰的 class 在 Module 内部和外部都可以被访问和继承
@@ -41,7 +41,7 @@ public typealias ResultClosure = (_ number: String)->()
 这里继承了UIView，这个注解只是用来实时预览，这里不要也行。如果想了解自定义View实时预览功能，可以参考下这篇文档：[https://blog.wangruofeng007.com/posts/56184/]()
 
 ### 2.3 定义类属性
-```
+```Swift
     /// 0为默认，1为零售开单
     var documentType:Int = 0
     
@@ -70,7 +70,7 @@ public typealias ResultClosure = (_ number: String)->()
 
 ### 2.4 生命周期函数
 
-```
+```Swift
 /// UIView的初始化函数，这里一般会覆写这个方法
 override public init(frame: CGRect) {
     super.init(frame: frame)
@@ -91,7 +91,7 @@ required public init?(coder aDecoder: NSCoder) {
 ```
 一般情况，自定义View都需要覆写下这两个init函数。用来初始化UI。
 
-```
+```Swift
 //设置UI布局
 fileprivate func setupUI() {
     /// 背景颜色清空
@@ -128,7 +128,7 @@ fileprivate func setupUI() {
 ```
 
 内部用了一个setupButton给按钮增加背景，看下哈：
-```
+```Swift
 //设置加减按钮的公共方法 设置action
 fileprivate func setupButton(title:String) -> UIButton {
     let button = UIButton.init();
@@ -145,7 +145,7 @@ fileprivate func setupButton(title:String) -> UIButton {
 ```
 
 这里给按钮增加了一个action，主要是处理用户行为点击加号或者减号的逻辑：
-```
+```Swift
 @objc fileprivate func touchDown(_ button: UIButton) {
         textField.endEditing(false)
         if button == decreaseBtn || button == decreaseBgBtn {
@@ -160,7 +160,7 @@ fileprivate func setupButton(title:String) -> UIButton {
 
 这里只有点击了就去执行加或者减的逻辑，用了一个定时器，保证150ms才走一次。
 加的逻辑看下哈：
-```
+```Swift
 @objc fileprivate func increase() {
         if (textField.text?.count)! == 0 || Int(textField.text!)! <= _minValue {
             textField.text = "\(_minValue)"
@@ -197,7 +197,7 @@ fileprivate func setupButton(title:String) -> UIButton {
 减的逻辑基本一致，这里就不再看了。
 
 上面还遗漏了一个抬起手后，将定时器取消，这点很重要，如果不及时处理，很容易造成内存泄漏。看下上面给touchCancel和其它按钮状态绑定的事件：
-```
+```Swift
 //松开按钮:清除定时器
 @objc fileprivate func touchUp()  {
     cleanTimer()
@@ -218,7 +218,7 @@ deinit {
 ```
 
 这里还有一个非常关键的生命周期函数：
-```
+```Swift
 // MARK: - 重新布局UI
     /// https://juejin.cn/post/6984250995874365448 layoutSubviews调用时机
     /// 改变一个UIView的Frame会触发layoutSubviews
@@ -248,7 +248,7 @@ deinit {
 在前面初始化UI里面有句代码是这样的：
 `textField.delegate = self`
 这里需要新建一个代理类来支持一下：
-```
+```Swift
 extension PPNumberButton: UITextFieldDelegate {
     
     // MARK: - UITextFieldDelegate
@@ -300,7 +300,7 @@ extension PPNumberButton: UITextFieldDelegate {
 
 ### 2.6 自定义扩展函数
 原因是每个地方使用场景不同，这里需要通过扩展函数，可以自己添加一些逻辑，方便调用处能够实现效果。
-```
+```Swift
 public extension PPNumberButton {
     
     /**
@@ -421,7 +421,7 @@ public extension PPNumberButton {
 ```
 这些都是暴露给外部调用者的函数，外部可以轻松改变背景，改变边框颜色等。
 
-```
+```Swift
 public extension PPNumberButton {
     
     /// 是否开启交互 这里主要是设置能否点击，业务需求是某些情况没有超过最大值或低于最小值也不可点击哦
@@ -446,7 +446,7 @@ public extension PPNumberButton {
 上面的代码也是因为增加了 特殊需求，添加的一个扩展方法。
 
 另外还有一部分代码是使用RxSwift，增加了扩展方法，看下哈：
-```
+```Swift
 extension Reactive where Base: PPNumberButton {
     var gmMaxValue: Binder<Int> {
         return Binder(self.base) { (pp, max) in
@@ -462,12 +462,12 @@ extension Reactive where Base: PPNumberButton {
 下面看看调用者如何来使用步进器，这里简单示例下：
 
 先声明一个步进器
-```
+```Swift
 private weak var cus_stepper: PPNumberButton!
 ```
 
 然后目标地方创建一个步进器，并且初始化步进器相关属性
-```
+```Swift
 let stepperViewW: CGFloat = 178.0
 let stepperViewH: CGFloat = 40.0
 let stepperViewB: CGFloat = 24.0

@@ -14,7 +14,7 @@ categories:
 > googe samples之 nowinandroid项目地址：[https://github.com/android/nowinandroid](https://github.com/android/nowinandroid)
 
 ### 1.app模块build.gradle文件配置
-```
+```Groovy
 plugins {
     id("nowinandroid.android.application")
     id("nowinandroid.android.application.compose")
@@ -27,7 +27,7 @@ plugins {
 引入了application插件，compose插件，jacoco插件，hilt插件，firebase插件
 
 依赖项：
-```
+```Groovy
     implementation(project(":feature:interests"))
     implementation(project(":feature:foryou"))
     implementation(project(":feature:bookmarks"))
@@ -53,7 +53,7 @@ feature_bookmarks 是书签模块
 然后sync_work是一些工具module了。
 
 ### 2.清单文件
-```
+```xml
     <application
         android:name=".NiaApplication"
         android:allowBackup="true"
@@ -92,7 +92,7 @@ feature_bookmarks 是书签模块
 作用就是初始化Sync三方库。
 
 里面是这样走的：
-```
+```Kotlin
   AppInitializer.getInstance(context)
             .initializeComponent(SyncInitializer::class.java)
 ```
@@ -125,7 +125,7 @@ AppInitializer是google的Jetpack下的startup中的类成员，关于这个用�
 参考文档：[https://www.jianshu.com/p/22a36660a656](https://www.jianshu.com/p/22a36660a656)
 
 然后声明了两个注入的变量：
-```
+```Kotlin
 /**
      * Lazily inject [JankStats], which is used to track jank throughout the app.
      * JankStats 是首个专为在用户设备上检测及报告应用的性能问题而构建的 AndroidX 库。
@@ -149,7 +149,7 @@ AppInitializer是google的Jetpack下的startup中的类成员，关于这个用�
  
  关于lazyStats怎么初始化的？在项目di文件夹下有个JankStatsModule
  
-```
+```Kotlin
 /**
  * 这里的目标是生产一个JankStats对象
  *
@@ -192,7 +192,7 @@ object JankStatsModule {
 
 关于网络监视器如何初始化的呢？
 这个网络监视器是一个接口来的：
-```
+```Kotlin
 /**
  * Utility for reporting app connectivity status
  */
@@ -203,7 +203,7 @@ interface NetworkMonitor {
 ```
 一直没找到如何实例化的地方。
 不过再其它模块，core下的data.di文件夹下发现了另外一个DataModule下有如下代码：
-```
+```Kotlin
 
     @Binds
     fun bindsNetworkMonitor(
@@ -227,7 +227,7 @@ interface NetworkMonitor {
 
 然后这里监听了一个密封接口中的 Loading 状态，
 密封接口定义如下：
-```
+```Kotlin
 /**
  * 首页ui 状态的密封类，有加载中和成功的状态
  * 密封接口 类似枚举类型，说明有Loading状态和成功状态
@@ -241,7 +241,7 @@ sealed interface MainActivityUiState {
 很明显这里Loading实现了这个接口，Success也实现了这个接口。
 
 在onCreate监听了这个Loading类：
-```
+```Kotlin
 
         /**
          * mutableStateOf 表明某个变量是有状态的，对变量进行监听，当状态改变时，触发重绘。
@@ -254,7 +254,7 @@ sealed interface MainActivityUiState {
 ```
 
 然后开启一个携程，拿用户数据：
-```
+```Kotlin
  // Activity生命周期内使用携程
         lifecycleScope.launch {
             // Lifecycle.State.STARTED: 表示只有在Activity处于Started状态的情况下，协程中的代码才会执行。
@@ -272,7 +272,7 @@ sealed interface MainActivityUiState {
 就是说uiState会有上面密封接口定义的两种类型。
 
 当监听到uiState变化后会走：
-```
+```Kotlin
  /**
          * 如果网络请求正在请求loading状态，就还是显示闪屏，如果拿到数据了就不需要闪屏了
          */
@@ -286,7 +286,7 @@ sealed interface MainActivityUiState {
 闪屏会去除掉。
 
 下面开启沉浸式状态栏：
-```
+```Kotlin
   /**
          * 第二参数decorFitsSystemWindows表示是否沉浸，false 表示沉浸，true表示不沉浸
          */
@@ -297,7 +297,7 @@ sealed interface MainActivityUiState {
 一个setContent的函数，太长了，就不全部贴图，挨个分析。
 
 1.首先获取一个systemUIController
-```
+```Kotlin
  /**
              * 开发者若想在 Compose 布局中控制 System UI，就必须获取 SystemUiController 对象。
              * 通过该库提供 rememberSystemUiController 函数，开发者可以获取当前操作系统（目前仅支持 Android 系统）的  SystemUiController 对象。
@@ -306,7 +306,7 @@ sealed interface MainActivityUiState {
 ```
 
 2.是否使用深色主题，用户可以自己选
-```
+```Kotlin
  /**
              * 是否使用深色主题，入参当前ui状态
              */
@@ -315,7 +315,7 @@ sealed interface MainActivityUiState {
 ```
 
 内部实现：
-```
+```Kotlin
 /**
  * Returns `true` if dark theme should be used, as a function of the [uiState] and the
  * current system context.
@@ -341,7 +341,7 @@ private fun shouldUseDarkTheme(
 ```
 
 然后开启一个DisposableEffect来关联上面这两个对象：
-```
+```Kotlin
   /**
              * disposable，顾名思义，这就是一个自带清理作用的Effect
              */
@@ -353,7 +353,7 @@ private fun shouldUseDarkTheme(
 ```
 
 最后，开始设置App主题了：
-```
+```Kotlin
   /**
              * 主题配置，是否暗色，判断用户是否有自己选择
              * 是否用Android主题
@@ -380,7 +380,7 @@ private fun shouldUseDarkTheme(
 里面的闭包 NiaApp也就是开启了我们的App。
 
 ### 6.首页其它生命周期
-```
+```Kotlin
   override fun onResume() {
         super.onResume()
         /**
@@ -407,7 +407,7 @@ MainActivity内容就这么多了，非常指简洁。
 
 ### 7.NiaTheme主题设置
 先是主题颜色：
-```
+```Kotlin
  // 主题颜色
     val colorScheme = when {
         // 判断当前 android主题是暗色还是浅色
@@ -423,7 +423,7 @@ MainActivity内容就这么多了，非常指简洁。
 ```
 
 渐变色:
-```
+```Kotlin
     // Gradient colors 渐变色
     // 空渐变色
     val emptyGradientColors = GradientColors(container = colorScheme.surfaceColorAtElevation(2.dp))
@@ -442,7 +442,7 @@ MainActivity内容就这么多了，非常指简洁。
 ```
 
 最终设置到MaterialTheme里面：
-```
+```Kotlin
    // Composition locals
     CompositionLocalProvider(
         LocalGradientColors provides gradientColors,
@@ -460,7 +460,7 @@ MainActivity内容就这么多了，非常指简洁。
 
 首先创建一个NiaApp实例。
 入参：窗口大小类，网络监视器
-```
+```Kotlin
  NiaApp(
                     /**
                      * 窗口大小类，获取一个WindowSizeClass 这个实例
@@ -478,7 +478,7 @@ MainActivity内容就这么多了，非常指简洁。
 这里用到的状态作为第三个参数，作为app状态记录。
 
 函数定义如下：
-```
+```Kotlin
 @OptIn(
     ExperimentalMaterial3Api::class,
     ExperimentalLayoutApi::class,
@@ -501,7 +501,7 @@ fun NiaApp(
 这里第三个参数已经默认实现了。
 
 就是用于app状态记录，调用了一个自定义的rememberNiaAppState方法。
-```
+```Kotlin
 @Composable
 fun rememberNiaAppState(
     windowSizeClass: WindowSizeClass,
@@ -526,7 +526,7 @@ fun rememberNiaAppState(
 这里通过remember闭包来返回这个变量。
 
 这个NiaAppState定义如下：
-```
+```Kotlin
 /**
  * 主要用于类似LiveData保存的数据
  * App状态记录，需要传入导航控制器，携程作用范围，window窗口大小
@@ -541,7 +541,7 @@ class NiaAppState(
 ```
 类似LiveData，保存了首页必要的一些数据。
 
-```
+```Kotlin
  /**
      * 当前在那个tab
      */
@@ -550,7 +550,7 @@ class NiaAppState(
             .currentBackStackEntryAsState().value?.destination
 ```
 
-```
+```Kotlin
  /**
      * 通过在哪个tab，决定用哪个枚举类， TopLevelDestination是自己定义的枚举类
      */
@@ -563,7 +563,7 @@ class NiaAppState(
         }
 ```
 
-```
+```Kotlin
  /**
      * 是否展示设置弹框
      */
@@ -571,7 +571,7 @@ class NiaAppState(
         private set
 ```
 
-```
+```Kotlin
  /**
      * 是否展示底部bar
      */
@@ -580,7 +580,7 @@ class NiaAppState(
             windowSizeClass.heightSizeClass == WindowHeightSizeClass.Compact
 ```
 
-```
+```Kotlin
   /**
      * 是否展示水平左侧导航
      */
@@ -588,7 +588,7 @@ class NiaAppState(
         get() = !shouldShowBottomBar
 ```
 
-```
+```Kotlin
  /**
      * 监控网络，是否断网
      */
@@ -602,7 +602,7 @@ class NiaAppState(
 
 ```
 
-```
+```Kotlin
    /**
      * 这里是一个枚举类，表示底部tab集合
      * Map of top level destinations to be used in the TopBar, BottomBar and NavRail. The key is the
@@ -611,7 +611,7 @@ class NiaAppState(
     val topLevelDestinations: List<TopLevelDestination> = TopLevelDestination.values().asList()
 ```
 
-```
+```Kotlin
  /**
      * 点击tab事件传递
      *
@@ -644,7 +644,7 @@ class NiaAppState(
 ```
 
 然后定义了一些方法：
-```
+```Kotlin
  /**
      * 返回点击
      */
@@ -663,7 +663,7 @@ class NiaAppState(
 ### 9.NiaApp内容区
 
 App背景色
-```
+```Kotlin
 @Composable
 fun NiaBackground(
     modifier: Modifier = Modifier,
@@ -686,7 +686,7 @@ fun NiaBackground(
 数据源使用 LocalBackgroundTheme.current.color
 
 内容区继续渐变背景：
-```
+```Kotlin
 @Composable
 fun NiaGradientBackground(
     modifier: Modifier = Modifier,
@@ -758,13 +758,13 @@ fun NiaGradientBackground(
 
 ### 10.业务内容区
 
-```
+```Kotlin
    // 记录下snackbar状态，后续可能会刷新
             val snackbarHostState = remember { SnackbarHostState() }
 ```
 这个用于网络监听，如果没有网络，底部会常驻一个snackbar
 
-```
+```Kotlin
             // 是否离线
             val isOffline by appState.isOffline.collectAsStateWithLifecycle()
 
@@ -780,7 +780,7 @@ fun NiaGradientBackground(
             }
 ```
 
-```
+Kotlin
             // 是否应该展示设置弹框，当点击右上角设置后，会弹出设置弹框
             if (appState.shouldShowSettingsDialog) {
                 SettingsDialog(
@@ -791,7 +791,7 @@ fun NiaGradientBackground(
 
 然后就是脚手架了：
 Scaffold，这里可以配置底部bar
-```
+```Kotlin
   Scaffold(
                 modifier = Modifier.semantics {
                     testTagsAsResourceId = true
@@ -817,7 +817,7 @@ Scaffold，这里可以配置底部bar
 这里snackbarHost也是脚手架里面的内容。
 
 然后里面是一个Row，为什么是一个水平布局，因为考虑到兼容电视，平板，这里将导航页设置了一个水平的左侧导航。
-```
+```Kotlin
   // 平板 水平布局 左侧导航
                     if (appState.shouldShowNavRail) {
                         NiaNavRail(
@@ -833,7 +833,7 @@ Scaffold，这里可以配置底部bar
 
 然后就是实际内容区域了：
 设置+主页构成。
-```
+```Kotlin
 // 垂直布局，状态栏+内容区
                     /**
                      * 以前，我们在布局中去设置一个控件的大小，间距，点击事件，宽高，背景等属性值。
@@ -872,7 +872,7 @@ NiaNavHost是主页面
 
 主页面也是在App模块下的navigation文件夹中定义。
 
-```
+```Kotlin
 @Composable
 fun NiaNavHost(
     /**

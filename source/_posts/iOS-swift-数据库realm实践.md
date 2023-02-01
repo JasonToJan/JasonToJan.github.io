@@ -62,7 +62,7 @@ github地址：[https://github.com/realm/realm-swift](https://github.com/realm/r
 不过我们没有在AppDelegate初始化，因为我们这个绑定了userId，等用户登录后才初始化，当然也是可以的。
 
 重点是初始化这个动作要先于使用就行了。
-```
+```Swift
 func configRealm(userID: String?,
                         keyWord: String? = nil,
                         schemaVersion: UInt64 = 2, migrationBlock: MigrationBlock? = nil) {
@@ -111,7 +111,7 @@ func configRealm(userID: String?,
 
 这里就是拿商品数据了，这里服务端提供的接口，返回的是加密后的字符串。
 类似这样：
-```
+```Json
 {
   "message" : "请求成功",
   "code" : 1000,
@@ -121,7 +121,7 @@ func configRealm(userID: String?,
 ```
 
 比如我们接口是这样请求的，这里我们先扩展了一个方法给控制器：
-```
+```Swift
 extension GMBaseViewController {
     
     open func updateOfflinePackageData(tips: String = "", successful: @escaping Handler) {
@@ -157,7 +157,7 @@ extension GMBaseViewController {
 成功后走successful的逃逸闭包，失败弹一个弹框。
 
 继续走进去：
-```
+```Swift
 class OfflinePackageManager: NSObject {
     
     open class func update(
@@ -210,7 +210,7 @@ class OfflinePackageManager: NSObject {
 ## 6 解压缩字符串
 
 这里服务端返回的一段加密后的字符串：
-```
+```Json
 {
   "message" : "请求成功",
   "code" : 1000,
@@ -229,7 +229,7 @@ class OfflinePackageManager: NSObject {
 具体细节就不讲解了。
 
 这里我们自己给String做了一个扩展，这样直接能拿到解压缩后的字符串：
-```
+```Swift
 extension String {
     var gunzip: String? {
         if let data = Data(base64Encoded: self, options: .ignoreUnknownCharacters) {
@@ -245,7 +245,7 @@ extension String {
 ```
 
 这里解析后的字符串为：
-```
+```Json
 {
     "appProductRelVOList":[],
     "appProductVOList":[],
@@ -256,13 +256,13 @@ extension String {
 
 同样也是一个json数组哦。
 所以我们还是得用Json解析下：
-```
+```Swift
 guard let model = try? JSONDecoder().decode(StageOfflinePackageData.self, from: data)
                 else { return }
 ```
 
 这时候我们需要一个实体来接收下：
-```
+```Swift
 class StageOfflinePackageData:Codable{
     
     var appProductVOList: [StageGoodsPackgeModelData] = []
@@ -296,7 +296,7 @@ Codable 协议在 Swift4.0 开始被引入，目标是取代现有的 NSCoding �
 ## 7 数据处理
 
 解析完毕后，我们有一段逻辑是这样的：
-```
+```Swift
 if endTimeStr != nil && (model.appProductVOList.count >= 1000 || model.appProductRelVOList.count >= 1000) {
                     Defaults[key:DefaultsKeys.updateTime] = nil
                     OfflinePackageManager.update(updateTime: "", successful: successful, failure: failure)
@@ -322,7 +322,7 @@ if endTimeStr != nil && (model.appProductVOList.count >= 1000 || model.appProduc
 我们需要定义两个实体，一个是商品模型，一个是关系模型。
 
 商品模型为：
-```
+```Swift
 
 class StageGoodsPackgeModelData: Object,Codable{
     
@@ -518,7 +518,7 @@ class StageGoodsPackgeModelData: Object,Codable{
 ```
 
 另外一个为：
-```
+```Swift
 
 class StageGoodsSuitPackgeModelData: Object,Codable{
 
@@ -574,7 +574,7 @@ class StageGoodsSuitPackgeModelData: Object,Codable{
 
 ### 7.2 全量更新
 
-```
+```Swift
 private class func fullUpdate(model: StageOfflinePackageData) {
         let suitResult = objectWithAll(objct: StageGoodsPackgeModelData.self)
         if suitResult.count != 0 {
@@ -603,7 +603,7 @@ private class func fullUpdate(model: StageOfflinePackageData) {
 ### 7.3 增量更新
 
 先声明一下sql
-```
+```Swift
     private class func incrementalUpdate(model: StageOfflinePackageData) {
         print("增量处理开始时间---->", Date().currentTime(0))
         var addGoodsArr: [StageGoodsPackgeModelData] = []
@@ -617,7 +617,7 @@ private class func fullUpdate(model: StageOfflinePackageData) {
 ```
 
 遍历下服务端返回的增量数据库：
-```
+```Swift
 for (_,suitModel) in model.appProductVOList.enumerated() {
     // delFlag为0表示，不是删除哦，这里是新增商品
     if suitModel.delFlag == 0 {
@@ -657,7 +657,7 @@ for (_,suitModel) in model.appProductVOList.enumerated() {
 这里就知道哪些商品要删除，哪些要加。哪些关系表要删除，哪些要加。
 
 这里先处理下新增的商品：
-```
+```Swift
 if goodsSql != "" {
     let predicate = NSPredicate(format:goodsSql)
     let suitArr = objectsWithPredicate(object: StageGoodsPackgeModelData.self, predicate: predicate)
@@ -676,7 +676,7 @@ if goodsSql != "" {
 使用方法可以参考这篇文章：[https://juejin.cn/post/6844903540805074951](https://juejin.cn/post/6844903540805074951)。
 
 然后处理下要删除的商品：
-```
+```Swift
  if deleteGoodsSql != "" {
     // NSPredicate是swift 过滤数据的类，类似数据库中的where字段
     let predicate = NSPredicate(format:deleteGoodsSql)
@@ -690,7 +690,7 @@ if goodsSql != "" {
 商品处理完成，剩下就是关系表了。
 
 这里先处理要新增的关系：
-```
+```Swift
 // 这里是新增的关系表
 for idStr in relationidArr {
     for relationModel in model.appProductRelVOList{
@@ -716,7 +716,7 @@ if relationSql != "" {
 ```
 
 然后处理下要删除的关系表：
-```
+```Swift
  if deleteRelationSql != "" {
     let relationPredicate = NSPredicate(format:deleteRelationSql)
     let relationArr = objectsWithPredicate(object: StageGoodsSuitPackgeModelData.self, predicate: relationPredicate)

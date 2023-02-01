@@ -40,7 +40,7 @@ categories:
 ### 3.1 构建UI
 
 首先把材料上齐。
-```
+```Swift
 lazy var squareImgView: UIImageView = {
         let imgv = UIImageView()
         imgv.isUserInteractionEnabled = false
@@ -109,7 +109,7 @@ lazy var squareImgView: UIImageView = {
 ### 3.2 全局变量声明
 
 想要具备扫码能力，有几个类是必须的。
-```
+```Swift
 // AVC 相关  相机硬件接口相关
     private var videoDataOutput: AVCaptureVideoDataOutput?
     private var output: AVCaptureMetadataOutput?
@@ -124,7 +124,7 @@ lazy var squareImgView: UIImageView = {
 loadView执行时机为：访问视图控制器的view时候，如何view为nil，或者还没有加载完成就会调用loadView方法来创建view。可以理解成先于viewDidLoad，一般走一次，一般用于视图初始化。
 
 这里就负责 添加子View 的工作。
-```
+```Swift
 private func setupUI() {
         view.addSubview(layerView)
         view.addSubview(squareImgView)
@@ -178,7 +178,7 @@ private func setupUI() {
 ### 3.4 生命周期之 viewDidLoad
 
 看下这里做了什么：
-```
+```Swift
  override func viewDidLoad() {
         super.viewDidLoad()
         // 标题文字大小
@@ -205,7 +205,7 @@ private func setupUI() {
 ```
 
 如何添加手势呢？
-```
+```Swift
 private func addGesture() {
         let prinGesture = UIPinchGestureRecognizer(target: self, action: #selector(pinch(gesture:)))
         layerView.addGestureRecognizer(prinGesture)
@@ -213,7 +213,7 @@ private func addGesture() {
 ```
 
 操作后会触发：
-```
+```Swift
 @objc func pinch(gesture: UIPinchGestureRecognizer) {
         guard let device = AVCaptureDevice.default(for: AVMediaType.video) else {
             print("get front video AVCaptureDeviceInput  failed!")
@@ -249,7 +249,7 @@ private func addGesture() {
 ### 3.5 生命周期之viewWillAppear
 
 这个是将要显示，一般做轻量级操作。
-```
+```Swift
 override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         setupRealWhiteClickCallBack()
@@ -262,7 +262,7 @@ override func viewWillAppear(_ animated: Bool) {
 ### 3.6 生命周期之viewDidAppear
 
 这里是已经显示了，这里可以做稍微重量级代码。
-```
+```Swift
 override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         if self.session == nil {
@@ -277,7 +277,7 @@ override func viewDidAppear(_ animated: Bool) {
 很明显这里判断了下session是否为null。
 
 如果session为nil，则先判断是否有相机权限：
-```
+```Swift
 func scanQRCodePermission() {
         // 判断摄像头是否可用
         let available = UIImagePickerController.isSourceTypeAvailable(.camera)
@@ -330,7 +330,7 @@ func scanQRCodePermission() {
 上面的代码讲述了如何申请权限，权限被拒绝如何跳转设置。
 
 如果有权限了会走 initCaptureSession 来初始化session:
-```
+```Swift
 func initCaptureSession() {
         //创建会话对象
         let `session` = AVCaptureSession()
@@ -405,14 +405,14 @@ func initCaptureSession() {
 ```
 
 回到 生命周期 中，如果 session 不为空，会走上面的startScan 函数，这里就是让session继续工作的意思：
-```
+```Swift
 func startScan() {
         session?.startRunning()
     }
 ```
 
 在viewDidAppear中还做了什么呢？
-```
+```Swift
 UIApplication.shared.isIdleTimerDisabled = true
 setNeedsStatusBarAppearanceUpdate()
 ```
@@ -422,7 +422,7 @@ setNeedsStatusBarAppearanceUpdate()
 
 ### 3.7 生命周期之viewDidDisappear
 
-```
+```Swift
  override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         stopScan()
@@ -431,7 +431,7 @@ setNeedsStatusBarAppearanceUpdate()
     }
 ```
 这里停止扫描，应该是停止session:
-```
+```Swift
 func stopScan() {
         session?.stopRunning()
     }
@@ -442,7 +442,7 @@ func stopScan() {
 ### 3.8 设置output代理
 
 回到初始化session的部分代码中：
-```
+```Swift
 //创建元数据输出流
 let `output` = AVCaptureMetadataOutput()
 self.output = output
@@ -451,7 +451,7 @@ output.setMetadataObjectsDelegate(self, queue: DispatchQueue.main)
 这里设置了一个metadata的代理，所以这个controller必然扩展了这个代理。
 
 具体如下：
-```
+```Swift
 extension GMBaseScanViewController: AVCaptureMetadataOutputObjectsDelegate {
     func metadataOutput(_ output: AVCaptureMetadataOutput, didOutput metadataObjects: [AVMetadataObject], from connection: AVCaptureConnection) {
         if isCanScan {
@@ -502,7 +502,7 @@ extension GMBaseScanViewController: AVCaptureMetadataOutputObjectsDelegate {
 ```
 这里覆写了这协议方法，表示识别到内容了。然后会回调metadateOutput，原因是前面session里面设置了Output的代理为self,也就是这里，这里就关联起来了。
 前面是这样的：
-```
+```Swift
  let `output` = AVCaptureMetadataOutput()
         self.output = output
         output.setMetadataObjectsDelegate(self, queue: DispatchQueue.main)
@@ -515,7 +515,7 @@ extension GMBaseScanViewController: AVCaptureMetadataOutputObjectsDelegate {
 ### 3.9 设置videoDataOuput代理
 
 这个代理，目的是为了识别光线强弱。
-```
+```Swift
 extension GMBaseScanViewController: AVCaptureVideoDataOutputSampleBufferDelegate {
     
     func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
@@ -556,7 +556,7 @@ extension GMBaseScanViewController: AVCaptureVideoDataOutputSampleBufferDelegate
 
 这里我们额外增加一个方法，主要给外面调用，因为我们会提供一个代理，如果识别到后，通过代理内部方法将识别的条码给外面。这时候外面要震动或声音效果，只需要调用我们内部的一个方法即可。
 
-```
+```Swift
 func playAudio(success code: Int) {
         if isPlay == false {
             return

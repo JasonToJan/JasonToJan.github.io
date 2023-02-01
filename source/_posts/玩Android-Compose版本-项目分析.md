@@ -15,7 +15,7 @@ categories:
 
 ### 1.项目settings.gradle
 
-```
+```groovy
 dependencyResolutionManagement {
     /**
      * 原文中说默认情况下，项目中的存储库会覆盖设置中的存储库 ，可以通过设置模式来更改这种行为
@@ -53,7 +53,7 @@ include ':toolkit'
 
 ### 2.config.gradle
 这个文件相信大家都有用过的，配置远程依赖的一个文件，统一管理。
-```
+```groovy
 ext{
     isRelease = true
 
@@ -155,7 +155,7 @@ ext{
 下面配置android闭包，很简单。
 
 其它关于compose的也需要配置下：
-```
+```groovy
  compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -170,7 +170,7 @@ ext{
 ```
 
 然后是远程依赖：
-```
+```groovy
 dependencies {
     // 如果是release模式，就把我的模块加进来
     if(isRelease){
@@ -198,7 +198,7 @@ isRelease定义在 config.gradle的顶部。如果是集成编译就为true，�
 * 配置Application
 * 配置主页
 * 配置provider，用于初始化sdk
-    ```
+    ```xml
       <!--  用provider初始化sdk-->
         <provider
             android:name="androidx.startup.InitializationProvider"
@@ -216,7 +216,7 @@ isRelease定义在 config.gradle的顶部。如果是集成编译就为true，�
  class HhfApp : YshhApplication()
  ```   
  依赖common模块：
- ```
+ ```Kotlin
  open class YshhApplication : Application() {
 
     lateinit var okbuilder: OkHttpClient
@@ -241,7 +241,7 @@ isRelease定义在 config.gradle的顶部。如果是集成编译就为true，�
  这里懒加载OkHttpClient
  定义了全局的协程，静态变量。
 
- ```
+ ```Kotlin
    override fun onCreate() {
         super.onCreate()
         context = applicationContext
@@ -250,7 +250,7 @@ isRelease定义在 config.gradle的顶部。如果是集成编译就为true，�
     }
  ```
  初始化Retrofit：
- ```
+ ```Kotlin
   /**
      * 初始化Retrofit
      */
@@ -299,7 +299,7 @@ isRelease定义在 config.gradle的顶部。如果是集成编译就为true，�
 
  ### 6.首页 MainActivity
  继承BaseActivity:
- ```
+ ```Kotlin
 
 /**
  * 基类Activity 设置非沉浸式，因为要设置导航栏和状态栏颜色
@@ -315,7 +315,7 @@ abstract class BaseActivity : AppCompatActivity() {
  ```
 
 onCreate生命周期：
-```
+```Kotlin
  @Suppress("DEPRECATED_IDENTITY_EQUALS")
     @OptIn(ExperimentalAnimationApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -361,7 +361,7 @@ onCreate生命周期：
 ```
 因为这个app就一个Activity，setContent中的内容就是展现给用户可以看到的所有东西了。
 顶层是一个自定义主题：
-```
+```Kotlin
 @Composable
 fun HhfTheme(
     theme: HhfTheme.Theme = HhfTheme.Theme.Light,
@@ -436,7 +436,7 @@ CompositionLocal适用场景：用来提供上下文数据，不扩大影响范�
 那这个页面有个渐变动画，淡入淡出效果。
 
 具体ui是这样的：
-```
+```Kotlin
 @Composable
 fun SplashView(startMain: () -> Unit) {
     /**
@@ -490,7 +490,7 @@ fun SplashView(startMain: () -> Unit) {
 
 虽然很简单，但实际上走了很多流程的。
 
-```
+```Kotlin
 class MainViewModel : ViewModel() {
     var isSplash by mutableStateOf(true)
 }
@@ -499,7 +499,7 @@ class MainViewModel : ViewModel() {
 
 
 ### 8.主页面外部架构
-```
+```Kotlin
 @ExperimentalAnimationApi
 @OptIn(ExperimentalPagerApi::class)
 @Composable
@@ -538,7 +538,7 @@ fun HhfNavigation() {
 本质上就是一个string，首页的路由。
 
 这样会默认展示首页，怎么展示首页呢？
-```
+```Kotlin
 composable(ModelPath.Main.route) {
             MainContent()
         }
@@ -549,7 +549,7 @@ composable(ModelPath.Main.route) {
 
 那这个比如跳转到设置页面，怎么处理呢？
 * 首先在这个AnimatedNavHost里面定义一个composable闭包
-```
+```Kotlin
  composable(ModelPath.Setting.route) {
             CpSetting(Modifier.fillMaxSize())
         }
@@ -567,7 +567,7 @@ composable(ModelPath.Main.route) {
 轮播图+中间列表可以看成一个整体，那就是内容区+底部bar
 
 架构怎么搭建呢？
-```
+```Kotlin
    Scaffold(bottomBar = {
         AnimatedVisibility(
             visible = bottomSwitch,
@@ -589,7 +589,7 @@ composable(ModelPath.Main.route) {
 然后是一个AnimatedVisibility，这个控制显示隐藏的动画组件。重点看里面的MainBottomBar，就找到了我们的底部bar了。
 
 这个看起来像自定义的，具体怎么实现的呢？
-```
+```Kotlin
 /**
  * App底部bar
  */
@@ -653,7 +653,7 @@ private fun MainBottomBar(
 ```
 这里看出底部bar就是用了官方的BottomAppBar。
 里面具体内容是我们开发者自行设定的，这里遍历了bottomList，这个集合就是我们自己定义的一个集合：
-```
+```Kotlin
 /**
  * 底部List集合 这里定义了4块
  * 首页，项目，公众号，我的
@@ -682,7 +682,7 @@ val bottomList = listOf(
 底部bar的item就是 BottomNavigationitem里面的了，可以看到是一个icon+label构成。有个onClick的参数就是点击事件回调了，这里调用了 回调函数，传递给上层了，传出去的参数就一个int，表示第几页。
 
 回调到哪里呢？
-```
+```Kotlin
  // 实际的底部bar 高度使用 固有特性测量 可以参考：https://juejin.cn/post/7068164264363556872
             MainBottomBar(
                 Modifier
@@ -696,7 +696,7 @@ val bottomList = listOf(
 
 等下分析内容区也会用到。
 
-```
+```Kotlin
  // 水平分页
             HorizontalPager(
                 count = bottomList.size,
@@ -755,8 +755,8 @@ val bottomList = listOf(
 这里再拆分下，就是轮播图+列表。
 对应 HomeView。
 
-```
-@Composable
+```Kotlin
+@CompoKotlinsable
 fun HomeView(modifier: Modifier = Modifier) {
     val viewModel: HomeViewModel = viewModel()
     ColumnTopBarMain(modifier
@@ -770,7 +770,7 @@ fun HomeView(modifier: Modifier = Modifier) {
 最外层是由顶部bar+内容区构成。
 
 ColumnTabBarMain是自定义通用的一个App的组件，用于上面展示toolbar，中间区域自定义。
-```
+```Kotlin
 @Composable
 fun ColumnTopBarMain(
     modifier: Modifier = Modifier,
@@ -800,7 +800,7 @@ fun ColumnTopBarMain(
 这里具体是一个Column+CpTopBar构成
 
 CpTopBar是这样的：
-```
+```Kotlin
 
 @Composable
 fun CpTopBar(
@@ -835,7 +835,7 @@ fun CpTopBar(
 ```
 
 里面还有自定义的HhTopAppBar
-```
+```Kotlin
 
 @Composable
 fun HhTopAppBar(
@@ -865,7 +865,7 @@ fun HhTopAppBar(
 ```
 
 竟然还有自定义层：Surface是官方提供的了
-```
+```Kotlin
 @Composable
 fun TopAppBarSurface(
     modifier: Modifier = Modifier,
@@ -884,7 +884,7 @@ fun TopAppBarSurface(
 }
 ```
 还有标题栏内容区： 这个TopAppBar是官方提供的了
-```
+```Kotlin
 @Composable
 fun TopAppBarContent(
     title: @Composable () -> Unit,
@@ -905,7 +905,7 @@ fun TopAppBarContent(
 
 标题栏看完了，那就到内容区了。
 
-```
+```Kotlin
 
 /**
  * 首页内容区
@@ -986,7 +986,7 @@ list 是专门用于懒加载列表，这个是存放可视区的列表。
 
 数据来源是ViewModel层的viewStates实例。
 
-```
+```Kotlin
 /**
  * 首页状态，包装首页需要的数据
  */
@@ -1011,7 +1011,7 @@ data class HomeState(
 ```
 这个是存放到ViewModel层的首页动态数据。
 
-```
+```Kotlin
  // 首页数据监听 通过 mutableStateOf包装 HomeState
     var viewStates by mutableStateOf(
         HomeState(
@@ -1025,7 +1025,7 @@ data class HomeState(
 
 下面继续回到首页内容区：
 然后是一个SwipeRefresh组件,官方提供的。
-```
+```Kotlin
     SwipeRefresh(
         /**
          * 状态，是否正在刷新
@@ -1048,7 +1048,7 @@ data class HomeState(
 然后首页内容区里面用了一个 LazyColumn，应该也是配合懒加载和复用官方实现的一个类。
 然后里面第一个item就是我们的轮播图了。
 
-```
+```Kotlin
 /**
  * 顶部轮播图
  */
@@ -1110,7 +1110,7 @@ fun BannerPager(modifier: Modifier = Modifier, viewModel: HomeViewModel) {
 ```
 这个轮播图里面开了个协程去获取轮播图数据，只会走一次。
 然后一个水平分页里面存放所有轮播图，轮播item为BannerItem,这个是自定义的
-```
+```Kotlin
 @Composable
 fun BannerItem(modifier: Modifier = Modifier, data: BannerResponse) {
     data.apply {
@@ -1144,7 +1144,7 @@ fun BannerItem(modifier: Modifier = Modifier, data: BannerResponse) {
 主要是为了实现这种效果
 ![](./%E7%8E%A9Android-Compose%E7%89%88%E6%9C%AC-%E9%A1%B9%E7%9B%AE%E5%88%86%E6%9E%90/home_item.jpeg)
 
-```
+```Kotlin
  /**
    * items集合
    */
@@ -1170,7 +1170,7 @@ items(it) { homeBean ->
 这里用了items，然后遍历了 list,每个item对应一个 HomeListItem
 这里定义了一个函数，说明了点击收藏图标后的逻辑。
 
-```
+```Kotlin
   /**
      * 是否收藏了，用remember包装一下bool值
      */
@@ -1201,7 +1201,7 @@ items(it) { homeBean ->
 这里外层是用了Card,定义了点击item的逻辑。
 
 里面是这样的：
-```
+```Kotlin
  Column(Modifier.padding(8.dp)) {
                 /**
                  * 第一行 水平布局
@@ -1345,7 +1345,7 @@ items(it) { homeBean ->
 要实现这样的效果，怎么处理呢？
 
 首先开启一个协程，获取用户sp数据，转成UserInfo对象
-```
+```Kotlin
    /**
      * 开启协程，只走一次
      */
@@ -1371,7 +1371,7 @@ items(it) { homeBean ->
 ```
 这里获取积分和排名是需要走接口的
 这里会走到ViewModel层这个函数：
-```
+```Kotlin
     private fun getIntegral() {
         viewModelScope.launch {
             flow {
@@ -1394,7 +1394,7 @@ items(it) { homeBean ->
     }
 ```
 这个retrofit中是这样定义的：
-```
+```Kotlin
 interface ApiService {
     /**
      * 获取当前账户的个人积分
@@ -1405,7 +1405,7 @@ interface ApiService {
 这个就是一个suspend挂起函数。
 
 顶层为Column:
-```
+```Kotlin
     /**
      * 顶层为列表视图
      */
@@ -1425,7 +1425,7 @@ interface ApiService {
 ```
 
 头像区域，点击后可以弹pop，但是需要先获取权限，这样获取：
-```
+```Kotlin
 // 图片点击事件 会去申请下权限
             XXPermissions
                 .with(context)
@@ -1465,7 +1465,7 @@ interface ApiService {
 用了一个三方库实现。
 
 中间操作栏这样实现：
-```
+```Kotlin
   // 操作栏 有个外边框，包裹菜单项，底部有阴影
         Surface(
             Modifier
@@ -1479,7 +1479,7 @@ interface ApiService {
 ```
 
 具体的菜单项也是用懒加载实现：
-```
+```Kotlin
 LazyColumn(Modifier.background(HhfTheme.colors.listItem)) {
                 itemsIndexed(list) { i, bean ->
 
@@ -1512,7 +1512,7 @@ LazyColumn(Modifier.background(HhfTheme.colors.listItem)) {
 ```
 
 具体的菜单item,有图标+文字+右侧箭头实现：
-```
+```Kotlin
 
 @Composable
 fun MineItem(
@@ -1555,7 +1555,7 @@ UI搞定了，跳转逻辑怎么处理呢？
 
 
 会委托给mineViewModel处理：
-```
+```Kotlin
     /**
      * 分发开发者行为
      */
@@ -1578,7 +1578,7 @@ UI搞定了，跳转逻辑怎么处理呢？
 这里分发开发者行为，其实更像用户行为，有可能不是用户触发，所以我这里称之为开发者行为。
 
 点击菜单项继续分发：
-```
+```Kotlin
 private fun toComposable(type: Int) {
         if(isLogin){
             when (type) {

@@ -80,7 +80,7 @@ end
 
 ### 4.1 自定义FlutterBoostDelegate
 
-```
+```Swift
 // Flutter Boost 架构Delegate
 // 参考： https://github.com/alibaba/flutter_boost/blob/master/docs/install.md
 class GMFlutterBoostDelegate : NSObject, FlutterBoostDelegate {
@@ -172,7 +172,7 @@ Flutter 跳转 原生 主要用这个：pushNativeRoute 方法
 其实说白了，Flutter页面本质上还是Controller。
 我们调整到任何一个Flutter，其实都是先跳自己的Controller。
 如下：
-```
+```Swift
 class DisPromotionChooseShopStoreViewController: FBFlutterViewContainer {
     
     static var pageName = "disPromotionChooseShopStore"
@@ -193,7 +193,7 @@ class DisPromotionChooseShopStoreViewController: FBFlutterViewContainer {
 
 这个需要再AppDelegate中完成。
 可以搞个扩展方法：
-```
+```Swift
 extension AppDelegate {
     /// 设置flutter
     func configFlutterBoost(_ application: UIApplication) {

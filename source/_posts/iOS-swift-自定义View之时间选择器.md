@@ -41,7 +41,7 @@ categories:
 
 ### 3.1 全局变量
 
-```
+```Swift
 class CalendarView: UIView {
     
     /// 传出去给调用者
@@ -80,7 +80,7 @@ timeArr是我们右侧使用的UIPickerView要用的数据。
 ### 3.2 UI定义
 
 这里我们大致会用到这些视图。
-```
+```Swift
 //白色背景底 整个半屏的视图
 private lazy var acView: UIView = {
     let view = UIView()
@@ -223,7 +223,7 @@ private lazy var pickerView: UIPickerView = {
 ### 3.3 生命周期函数
 
 初始化看下，应该要先设置一个蒙层。
-```
+```Swift
 override init(frame: CGRect){
         super.init(frame: frame)
         /// 这里应该是蒙层
@@ -243,7 +243,7 @@ override init(frame: CGRect){
 
 ### 3.4 定义方法，展示和隐藏选择器
 
-```
+```Swift
 extension CalendarView{
     /// 显示弹窗
     public func showAlertView() {
@@ -274,7 +274,7 @@ extension CalendarView{
 ### 3.5 设置初始化日期
 
 外部可能有选择好的日期，所以我们必须提供一个方法，设置数据。
-```
+```Swift
 extension CalendarView{
     /// 按照这个date获取这个月的数据
     func setDate(date: Date = Date()){
@@ -327,7 +327,7 @@ extension CalendarView{
 
 有了日期就可以设置UI了，所以我们看下如何填充视图的。
 
-```
+```Swift
 extension CalendarView {
     func setUI() {
         
@@ -440,7 +440,7 @@ extension CalendarView {
 中规中矩，老老实实从上到下，从左到右布局。
 
 内部星期几看下如何布局的：
-```
+```Swift
 func setWeekUiInner() {
         let arr = ["日","一","二","三","四","五","六"]
 
@@ -463,7 +463,7 @@ func setWeekUiInner() {
 ```
 
 还有底部的下一步和完成：
-```
+```Swift
 func addBottomUI() {
         let nextBtn: UIButton = UIButton.init(type: .custom)
         nextBtn.frame = CGRect.init(x: 16, y: ScreenHeight*0.57*0.57+8+34+40, width: (ScreenWidth-32), height: 44)
@@ -490,7 +490,7 @@ func addBottomUI() {
 ### 3.7 填充数据
 
 这里先看下日历数据如何使用代理和数据源的：
-```
+```Swift
 extension CalendarView: UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return modelArr.count
@@ -545,7 +545,7 @@ extension CalendarView: UICollectionViewDelegate,UICollectionViewDataSource,UICo
 ### 3.8 UIPickerView数据填充
 
 然后看下预约时间如何填充数据的。
-```
+```Swift
 extension CalendarView:UIPickerViewDelegate,UIPickerViewDataSource {
 
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
@@ -622,7 +622,7 @@ extension CalendarView:UIPickerViewDelegate,UIPickerViewDataSource {
 ### 3.9 交互事件
 
 这里交互事件统一用一个扩展类来实现。
-```
+```Swift
 extension CalendarView {
     
     @objc func actionForChooseDate(){
@@ -716,7 +716,7 @@ extension CalendarView {
 ## 4 撸下时间工具
 
 这个只是个单纯工具，不必重复造轮子。
-```
+```Swift
 class YSDateTool {
     // MARK: - 当前时间组件
     static func currentDateCom(date: Date = Date()) -> DateComponents{
@@ -1091,7 +1091,7 @@ class YSDateTool {
 这个就是日历里面的item，还是相当简单的。
 
 ### 5.1 全局变量
-```
+```Swift
 class CalendarCell: UICollectionViewCell {
     
     static var identifier = "UICollectionViewCell"
@@ -1154,7 +1154,7 @@ class CalendarCell: UICollectionViewCell {
 ### 5.2 UI子View
 
 这里只用到一个子View。
-```
+```Swift
 var titleLab: UILabel = {
         let lan = UILabel()
         lan.font = .pingFangRegular(size: 16)
@@ -1169,7 +1169,7 @@ var titleLab: UILabel = {
 
 ### 5.3 生命周期函数
 
-```
+```Swift
 override init(frame: CGRect) {
         super.init(frame: frame)
         contentView.backgroundColor = .clear

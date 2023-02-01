@@ -109,7 +109,7 @@ categories:
 </table>
 
 另外一个就是需要我们在AppDelegate中注册key：
-```
+```Swift
  /// 设置高德地图
 func configAMap() {
     AMapServices.shared().apiKey = "你申请的key"
@@ -123,7 +123,7 @@ func configAMap() {
 
 ### 4.1 新建两个实体类
 
-```
+```Swift
 class GMLocationPickerLocationResult: NSObject {
     
     //MARK: - property
@@ -206,7 +206,7 @@ class GMLocationPickerLocationResult: NSObject {
 
 这个用了一个convenience关键字来声明init，主要是覆写的作用，重载。可以参考这篇文章：[https://www.jianshu.com/p/09c6c88ed61e](https://www.jianshu.com/p/09c6c88ed61e)。这里面初始化已经用了高德的实体类AMapGeoPoint,这个包含了经纬度；AMapReGeocode，这个是逆地址编码；然后还有一个自定义实体，这个是Info，上面那个是result，info如下定义：
 
-```
+```Swift
 
 class GMLocationPickerLocationInfo: NSObject {
     
@@ -376,7 +376,7 @@ class GMLocationPickerLocationInfo: NSObject {
 
 ### 4.2 外部类定义
 
-```
+```Swift
 /// 地图选择 闭包，向外吐出去
 typealias GMLocationResultHandler = (GMLocationPickerLocationResult?) -> Swift.Void
 
@@ -408,7 +408,7 @@ enum GMLocationPickerRegionChageFor {
 
 ### 4.3 UI声明
 
-```
+```Swift
 class GMLocationPickerController: GMBaseViewController {
 
     //MARK: - property
@@ -429,7 +429,7 @@ class GMLocationPickerController: GMBaseViewController {
 
 ### 4.4 数据声明
 
-```
+```Swift
 // Data
 var navTitle: String?                                       // Nav标题 (可选)
 weak var delegate: GMLocationPickerControllerDelegate?      // 代理
@@ -450,7 +450,7 @@ var pickerFor: GMLocationPickerFor = .warehouseCreate       // 地图选择用�
 
 ### 4.5 其它成员声明
 
-```
+```Swift
 // Tool
 private var search: AMapSearchAPI!                          // 地图 搜索功能
 private var locationManager: AMapLocationManager!           // 地图 定位功能
@@ -469,7 +469,7 @@ private var viewDidAppear = false
 ### 4.6 生命周期之viewDidLoad
 
 这个走一次，看下做了什么：
-```
+```Swift
 override func viewDidLoad() {
         super.viewDidLoad()
         self.layoutSubviews()
@@ -477,7 +477,7 @@ override func viewDidLoad() {
     }
 ```
 加载了子View，然后去加载数据。
-```
+```Swift
 private func layoutSubviews() {
         
         self.view.backgroundColor = .white
@@ -639,7 +639,7 @@ private func layoutSubviews() {
 这里大头针跟地图一点关系没有，这个只是把大头针放在中间而已。没有跟地图绑定任何关系。
 
 然后去加载数据：
-```
+```Swift
 private func loadData() {
     // 设置标题
     if let navTitle = self.navTitle, !navTitle.isEmpty {
@@ -675,7 +675,7 @@ private func loadData() {
 这里设置了标题，然后就去走预地理位置信息处理的方法。这里的pre相关的数据，在跳转前，就给这个controller赋值了，这里跟Android不太一样，Android还要通过intent来传，它这个居然可以直接用controller的实例传值。
 
 具体预制方法为：
-```
+```Swift
 /// 根据预地理位置信息 按照优先级 决定预定位方式
 func data_preLocatedHandle(locationInfo: GMLocationPickerLocationInfo? = nil,
                             preCoordinate: CLLocationCoordinate2D? = nil, preKeyword: String? = nil) {
@@ -723,7 +723,7 @@ func data_preLocatedHandle(locationInfo: GMLocationPickerLocationInfo? = nil,
 ```
 这里就是一段逻辑，如果之前有地址，然后如何去显示的逻辑。如何去移动地图。
 主要是用了一个 self.mapView.centerCoordinate来设置地图中心坐标，然后这里调用搜索词是走了这个方法：
-```
+```Swift
 /// 根据当前地图中间位置 搜索逆地理
 /// - Parameter isForSubmit: 用于提交 or 用户滑动地理获取(顺带搜索附近)
 private func map_searchLocationForReGeo(isForSubmit: Bool) {
@@ -747,12 +747,12 @@ private func map_searchLocationForReGeo(isForSubmit: Bool) {
 }
 ```
 这里根据地图中心位置调用了搜索接口,具体请求在这里：
-```
+```Swift
 self.search.aMapReGoecodeSearch(regeo)
 ```
 
 如何搜索附近地址呢？
-```
+```Swift
 /// 根据选中位置 搜索附近POI
 private func map_searchLocationForNearby() {
     guard let coordinate = self.selectingLocationInfo?.coordinate else { return }
@@ -775,7 +775,7 @@ private func map_searchLocationForNearby() {
 
 ### 4.7 生命周期之viewWillAppear
 
-```
+```Swift
 override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         setupWhiteNavBarColor()
@@ -788,7 +788,7 @@ override func viewWillAppear(_ animated: Bool) {
 
 ### 4.8 生命周期之viewDidAppear
 
-```
+```Swift
 override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         self.viewDidAppear = true
@@ -798,13 +798,13 @@ override func viewDidAppear(_ animated: Bool) {
 
 ### 4.9 析构函数
 
-```
+```Swift
 deinit {
         self.tydev_logDeinit()
     }
 ```
 这里也没干啥，打印下日志：
-```
+```Swift
 /// 输出对象销毁日志
 func tydev_logDeinit() {
     self.tydev_logDeinit(nil)
@@ -824,7 +824,7 @@ func tydev_logDeinit(_ mark: String?) {
 ### 4.10 地图代理
 
 前面我们设置了代理为自己，需要处理下：
-```
+```Swift
 // 地图Delegate - Map
 extension GMLocationPickerController : MAMapViewDelegate {
     
@@ -848,7 +848,7 @@ extension GMLocationPickerController : MAMapViewDelegate {
 
 ### 4.11 搜索代理
 
-```
+```Swift
 // 地图Delegate - Search
 extension GMLocationPickerController : AMapSearchDelegate {
     /// POI查询回调函数 [定位获取附近POI、搜索POI]
@@ -976,7 +976,7 @@ extension GMLocationPickerController : AMapSearchDelegate {
 
 ### 4.12 其它代理
 
-```
+```Swift
 
 // TableView Delegate
 extension GMLocationPickerController: UITableViewDelegate, UITableViewDataSource {
@@ -1020,7 +1020,7 @@ extension GMLocationPickerController : UITextFieldDelegate
 
 ### 4.13 如何定位
 
-```
+```Swift
 /// 定位当前位置
 private func map_requestLocation(_ completion: ((CLLocation?, AMapLocationReGeocode?) -> ())?) {
     // 定位请求
@@ -1048,7 +1048,7 @@ private func map_requestLocation(_ completion: ((CLLocation?, AMapLocationReGeoc
 
 ### 4.14 地址权限工具
 
-```
+```Swift
 /// 地址权限管理器 配置
 class TYLocationAuthorizationConfig: NSObject {
     
@@ -1254,7 +1254,7 @@ extension TYLocationAuthorization : CLLocationManagerDelegate {
 ```
 这里需要考虑到多种情况，是否拒绝权限，是否拥有了权限以及不同手机系统的问题。
 用法也是相当简单：
-```
+```Swift
 let manager = self.authorizationManager
 manager.verifyLocationAuthroization(showAlertIn: self, completion: {
     if #available(iOS 14.0, *) {

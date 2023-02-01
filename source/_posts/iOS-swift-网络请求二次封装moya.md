@@ -48,7 +48,7 @@ moya是对Alamofire的再次封装。它可以实现各种自定义配置，真�
 
 可以建立一个登录相关接口，比如修改密码啥的，跟登录有关的统一用一个Manager。
 如下：
-```
+```swift
 import Foundation
 import Moya
 
@@ -203,7 +203,7 @@ extension UserLoginAPIManagerService : MyServerType {
 然后就是我们调用的地方了。
 
 在登录的地方这样用：
-```
+```swift
  loginApiRequest.requestJson(.userAccountLogin(userName: userName, passWord: safePassWord)) {result in
     let json = JSON.init(rawValue: result)
     if json?["code"].intValue == 1000 {
@@ -233,7 +233,7 @@ loginApiRequest就是我们前面定义的登录类接口的常量。
 注意到这里有传参，需要关注下.userAccoutLogin是啥东西？
 > 原来就是我们定义的泛型类，MyServerType，这里.userAccountLogin是一个枚举也是一个MyServerType，我们可以在这里面添加请求参数，这样就关联起来了。
 
-```
+```swift
 enum UserLoginAPIManagerService {
     /// 账号密码登录
     case userAccountLogin(userName:String, passWord:String)
@@ -259,7 +259,7 @@ enum UserLoginAPIManagerService {
 ## 4 细节分析
 
 继续上面的案例，当我们发送json请求时，走了一个框架封装好的方法，看下：
-```
+```swift
 @discardableResult
     public func requestJson(_ target: T,
                             callbackQueue: DispatchQueue? = DispatchQueue.main,
@@ -298,7 +298,7 @@ enum UserLoginAPIManagerService {
 里面回调是我们自己的逻辑，就是解析了下Json，然后就是403或401的时候，跳转了登录页，这里的逻辑不需要关注。
 
 看下内部的request方法吧：
-```
+```swift
 @discardableResult
     public func request(_ target: T,
                         callbackQueue: DispatchQueue? = DispatchQueue.main,
@@ -340,7 +340,7 @@ enum UserLoginAPIManagerService {
 
 ### 4.1 生产Moya Provider
 首先看下provider怎么来的：
-```
+```swift
 public struct Networking<T: MyServerType> {
     public let provider: MoyaProvider<T>
     
@@ -398,7 +398,7 @@ static var plugins: [PluginType] {
 这里创建的时候，就默认传了一个默认的Provider，这个是Moya官方的哦。
 
 另外新建这个MoyaProvider的时候还需要3个闭包，我们通过Networking来生产：
-```
+```swift
 static func endpointsClosure<T>() -> (T) -> Endpoint where T: MyServerType {
     return { target in
         var headers: [String: String] = target.headers ?? [:]
@@ -448,7 +448,7 @@ static func APIKeysBasedStubBehaviour<T>(_ target: T) -> Moya.StubBehavior where
 
 ### 4.2 继续走Provider的request
 
-```
+```swift
 /// Designated request-making method. Returns a `Cancellable` token to cancel the request later.
     @discardableResult
     open func request(_ target: Target,
@@ -466,7 +466,7 @@ static func APIKeysBasedStubBehaviour<T>(_ target: T) -> Moya.StubBehavior where
 
 个人感觉这个也是非常关键，我们外部使用，需要建立一个枚举，同时也是一个MyServerType，这个携带了请求参数，请求方法之类的，总之它包装了一切我们请求需要的东西。
 
-```
+```swift
 import Foundation
 import Moya
 
@@ -486,7 +486,7 @@ public protocol MyServerType: TargetType {
 ```
 首先，它这个继承了Moya自己的TargetType，还增加了自己额外的一些协议。
 
-```
+```swift
 extension MyServerType {
     public var base: String { return WebService.shared.rootUrl}
     
@@ -546,7 +546,7 @@ extension MyServerType {
 这里应该是实现了默认值的设定。
 当然我们是可以更改的。
 
-```
+```swift
 func myBaseUrl(_ path: String) -> String {
     if path.isCompleteUrl { return path }
     return WebService.shared.rootUrl;
@@ -568,7 +568,7 @@ extension String {
 然后是其它工具方法。
 
 这里有用到一个WebService类，这里面存放的也是一些默认值设定：
-```
+```swift
 import Foundation
 import UIKit
 import AdSupport
