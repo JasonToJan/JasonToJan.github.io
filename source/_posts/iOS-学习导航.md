@@ -19,6 +19,9 @@ categories:
 ### 1.2 SwiftUI自学站点
 > [https://www.openswiftui.com/](https://www.openswiftui.com/)
 
+### 1.3 Swift编程语言中文教程
+> [https://swift.bootcss.com/](https://swift.bootcss.com/)
+
 ## 2 优秀站点
 
 ### 2.1 国外世界级iOS讨论
