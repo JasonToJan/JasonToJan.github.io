@@ -9,8 +9,9 @@
     <meta name="google-site-verification" content="yCy2azpds5XSuGZvis6OuA-XIGF5GuGpYRAaGfD6o48" />
     <meta name="360-site-verification" content="b7c11a830ef90fd1464ad6206bb7b6e7" />
     <meta name="description" content="1 渐变TableView1.1 效果
+
 1.2 代码实现直接是继承了UITableViewController这个控制器，这个应该是自带了一个列表。内部有一个tableView。
-class ClearTableViewController">
+class ClearTableViewControlle">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -508,7 +509,8 @@ class ClearTableViewController">
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="1-渐变TableView"><a href="#1-渐变TableView" class="headerlink" title="1 渐变TableView"></a>1 渐变TableView</h2><h3 id="1-1-效果"><a href="#1-1-效果" class="headerlink" title="1.1 效果"></a>1.1 效果</h3><p><img src="/./iOS-swift-3%E5%A4%A930%E4%B8%AAswift%E9%A1%B9%E7%9B%AE%E4%B9%8B%E7%AC%AC%E4%BA%8C%E5%A4%A9/cleartableviewcell.gif"><br><img src=cleartableviewcell.gif></p>
+                <h2 id="1-渐变TableView"><a href="#1-渐变TableView" class="headerlink" title="1 渐变TableView"></a>1 渐变TableView</h2><h3 id="1-1-效果"><a href="#1-1-效果" class="headerlink" title="1.1 效果"></a>1.1 效果</h3><img src=cleartableviewcell.gif>
+
 <h3 id="1-2-代码实现"><a href="#1-2-代码实现" class="headerlink" title="1.2 代码实现"></a>1.2 代码实现</h3><p>直接是继承了UITableViewController这个控制器，这个应该是自带了一个列表。内部有一个tableView。</p>
 <pre><code>class ClearTableViewController: UITableViewController &#123;
 </code></pre>
@@ -599,8 +601,12 @@ class ClearTableViewController">
     &#125;
 </code></pre>
 <p>重点实现下这几个代理方法即可。颜色设置主要是通过willDisplay这个方法设置进去了。</p>
-<h2 id="2-登录动画"><a href="#2-登录动画" class="headerlink" title="2 登录动画"></a>2 登录动画</h2><h3 id="2-1-效果"><a href="#2-1-效果" class="headerlink" title="2.1 效果"></a>2.1 效果</h3><p><img src="/./iOS-swift-3%E5%A4%A930%E4%B8%AAswift%E9%A1%B9%E7%9B%AE%E4%B9%8B%E7%AC%AC%E4%BA%8C%E5%A4%A9/simple%20login%20animation.gif"><br><img src=simple%20login%20animation.gif></p>
-<h3 id="2-2-故事版关系"><a href="#2-2-故事版关系" class="headerlink" title="2.2 故事版关系"></a>2.2 故事版关系</h3><p><img src="/./iOS-swift-3%E5%A4%A930%E4%B8%AAswift%E9%A1%B9%E7%9B%AE%E4%B9%8B%E7%AC%AC%E4%BA%8C%E5%A4%A9/21_1.png"><br><img src=21_1.png><br>这里是有两个场景Scene，每个Scene绑定了一个类，也就是左侧的两个Controller。<br>这里学会了不用代码，直接用storyboard直接实现控制器的跳转。</p>
+<h2 id="2-登录动画"><a href="#2-登录动画" class="headerlink" title="2 登录动画"></a>2 登录动画</h2><h3 id="2-1-效果"><a href="#2-1-效果" class="headerlink" title="2.1 效果"></a>2.1 效果</h3><img src=simple%20login%20animation.gif>
+
+<h3 id="2-2-故事版关系"><a href="#2-2-故事版关系" class="headerlink" title="2.2 故事版关系"></a>2.2 故事版关系</h3><img src=21_1.png>
+这里是有两个场景Scene，每个Scene绑定了一个类，也就是左侧的两个Controller。
+这里学会了不用代码，直接用storyboard直接实现控制器的跳转。
+
 <p>可以参考下这篇文章：<a target="_blank" rel="noopener" href="https://blog.csdn.net/Sherlooock/article/details/106825134">Xcode新建View Controller Scene并实现界面间跳转的方法</a>。</p>
 <h3 id="2-3-启动页"><a href="#2-3-启动页" class="headerlink" title="2.3 启动页"></a>2.3 启动页</h3><pre><code class="line-numbers language-Swift">class SplasViewController: UIViewController &#123;
     
@@ -678,7 +684,8 @@ class ClearTableViewController">
 &#125;
 </code></pre>
 <p>这是设置3个动画，将三个视图从左边滑出。</p>
-<h2 id="3-列表动画"><a href="#3-列表动画" class="headerlink" title="3 列表动画"></a>3 列表动画</h2><h3 id="3-1-效果"><a href="#3-1-效果" class="headerlink" title="3.1 效果"></a>3.1 效果</h3><p><img src="/./iOS-swift-3%E5%A4%A930%E4%B8%AAswift%E9%A1%B9%E7%9B%AE%E4%B9%8B%E7%AC%AC%E4%BA%8C%E5%A4%A9/AnimateTabel.gif"><br><img src=AnimateTabel.gif></p>
+<h2 id="3-列表动画"><a href="#3-列表动画" class="headerlink" title="3 列表动画"></a>3 列表动画</h2><h3 id="3-1-效果"><a href="#3-1-效果" class="headerlink" title="3.1 效果"></a>3.1 效果</h3><img src=AnimateTabel.gif>
+
 <h3 id="3-2-第一个列表"><a href="#3-2-第一个列表" class="headerlink" title="3.2 第一个列表"></a>3.2 第一个列表</h3><p>初始化：</p>
 <pre><code class="line-numbers language-Swift">override func viewDidLoad() &#123;
     super.viewDidLoad()    
@@ -906,7 +913,8 @@ func colorforIndex(_ index: Int) -&gt; UIColor &#123;
 &#125;
 </code></pre>
 <p>这里和第一个Cell类似。</p>
-<h2 id="4-游戏抽奖滚动图案"><a href="#4-游戏抽奖滚动图案" class="headerlink" title="4 游戏抽奖滚动图案"></a>4 游戏抽奖滚动图案</h2><h3 id="4-1-效果"><a href="#4-1-效果" class="headerlink" title="4.1 效果"></a>4.1 效果</h3><p><img src="/./iOS-swift-3%E5%A4%A930%E4%B8%AAswift%E9%A1%B9%E7%9B%AE%E4%B9%8B%E7%AC%AC%E4%BA%8C%E5%A4%A9/emoji%20spin.gif"><br><img src=emoji%20spin.gif></p>
+<h2 id="4-游戏抽奖滚动图案"><a href="#4-游戏抽奖滚动图案" class="headerlink" title="4 游戏抽奖滚动图案"></a>4 游戏抽奖滚动图案</h2><h3 id="4-1-效果"><a href="#4-1-效果" class="headerlink" title="4.1 效果"></a>4.1 效果</h3><img src=emoji%20spin.gif>
+
 <h3 id="4-2-UI"><a href="#4-2-UI" class="headerlink" title="4.2 UI"></a>4.2 UI</h3><p>这里一个背景图片<br>go按钮<br>中间是UIPickerView，有点像时间滚动条<br>底部模式，结果文案。</p>
 <p>直接在故事版里面拖好了。</p>
 <p>然后拖动3个View到控制器：</p>
@@ -1012,8 +1020,9 @@ func colorforIndex(_ index: Int) -&gt; UIColor &#123;
     &#125;)
 &#125;
 </code></pre>
-<h2 id="5-启动动画"><a href="#5-启动动画" class="headerlink" title="5 启动动画"></a>5 启动动画</h2><h3 id="5-1-效果"><a href="#5-1-效果" class="headerlink" title="5.1 效果"></a>5.1 效果</h3><p><img src="/./iOS-swift-3%E5%A4%A930%E4%B8%AAswift%E9%A1%B9%E7%9B%AE%E4%B9%8B%E7%AC%AC%E4%BA%8C%E5%A4%A9/splash.gif"><br><img src=splash.gif></p>
-<h3 id="5-2-启动页"><a href="#5-2-启动页" class="headerlink" title="5.2 启动页"></a>5.2 启动页</h3><p>启动页需要再info.plist中配置<br>如下：<br><img src="/./iOS-swift-3%E5%A4%A930%E4%B8%AAswift%E9%A1%B9%E7%9B%AE%E4%B9%8B%E7%AC%AC%E4%BA%8C%E5%A4%A9/25_1.png"><br><img src=25_1.png></p>
+<h2 id="5-启动动画"><a href="#5-启动动画" class="headerlink" title="5 启动动画"></a>5 启动动画</h2><h3 id="5-1-效果"><a href="#5-1-效果" class="headerlink" title="5.1 效果"></a>5.1 效果</h3><img src=splash.gif>
+
+<h3 id="5-2-启动页"><a href="#5-2-启动页" class="headerlink" title="5.2 启动页"></a>5.2 启动页</h3><p>启动页需要再info.plist中配置<br>如下：<br><img src=25_1.png></p>
 <p>这里我们在LaunchScreen.storyboard中设置了一个背景图片。<br>这里面设置了一张白色的🕊没有效果哦。但是之前有，不知道为啥。</p>
 <h3 id="5-3-首页"><a href="#5-3-首页" class="headerlink" title="5.3 首页"></a>5.3 首页</h3><p>首页其实加了一个同启动页的蓝色背景，中间减掉一个白鸽，然后白鸽再扩展的动画。<br>这个背景是在故事版的View右侧属性里面的Background中设置的。</p>
 <p>设置蒙层：</p>
@@ -1063,7 +1072,8 @@ func colorforIndex(_ index: Int) -&gt; UIColor &#123;
 &#125;
 </code></pre>
 <p>动画结束，需要将蒙层去掉，不然屏幕上方会多出一块多余的遮挡视图。</p>
-<h2 id="6-滑动菜单"><a href="#6-滑动菜单" class="headerlink" title="6 滑动菜单"></a>6 滑动菜单</h2><h3 id="6-1-效果"><a href="#6-1-效果" class="headerlink" title="6.1 效果"></a>6.1 效果</h3><p><img src="/./iOS-swift-3%E5%A4%A930%E4%B8%AAswift%E9%A1%B9%E7%9B%AE%E4%B9%8B%E7%AC%AC%E4%BA%8C%E5%A4%A9/SlideMenu.gif"><br><img src=SlideMenu.gif></p>
+<h2 id="6-滑动菜单"><a href="#6-滑动菜单" class="headerlink" title="6 滑动菜单"></a>6 滑动菜单</h2><h3 id="6-1-效果"><a href="#6-1-效果" class="headerlink" title="6.1 效果"></a>6.1 效果</h3><img src=SlideMenu.gif>
+
 <h3 id="6-2-首页"><a href="#6-2-首页" class="headerlink" title="6.2 首页"></a>6.2 首页</h3><pre><code class="line-numbers language-Swift">class NewsTableViewController: BaseTableViewController &#123;
     let menuTransitionManager = MenuTransitionManager()
     
@@ -1297,7 +1307,8 @@ extension MenuTableViewController &#123;
 
 &#125;
 </code></pre>
-<h2 id="7-酷炫左右缩放菜单"><a href="#7-酷炫左右缩放菜单" class="headerlink" title="7 酷炫左右缩放菜单"></a>7 酷炫左右缩放菜单</h2><h3 id="7-1-效果"><a href="#7-1-效果" class="headerlink" title="7.1 效果"></a>7.1 效果</h3><p><img src="/./iOS-swift-3%E5%A4%A930%E4%B8%AAswift%E9%A1%B9%E7%9B%AE%E4%B9%8B%E7%AC%AC%E4%BA%8C%E5%A4%A9/TumblrMenu.gif"><br><img src=TumblrMenu.gif></p>
+<h2 id="7-酷炫左右缩放菜单"><a href="#7-酷炫左右缩放菜单" class="headerlink" title="7 酷炫左右缩放菜单"></a>7 酷炫左右缩放菜单</h2><h3 id="7-1-效果"><a href="#7-1-效果" class="headerlink" title="7.1 效果"></a>7.1 效果</h3><img src=TumblrMenu.gif>
+
 <h3 id="7-2-首页"><a href="#7-2-首页" class="headerlink" title="7.2 首页"></a>7.2 首页</h3><pre><code class="line-numbers language-Swift">class MainViewController: BaseViewController &#123;
 
     override func viewDidLoad() &#123;
@@ -1460,9 +1471,11 @@ class MenuTransitionManager: NSObject &#123;
 &#125;
 </code></pre>
 <p>主要是动画执行的时候，走了self.onStageMenuController方法或者self.offStageMenuController这个方法实现动画效果。</p>
-<h2 id="8-限制字符串"><a href="#8-限制字符串" class="headerlink" title="8 限制字符串"></a>8 限制字符串</h2><h3 id="8-1-效果"><a href="#8-1-效果" class="headerlink" title="8.1 效果"></a>8.1 效果</h3><p><img src="/./iOS-swift-3%E5%A4%A930%E4%B8%AAswift%E9%A1%B9%E7%9B%AE%E4%B9%8B%E7%AC%AC%E4%BA%8C%E5%A4%A9/Limit.gif"><br><img src=Limit.gif></p>
+<h2 id="8-限制字符串"><a href="#8-限制字符串" class="headerlink" title="8 限制字符串"></a>8 限制字符串</h2><h3 id="8-1-效果"><a href="#8-1-效果" class="headerlink" title="8.1 效果"></a>8.1 效果</h3><img src=Limit.gif>
+
 <h3 id="8-2-UI"><a href="#8-2-UI" class="headerlink" title="8.2 UI"></a>8.2 UI</h3><p>这里也是先构造一个故事版。<br>左上角：Close按钮。<br>右上角：Tweet按钮。<br>头像：Avatar Image VIew。<br>底部View: 4个Button<br>编辑框：UITextView</p>
-<p><img src="/./iOS-swift-3%E5%A4%A930%E4%B8%AAswift%E9%A1%B9%E7%9B%AE%E4%B9%8B%E7%AC%AC%E4%BA%8C%E5%A4%A9/18_1.png"><br><img src=18_1.png></p>
+<img src=18_1.png>
+
 <p>控制器要用的：</p>
 <pre><code class="line-numbers language-Swift">class ViewController: UIViewController &#123;
 
@@ -1535,7 +1548,8 @@ class MenuTransitionManager: NSObject &#123;
 &#125;
 </code></pre>
 <p>这里是为了统计当前剩余字符，如果不足，则无法继续输入。</p>
-<h2 id="9-自定义下拉刷新"><a href="#9-自定义下拉刷新" class="headerlink" title="9 自定义下拉刷新"></a>9 自定义下拉刷新</h2><h3 id="9-1-效果"><a href="#9-1-效果" class="headerlink" title="9.1 效果"></a>9.1 效果</h3><p><img src="/./iOS-swift-3%E5%A4%A930%E4%B8%AAswift%E9%A1%B9%E7%9B%AE%E4%B9%8B%E7%AC%AC%E4%BA%8C%E5%A4%A9/CustomPullToRefresh.gif"><br><img src=CustomPullToRefresh.gif></p>
+<h2 id="9-自定义下拉刷新"><a href="#9-自定义下拉刷新" class="headerlink" title="9 自定义下拉刷新"></a>9 自定义下拉刷新</h2><h3 id="9-1-效果"><a href="#9-1-效果" class="headerlink" title="9.1 效果"></a>9.1 效果</h3><img src=CustomPullToRefresh.gif>
+
 <h3 id="9-2-变量定义"><a href="#9-2-变量定义" class="headerlink" title="9.2 变量定义"></a>9.2 变量定义</h3><pre><code class="line-numbers language-Swift">    var refreshController: UIRefreshControl!
     var customView: UIView!
     var labelsArray: Array&lt;UILabel&gt; = []
@@ -1713,7 +1727,8 @@ func getNextColor() -&gt; UIColor &#123;
     &#125;)
 &#125;
 </code></pre>
-<h2 id="10-CollectionView动画"><a href="#10-CollectionView动画" class="headerlink" title="10 CollectionView动画"></a>10 CollectionView动画</h2><h3 id="10-1-效果"><a href="#10-1-效果" class="headerlink" title="10.1 效果"></a>10.1 效果</h3><p><img src="/./iOS-swift-3%E5%A4%A930%E4%B8%AAswift%E9%A1%B9%E7%9B%AE%E4%B9%8B%E7%AC%AC%E4%BA%8C%E5%A4%A9/CollectionViewAnimation.gif"><br><img src=CollectionViewAnimation.gif></p>
+<h2 id="10-CollectionView动画"><a href="#10-CollectionView动画" class="headerlink" title="10 CollectionView动画"></a>10 CollectionView动画</h2><h3 id="10-1-效果"><a href="#10-1-效果" class="headerlink" title="10.1 效果"></a>10.1 效果</h3><img src=CollectionViewAnimation.gif>
+
 <h3 id="10-2-首页"><a href="#10-2-首页" class="headerlink" title="10.2 首页"></a>10.2 首页</h3><p>Main.storyboard里面放置了一个UICollectionView。</p>
 <p>里面放置了2个结构体：</p>
 <pre><code class="line-numbers language-Swift">private struct Storyboard &#123;
@@ -2404,8 +2419,9 @@ override func collectionView(_ collectionView: UICollectionView, didSelectItemAt
                     <div class="summary block-with-text">
                         
                             1 渐变TableView1.1 效果
+
 1.2 代码实现直接是继承了UITableViewController这个控制器，这个应该是自带了一个列表。内部有一个tableView。
-class ClearTableViewController
+class ClearTableViewControlle
                         
                     </div>
                     <div class="publish-info">
