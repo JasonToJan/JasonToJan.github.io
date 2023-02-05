@@ -685,7 +685,8 @@
     &#125;
 </code></pre>
 <p>主要是在cellForRowAt显示了具体item效果，根据前面选择的字体索引，这里设置给cell了。</p>
-<h2 id="3-播放本地视频"><a href="#3-播放本地视频" class="headerlink" title="3 播放本地视频"></a>3 播放本地视频</h2><h3 id="3-1-效果"><a href="#3-1-效果" class="headerlink" title="3.1 效果"></a>3.1 效果</h3><p><img src="/./iOS-swift-3%E5%A4%A930%E4%B8%AASwift%E9%A1%B9%E7%9B%AE%E4%B9%8B%E7%AC%AC%E4%B8%80%E5%A4%A9/playvideo.gif"><br><img src=playvideo.gif></p>
+<h2 id="3-播放本地视频"><a href="#3-播放本地视频" class="headerlink" title="3 播放本地视频"></a>3 播放本地视频</h2><h3 id="3-1-效果"><a href="#3-1-效果" class="headerlink" title="3.1 效果"></a>3.1 效果</h3><img src=playvideo.gif>
+
 <h3 id="3-2-本地视频"><a href="#3-2-本地视频" class="headerlink" title="3.2 本地视频"></a>3.2 本地视频</h3><p>直接将mp4文件放置在根目录下。<br>Xcode可自动识别到Movie文件夹下。</p>
 <h3 id="3-3-Core-Data"><a href="#3-3-Core-Data" class="headerlink" title="3.3 Core Data"></a>3.3 Core Data</h3><p>这里播放本地视频并不依赖这个。<br>因为demo中有部分代码是这个，当然也是可以学习下的。<br>关于Core Data实际上是一个数据存储框架，类似Realm。<br>Ficow写的这篇文章还不错：<br> <a target="_blank" rel="noopener" href="https://blog.ficowshen.com/page/post/52">了解和采用 CoreData 框架 —— Ficow 陪你学 CoreData</a></p>
 <h3 id="3-4-UI定义"><a href="#3-4-UI定义" class="headerlink" title="3.4 UI定义"></a>3.4 UI定义</h3><pre><code class="line-numbers language-Swift"> // Swift中mark的使用方式，效果等同OC重的 #pragma mark -
@@ -822,11 +823,12 @@ class VideoCell: UITableViewCell &#123;
  &#125;
 </code></pre>
 <p>这里给系统的控制器设置了一个AVPlayer，AVPlayer里面设置了URL，这样实现了播放视频效果。</p>
-<h2 id="4-摄像头"><a href="#4-摄像头" class="headerlink" title="4 摄像头"></a>4 摄像头</h2><h3 id="4-1-效果预览"><a href="#4-1-效果预览" class="headerlink" title="4.1 效果预览"></a>4.1 效果预览</h3><p><img src="/./iOS-swift-3%E5%A4%A930%E4%B8%AASwift%E9%A1%B9%E7%9B%AE%E4%B9%8B%E7%AC%AC%E4%B8%80%E5%A4%A9/snapchatmenu.gif"><br><img src=snapchatmenu.gif></p>
+<h2 id="4-摄像头"><a href="#4-摄像头" class="headerlink" title="4 摄像头"></a>4 摄像头</h2><h3 id="4-1-效果预览"><a href="#4-1-效果预览" class="headerlink" title="4.1 效果预览"></a>4.1 效果预览</h3><img src=snapchatmenu.gif>
+
 <h3 id="4-2-UI"><a href="#4-2-UI" class="headerlink" title="4.2 UI"></a>4.2 UI</h3><p>这里主要是一个横滑的UIScrollView。<br>长度设置了屏幕的3倍，第一块放置一个UIImageView，中间放置摄像头，最后一块也放置了一个UIImageView。</p>
 <p>这里左侧的视图，采用了xib的方式来创建。<br>我个人理解，xib的方式有点类似Android的xml，因为我本身是学Android，希望大家原谅我这样比喻。xib也是很直观,可以看到效果，而且也可以挂载到某个具体的UIView上。</p>
-<p>左侧的xib是这样的：<br><img src="/./iOS-swift-3%E5%A4%A930%E4%B8%AASwift%E9%A1%B9%E7%9B%AE%E4%B9%8B%E7%AC%AC%E4%B8%80%E5%A4%A9/04_1.png"><br><img src=04_1.png></p>
-<p>右侧的xib是这样的：<br><img src="/./iOS-swift-3%E5%A4%A930%E4%B8%AASwift%E9%A1%B9%E7%9B%AE%E4%B9%8B%E7%AC%AC%E4%B8%80%E5%A4%A9/04_2.png"><br><img src=04_2.png></p>
+<p>左侧的xib是这样的：<br><img src=04_1.png></p>
+<p>右侧的xib是这样的：<br><img src=04_2.png></p>
 <p>中间的就是一个控制器来的,当然这个控制器也是可以关联xib的。<br>如何关联的？<br>这里有一个CameraView.xib，它的File’s Owner是CameraView，这样就关联起来了。所以再CameraView.swift里面操作的都是针对这个xib的逻辑处理。</p>
 <p>重点看下如何显示摄像头的吧：<br>首先是UI关联：</p>
 <pre><code>@IBOutlet weak var cameraView: UIView!
@@ -919,8 +921,13 @@ class ViewController: UIViewController &#123;
 <p>这里可以直接创建一个UINib作为控制器，传xib的名称给它就可以的。</p>
 <p>另外这里用到了相机，需要相机的权限声明哦：<br>在info.plist文件下配置：<br>Privacy - Camera Usage Description </p>
 <p>然后Value自己随便填下就好了。</p>
-<h2 id="5-传送带效果"><a href="#5-传送带效果" class="headerlink" title="5 传送带效果"></a>5 传送带效果</h2><h3 id="5-1-效果"><a href="#5-1-效果" class="headerlink" title="5.1 效果"></a>5.1 效果</h3><p><img src="/./iOS-swift-3%E5%A4%A930%E4%B8%AASwift%E9%A1%B9%E7%9B%AE%E4%B9%8B%E7%AC%AC%E4%B8%80%E5%A4%A9/Carousel.gif"><br><img src=Carousel.gif></p>
-<h3 id="5-2-故事版关联"><a href="#5-2-故事版关联" class="headerlink" title="5.2 故事版关联"></a>5.2 故事版关联</h3><p><img src="/./iOS-swift-3%E5%A4%A930%E4%B8%AASwift%E9%A1%B9%E7%9B%AE%E4%B9%8B%E7%AC%AC%E4%B8%80%E5%A4%A9/5_1.png"><br><img src=5_1.png><br>首先Main.storyboard是在info.plist中注册的。<br>然后这个首页故事版配置的控制器的Class就是代码区域表示的控制器了。<br>层层关联环环相扣。</p>
+<h2 id="5-传送带效果"><a href="#5-传送带效果" class="headerlink" title="5 传送带效果"></a>5 传送带效果</h2><h3 id="5-1-效果"><a href="#5-1-效果" class="headerlink" title="5.1 效果"></a>5.1 效果</h3><img src=Carousel.gif>
+
+<h3 id="5-2-故事版关联"><a href="#5-2-故事版关联" class="headerlink" title="5.2 故事版关联"></a>5.2 故事版关联</h3><img src=5_1.png>
+首先Main.storyboard是在info.plist中注册的。
+然后这个首页故事版配置的控制器的Class就是代码区域表示的控制器了。
+层层关联环环相扣。
+
 <h3 id="5-3-UI"><a href="#5-3-UI" class="headerlink" title="5.3 UI"></a>5.3 UI</h3><p>这里其实就一个背景图片+一个UICollectionView。</p>
 <pre><code class="line-numbers language-Swift">class HomeViewController: UIViewController &#123;
 
@@ -1053,9 +1060,10 @@ class ViewController: UIViewController &#123;
 &#125;
 </code></pre>
 <p>继续扩展下这个控制器，这里面，判断了offset在停止滑动后的逻辑。</p>
-<h2 id="6-定位"><a href="#6-定位" class="headerlink" title="6 定位"></a>6 定位</h2><h3 id="6-1-效果"><a href="#6-1-效果" class="headerlink" title="6.1 效果"></a>6.1 效果</h3><p><img src="/./iOS-swift-3%E5%A4%A930%E4%B8%AASwift%E9%A1%B9%E7%9B%AE%E4%B9%8B%E7%AC%AC%E4%B8%80%E5%A4%A9/mylocation.gif"><br><img src=mylocation.gif></p>
+<h2 id="6-定位"><a href="#6-定位" class="headerlink" title="6 定位"></a>6 定位</h2><h3 id="6-1-效果"><a href="#6-1-效果" class="headerlink" title="6.1 效果"></a>6.1 效果</h3><img src=mylocation.gif>
+
 <h3 id="6-2-UI"><a href="#6-2-UI" class="headerlink" title="6.2 UI"></a>6.2 UI</h3><p>这个UI比较简单，一个UILabel，一个按钮。</p>
-<p>这个按钮的点击事件直接通过故事版链接到了控制器，所以控制器无需有这个UIView，有这个点击事件就行了。<br><img src="/./iOS-swift-3%E5%A4%A930%E4%B8%AASwift%E9%A1%B9%E7%9B%AE%E4%B9%8B%E7%AC%AC%E4%B8%80%E5%A4%A9/06_1.png"><br><img src=06_1.png></p>
+<p>这个按钮的点击事件直接通过故事版链接到了控制器，所以控制器无需有这个UIView，有这个点击事件就行了。<br><img src=06_1.png></p>
 <h3 id="6-3-如何定位"><a href="#6-3-如何定位" class="headerlink" title="6.3 如何定位"></a>6.3 如何定位</h3><p>首先声明一个全局变量：</p>
 <pre><code class="line-numbers language-Swift">  // 强制自动解包，可以赋值为nil，为nil后再调用会报错
     // 建议定义为：
@@ -1117,7 +1125,8 @@ extension ViewController : CLLocationManagerDelegate &#123;
     &#125;
 &#125;
 </code></pre>
-<h2 id="7-下拉刷新"><a href="#7-下拉刷新" class="headerlink" title="7 下拉刷新"></a>7 下拉刷新</h2><h3 id="7-1-效果"><a href="#7-1-效果" class="headerlink" title="7.1 效果"></a>7.1 效果</h3><p><img src="/./iOS-swift-3%E5%A4%A930%E4%B8%AASwift%E9%A1%B9%E7%9B%AE%E4%B9%8B%E7%AC%AC%E4%B8%80%E5%A4%A9/07.gif"><br><img src=07.gif></p>
+<h2 id="7-下拉刷新"><a href="#7-下拉刷新" class="headerlink" title="7 下拉刷新"></a>7 下拉刷新</h2><h3 id="7-1-效果"><a href="#7-1-效果" class="headerlink" title="7.1 效果"></a>7.1 效果</h3><img src=07.gif>
+
 <h3 id="7-2-变量声明"><a href="#7-2-变量声明" class="headerlink" title="7.2 变量声明"></a>7.2 变量声明</h3><pre><code class="line-numbers language-Swift">class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate &#123;
     
     var index = 0
@@ -1204,7 +1213,8 @@ func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -&gt
 &#125;
 </code></pre>
 <p>DispatchQueue.main.asyncAfter： 主线程执行延迟任务方法。<br>这里延迟3s后，去更新数据。然后控制器取消刷新。</p>
-<h2 id="8-炫彩音乐"><a href="#8-炫彩音乐" class="headerlink" title="8 炫彩音乐"></a>8 炫彩音乐</h2><h3 id="8-1-效果"><a href="#8-1-效果" class="headerlink" title="8.1 效果"></a>8.1 效果</h3><p><img src="/./iOS-swift-3%E5%A4%A930%E4%B8%AASwift%E9%A1%B9%E7%9B%AE%E4%B9%8B%E7%AC%AC%E4%B8%80%E5%A4%A9/randomMusicColor.gif"><br><img src=randomMusicColor.gif></p>
+<h2 id="8-炫彩音乐"><a href="#8-炫彩音乐" class="headerlink" title="8 炫彩音乐"></a>8 炫彩音乐</h2><h3 id="8-1-效果"><a href="#8-1-效果" class="headerlink" title="8.1 效果"></a>8.1 效果</h3><img src=randomMusicColor.gif>
+
 <h3 id="8-2-全局变量定义"><a href="#8-2-全局变量定义" class="headerlink" title="8.2 全局变量定义"></a>8.2 全局变量定义</h3><pre><code class="line-numbers language-Swift">var audioPlayer = AVAudioPlayer()
     
 let gradientLayer = CAGradientLayer()
@@ -1277,7 +1287,8 @@ var backgroundColor: (red: CGFloat, green: CGFloat,blue: CGFloat,alpha: CGFloat)
 &#125;
 </code></pre>
 <p>这里红蓝绿会随机获取一个值，生成一个颜色值。同时会更新渐变层变更，这样背景就随机变化了。</p>
-<h2 id="9-图片缩放效果"><a href="#9-图片缩放效果" class="headerlink" title="9 图片缩放效果"></a>9 图片缩放效果</h2><h3 id="9-1-效果"><a href="#9-1-效果" class="headerlink" title="9.1 效果"></a>9.1 效果</h3><p><img src="/./iOS-swift-3%E5%A4%A930%E4%B8%AASwift%E9%A1%B9%E7%9B%AE%E4%B9%8B%E7%AC%AC%E4%B8%80%E5%A4%A9/09.gif"><br><img src=09.gif></p>
+<h2 id="9-图片缩放效果"><a href="#9-图片缩放效果" class="headerlink" title="9 图片缩放效果"></a>9 图片缩放效果</h2><h3 id="9-1-效果"><a href="#9-1-效果" class="headerlink" title="9.1 效果"></a>9.1 效果</h3><img src=09.gif>
+
 <h3 id="9-2-布局构造"><a href="#9-2-布局构造" class="headerlink" title="9.2 布局构造"></a>9.2 布局构造</h3><p>这里看了下Main.storyboard<br>貌似是在ScrollView里面放了一个ImageView哦。</p>
 <p>这里有个细节，就是背景有点毛玻璃效果。<br>其实是这样的，它在Main.storyboard底部设置了一张UIImageView，其实就是这张图片。<br>然后再搞了一个UIVisualEffectView覆盖再上面，就形成了一种毛玻璃效果。</p>
 <p>回到控制器里面，这里无非就是两个视图，并且把这个Constraint约束也加进来了，有4个约束，顶部约束，头部约束，底部约束和尾部约束。</p>
@@ -1391,7 +1402,8 @@ fileprivate func updateConstraintsForSize(_ size: CGSize) &#123;
 <blockquote>
 <p>func scrollViewDidScrollToTop(_ scrollView: UIScrollView)<br>当滚动到最上面时调用</p>
 </blockquote>
-<h2 id="10-视频背景"><a href="#10-视频背景" class="headerlink" title="10 视频背景"></a>10 视频背景</h2><h3 id="10-1-效果"><a href="#10-1-效果" class="headerlink" title="10.1 效果"></a>10.1 效果</h3><p><img src="/./iOS-swift-3%E5%A4%A930%E4%B8%AASwift%E9%A1%B9%E7%9B%AE%E4%B9%8B%E7%AC%AC%E4%B8%80%E5%A4%A9/videobg.gif"><br><img src=videobg.gif></p>
+<h2 id="10-视频背景"><a href="#10-视频背景" class="headerlink" title="10 视频背景"></a>10 视频背景</h2><h3 id="10-1-效果"><a href="#10-1-效果" class="headerlink" title="10.1 效果"></a>10.1 效果</h3><img src=videobg.gif>
+
 <h3 id="10-2-定义一个基类播放控制器"><a href="#10-2-定义一个基类播放控制器" class="headerlink" title="10.2 定义一个基类播放控制器"></a>10.2 定义一个基类播放控制器</h3><pre><code class="line-numbers language-Swift">public enum ScalingMode &#123;
   case resize
   case resizeAspect
