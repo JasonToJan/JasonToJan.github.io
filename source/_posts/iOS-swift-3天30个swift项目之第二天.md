@@ -14,7 +14,6 @@ categories:
 ## 1 渐变TableView
 
 ### 1.1 效果
-![](./iOS-swift-3%E5%A4%A930%E4%B8%AAswift%E9%A1%B9%E7%9B%AE%E4%B9%8B%E7%AC%AC%E4%BA%8C%E5%A4%A9/cleartableviewcell.gif)
 <img src=cleartableviewcell.gif>
 
 ### 1.2 代码实现
@@ -122,11 +121,9 @@ override func numberOfSections(in tableView: UITableView) -> Int {
 ## 2 登录动画
 
 ### 2.1 效果
-![](./iOS-swift-3%E5%A4%A930%E4%B8%AAswift%E9%A1%B9%E7%9B%AE%E4%B9%8B%E7%AC%AC%E4%BA%8C%E5%A4%A9/simple%20login%20animation.gif)
 <img src=simple%20login%20animation.gif>
 
 ### 2.2 故事版关系
-![](./iOS-swift-3%E5%A4%A930%E4%B8%AAswift%E9%A1%B9%E7%9B%AE%E4%B9%8B%E7%AC%AC%E4%BA%8C%E5%A4%A9/21_1.png)
 <img src=21_1.png>
 这里是有两个场景Scene，每个Scene绑定了一个类，也就是左侧的两个Controller。
 这里学会了不用代码，直接用storyboard直接实现控制器的跳转。
@@ -224,7 +221,6 @@ override func viewDidAppear(_ animated: Bool) {
 ## 3 列表动画
 
 ### 3.1 效果
-![](./iOS-swift-3%E5%A4%A930%E4%B8%AAswift%E9%A1%B9%E7%9B%AE%E4%B9%8B%E7%AC%AC%E4%BA%8C%E5%A4%A9/AnimateTabel.gif)
 <img src=AnimateTabel.gif>
 
 ### 3.2 第一个列表
@@ -479,7 +475,6 @@ class SecondTableCell: UITableViewCell {
 ## 4 游戏抽奖滚动图案
 
 ### 4.1 效果
-![](./iOS-swift-3%E5%A4%A930%E4%B8%AAswift%E9%A1%B9%E7%9B%AE%E4%B9%8B%E7%AC%AC%E4%BA%8C%E5%A4%A9/emoji%20spin.gif)
 <img src=emoji%20spin.gif>
 
 ### 4.2 UI
@@ -613,13 +608,11 @@ override func viewDidAppear(_ animated: Bool) {
 ## 5 启动动画
 
 ### 5.1 效果
-![](./iOS-swift-3%E5%A4%A930%E4%B8%AAswift%E9%A1%B9%E7%9B%AE%E4%B9%8B%E7%AC%AC%E4%BA%8C%E5%A4%A9/splash.gif)
 <img src=splash.gif>
 
 ### 5.2 启动页
 启动页需要再info.plist中配置
 如下：
-![](./iOS-swift-3%E5%A4%A930%E4%B8%AAswift%E9%A1%B9%E7%9B%AE%E4%B9%8B%E7%AC%AC%E4%BA%8C%E5%A4%A9/25_1.png)
 <img src=25_1.png>
 
 这里我们在LaunchScreen.storyboard中设置了一个背景图片。
@@ -685,7 +678,6 @@ extension ViewController : CAAnimationDelegate {
 ## 6 滑动菜单
 
 ### 6.1 效果
-![](./iOS-swift-3%E5%A4%A930%E4%B8%AAswift%E9%A1%B9%E7%9B%AE%E4%B9%8B%E7%AC%AC%E4%BA%8C%E5%A4%A9/SlideMenu.gif)
 <img src=SlideMenu.gif>
 
 ### 6.2 首页
@@ -949,7 +941,6 @@ class MenuTableViewCell: UITableViewCell {
 ## 7 酷炫左右缩放菜单
 
 ### 7.1 效果
-![](./iOS-swift-3%E5%A4%A930%E4%B8%AAswift%E9%A1%B9%E7%9B%AE%E4%B9%8B%E7%AC%AC%E4%BA%8C%E5%A4%A9/TumblrMenu.gif)
 <img src=TumblrMenu.gif>
 
 ### 7.2 首页
@@ -1133,7 +1124,6 @@ extension MenuTransitionManager : UIViewControllerAnimatedTransitioning {
 ## 8 限制字符串
 
 ### 8.1 效果
-![](./iOS-swift-3%E5%A4%A930%E4%B8%AAswift%E9%A1%B9%E7%9B%AE%E4%B9%8B%E7%AC%AC%E4%BA%8C%E5%A4%A9/Limit.gif)
 <img src=Limit.gif>
 
 ### 8.2 UI
@@ -1144,7 +1134,6 @@ extension MenuTransitionManager : UIViewControllerAnimatedTransitioning {
 底部View: 4个Button
 编辑框：UITextView
 
-![](./iOS-swift-3%E5%A4%A930%E4%B8%AAswift%E9%A1%B9%E7%9B%AE%E4%B9%8B%E7%AC%AC%E4%BA%8C%E5%A4%A9/18_1.png)
 <img src=18_1.png>
 
 控制器要用的：
@@ -1234,7 +1223,6 @@ extension ViewController : UITextViewDelegate {
 ## 9 自定义下拉刷新
 
 ### 9.1 效果
-![](./iOS-swift-3%E5%A4%A930%E4%B8%AAswift%E9%A1%B9%E7%9B%AE%E4%B9%8B%E7%AC%AC%E4%BA%8C%E5%A4%A9/CustomPullToRefresh.gif)
 <img src=CustomPullToRefresh.gif>
 
 ### 9.2 变量定义
@@ -1439,7 +1427,6 @@ func animateRefreshStep2() {
 ## 10 CollectionView动画
 
 ### 10.1 效果
-![](./iOS-swift-3%E5%A4%A930%E4%B8%AAswift%E9%A1%B9%E7%9B%AE%E4%B9%8B%E7%AC%AC%E4%BA%8C%E5%A4%A9/CollectionViewAnimation.gif)
 <img src=CollectionViewAnimation.gif>
 
 ### 10.2 首页
