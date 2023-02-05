@@ -244,7 +244,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 ## 3 播放本地视频
 
 ### 3.1 效果
-![](./iOS-swift-3%E5%A4%A930%E4%B8%AASwift%E9%A1%B9%E7%9B%AE%E4%B9%8B%E7%AC%AC%E4%B8%80%E5%A4%A9/playvideo.gif)
 <img src=playvideo.gif>
 
 ### 3.2 本地视频
@@ -418,7 +417,6 @@ class VideoCell: UITableViewCell {
 
 ### 4.1 效果预览
 
-![](./iOS-swift-3%E5%A4%A930%E4%B8%AASwift%E9%A1%B9%E7%9B%AE%E4%B9%8B%E7%AC%AC%E4%B8%80%E5%A4%A9/snapchatmenu.gif)
 <img src=snapchatmenu.gif>
 
 ### 4.2 UI
@@ -429,11 +427,9 @@ class VideoCell: UITableViewCell {
 我个人理解，xib的方式有点类似Android的xml，因为我本身是学Android，希望大家原谅我这样比喻。xib也是很直观,可以看到效果，而且也可以挂载到某个具体的UIView上。
 
 左侧的xib是这样的：
-![](./iOS-swift-3%E5%A4%A930%E4%B8%AASwift%E9%A1%B9%E7%9B%AE%E4%B9%8B%E7%AC%AC%E4%B8%80%E5%A4%A9/04_1.png)
 <img src=04_1.png>
 
 右侧的xib是这样的：
-![](./iOS-swift-3%E5%A4%A930%E4%B8%AASwift%E9%A1%B9%E7%9B%AE%E4%B9%8B%E7%AC%AC%E4%B8%80%E5%A4%A9/04_2.png)
 <img src=04_2.png>
 
 中间的就是一个控制器来的,当然这个控制器也是可以关联xib的。
@@ -553,12 +549,10 @@ Privacy - Camera Usage Description
 ## 5 传送带效果
 
 ### 5.1 效果
-![](./iOS-swift-3%E5%A4%A930%E4%B8%AASwift%E9%A1%B9%E7%9B%AE%E4%B9%8B%E7%AC%AC%E4%B8%80%E5%A4%A9/Carousel.gif)
 <img src=Carousel.gif>
 
 ### 5.2 故事版关联
 
-![](./iOS-swift-3%E5%A4%A930%E4%B8%AASwift%E9%A1%B9%E7%9B%AE%E4%B9%8B%E7%AC%AC%E4%B8%80%E5%A4%A9/5_1.png)
 <img src=5_1.png>
 首先Main.storyboard是在info.plist中注册的。
 然后这个首页故事版配置的控制器的Class就是代码区域表示的控制器了。
@@ -726,14 +720,12 @@ extension HomeViewController : UIScrollViewDelegate {
 ## 6 定位
 
 ### 6.1 效果
-![](./iOS-swift-3%E5%A4%A930%E4%B8%AASwift%E9%A1%B9%E7%9B%AE%E4%B9%8B%E7%AC%AC%E4%B8%80%E5%A4%A9/mylocation.gif)
 <img src=mylocation.gif>
 
 ### 6.2 UI
 这个UI比较简单，一个UILabel，一个按钮。
 
 这个按钮的点击事件直接通过故事版链接到了控制器，所以控制器无需有这个UIView，有这个点击事件就行了。
-![](./iOS-swift-3%E5%A4%A930%E4%B8%AASwift%E9%A1%B9%E7%9B%AE%E4%B9%8B%E7%AC%AC%E4%B8%80%E5%A4%A9/06_1.png)
 <img src=06_1.png>
 
 ### 6.3 如何定位
@@ -810,7 +802,6 @@ extension ViewController : CLLocationManagerDelegate {
 ## 7 下拉刷新
 
 ### 7.1 效果
-![](./iOS-swift-3%E5%A4%A930%E4%B8%AASwift%E9%A1%B9%E7%9B%AE%E4%B9%8B%E7%AC%AC%E4%B8%80%E5%A4%A9/07.gif)
 <img src=07.gif>
 
 ### 7.2 变量声明
@@ -920,7 +911,7 @@ DispatchQueue.main.asyncAfter： 主线程执行延迟任务方法。
 ## 8 炫彩音乐
 
 ### 8.1 效果
-![](./iOS-swift-3%E5%A4%A930%E4%B8%AASwift%E9%A1%B9%E7%9B%AE%E4%B9%8B%E7%AC%AC%E4%B8%80%E5%A4%A9/randomMusicColor.gif)
+
 <img src=randomMusicColor.gif>
 
 ### 8.2 全局变量定义
@@ -1010,7 +1001,6 @@ backgroundColor背景色，如果任何地方更改后，触发渐变色颜色�
 ## 9 图片缩放效果
 
 ### 9.1 效果
-![](./iOS-swift-3%E5%A4%A930%E4%B8%AASwift%E9%A1%B9%E7%9B%AE%E4%B9%8B%E7%AC%AC%E4%B8%80%E5%A4%A9/09.gif)
 <img src=09.gif>
 
 ### 9.2 布局构造
@@ -1153,7 +1143,6 @@ scrollView结束缩放时调用
 ## 10 视频背景
 
 ### 10.1 效果
-![](./iOS-swift-3%E5%A4%A930%E4%B8%AASwift%E9%A1%B9%E7%9B%AE%E4%B9%8B%E7%AC%AC%E4%B8%80%E5%A4%A9/videobg.gif)
 <img src=videobg.gif>
 
 ### 10.2 定义一个基类播放控制器

@@ -16,7 +16,7 @@ categories:
 ### 1.1 效果
 <img src=Swipeable%20Cell.gif>
 
-## 1.2 列表实现
+### 1.2 列表实现
 ```Swift
 class ViewController: UITableViewController {
 ```
