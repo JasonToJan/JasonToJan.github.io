@@ -9,11 +9,12 @@
     <meta name="google-site-verification" content="yCy2azpds5XSuGZvis6OuA-XIGF5GuGpYRAaGfD6o48" />
     <meta name="360-site-verification" content="b7c11a830ef90fd1464ad6206bb7b6e7" />
     <meta name="description" content="1 滑动删除1.1 效果
+
 1.2 列表实现class ViewController: UITableViewController &amp;#123;
 
 数据定义：
 var data = [
-    pattern(image: &amp;quot;1&amp;q">
+    pattern(image: &amp;quot;1&amp;">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -511,7 +512,8 @@ var data = [
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="1-滑动删除"><a href="#1-滑动删除" class="headerlink" title="1 滑动删除"></a>1 滑动删除</h2><h3 id="1-1-效果"><a href="#1-1-效果" class="headerlink" title="1.1 效果"></a>1.1 效果</h3><p><img src="/./iOS-swift-3%E5%A4%A930%E4%B8%AAswift%E9%A1%B9%E7%9B%AE%E4%B9%8B%E7%AC%AC%E4%B8%89%E5%A4%A9/Swipeable%20Cell.gif"><br><img src=Swipeable%20Cell.gif></p>
+                <h2 id="1-滑动删除"><a href="#1-滑动删除" class="headerlink" title="1 滑动删除"></a>1 滑动删除</h2><h3 id="1-1-效果"><a href="#1-1-效果" class="headerlink" title="1.1 效果"></a>1.1 效果</h3><img src=Swipeable%20Cell.gif>
+
 <h2 id="1-2-列表实现"><a href="#1-2-列表实现" class="headerlink" title="1.2 列表实现"></a>1.2 列表实现</h2><pre><code class="line-numbers language-Swift">class ViewController: UITableViewController &#123;
 </code></pre>
 <p>数据定义：</p>
@@ -588,10 +590,11 @@ override func tableView(_ tableView: UITableView, commit editingStyle: UITableVi
 &#125;
 </code></pre>
 <p>cell是自定义的，但主要是通过故事版拖动的，代码绑定里面没有做其它事情。<br>其实这个横滑效果，是系统支持的，我们只需要多实现一些协议方法即可。</p>
-<h2 id="2-3D触摸菜单"><a href="#2-3D触摸菜单" class="headerlink" title="2 3D触摸菜单"></a>2 3D触摸菜单</h2><h3 id="2-1-效果"><a href="#2-1-效果" class="headerlink" title="2.1 效果"></a>2.1 效果</h3><p><img src="/./iOS-swift-3%E5%A4%A930%E4%B8%AAswift%E9%A1%B9%E7%9B%AE%E4%B9%8B%E7%AC%AC%E4%B8%89%E5%A4%A9/3DTouchQuickAction.gif"><br><img src=3DTouchQuickAction.gif></p>
+<h2 id="2-3D触摸菜单"><a href="#2-3D触摸菜单" class="headerlink" title="2 3D触摸菜单"></a>2 3D触摸菜单</h2><h3 id="2-1-效果"><a href="#2-1-效果" class="headerlink" title="2.1 效果"></a>2.1 效果</h3><img src=3DTouchQuickAction.gif>
+
 <h3 id="2-2-页面定义"><a href="#2-2-页面定义" class="headerlink" title="2.2 页面定义"></a>2.2 页面定义</h3><p>首页很简单，这里是在故事版里面绑定的控制器。<br>就中间一个Label。</p>
 <p>然后还有2个页面，都是一张图片，在故事版里面定义了，没有在代码里面声明。</p>
-<h3 id="2-3-配置3D菜单"><a href="#2-3-配置3D菜单" class="headerlink" title="2.3 配置3D菜单"></a>2.3 配置3D菜单</h3><p>先在info.plist中配置菜单，这里先不实现具体跳转：<br><img src="/./iOS-swift-3%E5%A4%A930%E4%B8%AAswift%E9%A1%B9%E7%9B%AE%E4%B9%8B%E7%AC%AC%E4%B8%89%E5%A4%A9/22.png"><br><img src=22.png></p>
+<h3 id="2-3-配置3D菜单"><a href="#2-3-配置3D菜单" class="headerlink" title="2.3 配置3D菜单"></a>2.3 配置3D菜单</h3><p>先在info.plist中配置菜单，这里先不实现具体跳转：<br><img src=22.png></p>
 <h3 id="2-4-AppDelegate配置"><a href="#2-4-AppDelegate配置" class="headerlink" title="2.4 AppDelegate配置"></a>2.4 AppDelegate配置</h3><pre><code class="line-numbers language-Swift">enum ShortcutIdentifier: String &#123;
     
     case First
@@ -665,9 +668,12 @@ func handleShortCutItem(_ shortcutItem: UIApplicationShortcutItem) -&gt; Bool &#
 &#125;
 </code></pre>
 <p>这里定义了快捷键方式跳转方式，这里通过获取到Main的故事版，然后，故事版去instantiateViewController来获取其它的控制器，这里再通过present方法跳转到目标控制器。</p>
-<h2 id="3-侧滑菜单"><a href="#3-侧滑菜单" class="headerlink" title="3 侧滑菜单"></a>3 侧滑菜单</h2><h3 id="3-1-效果"><a href="#3-1-效果" class="headerlink" title="3.1 效果"></a>3.1 效果</h3><p><img src="/./iOS-swift-3%E5%A4%A930%E4%B8%AAswift%E9%A1%B9%E7%9B%AE%E4%B9%8B%E7%AC%AC%E4%B8%89%E5%A4%A9/SlideOutMenu.gif"><br><img src=SlideOutMenu.gif></p>
+<h2 id="3-侧滑菜单"><a href="#3-侧滑菜单" class="headerlink" title="3 侧滑菜单"></a>3 侧滑菜单</h2><h3 id="3-1-效果"><a href="#3-1-效果" class="headerlink" title="3.1 效果"></a>3.1 效果</h3><img src=SlideOutMenu.gif>
+
 <h3 id="3-2-侧滑支持"><a href="#3-2-侧滑支持" class="headerlink" title="3.2 侧滑支持"></a>3.2 侧滑支持</h3><p>首先需要引入SWRevealViewController.h和SWRevealViewController.m文件。<br>这个用官方的即可，文件比较长，就不贴进来了。</p>
-<h3 id="3-3-故事版定义"><a href="#3-3-故事版定义" class="headerlink" title="3.3 故事版定义"></a>3.3 故事版定义</h3><p><img src="/./iOS-swift-3%E5%A4%A930%E4%B8%AAswift%E9%A1%B9%E7%9B%AE%E4%B9%8B%E7%AC%AC%E4%B8%89%E5%A4%A9/23_1.png"><br><img src=23_1.png><br>这里定义好了跳转逻辑，直接在故事版里面操作的。</p>
+<h3 id="3-3-故事版定义"><a href="#3-3-故事版定义" class="headerlink" title="3.3 故事版定义"></a>3.3 故事版定义</h3><img src=23_1.png>
+这里定义好了跳转逻辑，直接在故事版里面操作的。
+
 <p>其它2个item也是如此。</p>
 <p>主要是在Main.storyboard中定义了第一个控制为：SWRevealViewController<br>这个是oc写的。</p>
 <p>故事版里面定义了这个控制器会指向一个BackTableVC。</p>
@@ -704,8 +710,9 @@ func handleShortCutItem(_ shortcutItem: UIApplicationShortcutItem) -&gt; Bool &#
 <pre><code> self.view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())   
 </code></pre>
 <p>才能实现菜单左滑手势效果哦。</p>
-<h2 id="4-磁片效果"><a href="#4-磁片效果" class="headerlink" title="4 磁片效果"></a>4 磁片效果</h2><h3 id="4-1-效果"><a href="#4-1-效果" class="headerlink" title="4.1 效果"></a>4.1 效果</h3><p><img src="/./iOS-swift-3%E5%A4%A930%E4%B8%AAswift%E9%A1%B9%E7%9B%AE%E4%B9%8B%E7%AC%AC%E4%B8%89%E5%A4%A9/MosaicLayouts.gif"><br><img src=MosaicLayouts.gif></p>
-<h3 id="4-2-pod引入三方库"><a href="#4-2-pod引入三方库" class="headerlink" title="4.2 pod引入三方库"></a>4.2 pod引入三方库</h3><p>这里通过Pod引入依赖，如下图：<br><img src="/./iOS-swift-3%E5%A4%A930%E4%B8%AAswift%E9%A1%B9%E7%9B%AE%E4%B9%8B%E7%AC%AC%E4%B8%89%E5%A4%A9/24_1.png"><br><img src=24_1.png></p>
+<h2 id="4-磁片效果"><a href="#4-磁片效果" class="headerlink" title="4 磁片效果"></a>4 磁片效果</h2><h3 id="4-1-效果"><a href="#4-1-效果" class="headerlink" title="4.1 效果"></a>4.1 效果</h3><img src=MosaicLayouts.gif>
+
+<h3 id="4-2-pod引入三方库"><a href="#4-2-pod引入三方库" class="headerlink" title="4.2 pod引入三方库"></a>4.2 pod引入三方库</h3><p>这里通过Pod引入依赖，如下图：<br><img src=24_1.png></p>
 <p>这里引入了FMMosaicLayout库+AFNetworking+ORStackView+SwiftyJSON<br>用了这四个库。</p>
 <h3 id="4-3-页面定义"><a href="#4-3-页面定义" class="headerlink" title="4.3 页面定义"></a>4.3 页面定义</h3><p>这里也是用了一个UICollectionView，单一个页面。<br>直接继承了这个：UICollectionViewController。</p>
 <pre><code class="line-numbers language-Swift">override func numberOfSections(in collectionView: UICollectionView) -&gt; Int &#123;
@@ -772,12 +779,13 @@ override func viewDidLoad() &#123;
 &#125;
 </code></pre>
 <p>这里如果是7的倍数就大图，否则小图。有3种类型。</p>
-<h2 id="5-基础动画"><a href="#5-基础动画" class="headerlink" title="5 基础动画"></a>5 基础动画</h2><h3 id="5-1-效果"><a href="#5-1-效果" class="headerlink" title="5.1 效果"></a>5.1 效果</h3><p><img src="/./iOS-swift-3%E5%A4%A930%E4%B8%AAswift%E9%A1%B9%E7%9B%AE%E4%B9%8B%E7%AC%AC%E4%B8%89%E5%A4%A9/BasicAnimation.gif"><br><img src=BasicAnimation.gif></p>
+<h2 id="5-基础动画"><a href="#5-基础动画" class="headerlink" title="5 基础动画"></a>5 基础动画</h2><h3 id="5-1-效果"><a href="#5-1-效果" class="headerlink" title="5.1 效果"></a>5.1 效果</h3><img src=BasicAnimation.gif>
+
 <h3 id="5-2-故事版"><a href="#5-2-故事版" class="headerlink" title="5.2 故事版"></a>5.2 故事版</h3><p>第一个启动页首先是Main.storyboard故事版，然后这个故事版有一个Storyboard Entry Point就是第一个场景了，这里第一个场景是空的NavigationController Scene。</p>
-<p>然后这里绑定了这个第一个场景跳转逻辑，底部这里有个：<br><img src="/./iOS-swift-3%E5%A4%A930%E4%B8%AAswift%E9%A1%B9%E7%9B%AE%E4%B9%8B%E7%AC%AC%E4%B8%89%E5%A4%A9/25_1.png"><br><img src=25_1.png></p>
-<p>那如何修改这个启动路径呢？<br><img src="/./iOS-swift-3%E5%A4%A930%E4%B8%AAswift%E9%A1%B9%E7%9B%AE%E4%B9%8B%E7%AC%AC%E4%B8%89%E5%A4%A9/25_2.png"><br><img src=25_2.png><br>这里最右侧属性里面，先清除掉之前的，然后拖动小圆点，指向目标场景即可哦。</p>
-<p>这里Navigation Controller场景指向了BasicAnimation场景，这里面是一个TableView。<br>这里配置的UITableView的代理和数据源都指向了Basic Animation。<br><img src="/./iOS-swift-3%E5%A4%A930%E4%B8%AAswift%E9%A1%B9%E7%9B%AE%E4%B9%8B%E7%AC%AC%E4%B8%89%E5%A4%A9/25_3.png"><br><img src=25_3.png><br>这里数据直接在故事版里面写好了。</p>
-<p>然后item的跳转也是直接在故事版里面拖动的：<br><img src="/./iOS-swift-3%E5%A4%A930%E4%B8%AAswift%E9%A1%B9%E7%9B%AE%E4%B9%8B%E7%AC%AC%E4%B8%89%E5%A4%A9/25_4.png"><br><img src=25_4.png></p>
+<p>然后这里绑定了这个第一个场景跳转逻辑，底部这里有个：<br><img src=25_1.png></p>
+<p>那如何修改这个启动路径呢？<br><img src=25_2.png><br>这里最右侧属性里面，先清除掉之前的，然后拖动小圆点，指向目标场景即可哦。</p>
+<p>这里Navigation Controller场景指向了BasicAnimation场景，这里面是一个TableView。<br>这里配置的UITableView的代理和数据源都指向了Basic Animation。<br><img src=25_3.png><br>这里数据直接在故事版里面写好了。</p>
+<p>然后item的跳转也是直接在故事版里面拖动的：<br><img src=25_4.png></p>
 <p>这里其实对应的首页的Controller没有啥东西：</p>
 <pre><code class="line-numbers language-Swift">class ViewController: UITableViewController &#123;
 
@@ -939,7 +947,8 @@ func setHeight(_ height: CGFloat) &#123;
 &#125;
 </code></pre>
 <p>这里让8个视图都开始旋转了。</p>
-<h2 id="6-CoreData使用"><a href="#6-CoreData使用" class="headerlink" title="6 CoreData使用"></a>6 CoreData使用</h2><h3 id="6-1-效果"><a href="#6-1-效果" class="headerlink" title="6.1 效果"></a>6.1 效果</h3><p><img src="/./iOS-swift-3%E5%A4%A930%E4%B8%AAswift%E9%A1%B9%E7%9B%AE%E4%B9%8B%E7%AC%AC%E4%B8%89%E5%A4%A9/CoreData.gif"><br><img src=CoreData.gif></p>
+<h2 id="6-CoreData使用"><a href="#6-CoreData使用" class="headerlink" title="6 CoreData使用"></a>6 CoreData使用</h2><h3 id="6-1-效果"><a href="#6-1-效果" class="headerlink" title="6.1 效果"></a>6.1 效果</h3><img src=CoreData.gif>
+
 <h3 id="6-2-AddDelegate配置"><a href="#6-2-AddDelegate配置" class="headerlink" title="6.2 AddDelegate配置"></a>6.2 AddDelegate配置</h3><pre><code class="line-numbers language-Swift">lazy var applicationDocumentsDirectory: NSURL = &#123;
         // The directory the application uses to store the Core Data store file. This code uses a directory named &quot;me.appkitchen.cd&quot; in the application&#39;s documents Application Support directory.
         let urls = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
@@ -1004,8 +1013,10 @@ func saveContext () &#123;
 <p>因为代码比较久了，这个按照XCode指示修复后就是这个效果。<br>这里可以运行了。</p>
 <p>主要是applicationWillTerminate方法中saveContext了。</p>
 <h3 id="6-3-可见数据操作"><a href="#6-3-可见数据操作" class="headerlink" title="6.3 可见数据操作"></a>6.3 可见数据操作</h3><p>这里代码使用还有点问题，暂时无法贴最新代码。<br>关于CoreData的使用还是建议参考这篇文章：<br><a target="_blank" rel="noopener" href="https://blog.ficowshen.com/page/post/52">了解和采用 CoreData 框架 —— Ficow 陪你学 CoreData</a>。</p>
-<h2 id="7-底部Bar动画"><a href="#7-底部Bar动画" class="headerlink" title="7 底部Bar动画"></a>7 底部Bar动画</h2><h3 id="7-1-效果"><a href="#7-1-效果" class="headerlink" title="7.1 效果"></a>7.1 效果</h3><p><img src="/./iOS-swift-3%E5%A4%A930%E4%B8%AAswift%E9%A1%B9%E7%9B%AE%E4%B9%8B%E7%AC%AC%E4%B8%89%E5%A4%A9/TapBarAnimation.gif"><br><img src=TapBarAnimation.gif></p>
-<h3 id="7-2-故事版添加导航item"><a href="#7-2-故事版添加导航item" class="headerlink" title="7.2 故事版添加导航item"></a>7.2 故事版添加导航item</h3><p><img src="/./iOS-swift-3%E5%A4%A930%E4%B8%AAswift%E9%A1%B9%E7%9B%AE%E4%B9%8B%E7%AC%AC%E4%B8%89%E5%A4%A9/27_1.png"><br><img src=27_1.png></p>
+<h2 id="7-底部Bar动画"><a href="#7-底部Bar动画" class="headerlink" title="7 底部Bar动画"></a>7 底部Bar动画</h2><h3 id="7-1-效果"><a href="#7-1-效果" class="headerlink" title="7.1 效果"></a>7.1 效果</h3><img src=TapBarAnimation.gif>
+
+<h3 id="7-2-故事版添加导航item"><a href="#7-2-故事版添加导航item" class="headerlink" title="7.2 故事版添加导航item"></a>7.2 故事版添加导航item</h3><img src=27_1.png>
+
 <p>这里应该是关联到了这3个item。<br>这样子，就可以展示底部导航栏效果。<br>然后item也定义了跳转的目标场景。</p>
 <h3 id="7-3-第一个Tab页"><a href="#7-3-第一个Tab页" class="headerlink" title="7.3 第一个Tab页"></a>7.3 第一个Tab页</h3><pre><code class="line-numbers language-Swift">class FirstTabViewController: UIViewController, UITableViewDataSource, UITableViewDelegate &#123;
 
@@ -1168,8 +1179,9 @@ func resetViewTransform() &#123;
     self.profileImageView.transform = CGAffineTransform(scaleX: 0.5, y: 0.5)
 &#125;
 </code></pre>
-<h2 id="8-系统搜索"><a href="#8-系统搜索" class="headerlink" title="8 系统搜索"></a>8 系统搜索</h2><h3 id="8-1-效果"><a href="#8-1-效果" class="headerlink" title="8.1 效果"></a>8.1 效果</h3><p><img src="/./iOS-swift-3%E5%A4%A930%E4%B8%AAswift%E9%A1%B9%E7%9B%AE%E4%B9%8B%E7%AC%AC%E4%B8%89%E5%A4%A9/Spotlight%20Search.gif"><br><img src=Spotlight%20Search.gif></p>
-<h3 id="8-2-首页"><a href="#8-2-首页" class="headerlink" title="8.2 首页"></a>8.2 首页</h3><p>数据设置：<br><img src="/./iOS-swift-3%E5%A4%A930%E4%B8%AAswift%E9%A1%B9%E7%9B%AE%E4%B9%8B%E7%AC%AC%E4%B8%89%E5%A4%A9/28_1.png"><br><img src=28_1.png><br>这里新建了一个电影数据，用key-value形式保存了。</p>
+<h2 id="8-系统搜索"><a href="#8-系统搜索" class="headerlink" title="8 系统搜索"></a>8 系统搜索</h2><h3 id="8-1-效果"><a href="#8-1-效果" class="headerlink" title="8.1 效果"></a>8.1 效果</h3><img src=Spotlight%20Search.gif>
+
+<h3 id="8-2-首页"><a href="#8-2-首页" class="headerlink" title="8.2 首页"></a>8.2 首页</h3><p>数据设置：<br><img src=28_1.png><br>这里新建了一个电影数据，用key-value形式保存了。</p>
 <p>可见时处理：</p>
 <pre><code class="line-numbers language-Swift">override func viewDidLoad() &#123;
     super.viewDidLoad()
@@ -1336,7 +1348,8 @@ override func prepare(for segue: UIStoryboardSegue, sender: Any?) &#123;
 &#125;
 </code></pre>
 <p>这里配置了movieInfo，外部设置进来，然后回显进去。</p>
-<h2 id="9-选择头像"><a href="#9-选择头像" class="headerlink" title="9 选择头像"></a>9 选择头像</h2><h3 id="9-1-效果"><a href="#9-1-效果" class="headerlink" title="9.1 效果"></a>9.1 效果</h3><p><img src="/./iOS-swift-3%E5%A4%A930%E4%B8%AAswift%E9%A1%B9%E7%9B%AE%E4%B9%8B%E7%AC%AC%E4%B8%89%E5%A4%A9/AvatarPicker.gif"><br><img src=AvatarPicker.gif></p>
+<h2 id="9-选择头像"><a href="#9-选择头像" class="headerlink" title="9 选择头像"></a>9 选择头像</h2><h3 id="9-1-效果"><a href="#9-1-效果" class="headerlink" title="9.1 效果"></a>9.1 效果</h3><img src=AvatarPicker.gif>
+
 <h3 id="9-2-点击头像"><a href="#9-2-点击头像" class="headerlink" title="9.2 点击头像"></a>9.2 点击头像</h3><pre><code class="line-numbers language-Swift">@IBAction func pickProfileImage(_ tap: UITapGestureRecognizer) &#123;
     let authorization = PHPhotoLibrary.authorizationStatus()
     
@@ -1373,7 +1386,8 @@ func presentCamera()
 &#125;
 </code></pre>
 <p>这里先判断有无权限，没有权限继续执行，有权限再跳转控制器。</p>
-<h2 id="10-wiki-Face"><a href="#10-wiki-Face" class="headerlink" title="10 wiki-Face"></a>10 wiki-Face</h2><h3 id="10-1-效果"><a href="#10-1-效果" class="headerlink" title="10.1 效果"></a>10.1 效果</h3><p><img src="/./iOS-swift-3%E5%A4%A930%E4%B8%AAswift%E9%A1%B9%E7%9B%AE%E4%B9%8B%E7%AC%AC%E4%B8%89%E5%A4%A9/wikiFace.gif"><br><img src=wikiFace.gif></p>
+<h2 id="10-wiki-Face"><a href="#10-wiki-Face" class="headerlink" title="10 wiki-Face"></a>10 wiki-Face</h2><h3 id="10-1-效果"><a href="#10-1-效果" class="headerlink" title="10.1 效果"></a>10.1 效果</h3><img src=wikiFace.gif>
+
 <h3 id="10-2-搜索处理"><a href="#10-2-搜索处理" class="headerlink" title="10.2 搜索处理"></a>10.2 搜索处理</h3><pre><code class="line-numbers language-Swift">func textFieldShouldReturn(_ textField: UITextField) -&gt; Bool &#123;
         
     textField.resignFirstResponder()
@@ -2017,11 +2031,12 @@ class WikiFace: NSObject &#123;
                     <div class="summary block-with-text">
                         
                             1 滑动删除1.1 效果
+
 1.2 列表实现class ViewController: UITableViewController &#123;
 
 数据定义：
 var data = [
-    pattern(image: &quot;1&q
+    pattern(image: &quot;1&
                         
                     </div>
                     <div class="publish-info">
