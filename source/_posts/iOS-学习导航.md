@@ -99,6 +99,12 @@ categories:
 ### 6.2 github 开源项目
 > [https://github.com/panbin/panbin-ios/blob/master/Swift.md](https://github.com/panbin/panbin-ios/blob/master/Swift.md)
 
+### 6.3 gitee仓库中的swift项目
+> [https://gitee.com/explore/all?lang=Swift](https://gitee.com/explore/all?lang=Swift)
+
+### 6.4 gitee客户端SwiftUI
+> [https://gitee.com/open-gitee/gitee_ios](https://gitee.com/open-gitee/gitee_ios)
+
 ## 7 其它
 
 ### 7.1 面试相关
