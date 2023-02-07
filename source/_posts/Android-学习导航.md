@@ -18,7 +18,10 @@ categories:
 ### 1.1.1 包体积优化
 > [https://juejin.cn/post/7186580175222472759](https://juejin.cn/post/7186580175222472759)
 
+### 1.1.2 NDK OpenGLES 3.0
+> [https://github.com/githubhaohao/NDK_OpenGLES_3_0](https://github.com/githubhaohao/NDK_OpenGLES_3_0)
 
+> [https://github.com/ouyangpeng/OpenGLESDemo](https://github.com/ouyangpeng/OpenGLESDemo)
 
 # 2 优秀站点
 
@@ -213,3 +216,9 @@ categories:
 
 ### 7.3.2 Google Samples
 > [https://github.com/googlesamples](https://github.com/googlesamples)
+
+## 7.4 随记
+
+### 7.4.1 kotlin let also run with 用法
+> [https://juejin.cn/post/6868179386344931342](https://juejin.cn/post/6868179386344931342)
+
