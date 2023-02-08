@@ -222,3 +222,10 @@ categories:
 ### 7.4.1 kotlin let also run with 用法
 > [https://juejin.cn/post/6868179386344931342](https://juejin.cn/post/6868179386344931342)
 
+### 7.4.2 包体积优化，11 项优化建议
+>  [封神之作：5 款逆向工具，7 款代码分析工具，11 项优化建议](https://mp.weixin.qq.com/s/m5Wv5rJEKI6MvA2YdcCOmQ)
+
+### 7.4.3 着色语言glsl
+> [OpenGL学习（十）-- 着色语言 GLSL 语法介绍](https://juejin.cn/post/6844903956183793678)
+
+> [Learn OpenGL github之着色器](https://learnopengl-cn.github.io/01%20Getting%20started/05%20Shaders/)

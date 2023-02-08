@@ -11,10 +11,9 @@ categories:
 - Android
 ---
 
-## 1 展示一个基本的红色三角形
+## 1 Demo1展示一个基本的红色三角形
 
 ### 1.1 效果
-![](./Android-OpenGLES-demo-%E5%AD%A6%E4%B9%A0%E4%B9%8B%E4%B8%80/01.png)
 <img src=01.png>
 
 ### 1.2 渲染页
