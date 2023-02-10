@@ -637,3 +637,52 @@ glBindBuffer(GL_ARRAY_BUFFER, 1);
 
 然后重复走glEnablevertexAttribArray和glVertexAttribPointer方法。
 
+然后if外面，其实就是拿缓存区里面的东西了。
+```
+glBindBuffer(GL_ARRAY_BUFFER, vboIds[0]);
+glEnableVertexAttribArray(VERTEX_POS_INDX);
+glVertexAttribPointer(VERTEX_POS_INDX, VERTEX_POS_SIZE, GL_FLOAT,
+                          GL_FALSE, vtxStrides[0], nullptr);
+```
+上面是拿第一个缓冲区数据，然后立即将绑定的缓冲数据映射到顶点着色器中的顶点属性变量。
+> 在使用OpenGL中的glVertexAttribPointer和glBindBuffer函数时，通常需要先绑定需要操作的缓冲对象，再调用glVertexAttribPointer函数。
+具体地，通常会进行如下操作：
+使用glGenBuffers函数创建一个缓冲对象。
+使用glBindBuffer函数绑定刚创建的缓冲对象。
+使用glBufferData函数将顶点数据复制到缓冲对象中。
+调用glVertexAttribPointer函数指定顶点属性数组。
+绑定缓冲对象后调用glVertexAttribPointer函数，表示将当前绑定的缓冲对象映射到顶点着色器中的顶点属性变量。因此，绑定和映射是两个独立的操作，需要按照正确的顺序进行。
+
+最后，再先拿glBindBuffer，再走glDrawElements，为何要按照这个顺序？
+> glBindBuffer 用于绑定缓冲区，指定下一次操作的缓冲区对象。在使用 glDrawElements 绘制图形之前，需要通过 glBindBuffer 将顶点数据缓冲区绑定到 OpenGL，以便它能够使用这些数据进行渲染。
+因此，在执行 glDrawElements 之前，必须首先通过执行 glBindBuffer 来绑定包含顶点数据的缓冲区，以确保 OpenGL 能够访问这些数据并正确渲染图形。
+
+那glDrawElements函数到底怎么用呢？
+> glDrawElements是OpenGL中的一个函数，用于通过索引来渲染几何图形。它用于绘制一系列的三角形或其他图元，基于一个索引数组和一组顶点数组。索引用于访问存储在一个或多个顶点数组中的顶点数据，这些数组可用于指定顶点的位置、颜色、纹理坐标或其他属性。
+在这种情况下，传递了nullptr，表示未提供索引数据，顶点将按照它们在顶点缓冲区中存储的顺序绘制。
+
+
+最后将顶点disable:
+```
+glDisableVertexAttribArray(VERTEX_POS_INDX);
+glDisableVertexAttribArray(VERTEX_COLOR_INDX);
+```
+
+然后清空缓存：
+```
+glBindBuffer(GL_ARRAY_BUFFER, 0);
+glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+```
+
+然后析构函数注意shutdown回收：
+```
+ glDeleteBuffers(3, &vboIds[0]);
+```
+这里把第一个地址给它即可。
+
+## 3 总结
+
+* 绘制三角形方法1，定义 in vec4 a_position位置信息，in vec4 a_color颜色信息，位置给gl_position表示顶点位置，a_color作为输出。绘制的时候通过glVertextAttribPointer方法可以直接将坐标点传进去，然后通过glVertexAttrib4fv给顶点设置颜色。然后直接用glDrawArrays开始绘制。
+
+* 使用缓冲区绘制三角形，着色器代码不改，本地建立一个int指针，第一个存顶点，第二个存颜色，第3个存3个点索引。然后通过glVertexAttribPointer，再拿第二个缓冲区再设置一次glVertexAttribPointer，相当于给顶点着色器中的数值赋值了。最后通过再拿索引，走glDrawElements绘制。记得需要disable和清缓存，并且销毁的时候需要将指针delete。
+

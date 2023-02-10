@@ -6,7 +6,7 @@ cover: false
 toc: true
 mathjax: true
 tags:
-- Android
+- Android Compose
 categories:
 - Android
 ---
