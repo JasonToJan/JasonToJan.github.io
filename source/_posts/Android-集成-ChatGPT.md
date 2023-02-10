@@ -230,7 +230,7 @@ private fun setContentListRV() {
 ```
 这里返回退出App。
 
-## 3.6 消息Adapter
+### 3.6 消息Adapter
 ```Kotlin
 class ContentAdapter(val context : Context, private val dataSet : List<ContentEntity>) : RecyclerView.Adapter<ContentAdapter.ViewHolder>() {
 
