@@ -4,12 +4,13 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="iOS swift 数据库realm实践, Android iOS Flutter">
+    <meta name="keywords" content="Android 集成 ChatGPT, Android iOS Flutter">
     <meta name="baidu-site-verification" content="fmlEuI34ir" />
     <meta name="google-site-verification" content="yCy2azpds5XSuGZvis6OuA-XIGF5GuGpYRAaGfD6o48" />
     <meta name="360-site-verification" content="b7c11a830ef90fd1464ad6206bb7b6e7" />
-    <meta name="description" content="1 需求定义需要获取服务端的条码数据库，存放到本地数据库。
-背景：集成了扫码功能，扫到的条码头需要匹配数据库中的条码列表，可以认为这个是一个离线数据库。不会实时判断，因为条码很多，这里先获取所有的条码，存放到本地数据库。然后扫码就按照数据库">
+    <meta name="description" content="1 效果
+
+2 技术栈Timber: 日志打印工具（Github地址）Room：Jetpack包含的数据库（最全面的Room数据库指南）Splash Screens: 启动屏幕Android12支持（Android 12 SplashScr">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -17,7 +18,7 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>iOS swift 数据库realm实践 | JasonToJan&#39;s Blog</title>
+    <title>Android 集成 ChatGPT | JasonToJan&#39;s Blog</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/font-awesome.min.css">
@@ -329,13 +330,13 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/0.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/19.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
                     <div class="description center-align post-title">
-                        iOS swift 数据库realm实践
+                        Android 集成 ChatGPT
                     </div>
                 </div>
             </div>
@@ -446,8 +447,8 @@
                     
                     <div class="article-tag">
                         
-                        <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93-iOS/" target="_blank">
-                            <span class="chip bg-color">数据库 iOS</span>
+                        <a href="/tags/Android-Kotlin-ChatGPT/" target="_blank">
+                            <span class="chip bg-color">Android Kotlin ChatGPT</span>
                         </a>
                         
                     </div>
@@ -458,8 +459,8 @@
                     <div class="post-cate">
                         <i class="fa fa-bookmark fa-fw icon-category"></i>
                         
-                        <a href="/categories/iOS/" class="post-category" target="_blank">
-                            iOS
+                        <a href="/categories/Android/" class="post-category" target="_blank">
+                            Android
                         </a>
                         
                     </div>
@@ -470,7 +471,7 @@
             <div class="post-info">
                 <div class="post-date info-break-policy">
                     <i class="fa fa-calendar-minus-o fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2023-01-30
+                    2023-02-10
                 </div>
 
                 <div class="post-author info-break-policy">
@@ -484,14 +485,14 @@
                 
                 <div class="info-break-policy">
                     <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    4.3k
+                    2.7k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    20 分
+                    13 分
                 </div>
                 
                 
@@ -507,625 +508,501 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="1-需求定义"><a href="#1-需求定义" class="headerlink" title="1 需求定义"></a>1 需求定义</h2><p>需要获取服务端的条码数据库，存放到本地数据库。</p>
-<p>背景：集成了扫码功能，扫到的条码头需要匹配数据库中的条码列表，可以认为这个是一个离线数据库。不会实时判断，因为条码很多，这里先获取所有的条码，存放到本地数据库。然后扫码就按照数据库中的关系表来匹配就好了。</p>
-<p>这里我们有两个表，一个商品库表，一个是关系表。为什么有2个表呢？因为我们有配套的关系，2个零件可以看做单个商品，他们组合了也可以看成单独商品哦，这种就是套机了。想必做个电商的人都懂这个道理。比如可以买一件上衣，一条裤子，它们都是独立商品，也可以配套组合一套商品，而且这一套也可以认为是一个商品。</p>
-<h2 id="2-需求分析"><a href="#2-需求分析" class="headerlink" title="2 需求分析"></a>2 需求分析</h2><p>这里我们采用 realm数据库。<br>realm非常简介，效率也是不错的。<br>github地址：<a target="_blank" rel="noopener" href="https://github.com/realm/realm-swift">https://github.com/realm/realm-swift</a></p>
-<p>简单描述下realm吧：Realm 是一个跨平台的移动数据库引擎，其性能要优于 Core Data 和 FMDB - 移动端数据库性能比较, 我们可以在 Android 端 realm-java，iOS端:Realm-Cocoa，同时支持 OC 和 Swift两种语言开发。其使用简单，免费，性能优异，跨平台的特点广受关注。</p>
-<p>这里我们会用到2个表。</p>
-<p>因为这是个离线数据库，我们需要考虑数据库变更，与服务端同步问题。<br>所以我们需要一个接口，判断有无新增或者变更的数据。</p>
-<p>需要考虑到增量更新，同时如果数据变更大于一个阙值，比如1000条数据，我们可以认为是全量更新。这时候全量更新的时间和增量插入数据时间几乎相同。</p>
-<p>另外如果第一次获取数据，数据量可能会很大，我们需要考虑压缩，与服务端商议，将json数据压缩，然后我们自行解析为实体类。</p>
-<p>另外增量更新的时候，要特别注意改数据是删除了还是新增的，还是变更的。<br>如果商品删除了，关系表也是要删除的哦。这点很重要，不然后期会导致匹配异常。</p>
-<h2 id="3-准备工作，会用Realm"><a href="#3-准备工作，会用Realm" class="headerlink" title="3 准备工作，会用Realm"></a>3 准备工作，会用Realm</h2><p>因为是从0开始，建议熟悉一下Realm使用方法。<br>可以参考下这篇博客：<a target="_blank" rel="noopener" href="https://juejin.cn/post/6844904117442215944">https://juejin.cn/post/6844904117442215944</a>,写得还是相当不错，有Demo，讲述得非常清晰易懂。</p>
-<p>这里就不讲解如何引用这个Realm了。</p>
-<p>这里需要会用一个工具：Realm Studio，<br>下载地址：<a target="_blank" rel="noopener" href="https://www.mongodb.com/docs/realm/studio/install/">https://www.mongodb.com/docs/realm/studio/install/</a><br>这里按照自己电脑版本下载相应软件就好了，这个也是免费的。</p>
-<p>如何分析真机里面的realm数据库呢？<br>可以参考下：<a target="_blank" rel="noopener" href="https://blog.csdn.net/asfasnjn/article/details/124714242">https://blog.csdn.net/asfasnjn/article/details/124714242</a> 很简单，打开XCode的window下的设备和模拟器，再 点击更多图标，再下载Container，然后下载后，查看包内容，就可以看到这个应用的realm文件了。然后可以右键，用我们下载好的Realm Studio来查看这个文件，文件以表格形式展示，清晰直观。</p>
-<h2 id="4-初始化配置数据库"><a href="#4-初始化配置数据库" class="headerlink" title="4 初始化配置数据库"></a>4 初始化配置数据库</h2><p>这里需要在AppDelegate中配置下realm数据库。<br>很简单的。<br>不过我们没有在AppDelegate初始化，因为我们这个绑定了userId，等用户登录后才初始化，当然也是可以的。</p>
-<p>重点是初始化这个动作要先于使用就行了。</p>
-<pre><code class="line-numbers language-Swift">func configRealm(userID: String?,
-                        keyWord: String? = nil,
-                        schemaVersion: UInt64 = 2, migrationBlock: MigrationBlock? = nil) &#123;
-    // 加密串128位结果为：464e5774625e64306771702463336e316a4074487442325145766477335e21346b715169364c406c6a4976346d695958396245346e356f6a62256d2637566126
-    // let key: Data = &quot;FNWtb^d0gqp$c3n1j@tHtB2QEvdw3^!4kqQi6L@ljIv4miYX9bE4n5ojb%m&amp;7Va&amp;&quot;.data(using: .utf8, allowLossyConversion: false)!
-    // 加密的key
-    // let key: Data = keyWord.data(using: .utf8, allowLossyConversion: false)!
-    // 打开加密文件
-    // (encryptionKey: key)
-    // 使用默认的目录，但是使用用户 ID 来替换默认的文件名
+                <h2 id="1-效果"><a href="#1-效果" class="headerlink" title="1 效果"></a>1 效果</h2><img src=chatGPT.gif>
+
+<h2 id="2-技术栈"><a href="#2-技术栈" class="headerlink" title="2 技术栈"></a>2 技术栈</h2><p>Timber: 日志打印工具（<a target="_blank" rel="noopener" href="https://github.com/JakeWharton/timber">Github地址</a>）<br>Room：Jetpack包含的数据库（<a target="_blank" rel="noopener" href="https://juejin.cn/post/6844904200162246663">最全面的Room数据库指南</a>）<br>Splash Screens: 启动屏幕Android12支持（<a target="_blank" rel="noopener" href="https://blog.csdn.net/guolin_blog/article/details/120275319">Android 12 SplashScreen API快速入门</a>）<br>Coil：kotlin图片加载框架（<a target="_blank" rel="noopener" href="https://github.com/coil-kt/coil">Github地址</a>）<br>Coroutine：kotlin协程(<a target="_blank" rel="noopener" href="https://kotlinlang.org/docs/coroutines-overview.html#tutorials">官方文档</a>)<br>Retrofit：网络请求（<a target="_blank" rel="noopener" href="https://github.com/square/retrofit">Github地址</a>）</p>
+<h2 id="3-要点"><a href="#3-要点" class="headerlink" title="3 要点"></a>3 要点</h2><h3 id="3-1-Application初始化"><a href="#3-1-Application初始化" class="headerlink" title="3.1 Application初始化"></a>3.1 Application初始化</h3><pre><code class="line-numbers language-Kotlin">class App : Application() &#123;
     
-    //schemaVersion 数据库版本号从0开始
-    let manager = FileManager.default
-    let document = manager.urls(for: .documentDirectory, in: .userDomainMask)
-    let url = document[0] as URL
-    let urlStr = url.absoluteString
-    let path = urlStr + &quot;/&quot; + (&quot;\(userID!).realm&quot;)
-    let config = Realm.Configuration(fileURL: URL(string: path), schemaVersion: schemaVersion, migrationBlock: &#123; (migration, oldSchemaVersion) in
-        // 目前我们还未进行数据迁移，因此 oldSchemaVersion == 0
-        if oldSchemaVersion &lt; 100 &#123;
-            // 什么都不要做！Realm 会自行检测新增和需要移除的属性，然后自动更新硬盘上的数据库架构
-            // 属性重命名  migration.renameProperty(onType: Person.className(), from: &quot;yearsSinceBirth&quot;, to: &quot;age&quot;)
-            print(oldSchemaVersion)
-            print(&quot;end&quot;)
-        &#125;
-        // 低版本的数据库迁移......
-        if migrationBlock != nil &#123;
-            migrationBlock!(migration, oldSchemaVersion)
-        &#125;
-    &#125;)
-    // 告诉 Realm 为默认的 Realm 数据库使用这个新的配置对象
-    Realm.Configuration.defaultConfiguration = config
-    guard let realm = try? Realm(configuration: config) else &#123;
-        return
+    init &#123;
+        instance = this
     &#125;
-    currentSchemaVersion = schemaVersion
-    currentRealm = realm
-    currentKeyWord = keyWord
-&#125;
-</code></pre>
-<p>这个realm实际上以userId为名称了。<br>这样就有个弊端了，切换用户后，需要重新下载数据库，特别是数据库特别大的情况下，这对用户体验不是特别好。</p>
-<h2 id="5-走接口拿数据"><a href="#5-走接口拿数据" class="headerlink" title="5 走接口拿数据"></a>5 走接口拿数据</h2><p>这里就是拿商品数据了，这里服务端提供的接口，返回的是加密后的字符串。<br>类似这样：</p>
-<pre><code class="line-numbers language-Json">&#123;
-  &quot;message&quot; : &quot;请求成功&quot;,
-  &quot;code&quot; : 1000,
-  &quot;data&quot; : &quot;H4sIAAAAAAAAAKtWSiwoCCjKTylNLglKzQnz98ksLlGyio7VQZJAFk3OzytJzQ
-  NyDA2NdJRKC1IS\nS1JDMnNTlayUjAyMjHUNDHWNLBUMTaxMzaxMDJVqAQ0XaZphAAAA&quot;
-&#125;
-</code></pre>
-<p>比如我们接口是这样请求的，这里我们先扩展了一个方法给控制器：</p>
-<pre><code class="line-numbers language-Swift">extension GMBaseViewController &#123;
-    
-    open func updateOfflinePackageData(tips: String = &quot;&quot;, successful: @escaping Handler) &#123;
-        MBProgressHUD.showMessage(tips)
-        OfflinePackageManager.update &#123;
-            successful()
-            MBProgressHUD.hide()
-            MBProgressHUD.hide()
-        &#125; failure: &#123;
-            MBProgressHUD.hide()
-            MBProgressHUD.hide()
-            let alerVC = UIAlertController(
-                title: &quot;&quot;,
-                message: &quot;检测到商品信息变动，系统为您自动更新商品信息失败，请在网络良好的环境下，手动更新商品信息&quot;,
-                preferredStyle: .alert
-            )
-            alerVC.addAction(
-                UIAlertAction(
-                    title: &quot;下载商品信息&quot;,
-                    style: .default
-                ) &#123; (action) in
-                    self.updateOfflinePackageData(successful: successful)
-                &#125;
-            )
-            self.present(alerVC, animated: true, completion:nil)
+    companion object &#123;
+        private var instance : App? = null
+        fun context() : Context &#123;
+            return instance!!.applicationContext
         &#125;
-        
     &#125;
     
+    override fun onCreate() &#123;
+        super.onCreate()
+        Timber.plant(Timber.DebugTree())
+    &#125;
 &#125;
 </code></pre>
-<p>这里我们的OfflinePackageManager就是我们封装好的专门去下载离线库的工具类。<br>成功后走successful的逃逸闭包，失败弹一个弹框。</p>
-<p>继续走进去：</p>
-<pre><code class="line-numbers language-Swift">class OfflinePackageManager: NSObject &#123;
-    
-    open class func update(
-        updateTime: String = Defaults[key: DefaultsKeys.updateTime] ?? &quot;&quot;,
-        successful: @escaping Handler,
-        failure: @escaping Handler
-    ) &#123;
-        let endTimeStr = Defaults[key: DefaultsKeys.updateTime]
-        let updateTimeStr = updateTime
-       
-        productProvider.requestJson(.getProductMetadataForAPP(updateTime: updateTimeStr)) &#123; response in
-            let jsonString = JSON(rawValue: response).jsonString
-            let result = GMBaseRequestModel.deserialize(from: jsonString)
-            if result?.code == 1000 &#123;
-                guard let data = result?.data?.gunzip?.data(using: .utf8) else &#123; return &#125;
-                
-                let file = &quot;zpi_offline_package_data.txt&quot;
-                let text = result?.data?.gunzip ?? &quot;&quot;
-                
-                if let dir = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first &#123;
-                    let fileURL = dir.appendingPathComponent(file)
-                    do &#123;
-                        try text.write(to: fileURL, atomically: false, encoding: .utf8)
-                    &#125; catch &#123;&#125;
-                &#125;
-                
-                guard let model = try? JSONDecoder().decode(StageOfflinePackageData.self, from: data) else &#123; return &#125;
-                
-                if endTimeStr != nil &amp;&amp; (model.appProductVOList.count &gt;= 1000 || model.appProductRelVOList.count &gt;= 1000) &#123;
-                    Defaults[key:DefaultsKeys.updateTime] = nil
-                    OfflinePackageManager.update(updateTime: &quot;&quot;, successful: successful, failure: failure)
-                &#125; else &#123;
-                    if endTimeStr == nil &#123;
-                        OfflinePackageManager.fullUpdate(model: model)
-                    &#125; else &#123;
-                        OfflinePackageManager.incrementalUpdate(model: model)
-                    &#125;
-                    Defaults[key: DefaultsKeys.updateTime] = model.updateTime
-                    successful()
-                &#125;
+<p>这里初始化了Timer</p>
+<blockquote>
+<p>“Timber.plant(Timber.DebugTree())” 这个语句是 Android 中的一个日志框架 Timber 的语句，用于将 Timber 与一个 DebugTree 实例关联起来。<br>Timber 是一个 Android 日志框架，用于简化 Android 中的日志记录。它提供了一种更方便的方法来记录日志，而不需要繁琐的配置。<br>DebugTree 是 Timber 提供的一个简单的实现，它将日志信息打印到控制台，以便在开发期间进行调试。<br>通过调用 Timber.plant(Timber.DebugTree())，可以将 DebugTree 实例安装到 Timber 日志框架中，以便将日志记录到控制台。</p>
+</blockquote>
+<h3 id="3-2-启动页配置"><a href="#3-2-启动页配置" class="headerlink" title="3.2 启动页配置"></a>3.2 启动页配置</h3><pre><code class="line-numbers language-xml">&lt;activity
+        android:name=&quot;.view.MainActivity&quot;
+        android:theme=&quot;@style/Theme.Test.Splash&quot;
+        android:windowSoftInputMode=&quot;adjustResize&quot;
+        android:exported=&quot;true&quot;&gt;
+        &lt;intent-filter&gt;
+            &lt;action android:name=&quot;android.intent.action.MAIN&quot; /&gt;
+
+            &lt;category android:name=&quot;android.intent.category.LAUNCHER&quot; /&gt;
+        &lt;/intent-filter&gt;
+
+        &lt;meta-data
+            android:name=&quot;android.app.lib_name&quot;
+            android:value=&quot;&quot; /&gt;
+    &lt;/activity&gt;
+</code></pre>
+<p>关联的主体为：</p>
+<pre><code>&lt;style name=&quot;Theme.Test.Splash&quot; parent=&quot;Theme.SplashScreen.IconBackground&quot;&gt;
+    &lt;item name=&quot;windowSplashScreenAnimatedIcon&quot;&gt;@drawable/splash_layout&lt;/item&gt;
+    &lt;item name=&quot;windowSplashScreenBackground&quot;&gt;@color/black&lt;/item&gt;
+    &lt;!-- splash delay --&gt;
+    &lt;item name=&quot;windowSplashScreenAnimationDuration&quot;&gt;2000&lt;/item&gt;
+    &lt;!-- splash icon back color
+    &lt;item name=&quot;windowSplashScreenIconBackgroundColor&quot;&gt;@color/white&lt;/item&gt; --&gt;
+    &lt;item name=&quot;postSplashScreenTheme&quot;&gt;@style/Theme.Test&lt;/item&gt;
+&lt;/style&gt;
+</code></pre>
+<p>这里的Theme.SplashScreen.IconBackground主题需要引入这个三方库：</p>
+<pre><code>implementation &#39;androidx.core:core-splashscreen:1.0.0&#39;
+</code></pre>
+<p>然后还需要在首页onCreate最前面，执行一下：</p>
+<pre><code>installSplashScreen得以支持
+</code></pre>
+<p>这里直接跳转MainActivity。</p>
+<h3 id="3-3-首页"><a href="#3-3-首页" class="headerlink" title="3.3 首页"></a>3.3 首页</h3><p>数据定义：</p>
+<pre><code class="line-numbers language-Kotlin">private lateinit var binding : ActivityMainBinding
+private val viewModel : MainViewModel by viewModels()
+private var contentDataList = ArrayList&lt;ContentEntity&gt;()
+</code></pre>
+<p>ActivityMainBinding绑定的视图如下：<br><img src=chat_01.png></p>
+<p>然后先走启动页，再设置布局：</p>
+<pre><code>installSplashScreen()
+
+super.onCreate(savedInstanceState)
+binding = ActivityMainBinding.inflate(layoutInflater)
+setContentView(binding.root)
+</code></pre>
+<p>这里再配置下Coil的图片加载器：</p>
+<pre><code>val imageLoader = this?.let &#123;
+    ImageLoader.Builder(it)
+        .components &#123;
+            if (SDK_INT &gt;= 28) &#123;
+                add(ImageDecoderDecoder.Factory())
             &#125; else &#123;
-                failure()
-            &#125;
-        &#125; failure: &#123; _ in
-            failure()
-        &#125;
-    &#125;
-</code></pre>
-<h2 id="6-解压缩字符串"><a href="#6-解压缩字符串" class="headerlink" title="6 解压缩字符串"></a>6 解压缩字符串</h2><p>这里服务端返回的一段加密后的字符串：</p>
-<pre><code class="line-numbers language-Json">&#123;
-  &quot;message&quot; : &quot;请求成功&quot;,
-  &quot;code&quot; : 1000,
-  &quot;data&quot; : &quot;H4sIAAAAAAAAAKtWSiwoCCjKTylNLglKzQnz98ksLlGyio7VQZJAFk3OzytJzQNyDA2NdJRKC1IS\nS1JDMnNTlayUjAyMjHUNDHWNLBUMTaxMzaxMDJVqAQ0XaZphAAAA&quot;
-&#125;
-</code></pre>
-<p>不过返回体还是json，我们先拿data里面的字符串。<br>再去解压缩。</p>
-<p>字符串解压缩可以参考这篇文章：<a target="_blank" rel="noopener" href="https://www.cnblogs.com/strengthen/p/10844466.html">https://www.cnblogs.com/strengthen/p/10844466.html</a></p>
-<p>这里我们用到了GzipSwift框架。</p>
-<p>这个框架地址为：<a target="_blank" rel="noopener" href="https://github.com/1024jp/GzipSwift">https://github.com/1024jp/GzipSwift</a> 还是有挺多人star的。</p>
-<p>具体细节就不讲解了。</p>
-<p>这里我们自己给String做了一个扩展，这样直接能拿到解压缩后的字符串：</p>
-<pre><code class="line-numbers language-Swift">extension String &#123;
-    var gunzip: String? &#123;
-        if let data = Data(base64Encoded: self, options: .ignoreUnknownCharacters) &#123;
-            if data.isGzipped &#123;
-                if let gun = try? data.gunzipped() &#123;
-                    return String(data: gun, encoding: String.Encoding.utf8)
-                &#125;
+                add(GifDecoder.Factory())
             &#125;
         &#125;
-        return nil
+        .build()
+&#125;
+if (imageLoader != null) &#123;
+    Coil.setImageLoader(imageLoader)
+&#125;
+
+binding.loading.visibility = View.INVISIBLE
+binding.loading.load(R.drawable.loading3)
+</code></pre>
+<p>这里用了一个扩展ImageView的load函数。</p>
+<h3 id="3-4-配置LiveData监听"><a href="#3-4-配置LiveData监听" class="headerlink" title="3.4 配置LiveData监听"></a>3.4 配置LiveData监听</h3><pre><code class="line-numbers language-Kotlin">viewModel.contentList.observe(this, Observer &#123;
+    contentDataList.clear()
+    for (entity in it) &#123;
+        contentDataList.add(entity)
+    &#125;
+    setContentListRV()
+&#125;)
+</code></pre>
+<p>上面是监听内容列表变更情况。如果有变化，就更新下contentDataList的全局变量。<br>看下setContentListRV()</p>
+<pre><code class="line-numbers language-kotlin">private fun setContentListRV() &#123;
+    val contentAdapter = ContentAdapter(this, contentDataList)
+    binding.RVContainer.adapter = contentAdapter
+    binding.RVContainer.layoutManager = LinearLayoutManager(this).apply &#123;
+        stackFromEnd = true
+    &#125;
+
+    viewModel.launch(&#123;
+        delay(100)
+        binding.SVContainer.fullScroll(ScrollView.FOCUS_DOWN)
+    &#125;)
+
+    contentAdapter.delChatLayoutClick = object : ContentAdapter.DelChatLayoutClick &#123;
+        override fun onLongClick(view : View, position: Int) &#123;
+            Timber.tag(&quot;TEST##&quot;).e(&quot;$&#123;contentDataList[position].id&#125;&quot;)
+            val builder = AlertDialog.Builder(this@MainActivity)
+            builder.setTitle(&quot;清空&quot;)
+                .setMessage(&quot;清空此条消息&quot;)
+                .setPositiveButton(&quot;确定&quot;,
+                    DialogInterface.OnClickListener &#123; dialog, id -&gt;
+                        viewModel.deleteSelectedContent(contentDataList[position].id)
+                    &#125;)
+                .setNegativeButton(&quot;取消&quot;,
+                    DialogInterface.OnClickListener &#123; dialog, id -&gt;
+                    &#125;)
+            builder.show()
+        &#125;
     &#125;
 &#125;
 </code></pre>
-<p>这里解析后的字符串为：</p>
-<pre><code class="line-numbers language-Json">&#123;
-    &quot;appProductRelVOList&quot;:[],
-    &quot;appProductVOList&quot;:[],
-    &quot;content&quot;:112,
-    &quot;updateTime&quot;:&quot;2023-01-29 14:56:41&quot;
+<p>这里每次都new了一个Adapter，然后走一个协程，滑动最底部。<br>同时也配置下长按点击事件，这里弹一个弹框，提示清空消息，如果要清空，就再走一次viewModel对数据进行删除。</p>
+<p>第二个LiveData监听是：</p>
+<pre><code class="line-numbers language-Kotlin"> viewModel.deleteCheck.observe(this, Observer &#123;
+    if (it == true) &#123;
+        viewModel.getContentData()
+    &#125;
+&#125;)
+</code></pre>
+<p>这里监听删除是否成功，如果成功，就重新获取一次数据。</p>
+<p>第三个LiveData监听是：</p>
+<pre><code class="line-numbers language-Kotlin"> viewModel.gptInsertCheck.observe(this, Observer &#123;
+    if (it == true) &#123;
+        viewModel.getContentData()
+        binding.loading.visibility = View.INVISIBLE
+    &#125;
+&#125;)
+</code></pre>
+<p>插入数据监听，当用户发出消息成功后，需要插入数据库，插入后，这里更新列表，同时需要关闭加载动画。</p>
+<h3 id="3-5-其它点击事件"><a href="#3-5-其它点击事件" class="headerlink" title="3.5 其它点击事件"></a>3.5 其它点击事件</h3><pre><code class="line-numbers language-Kotlin"> binding.sendBtn.setOnClickListener &#123;
+    binding.loading.visibility = View.VISIBLE
+
+    if (binding.EDView.text.toString().isEmpty()) &#123;
+        return@setOnClickListener
+    &#125;
+
+    viewModel.postResponse(binding.EDView.text.toString())
+    viewModel.insertContent(binding.EDView.text.toString(), 2) // 1: Gpt, 2: User
+    binding.EDView.setText(&quot;&quot;)
+    viewModel.getContentData()
 &#125;
 </code></pre>
-<p>同样也是一个json数组哦。<br>所以我们还是得用Json解析下：</p>
-<pre><code class="line-numbers language-Swift">guard let model = try? JSONDecoder().decode(StageOfflinePackageData.self, from: data)
-                else &#123; return &#125;
-</code></pre>
-<p>这时候我们需要一个实体来接收下：</p>
-<pre><code class="line-numbers language-Swift">class StageOfflinePackageData:Codable&#123;
-    
-    var appProductVOList: [StageGoodsPackgeModelData] = []
-    
-    var appProductRelVOList: [StageGoodsSuitPackgeModelData] = []
-    
-    var updateTime: String = &quot;&quot;
-    
-    
-    private enum Codingkeys: String, CodingKey&#123;
-        case appProductVOList,appProductRelVOList,updateTime
-    &#125;
-    
-    func encode(to encoder: Encoder) throws &#123;&#125;
-    
-    required init(from decoder: Decoder) throws &#123;
-        let values = try decoder.container(keyedBy: Codingkeys.self)
-        appProductVOList = try values.decode(Array.self, forKey: .appProductVOList)
-        appProductRelVOList = try values.decode(Array.self, forKey: .appProductRelVOList)
-        updateTime = try values.decode(String.self, forKey: .updateTime)
-    &#125;
+<p>发送消息事件，这里先展示loading状态，然后通过viewModel层走接口发送数据。<br>同时需要插入用户发送数据到本地数据库。<br>然后理解刷新数据。</p>
+<pre><code class="line-numbers language-Kotlin"> binding.backBtn.setOnClickListener &#123;
+    finish()
 &#125;
 </code></pre>
-<p>为啥要继承Codable呢？<br>Codable 协议在 Swift4.0 开始被引入，目标是取代现有的 NSCoding 协议，它对结构体，枚举和类都支持。Codable 的引入简化了JSON 和 Swift 类型之间相互转换的难度，能够把 JSON 这种弱类型数据转换成代码中使用的强类型数据。具体可以看这篇文章：<a target="_blank" rel="noopener" href="https://juejin.cn/post/6971997599725256734">https://juejin.cn/post/6971997599725256734</a>。</p>
-<p>解析后就拿到服务端的数据了，可能是增量数据，可能是全量数据。后面我们具体分析下。</p>
-<h2 id="7-数据处理"><a href="#7-数据处理" class="headerlink" title="7 数据处理"></a>7 数据处理</h2><p>解析完毕后，我们有一段逻辑是这样的：</p>
-<pre><code class="line-numbers language-Swift">if endTimeStr != nil &amp;&amp; (model.appProductVOList.count &gt;= 1000 || model.appProductRelVOList.count &gt;= 1000) &#123;
-                    Defaults[key:DefaultsKeys.updateTime] = nil
-                    OfflinePackageManager.update(updateTime: &quot;&quot;, successful: successful, failure: failure)
+<p>这里返回退出App。</p>
+<h2 id="3-6-消息Adapter"><a href="#3-6-消息Adapter" class="headerlink" title="3.6 消息Adapter"></a>3.6 消息Adapter</h2><pre><code class="line-numbers language-Kotlin">class ContentAdapter(val context : Context, private val dataSet : List&lt;ContentEntity&gt;) : RecyclerView.Adapter&lt;ContentAdapter.ViewHolder&gt;() &#123;
+
+    companion object &#123;
+        private const val Gpt = 1
+        private const val User = 2
+    &#125;
+
+    interface DelChatLayoutClick &#123;
+        fun onLongClick(view : View, position: Int)
+    &#125;
+    var delChatLayoutClick : DelChatLayoutClick? = null
+
+    inner class ViewHolder(view : View) : RecyclerView.ViewHolder(view) &#123;
+        val contentTV : TextView = view.findViewById(R.id.rvItemTV)
+        val delChatLayout : ConstraintLayout = view.findViewById(R.id.chatLayout)
+        val idHolder : TextView = view.findViewById(R.id.holdingId)
+    &#125;
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder &#123;
+        if (viewType == Gpt) &#123;
+            val view = LayoutInflater.from(parent.context).inflate(R.layout.gpt_content_item, parent, false)
+            return ViewHolder(view)
+        &#125; else &#123;
+            val view = LayoutInflater.from(parent.context).inflate(R.layout.user_content_item, parent, false)
+            return ViewHolder(view)
+        &#125;
+    &#125;
+
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) &#123;
+        holder.contentTV.text = dataSet[position].content
+        holder.idHolder.text = dataSet[position].id.toString()
+
+        holder.delChatLayout.setOnLongClickListener &#123; view -&gt;
+            delChatLayoutClick?.onLongClick(view, position)
+            return@setOnLongClickListener true
+        &#125;
+
+    &#125;
+
+    override fun getItemCount(): Int &#123;
+        return dataSet.size
+    &#125;
+
+    override fun getItemViewType(position: Int): Int &#123;
+        return if (dataSet[position].gptOrUser == 1) &#123; // Gpt
+            Gpt
+        &#125; else &#123;
+            User
+        &#125;
+    &#125;
+
+&#125;
+</code></pre>
+<p>这里分两种Type，一种是GPT，一种是用户，展示不同item。</p>
+<p>item数据：</p>
+<pre><code class="line-numbers language-Kotlin">@Entity(tableName = &quot;ContentTable&quot;)
+data class ContentEntity(
+
+    @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = &quot;id&quot;)
+    var id : Int,
+    @ColumnInfo(name = &quot;Content&quot;)
+    var content : String,
+    @ColumnInfo(name = &quot;gptOrUser&quot;)
+    var gptOrUser : Int
+
+)
+</code></pre>
+<p>这里是model层了，内容实体，有个int表示是人还是人工智能。</p>
+<h3 id="3-7-ViewModel层"><a href="#3-7-ViewModel层" class="headerlink" title="3.7 ViewModel层"></a>3.7 ViewModel层</h3><pre><code class="line-numbers language-Kotlin">class MainViewModel : ViewModel() &#123;
+
+    private val databaseRepository = DatabaseRepository()
+    private val netWorkRepository = NetWorkRepository()
+
+    private var _contentList = MutableLiveData&lt;List&lt;ContentEntity&gt;&gt;()
+    val contentList : LiveData&lt;List&lt;ContentEntity&gt;&gt;
+        get() = _contentList
+
+    private var _deleteCheck = MutableLiveData&lt;Boolean&gt;(false)
+    val deleteCheck : LiveData&lt;Boolean&gt;
+        get() = _deleteCheck
+
+    private var _gptInsertCheck = MutableLiveData&lt;Boolean&gt;(false)
+    val gptInsertCheck : LiveData&lt;Boolean&gt;
+        get() = _gptInsertCheck
+</code></pre>
+<p>这里继承ViewModel，然后建立2个仓库。</p>
+<ul>
+<li>DatabaseRepository 数据仓库层</li>
+<li>NetworkRepository 网络仓库层</li>
+</ul>
+<p>然后有3个LiveData监听内容，删除，插入数据的监听。</p>
+<p>协程封装：</p>
+<pre><code class="line-numbers language-Kotlin">
+/**
+ * ViewModel扩展方法：启动协程
+ * @param block 协程逻辑
+ * @param onError 错误回调方法
+ * @param onComplete 完成回调方法
+ */
+fun ViewModel.launch(
+    block: suspend CoroutineScope.() -&gt; Unit,
+    onError: (e: Throwable) -&gt; Unit = &#123; _: Throwable -&gt; &#125;,
+    onComplete: () -&gt; Unit = &#123;&#125;
+) &#123;
+    viewModelScope.launch(
+        CoroutineExceptionHandler &#123; _, throwable -&gt;
+            run &#123;
+                if (throwable is Exception) &#123;
+                    onError(NetExceptionFilter.onFilter(throwable))
                 &#125; else &#123;
-                    if endTimeStr == nil &#123;
-                        OfflinePackageManager.fullUpdate(model: model)
-                    &#125; else &#123;
-                        OfflinePackageManager.incrementalUpdate(model: model)
-                    &#125;
-                    Defaults[key: DefaultsKeys.updateTime] = model.updateTime
-                    successful()
+                    onError(throwable)
                 &#125;
-</code></pre>
-<p>这里如果数据大于1000条，我们重新走全量更新接口。<br>如果上次更新时间为空，我们默认为全量更新，将所有数据插入数据库。<br>如果上次更新时间不为空，而且小于1000条，我们就走增量更新逻辑。</p>
-<h3 id="7-1-Model层定义"><a href="#7-1-Model层定义" class="headerlink" title="7.1 Model层定义"></a>7.1 Model层定义</h3><p>这里是定义的Realm的基础模型。</p>
-<p>我们需要定义两个实体，一个是商品模型，一个是关系模型。</p>
-<p>商品模型为：</p>
-<pre><code class="line-numbers language-Swift">
-class StageGoodsPackgeModelData: Object,Codable&#123;
-    
-    @objc dynamic var barcode: String = &quot;&quot;
-    @objc dynamic var brand: String = &quot;&quot;
-    @objc dynamic var brandId: String = &quot;&quot;
-    @objc dynamic var category: String = &quot;&quot;
-    @objc dynamic var categoryId: Int = 0
-    @objc dynamic var createBy: String = &quot;&quot;
-    @objc dynamic var createTime: String = &quot;&quot;
-    @objc dynamic var delFlag: Int = 0
-    @objc dynamic var groupNum: Int = 1         //返回为&quot;&quot;时服务器需要传1
-    @objc dynamic var id: String = &quot;&quot;
-    @objc dynamic var isGreeProduct: Bool = false
-    @objc dynamic var isGroupedProduct: Bool = false
-    @objc dynamic var isSaleProduct: Bool = false
-    @objc dynamic var length: Double = 0.0
-    @objc dynamic var name: String = &quot;&quot;
-    @objc dynamic var orgId: String = &quot;&quot;
-    @objc dynamic var skuCode: String = &quot;&quot;
-    @objc dynamic var tall: Double = 0
-    @objc dynamic var unit: String = &quot;&quot;
-    @objc dynamic var updateBy: String = &quot;&quot;
-    @objc dynamic var updateTime: String = &quot;&quot;
-    @objc dynamic var volume: Double = 0.0
-    @objc dynamic var weight: Double = 0.0
-    @objc dynamic var wide: Double = 0.0
-    @objc dynamic var isMarketingProduct :Bool = false
-    
-    private enum Codingkeys: String, CodingKey&#123;
-        case barcode
-        ,brand
-        ,brandId
-        ,category
-        ,categoryId
-        ,createBy
-        ,createTime
-        ,delFlag
-        ,groupNum
-        ,id
-        ,isGreeProduct
-        ,isGroupedProduct
-        ,isSaleProduct
-        ,length
-        ,name
-        ,orgId
-        ,skuCode
-        ,tall
-        ,unit
-        ,updateBy
-        ,updateTime
-        ,volume
-        ,weight
-        ,wide,
-        isMarketingProduct
-    &#125;
-    
-    
-    required init(from decoder: Decoder) throws &#123;
-        let values = try decoder.container(keyedBy: Codingkeys.self)
-        
-        do &#123;
-            barcode = try values.decode(String.self, forKey: .barcode)
-        &#125; catch &#123;
-            barcode = &quot;&quot;
-        &#125;
-        do &#123;
-            brand = try values.decode(String.self, forKey: .brand)
-        &#125; catch &#123;
-            brand = &quot;&quot;
-        &#125;
-        do &#123;
-            brandId = try values.decode(String.self, forKey: .brandId)
-        &#125; catch &#123;
-            brandId = &quot;&quot;
-        &#125;
-        do &#123;
-            category = try values.decode(String.self, forKey: .category)
-        &#125; catch &#123;
-            category = &quot;&quot;
-        &#125;
-        do &#123;
-            categoryId = try values.decode(Int.self, forKey: .categoryId)
-        &#125; catch &#123;
-            categoryId = 0
-        &#125;
-        do &#123;
-            createBy = try values.decode(String.self, forKey: .createBy)
-        &#125; catch &#123;
-            createBy = &quot;&quot;
-        &#125;
-        do &#123;
-            createTime = try values.decode(String.self, forKey: .createTime)
-        &#125; catch &#123;
-            createTime = &quot;&quot;
-        &#125;
-        do &#123;
-            delFlag = try values.decode(Int.self, forKey: .delFlag)
-        &#125; catch &#123;
-            delFlag = 0
-        &#125;
-        do &#123;
-            groupNum = try values.decode(Int.self, forKey: .groupNum)
-        &#125; catch &#123;
-            groupNum = 1
-        &#125;
-        do &#123;
-            id = try values.decode(String.self, forKey: .id)
-        &#125; catch &#123;
-            id = &quot;&quot;
-        &#125;
-        do &#123;
-            isGreeProduct = try values.decode(Bool.self, forKey: .isGreeProduct)
-        &#125; catch &#123;
-            isGreeProduct = false
-        &#125;
-        do &#123;
-            isGroupedProduct = try values.decode(Bool.self, forKey: .isGroupedProduct)
-        &#125; catch &#123;
-            isGroupedProduct = false
-        &#125;
-        do &#123;
-            isSaleProduct = try values.decode(Bool.self, forKey: .isSaleProduct)
-        &#125; catch &#123;
-            isSaleProduct = false
-        &#125;
-        do &#123;
-            length = try values.decode(CGFloat.self, forKey: .length)
-        &#125; catch &#123;
-            length = 0.0
-        &#125;
-        do &#123;
-            name = try values.decode(String.self, forKey: .name)
-        &#125; catch &#123;
-            name = &quot;&quot;
-        &#125;
-        do &#123;
-            orgId = try values.decode(String.self, forKey: .orgId)
-        &#125; catch &#123;
-            orgId = &quot;&quot;
-        &#125;
-        do &#123;
-            skuCode = try values.decode(String.self, forKey: .skuCode)
-        &#125; catch &#123;
-            skuCode = &quot;&quot;
-        &#125;
-        do &#123;
-            tall = try values.decode(Double.self, forKey: .tall)
-        &#125; catch &#123;
-            tall = 0
-        &#125;
-        do &#123;
-            unit = try values.decode(String.self, forKey: .unit)
-        &#125; catch &#123;
-            unit = &quot;&quot;
-        &#125;
-        do &#123;
-            updateBy =  try values.decode(String.self, forKey: .updateBy)
-        &#125; catch &#123;
-            updateBy = &quot;&quot;
-        &#125;
-        do &#123;
-            updateTime = try values.decode(String.self, forKey: .updateTime)
-        &#125; catch &#123;
-            updateTime = &quot;&quot;
-        &#125;
-        do &#123;
-            volume = try values.decode(Double.self, forKey: .volume)
-        &#125; catch &#123;
-            volume = 0.0
-        &#125;
-        do &#123;
-            weight = try values.decode(Double.self, forKey: .weight)
-        &#125; catch &#123;
-            weight = 0.0
-        &#125;
-        do &#123;
-            wide = try values.decode(Double.self, forKey: .wide)
-        &#125; catch &#123;
-            wide = 0.0
-        &#125;
-        do &#123;
-            isMarketingProduct = try values.decode(Bool.self, forKey: .isMarketingProduct)
-        &#125; catch &#123;
-            isMarketingProduct = false
-        &#125;
-    &#125;
-    
-    func encode(to encoder: Encoder) throws &#123;&#125;
-    
-    override required init()&#123;&#125;
-&#125;
-</code></pre>
-<p>另外一个为：</p>
-<pre><code class="line-numbers language-Swift">
-class StageGoodsSuitPackgeModelData: Object,Codable&#123;
-
-    @objc dynamic var groupNum: Int = 0
-    @objc dynamic var id: String = &quot;&quot;
-    @objc dynamic var orgId: String = &quot;&quot;
-    @objc dynamic var productId: String = &quot;&quot;
-    @objc dynamic var subProductId: String = &quot;&quot;
-    
-    private enum Codingkeys: String, CodingKey &#123;
-        case groupNum
-        case id
-        case orgId
-        case productId
-        case subProductId
-    &#125;
-
-    required init(from decoder: Decoder) throws &#123;
-        let values = try decoder.container(keyedBy: Codingkeys.self)
-        
-        do &#123;
-            groupNum = try values.decode(Int.self, forKey: .groupNum)
-        &#125; catch &#123;
-            groupNum = 0
-        &#125;
-        do &#123;
-            id = try values.decode(String.self, forKey: .id)
-        &#125; catch &#123;
-            id = &quot;&quot;
-        &#125;
-        do &#123;
-            orgId = try values.decode(String.self, forKey: .orgId)
-        &#125; catch &#123;
-            orgId = &quot;&quot;
-        &#125;
-        do &#123;
-            productId = try values.decode(String.self, forKey: .productId)
-        &#125; catch &#123;
-            productId = &quot;&quot;
-        &#125;
-        do &#123;
-            subProductId = try values.decode(String.self, forKey: .subProductId)
-        &#125; catch &#123;
-            subProductId = &quot;&quot;
-        &#125;
-    &#125;
-
-    func encode(to encoder: Encoder) throws &#123;&#125;
-    
-    override required init()&#123;&#125;
-&#125;
-</code></pre>
-<h3 id="7-2-全量更新"><a href="#7-2-全量更新" class="headerlink" title="7.2 全量更新"></a>7.2 全量更新</h3><pre><code class="line-numbers language-Swift">private class func fullUpdate(model: StageOfflinePackageData) &#123;
-        let suitResult = objectWithAll(objct: StageGoodsPackgeModelData.self)
-        if suitResult.count != 0 &#123;
-            deleteList(suitResult) &#123;
-                print(&quot;StageGoodsPackgeModelData表数据清除成功&quot;)
             &#125;
         &#125;
-        addList(model.appProductVOList) &#123;
-            print(&quot;StageGoodsPackgeModelData 插入成功&quot;)
+    ) &#123;
+        try &#123;
+            block.invoke(this)
+        &#125; finally &#123;
+            onComplete()
         &#125;
-        
-        let relationResult = objectWithAll(objct: StageGoodsSuitPackgeModelData.self)
-        if relationResult.count != 0 &#123;
-            deleteList(relationResult) &#123;
-                print(&quot;StageGoodsSuitPackgeModelData表数据清除成功&quot;)
+    &#125;
+&#125;
+</code></pre>
+<p>对ViewModel做了扩展，可以直接发起协程，并且内部捕获异常。<br>有个工具类可以对异常再继续处理：</p>
+<pre><code class="line-numbers language-Kotlin">object NetExceptionFilter &#123;
+    @JvmStatic
+    fun onFilter(e: Exception): Exception &#123;
+        e.printStackTrace()
+        if (e is HttpException) &#123;
+            return e
+        &#125;
+        if (e is SocketTimeoutException) &#123;
+            return Exception(&quot;已超时&quot;)
+        &#125;
+        if (e is UnknownHostException || e is SocketException) &#123;
+            return Exception(&quot;socket异常&quot;)
+        &#125;
+        return if (e is IOException) &#123;
+            return Exception(&quot;io异常&quot;)
+        &#125; else Exception(&quot;其它异常&quot;)
+    &#125;
+&#125;
+</code></pre>
+<p>ok。然后具体看下viewModel层中的耗时任务。</p>
+<p>第一个最重要的当然是发起调用GPT接口了：</p>
+<pre><code class="line-numbers language-Kotlin">fun postResponse(query : String) = launch(&#123;
+    val jsonObject: JsonObject? = JsonObject().apply&#123;
+        // params
+        addProperty(&quot;model&quot;, &quot;text-davinci-003&quot;)
+        addProperty(&quot;prompt&quot;, query)
+        addProperty(&quot;temperature&quot;, 0)
+        addProperty(&quot;max_tokens&quot;, 500)
+        addProperty(&quot;top_p&quot;, 1)
+        addProperty(&quot;frequency_penalty&quot;, 0.0)
+        addProperty(&quot;presence_penalty&quot;, 0.0)
+    &#125;
+    val response = netWorkRepository.postResponse(jsonObject!!)
+    
+    Timber.tag(&quot;TEST##&quot;).e(&quot;$&#123;response.choices.get(0)&#125;&quot;)
+    val gson = Gson()
+    val tempjson = gson.toJson(response.choices.get(0))
+    val tempgson = gson.fromJson(tempjson, GptText::class.java)
+    Timber.tag(&quot;TEST##&quot;).e(&quot;$&#123;tempgson.text&#125;&quot;)
+    insertContent(tempgson.text.toString(), 1)
+    
+&#125;, &#123;
+    Toast.makeText(App.context(), &quot;$&#123;it.message&#125;&quot;, Toast.LENGTH_SHORT).show()
+    _gptInsertCheck.postValue(true)
+&#125;)
+</code></pre>
+<p>这里配置GPT接口需要的参数定义，通过netWorkRepository发起请求，定义了接收数据的格式转换，然后拿到数据后，转换为GptText，并插入本地数据库。</p>
+<p>有异常时，这里弹出一个toast。</p>
+<p>第二个获取数据方法：</p>
+<pre><code class="line-numbers language-Kotlin">fun getContentData() = viewModelScope.launch(Dispatchers.IO) &#123;
+    _contentList.postValue(databaseRepository.getContentData())
+    _deleteCheck.postValue(false)
+    _gptInsertCheck.postValue(false)
+&#125;
+</code></pre>
+<p>这里通过向IO线程，调用databaseRepository层的获取数据库的方法，拿到最新数据。</p>
+<p>第三个插入数据：</p>
+<pre><code class="line-numbers language-Kotlin">fun insertContent(content : String, gptOrUser : Int) = viewModelScope.launch(Dispatchers.IO) &#123;
+    databaseRepository.insertContent(content, gptOrUser)
+    if (gptOrUser == 1) &#123;
+        _gptInsertCheck.postValue(true)
+    &#125;
+&#125;
+</code></pre>
+<p>这里也是调用了数据库层，插入数据。</p>
+<p>第四个是删除数据：</p>
+<pre><code class="line-numbers language-Kotlin">fun deleteSelectedContent(id : Int) = viewModelScope.launch(Dispatchers.IO) &#123;
+    databaseRepository.deleteSelectedContent(id)
+    _deleteCheck.postValue(true)
+&#125;
+</code></pre>
+<p>同样走数据库层删除数据。</p>
+<h3 id="3-8-Model层的数据库层"><a href="#3-8-Model层的数据库层" class="headerlink" title="3.8 Model层的数据库层"></a>3.8 Model层的数据库层</h3><p>先看下数据库层：</p>
+<pre><code class="line-numbers language-Kotlin">class DatabaseRepository &#123;
+
+    private val context = App.context()
+    private val database = ChatDatabase.getDatabase(context)
+
+    fun getContentData() = database.contentDAO().getContentData()
+
+    fun insertContent(content : String, gptOrUser : Int) = database.contentDAO().insertContent(ContentEntity(0, content, gptOrUser))
+
+    fun deleteSelectedContent(id : Int) = database.contentDAO().deleteSelectedContent(id)
+
+&#125;
+</code></pre>
+<p>这是一个仓库类，声明了几个操作数据库的方法。</p>
+<p>实体类声明：</p>
+<pre><code class="line-numbers language-Kotlin">@Entity(tableName = &quot;ContentTable&quot;)
+data class ContentEntity(
+
+    @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = &quot;id&quot;)
+    var id : Int,
+    @ColumnInfo(name = &quot;Content&quot;)
+    var content : String,
+    @ColumnInfo(name = &quot;gptOrUser&quot;)
+    var gptOrUser : Int
+)
+</code></pre>
+<p>这里id为唯一索引。表名叫做ContentTable。</p>
+<p>DAO接口声明：</p>
+<pre><code class="line-numbers language-Kotlin">@Dao
+interface ContentDAO &#123;
+
+    @Query(&quot;SELECT * FROM ContentTable&quot;)
+    fun getContentData() : List&lt;ContentEntity&gt;
+
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    fun insertContent(content : ContentEntity)
+
+    @Query(&quot;DELETE FROM ContentTable WHERE id = :id&quot;)
+    fun deleteSelectedContent(id : Int)
+
+&#125;
+</code></pre>
+<p>这里是操作数据库的底层方法。</p>
+<p>数据库声明：</p>
+<pre><code class="line-numbers language-Kotlin">@Database(entities = [ContentEntity::class], version = 2)
+abstract class ChatDatabase : RoomDatabase() &#123;
+
+    abstract fun contentDAO() : ContentDAO
+
+    companion object &#123;
+        @Volatile
+        private var INSTANCE : ChatDatabase? = null
+
+        fun getDatabase(
+            context : Context
+        ) : ChatDatabase &#123;
+            return INSTANCE ?: synchronized(this) &#123;
+                val instance = Room.databaseBuilder(
+                    context.applicationContext,
+                    ChatDatabase::class.java,
+                    &quot;chatDatabase&quot;
+                )
+                    .fallbackToDestructiveMigration()
+                    .build()
+                INSTANCE = instance
+                instance
             &#125;
         &#125;
-        addList(model.appProductRelVOList) &#123;
-            print(&quot;StageGoodsSuitPackgeModelData 插入成功&quot;)
-        &#125;
-    &#125;
-</code></pre>
-<p>如果是全量更新就比较简单了。<br>先把之前的那两个删除掉，然后新增新的model就好了。</p>
-<h3 id="7-3-增量更新"><a href="#7-3-增量更新" class="headerlink" title="7.3 增量更新"></a>7.3 增量更新</h3><p>先声明一下sql</p>
-<pre><code class="line-numbers language-Swift">    private class func incrementalUpdate(model: StageOfflinePackageData) &#123;
-        print(&quot;增量处理开始时间----&gt;&quot;, Date().currentTime(0))
-        var addGoodsArr: [StageGoodsPackgeModelData] = []
-        var addRelationsArr: [StageGoodsSuitPackgeModelData] = []
-        var relationidArr: [String] = []
-        
-        var goodsSql = &quot;&quot;
-        var relationSql = &quot;&quot;
-        var deleteGoodsSql = &quot;&quot;
-        var deleteRelationSql = &quot;&quot;
-</code></pre>
-<p>遍历下服务端返回的增量数据库：</p>
-<pre><code class="line-numbers language-Swift">for (_,suitModel) in model.appProductVOList.enumerated() &#123;
-    // delFlag为0表示，不是删除哦，这里是新增商品
-    if suitModel.delFlag == 0 &#123;
-        if goodsSql == &quot;&quot; &#123;
-            let str1 = String(format:&quot;id = &#39;%@&#39;&quot;, suitModel.id)
-            let str2 = String(format:&quot;productId = &#39;%@&#39;&quot;, suitModel.id)
-            goodsSql.append(str1)
-            relationSql.append(str2)
-        &#125; else &#123;
-            let str1 = String(format:&quot;|| id = &#39;%@&#39;&quot;, suitModel.id)
-            let str2 = String(format:&quot;|| productId = &#39;%@&#39;&quot;, suitModel.id)
-            goodsSql.append(str1)
-            relationSql.append(str2)
-        &#125;
-        addGoodsArr.append(suitModel)
-        relationidArr.append(suitModel.id)
-    &#125; else &#123;
-        // delFlag为1表示删除了商品
-        if deleteGoodsSql == &quot;&quot; &#123;
-            let str1 = String(format:&quot;id = &#39;%@&#39;&quot;, suitModel.id)
-            let str2 = String(format:&quot;productId = &#39;%@&#39;&quot;, suitModel.id)
-            deleteGoodsSql.append(str1)
-            deleteRelationSql.append(str2)
-        &#125; else &#123;
-            let str1 = String(format:&quot;|| id = &#39;%@&#39;&quot;, suitModel.id)
-            let str2 = String(format:&quot;|| productId = &#39;%@&#39;&quot;, suitModel.id)
-            deleteGoodsSql.append(str1)
-            deleteRelationSql.append(str2)
-        &#125;
     &#125;
 &#125;
 </code></pre>
-<p>有个一个delFlag变量，就是表示是否删除的意思。<br>如果是删除的话，将sql组合一下，就成为 id &#x3D; ‘12’ || id &#x3D; ‘13’ || id &#x3D; ‘14’ 这种。关系表就是 productId &#x3D; ‘12’ || productId &#x3D; ‘14’ 这种。</p>
-<p>这里就知道哪些商品要删除，哪些要加。哪些关系表要删除，哪些要加。</p>
-<p>这里先处理下新增的商品：</p>
-<pre><code class="line-numbers language-Swift">if goodsSql != &quot;&quot; &#123;
-    let predicate = NSPredicate(format:goodsSql)
-    let suitArr = objectsWithPredicate(object: StageGoodsPackgeModelData.self, predicate: predicate)
-    // 这里需要把可能之前存在相同的去掉
-    deleteList(suitArr)&#123;
-        print(&quot;删除商品成功&quot;)
-    &#125;
-    if addGoodsArr.count != 0 &#123;
-        addList(addGoodsArr)&#123;
-            print(&quot;增量更新商品数据成功&quot;)
-        &#125;
-    &#125;
-&#125;
-</code></pre>
-<p>这里用了系统的NSPredicate类来组合sql语句。它其实是用来过滤数据的类。<br>使用方法可以参考这篇文章：<a target="_blank" rel="noopener" href="https://juejin.cn/post/6844903540805074951">https://juejin.cn/post/6844903540805074951</a>。</p>
-<p>然后处理下要删除的商品：</p>
-<pre><code class="line-numbers language-Swift"> if deleteGoodsSql != &quot;&quot; &#123;
-    // NSPredicate是swift 过滤数据的类，类似数据库中的where字段
-    let predicate = NSPredicate(format:deleteGoodsSql)
-    let suitArr = objectsWithPredicate(object: StageGoodsPackgeModelData.self, predicate: predicate)
-    deleteList(suitArr)&#123;
-        print(&quot;删除商品成功&quot;)
-    &#125;
-&#125;
-</code></pre>
-<p>商品处理完成，剩下就是关系表了。</p>
-<p>这里先处理要新增的关系：</p>
-<pre><code class="line-numbers language-Swift">// 这里是新增的关系表
-for idStr in relationidArr &#123;
-    for relationModel in model.appProductRelVOList&#123;
-        if idStr == relationModel.productId &#123;
-            addRelationsArr.append(relationModel)
-        &#125;
-    &#125;
-&#125;
+<p>这里就是初始化Room数据库了。</p>
+<h3 id="3-9-Model层的网络层"><a href="#3-9-Model层的网络层" class="headerlink" title="3.9 Model层的网络层"></a>3.9 Model层的网络层</h3><p>首先声明Api接口：</p>
+<pre><code class="line-numbers language-Kotlin">interface Apis &#123;
+    @Headers(
+        &quot;Content-Type:application/json&quot;,
+        &quot;Authorization:Bearer 自己的Key&quot;)
+    @POST(&quot;v1/completions&quot;)
+    suspend fun postRequest(
+        @Body json : JsonObject
+    ) : GptResponse
 
-// 新增的关系表
-if relationSql != &quot;&quot; &#123;
-    let relationPredicate = NSPredicate(format:relationSql)
-    let relationArr = objectsWithPredicate(object: StageGoodsSuitPackgeModelData.self, predicate: relationPredicate)
-    deleteList(relationArr)&#123;
-        print(&quot;删除套机关系模型成功&quot;)
-    &#125;
-    if addRelationsArr.count != 0 &#123;
-        addList(addRelationsArr)&#123;
-            print(&quot;增量更新套机关系模型成功&quot;)
-        &#125;
+&#125;
+</code></pre>
+<p>用了suspend，表示协程调用。<br>body发送的是Json对象，返回一个GptResponse对象。<br>这个是一个Json数组：</p>
+<pre><code class="line-numbers language-Kotlin">import com.google.gson.JsonArray
+
+data class GptResponse (
+    val choices : JsonArray
+)
+</code></pre>
+<p>然后是Retrofit初始化：</p>
+<pre><code class="line-numbers language-Kotlin">object RetrofitInstance &#123;
+    private var okHttpClient = OkHttpClient
+        .Builder()
+        .connectTimeout(1, TimeUnit.MINUTES)
+        .readTimeout(1, TimeUnit.MINUTES)
+        .writeTimeout(1, TimeUnit.MINUTES)
+        .build()
+
+    private const val BASE_URL = &quot;https://api.openai.com/&quot;
+
+    private val client = Retrofit
+        .Builder()
+        .baseUrl(BASE_URL)
+        .client(okHttpClient)
+        .addConverterFactory(GsonConverterFactory.create())
+        .build()
+
+    fun getInstance() : Retrofit &#123;
+        return client
     &#125;
 &#125;
 </code></pre>
-<p>然后处理下要删除的关系表：</p>
-<pre><code class="line-numbers language-Swift"> if deleteRelationSql != &quot;&quot; &#123;
-    let relationPredicate = NSPredicate(format:deleteRelationSql)
-    let relationArr = objectsWithPredicate(object: StageGoodsSuitPackgeModelData.self, predicate: relationPredicate)
-    deleteList(relationArr)&#123;
-        print(&quot;删除套机关系模型成功&quot;)
-    &#125;
+<p>new了一个OkHttpClient对象，同时将他作为参数传到Retrofit里面。</p>
+<p>然后就是声明一个网络仓库来调用接口：</p>
+<pre><code class="line-numbers language-Kotlin">class NetWorkRepository &#123;
+
+    private val chatGPTClient = RetrofitInstance.getInstance().create(Apis::class.java)
+
+    suspend fun postResponse(jsonData : JsonObject) = chatGPTClient.postRequest(jsonData)
 &#125;
 </code></pre>
-<p>这样增量数据就成功插入了。</p>
-<h2 id="8-预览realm数据库"><a href="#8-预览realm数据库" class="headerlink" title="8 预览realm数据库"></a>8 预览realm数据库</h2><p>插入数据成功后，我们可以用 Realm Studio 来预览数据。<br>上面有讲解如何使用这个可视化工具。</p>
-<p>这里我们就看下最终的结果吧：<br><img src=realm1.png><br><img src=realm2.png></p>
-<h2 id="9-总结"><a href="#9-总结" class="headerlink" title="9 总结"></a>9 总结</h2><ul>
-<li><p>iOS数据库可以考虑使用realm数据库，这个是跨平台，Android也有相应的三方库，使用非常简洁，可以考虑。</p>
-</li>
-<li><p>对于大量数据，我们务必要注意数据的修改，新增，最好采用增量更新的方式，而且如果全量，最好是先压缩下，减小对网络依赖。</p>
-</li>
-<li><p>realm数据库要注意数据库迁移的问题，升级的问题，使用前需要configRealm。</p>
-</li>
-<li><p>真机预览realm数据库可以使用Realm Studio。</p>
-</li>
-<li><p>增量更新一定要注意删除之前的记录，否则数据会很紊乱。</p>
-</li>
+<h2 id="4-总结"><a href="#4-总结" class="headerlink" title="4 总结"></a>4 总结</h2><ul>
+<li>总体来说，集成GPT很简单，本质上就是联调一个接口，使用Retrofit通过传参即可拿到返回数据。</li>
+<li>本篇文章主要是简单描述一个MVVM如何构造，主要是Activity和Adapter对应View层，自定义ViewModel层对应VM层，网络层和数据库层和实体 对应Model层。</li>
+<li>其次，学会Kotlin协程用法，这里ViewModel中可以使用viewModelScope 来调用launch函数，实现协程，最好是要捕获一下异常，保证多种可能性。</li>
+<li>另外，要了解Room数据库使用，通过执行协程，再调用数据库，拿到数据后再post发送给View层。</li>
 </ul>
 
             </div>
@@ -1285,9 +1162,9 @@ if relationSql != &quot;&quot; &#123;
             <br/>
             <span xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/Text"
                   property="dct:title" rel="dct:type">
-                    《iOS swift 数据库realm实践》
+                    《Android 集成 ChatGPT》
                 </span> 由
-            <a xmlns:cc="http://creativecommons.org/ns#" href="/2023/01/30/iOS-swift-%E6%95%B0%E6%8D%AE%E5%BA%93realm%E5%AE%9E%E8%B7%B5/" property="cc:attributionName"
+            <a xmlns:cc="http://creativecommons.org/ns#" href="/2023/02/10/Android-%E9%9B%86%E6%88%90-ChatGPT/" property="cc:attributionName"
                rel="cc:attributionURL">
                 Jason
             </a> 采用
@@ -1328,7 +1205,7 @@ if relationSql != &quot;&quot; &#123;
         repo: 'jasontojan.github.io',
         owner: 'jasontojan',
         admin: "jasontojan",
-        id: '2023/01/30/iOS-swift-数据库realm实践/',
+        id: '2023/02/10/Android-集成-ChatGPT/',
         distractionFreeMode: false  // Facebook-like distraction free mode
     });
 
@@ -1611,46 +1488,50 @@ if relationSql != &quot;&quot; &#123;
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fa fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="fa fa-dot-circle-o"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/2023/01/31/iOS-swift-%E5%AE%9E%E7%8E%B0%E7%AE%80%E6%98%93%E5%9C%B0%E5%9B%BE%E5%8A%9F%E8%83%BD/">
+                <a href="/2023/02/10/Android-%E9%9B%86%E6%88%90-ChatGPT/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/27.jpg" class="responsive-img" alt="iOS swift 实现简易地图功能">
+                        <img src="/medias/featureimages/19.jpg" class="responsive-img" alt="Android 集成 ChatGPT">
                         
-                        <span class="card-title">iOS swift 实现简易地图功能</span>
+                        <span class="card-title">Android 集成 ChatGPT</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            1 需求定义产品需要我们实现这样一个需求，就是根据一个地址（可能有经纬度也可能没有）,然后跳转到地图页面去，地图中间会显示这个地址。运行用户自行点击定位，这样中间会显示当前位置。允许左右滑动，地图中心也会随之变更。支持搜索功能，根据用户搜索
+                            1 效果
+
+2 技术栈Timber: 日志打印工具（Github地址）Room：Jetpack包含的数据库（最全面的Room数据库指南）Splash Screens: 启动屏幕Android12支持（Android 12 SplashScr
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="fa fa-clock-o fa-fw icon-date"></i>2023-01-31
-                        </span>
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2023-02-10
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fa fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/iOS/" class="post-category" target="_blank">
-                                    iOS
+                            <a href="/categories/Android/" class="post-category" target="_blank">
+                                    Android
                                 </a>
                             
                             
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E5%9C%B0%E5%9B%BE/" target="_blank">
-                        <span class="chip bg-color">地图</span>
+                    <a href="/tags/Android-Kotlin-ChatGPT/" target="_blank">
+                        <span class="chip bg-color">Android Kotlin ChatGPT</span>
                     </a>
                     
                 </div>
@@ -1664,31 +1545,34 @@ if relationSql != &quot;&quot; &#123;
                 下一篇&nbsp;<i class="fa fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2023/01/29/iOS-swift-%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0%E6%89%AB%E7%A0%81%E5%8A%9F%E8%83%BD/">
+                <a href="/2023/02/08/Android-OpenGLES-demo-%E5%AD%A6%E4%B9%A0%E4%B9%8B%E4%BA%8C/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/7.jpg" class="responsive-img" alt="iOS swift 如何实现扫码功能">
+                        <img src="/medias/featureimages/12.jpg" class="responsive-img" alt="Android OpenGLES demo 学习之二">
                         
-                        <span class="card-title">iOS swift 如何实现扫码功能</span>
+                        <span class="card-title">Android OpenGLES demo 学习之二</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            1 需求定义这里有个需求，就是继承扫码能力，可以识别到条形码里面的内容。首先我们需要下载一个离线库，这个库里面会包含很多条码Code，相机通过识别到条码跟离线库中的匹配，如果匹配上了，会提示用户。所以首先我们肯定要有一个识别能力，数据库先不
+                            1 Demo2 展示一个蓝色三角形1.1 效果
+
+1.2 首页传参val itemHelloTriangle2: MutableMap&lt;String, Any?&gt; = HashMap()
+    itemHelloTriangl
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="fa fa-clock-o fa-fw icon-date"></i>2023-01-29
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2023-02-08
                             </span>
                         <span class="publish-author">
                             
                             <i class="fa fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/iOS/" class="post-category" target="_blank">
-                                    iOS
+                            <a href="/categories/Android/" class="post-category" target="_blank">
+                                    Android
                                 </a>
                             
                             
@@ -1698,8 +1582,8 @@ if relationSql != &quot;&quot; &#123;
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E6%9D%A1%E5%BD%A2%E7%A0%81%E8%AF%86%E5%88%AB-%E7%9B%B8%E6%9C%BA/" target="_blank">
-                        <span class="chip bg-color">条形码识别 相机</span>
+                    <a href="/tags/Android-OpenGLES/" target="_blank">
+                        <span class="chip bg-color">Android OpenGLES</span>
                     </a>
                     
                 </div>
