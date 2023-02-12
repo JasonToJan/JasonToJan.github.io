@@ -4,13 +4,11 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="iOS swift 打造TabLayout效果, Android iOS Flutter">
+    <meta name="keywords" content="iOS swift Gitee客户端 完整项目分析之二, Android iOS Flutter">
     <meta name="baidu-site-verification" content="fmlEuI34ir" />
     <meta name="google-site-verification" content="yCy2azpds5XSuGZvis6OuA-XIGF5GuGpYRAaGfD6o48" />
     <meta name="360-site-verification" content="b7c11a830ef90fd1464ad6206bb7b6e7" />
-    <meta name="description" content="1 需求定义在首页，我们需要实现一个多tab页，支持左右滑动，上滑吸顶的效果。比如这样：
-需要保证良好的用户体验效果，每个页面都是独立的，可以上滑吸顶，左右滑动页面切换，而且还需要支持未读数字提示。
-2 需求分析针对这些需求，github上">
+    <meta name="description" content="iOS swift Gitee客户端 完整项目分析之二 | JasonToJan&#39;s Blog">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -18,7 +16,7 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>iOS swift 打造TabLayout效果 | JasonToJan&#39;s Blog</title>
+    <title>iOS swift Gitee客户端 完整项目分析之二 | JasonToJan&#39;s Blog</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/font-awesome.min.css">
@@ -330,13 +328,13 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/23.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/3.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
                     <div class="description center-align post-title">
-                        iOS swift 打造TabLayout效果
+                        iOS swift Gitee客户端 完整项目分析之二
                     </div>
                 </div>
             </div>
@@ -446,24 +444,11 @@
                 <div class="col s7">
                     
                     <div class="article-tag">
-                        
-                        <a href="/tags/TabLayout/" target="_blank">
-                            <span class="chip bg-color">TabLayout</span>
-                        </a>
-                        
+                        <span class="chip bg-color">无标签</span>
                     </div>
                     
                 </div>
                 <div class="col s5 right-align">
-                    
-                    <div class="post-cate">
-                        <i class="fa fa-bookmark fa-fw icon-category"></i>
-                        
-                        <a href="/categories/iOS/" class="post-category" target="_blank">
-                            iOS
-                        </a>
-                        
-                    </div>
                     
                 </div>
             </div>
@@ -471,7 +456,7 @@
             <div class="post-info">
                 <div class="post-date info-break-policy">
                     <i class="fa fa-calendar-minus-o fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2023-02-02
+                    2023-02-12
                 </div>
 
                 <div class="post-author info-break-policy">
@@ -485,14 +470,14 @@
                 
                 <div class="info-break-policy">
                     <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    2.5k
+                    0
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    11 分
+                    1 分
                 </div>
                 
                 
@@ -508,376 +493,7 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="1-需求定义"><a href="#1-需求定义" class="headerlink" title="1 需求定义"></a>1 需求定义</h2><p>在首页，我们需要实现一个多tab页，支持左右滑动，上滑吸顶的效果。<br>比如这样：<br><img src=page1.gif width=50%></p>
-<p>需要保证良好的用户体验效果，每个页面都是独立的，可以上滑吸顶，左右滑动页面切换，而且还需要支持未读数字提示。</p>
-<h2 id="2-需求分析"><a href="#2-需求分析" class="headerlink" title="2 需求分析"></a>2 需求分析</h2><p>针对这些需求，github上面有一个成熟的框架。<br><a target="_blank" rel="noopener" href="https://github.com/pujiaxin33/JXSegmentedView">JXsegementedView</a>，github上面有2千多个stars，想必是深受大家喜欢，所以我们也可以考虑用起来。</p>
-<blockquote>
-<p>它的特点是：<br>腾讯新闻、今日头条、QQ音乐、网易云音乐、京东、爱奇艺、腾讯视频、淘宝、天猫、简书、微博等<br>所有主流APP分类切换滚动视图<br>与其他的同类三方库对比的优点：<br>指示器逻辑面向协议编程，可以为所欲为的扩展指示器效果；<br>提供更加全面丰富效果，几乎支持所有主流APP效果；<br>使用子类化管理cell样式，逻辑更清晰，扩展更简单；<br>列表支持整个生命周期方法； </p>
-</blockquote>
-<p>另外一个与之协同的是 <a target="_blank" rel="noopener" href="https://github.com/pujiaxin33/JXPagingView">JXPagingView</a> ，注意这两个库不是替换的关系，而是互相协作的关系。</p>
-<blockquote>
-<p>JXPagingView: 类似微博主页、简书主页、QQ联系人页面等效果。多页面嵌套，既可以上下滑动，也可以左右滑动切换页面。支持HeaderView悬浮、支持下拉刷新、上拉加载更多。</p>
-</blockquote>
-<h2 id="3-使用步骤"><a href="#3-使用步骤" class="headerlink" title="3 使用步骤"></a>3 使用步骤</h2><h3 id="3-1-引用依赖"><a href="#3-1-引用依赖" class="headerlink" title="3.1 引用依赖"></a>3.1 引用依赖</h3><p>这里其实可以远程依赖，但我们考虑到自身一些需求，直接拖进项目里面，将github上的source文件，拷贝到项目里面。</p>
-<img src=segment1.png>
-
-<p>注意这个Personal文件夹里面主要放的是JXPagingView相关代码。</p>
-<p>ok，这样项目中可以自由使用了。</p>
-<h3 id="3-2-初始化视图相关"><a href="#3-2-初始化视图相关" class="headerlink" title="3.2 初始化视图相关"></a>3.2 初始化视图相关</h3><pre><code class="line-numbers language-Swift">extension JXPagingListContainerView: JXSegmentedViewListContainer &#123;&#125;
-</code></pre>
-<p>这里我们先扩展下这个协议，这个JXSegementedViewListContainer是框架里面的协议：</p>
-<pre><code class="line-numbers language-Swift">public protocol JXSegmentedViewListContainer &#123;
-    var defaultSelectedIndex: Int &#123; set get &#125;
-    func contentScrollView() -&gt; UIScrollView
-    func reloadData()
-    func didClickSelectedItem(at index: Int)
-&#125;
-</code></pre>
-<p>协议可以理解为Android中的接口。</p>
-<p>然后我们定义了几个tab，枚举类，姑且叫做这个吧：</p>
-<pre><code class="line-numbers language-Swift">enum WorkListCellItem &#123;
-    /// 待收讫
-    case waitingBalance
-    /// 待开单
-    case waitingForBilling
-    /// 待送货
-    case waitingForDelivery
-    /// 待安装
-    case waitingForInstallation
-    /// 待出库
-    case outOfWarehouse
-    /// 待入库
-    case toBeWarehoused
-&#125;
-</code></pre>
-<p>然后在控制器里面声明下全局变量：</p>
-<pre><code class="line-numbers language-Swift"> var pagingView: JXPagingView!
-var userHeaderView: WorkHeadView!
-var segmentedViewDataSource: JXSegmentedTitleDataSource!
-var segmentedView: JXSegmentedView!
-var JXheightForHeaderInSection: Int = 44
-var JXTableHeaderViewHeight: Int = 182&#123;
-    didSet&#123;
-        self.pagingView.reloadData()
-    &#125;
-&#125;
-</code></pre>
-<p>这里简单说下这几个成员作用：</p>
-<ul>
-<li>JXPagingView: 这个是最外层的容器，里面有一个mainTableView和listContainerView。</li>
-<li>WorkHeadView: 这个是我们自定义的头部，无需关注。</li>
-<li>JXSegemntedTitleDataSource: 这个主要是tab的数据。</li>
-<li>JXheightForHeaderInSection: 标签栏高度定义。</li>
-<li>JXTableHeaderViewHeight: 头部区域高度定义。</li>
-</ul>
-<p>然后看下如何初始化视图：</p>
-<pre><code class="line-numbers language-Swift">func setUI() &#123;
-
-        view.backgroundColor = UIColor(hex:&quot;#3E4D89&quot;).withAlphaComponent(0.06)
-        view.gm_addSubview(navView) &#123; make in
-            make.top.equalTo(0)
-            make.left.right.equalToSuperview()
-            make.height.equalTo(Height_NavBarAndStatusBar)
-        &#125;
-        
-        /// 头部区域
-        userHeaderView = WorkHeadView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: CGFloat(JXTableHeaderViewHeight)))
-        userHeaderView.eventClosure = &#123; [unowned self] (event) in
-            self.workFunctionItemEventClick(event: event)
-        &#125;
-        userHeaderView.clickMsgHandle = &#123;[weak self] model in
-            self?.requestForClickMsg(model: model)
-        &#125;
-        // 配置指示器
-        let indicator = JXSegmentedIndicatorLineView()
-        // 标签栏下划线
-        indicator.indicatorColor = UIColor(r: 64, g: 158, b: 255, alpha: 1)
-        indicator.indicatorWidthIncrement = -15 /// 作用于增大可触区域
-        /// 标签栏
-        segmentedView = JXSegmentedView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: CGFloat(JXheightForHeaderInSection)))
-        segmentedView.backgroundColor = UIColor.white
-        segmentedView.dataSource = dataSource
-        segmentedView.isContentScrollViewClickTransitionAnimationEnabled = true
-        segmentedView.indicators = [indicator]
-
-        let lineWidth = 1/UIScreen.main.scale
-        let lineLayer = CALayer()
-        lineLayer.backgroundColor = UIColor.lightGray.cgColor
-        lineLayer.frame = CGRect(x: 0, y: segmentedView.bounds.height - lineWidth, width: segmentedView.bounds.width, height: lineWidth)
-        segmentedView.layer.addSublayer(lineLayer)
-
-        pagingView = JXPagingView(delegate: self)
-        let header = GMSAutoRefreshHeader()
-        header.setRefreshingTarget(self, refreshingAction: #selector(defaultTableHeaderRefresh))
-        pagingView.mainTableView.mj_header = header
-        if #available(iOS 15.0, *) &#123;
-            pagingView.mainTableView.sectionHeaderTopPadding = 0
-        &#125; else &#123;
-            // Fallback on earlier ···versions
-        &#125;
-        
-        self.view.addSubview(pagingView)
-
-        segmentedView.listContainer = pagingView.listContainerView
-        
-        self.view.gm_addSubview(stockInitializationTipsView) &#123; make in
-            make.top.equalTo(Height_NavBarAndStatusBar)
-            make.width.equalTo(ScreenWidth)
-            make.height.equalTo(0)
-        &#125;
-        pagingView.snp_makeConstraints &#123; make in
-            make.top.equalTo(stockInitializationTipsView.snp_bottom).offset(0)
-            make.width.equalTo(ScreenWidth)
-            make.height.equalTo(ScreenHeight-Height_NavBarAndStatusBar-Height_TabBar)
-        &#125;
-        
-        /// 待开单列表--取消订单闭包回调
-        self.waitingForBillingVC.cancelBlock = &#123; [weak self] in
-            self?.waitingForBillingVC.requestIntendedOrder()
-        &#125;
-        
-        self.setJXCountBolck()
-        
-        WatermarkView.showWindow()
-    &#125;
-</code></pre>
-<p>这里JXSegmentView主要是标签栏。</p>
-<p>PageView是我们实现这效果的父布局。<br>不出意外，这个PageView里面应该会关联到标签栏。<br>这里有部分代码是这样的：<br><code>segmentedView.listContainer = pagingView.listContainerView</code><br>这里应该就是建立联系了。</p>
-<h3 id="3-3-配置代理和数据源"><a href="#3-3-配置代理和数据源" class="headerlink" title="3.3 配置代理和数据源"></a>3.3 配置代理和数据源</h3><p>前面将delegate设置为self了，所以我们需要看下如何配置的。<br>先看下PageView设置的代理吧：</p>
-<pre><code class="line-numbers language-swfit">extension NewWorkViewController: JXPagingViewDelegate &#123;
-
-    /// tableHeaderView高度
-    func tableHeaderViewHeight(in pagingView: JXPagingView) -&gt; Int &#123;
-        return JXTableHeaderViewHeight
-    &#125;
-
-    /// tableHeaderView
-    func tableHeaderView(in pagingView: JXPagingView) -&gt; UIView &#123;
-        return userHeaderView
-    &#125;
-
-    /// 吸顶标签栏的高度
-    func heightForPinSectionHeader(in pagingView: JXPagingView) -&gt; Int &#123;
-        return JXheightForHeaderInSection
-    &#125;
-
-    /// 吸顶标签栏
-    func viewForPinSectionHeader(in pagingView: JXPagingView) -&gt; UIView &#123;
-        return segmentedView
-    &#125;
-    
-    /// 列表的数量
-    func numberOfLists(in pagingView: JXPagingView) -&gt; Int &#123;
-        return dataSource.attributedTitles.count
-    &#125;
-
-    /// 列表
-    func pagingView(_ pagingView: JXPagingView, initListAtIndex index: Int) -&gt; JXPagingViewListViewDelegate &#123;
-        let flag: WorkListCellItem = self.listDataArray[index]
-        
-        if flag == .waitingBalance &#123;
-            /// 待收讫VC
-            let list = waitingBalanceVC
-            return list
-        &#125;else if flag == .waitingForBilling &#123;
-            /// 待开单VC
-            let list = waitingForBillingVC
-            return list
-        &#125;else if flag == .waitingForDelivery &#123;
-            /// 待送货VC
-            let list = waitingForDeliveryVC
-            return list
-        &#125;else if flag == .waitingForInstallation &#123;
-            /// 待安装VC
-            let list = waitingForInstallationVC
-            return list
-        &#125;else if flag == .outOfWarehouse &#123;
-            /// 待出库VC
-            let list = outOfWarehouseVC
-            return list
-        &#125;else &#123;
-            /// 待入库VC
-            let list = toBeWarehousedVC
-            return list
-        &#125;
-    &#125;
-
-    func mainTableViewDidScroll(_ scrollView: UIScrollView) &#123;
-//        userHeaderView?.scrollViewDidScroll(contentOffsetY: scrollView.contentOffset.y)
-    &#125;
-&#125;
-</code></pre>
-<p>这里配置了头部，高度等。<br>主要的pagingView是需要我们自己实现的，这个就是Tab下方的列表展示了。<br>不出意外这个应该需要继承框架里面的某个View吧。</p>
-<p>我们等下看下waitingForBillingVC吧。</p>
-<p>另外看下标签栏的数据源是怎么设置的：</p>
-<pre><code class="line-numbers language-Swift"> private lazy var dataSource : JXSegmentedTitleAttributeDataSource = &#123;
-        let dataSource = JXSegmentedTitleAttributeDataSource()
-        /// 关闭标签栏等分宽度
-        dataSource.isItemSpacingAverageEnabled = false
-        dataSource.itemSpacing = 0
-        return dataSource
-    &#125;()
-</code></pre>
-<p>这里只是定义了，还需要在需要的地方配置下数据：</p>
-<pre><code class="line-numbers language-Swift">  dataSource.attributedTitles = dataTitles
-  dataSource.selectedAttributedTitles = dataSelectedTitles
-        
-</code></pre>
-<h2 id="4-子列表"><a href="#4-子列表" class="headerlink" title="4 子列表"></a>4 子列表</h2><p>外层框架搭好了，需要看下每个子列表是如何塞进去的。</p>
-<pre><code class="line-numbers language-Swift">// MARK: - 工作台（待开单）
-class WorkWaitingForBillingVC: AutomaticDimensionTableViewController, JXPagingViewListViewDelegate &#123;
-</code></pre>
-<p>这里其实本质上是一个控制器哦，只是实现了它定义的代理方法即可。<br>这里用了一个我们自己定义的自动高度的控制器，跟这个框架无关哈。</p>
-<pre><code class="line-numbers language-Swift">/// 自动高度 TableView （避免 使用UITableView.automaticDimension 带来的弊端（某些时候 reloadData contentOffSet 会改变 导致闪跳））
-/// 只实现了UITableViewDelegate和高度相关的代理方法，tableview也没有创建，自行按需创建
-class AutomaticDimensionTableViewController: GMBaseViewController &#123;
-    private var rowHeights = [String: CGFloat]()
-    private var headerHeights = [String: CGFloat]()
-    private var footerHeights = [String: CGFloat]()
-    
-    /// 预估cell高度
-    var rowEstimatedHeight: CGFloat = UITableView.automaticDimension
-    /// 预估header高度
-    var headerEstimatedHeight: CGFloat = 200
-    /// 预估footer高度
-    var footerEstimatedHeight: CGFloat = 200
-
-&#125;
-private extension AutomaticDimensionTableViewController &#123;
-    func getRowKeyWithIndexPath(_ indexPath: IndexPath) -&gt; String &#123;
-        let section = indexPath.section
-        let row = indexPath.row
-        let key = &quot;\(section)-\(row)&quot;
-        return key
-    &#125;
-&#125;
-extension AutomaticDimensionTableViewController: UITableViewDelegate &#123;
-    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) &#123;
-        let key = getRowKeyWithIndexPath(indexPath)
-        let height = cell.frame.height
-        rowHeights[key] = height
-    &#125;
-    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -&gt; CGFloat &#123;
-        let key = getRowKeyWithIndexPath(indexPath)
-        guard let height = rowHeights[key] else &#123; return rowEstimatedHeight &#125;
-        return height
-    &#125;
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -&gt; CGFloat &#123;
-        return UITableView.automaticDimension
-    &#125;
-    
-    
-    
-    func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) &#123;
-        let key = &quot;\(section)&quot;
-        let height = view.frame.height
-        headerHeights[key] = height
-    &#125;
-    func tableView(_ tableView: UITableView, estimatedHeightForHeaderInSection section: Int) -&gt; CGFloat &#123;
-        let key = &quot;\(section)&quot;
-        guard let height = headerHeights[key] else &#123; return headerEstimatedHeight &#125;
-        return height
-    &#125;
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -&gt; CGFloat &#123;
-        return UITableView.automaticDimension
-    &#125;
-    
-    
-    func tableView(_ tableView: UITableView, willDisplayFooterView view: UIView, forSection section: Int) &#123;
-        let key = &quot;\(section)&quot;
-        let height = view.frame.height
-        footerHeights[key] = height
-    &#125;
-    func tableView(_ tableView: UITableView, estimatedHeightForFooterInSection section: Int) -&gt; CGFloat &#123;
-        let key = &quot;\(section)&quot;
-        guard let height = footerHeights[key] else &#123; return footerEstimatedHeight &#125;
-        return height
-    &#125;
-    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -&gt; CGFloat &#123;
-        return UITableView.automaticDimension
-    &#125;
-&#125;
-</code></pre>
-<p>框架要求的协议需要看下：</p>
-<pre><code class="line-numbers language-Swift">@objc
-public protocol JXPagingViewListViewDelegate &#123;
-    /// 如果列表是VC，就返回VC.view
-    /// 如果列表是View，就返回View自己
-    ///
-    /// - Returns: 返回列表视图
-    func listView() -&gt; UIView
-    /// 返回listView内部持有的UIScrollView或UITableView或UICollectionView
-    /// 主要用于mainTableView已经显示了header，listView的contentOffset需要重置时，内部需要访问到外部传入进来的listView内的scrollView
-    ///
-    /// - Returns: listView内部持有的UIScrollView或UITableView或UICollectionView
-    func listScrollView() -&gt; UIScrollView
-    /// 当listView内部持有的UIScrollView或UITableView或UICollectionView的代理方法`scrollViewDidScroll`回调时，需要调用该代理方法传入的callback
-    ///
-    /// - Parameter callback: `scrollViewDidScroll`回调时调用的callback
-    func listViewDidScrollCallback(callback: @escaping (UIScrollView)-&gt;())
-
-    /// 将要重置listScrollView的contentOffset
-    @objc optional func listScrollViewWillResetContentOffset()
-    /// 可选实现，列表将要显示的时候调用
-    @objc optional func listWillAppear()
-    /// 可选实现，列表显示的时候调用
-    @objc optional func listDidAppear()
-    /// 可选实现，列表将要消失的时候调用
-    @objc optional func listWillDisappear()
-    /// 可选实现，列表消失的时候调用
-    @objc optional func listDidDisappear()
-&#125;
-</code></pre>
-<p>这里要求我们可以实现这些方法。</p>
-<pre><code class="line-numbers language-Swift">var listViewDidScrollCallback: ((UIScrollView) -&gt; ())?
-    
-    deinit &#123;
-        listViewDidScrollCallback = nil
-    &#125;
-    
-    func listView() -&gt; UIView &#123;
-        return self.view
-    &#125;
-    
-    func listScrollView() -&gt; UIScrollView &#123;
-        return self.mainTableView
-    &#125;
-    
-    func listViewDidScrollCallback(callback: @escaping (UIScrollView) -&gt; ()) &#123;
-        self.listViewDidScrollCallback = callback
-    &#125;
-
-    /// 主列表
-    lazy var mainTableView: UITableView = &#123;
-        let tableView = UITableView(frame: UIScreen.main.bounds, style: .grouped)
-        if #available(iOS 15.0, *) &#123;
-            tableView.sectionHeaderTopPadding = 0
-        &#125; else &#123;
-            // Fallback on earlier ···versions
-        &#125;
-        tableView.separatorStyle = .none
-        tableView.delegate = self
-        tableView.dataSource = self
-        tableView.backgroundColor = .white
-        tableView.showsVerticalScrollIndicator = false
-        tableView.showsHorizontalScrollIndicator = false
-        tableView.tableFooterView = UIView()
-        
-        let footer = GMSAutoRefreshFooter()
-        footer.setRefreshingTarget(self, refreshingAction: #selector(defaultTableFooterRefresh))
-        tableView.mj_footer = footer
-       return tableView
-   &#125;()
-</code></pre>
-<p>这里我们直接把控制的view给他了。<br>这个滚动的视图就是我们自己定义的主列表。</p>
-<p>大致就是这样，使用起来还是简单的。<br>后面有时间再详细看下源码才行。</p>
-<h2 id="5-总结"><a href="#5-总结" class="headerlink" title="5 总结"></a>5 总结</h2><ul>
-<li>本文主要是针对多Tab页，吸顶效果和可分页可滑动的需求，利用一个三方框架完美解决。</li>
-<li>主要通过最外层的JPagingView本质上是UIView来的，设置代理，配置头部区域和中间列表区域显示。通过一个listContainer关联起了标签栏和列表区，这样实现双向交互。</li>
-<li>使用这个框架的工作就是创建这几个View，配置代理，实现代理，最后实现列表的控制器，控制器也需要实现它提供的代理，另外头部也需要我们按照ui要求自己编写即可。</li>
-<li>使用任何一个三方库一定要懂得它的原理，一旦出问题，我们可以游刃而解。</li>
-</ul>
-
+                
             </div>
             <hr />
 
@@ -1035,9 +651,9 @@ public protocol JXPagingViewListViewDelegate &#123;
             <br/>
             <span xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/Text"
                   property="dct:title" rel="dct:type">
-                    《iOS swift 打造TabLayout效果》
+                    《iOS swift Gitee客户端 完整项目分析之二》
                 </span> 由
-            <a xmlns:cc="http://creativecommons.org/ns#" href="/2023/02/02/iOS-swift-%E6%89%93%E9%80%A0TabLayout%E6%95%88%E6%9E%9C/" property="cc:attributionName"
+            <a xmlns:cc="http://creativecommons.org/ns#" href="/2023/02/12/iOS-swift-Gitee%E5%AE%A2%E6%88%B7%E7%AB%AF-%E5%AE%8C%E6%95%B4%E9%A1%B9%E7%9B%AE%E5%88%86%E6%9E%90%E4%B9%8B%E4%BA%8C/" property="cc:attributionName"
                rel="cc:attributionURL">
                 Jason
             </a> 采用
@@ -1078,7 +694,7 @@ public protocol JXPagingViewListViewDelegate &#123;
         repo: 'jasontojan.github.io',
         owner: 'jasontojan',
         admin: "jasontojan",
-        id: '2023/02/02/iOS-swift-打造TabLayout效果/',
+        id: '2023/02/12/iOS-swift-Gitee客户端-完整项目分析之二/',
         distractionFreeMode: false  // Facebook-like distraction free mode
     });
 
@@ -1361,53 +977,36 @@ public protocol JXPagingViewListViewDelegate &#123;
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fa fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="fa fa-dot-circle-o"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/2023/02/03/iOS-swift-3%E5%A4%A930%E4%B8%AASwift%E9%A1%B9%E7%9B%AE%E4%B9%8B%E7%AC%AC%E4%B8%80%E5%A4%A9/">
+                <a href="/2023/02/12/iOS-swift-Gitee%E5%AE%A2%E6%88%B7%E7%AB%AF-%E5%AE%8C%E6%95%B4%E9%A1%B9%E7%9B%AE%E5%88%86%E6%9E%90%E4%B9%8B%E4%BA%8C/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/13.jpg" class="responsive-img" alt="iOS swift 3天30个Swift项目之第一天">
+                        <img src="/medias/featureimages/3.jpg" class="responsive-img" alt="iOS swift Gitee客户端 完整项目分析之二">
                         
-                        <span class="card-title">iOS swift 3天30个Swift项目之第一天</span>
+                        <span class="card-title">iOS swift Gitee客户端 完整项目分析之二</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
                             
-参考项目：https://github.com/soapyigu/Swift-30-Projects 
-
-1 计时器首先看下效果吧。
-1.1 主要功能点击播放按钮，数字开始增加；点击暂停按钮，数字停止增加；点击“Reset”，数值置为0；
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="fa fa-clock-o fa-fw icon-date"></i>2023-02-03
-                        </span>
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2023-02-12
+                            </span>
                         <span class="publish-author">
-                            
-                            <i class="fa fa-bookmark fa-fw icon-category"></i>
-                            
-                            <a href="/categories/iOS/" class="post-category" target="_blank">
-                                    iOS
-                                </a>
-                            
                             
                         </span>
                     </div>
                 </div>
-                
-                <div class="card-action article-tags">
-                    
-                    <a href="/tags/30%E4%B8%AASwift%E9%A1%B9%E7%9B%AE/" target="_blank">
-                        <span class="chip bg-color">30个Swift项目</span>
-                    </a>
-                    
-                </div>
+
                 
             </div>
         </div>
@@ -1418,32 +1017,32 @@ public protocol JXPagingViewListViewDelegate &#123;
                 下一篇&nbsp;<i class="fa fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2023/02/01/iOS-swift-%E6%B7%B7%E7%BC%96Flutter/">
+                <a href="/2023/02/10/Android-%E9%9B%86%E6%88%90-%E9%AB%98%E5%BE%B7%E5%9C%B0%E5%9B%BEAPI/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/11.jpg" class="responsive-img" alt="iOS swift 混编Flutter">
+                        <img src="/medias/featureimages/26.jpg" class="responsive-img" alt="Android 集成 高德地图API">
                         
-                        <span class="card-title">iOS swift 混编Flutter</span>
+                        <span class="card-title">Android 集成 高德地图API</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            1 集成Flutter原因最除是项目人员调动，导致产品和开发数量不匹配。领导打算使用跨平台方案，但原有项目都是基于原生实现，如果想转Flutter，肯定得先考虑混编方案，因为需求也是持续迭代的，而且市场上也是由先例，可行性肯定是没问题的。
-
+                            1 参考文档
+Github源码地址：https://github.com/lilongweidev/GaodeMapDemo博主博客地址:Android 高德地图API（详细步骤+源码）7Android 高德地图API（详细步骤+源码）6A
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="fa fa-clock-o fa-fw icon-date"></i>2023-02-01
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2023-02-10
                             </span>
                         <span class="publish-author">
                             
                             <i class="fa fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/iOS/" class="post-category" target="_blank">
-                                    iOS
+                            <a href="/categories/Android/" class="post-category" target="_blank">
+                                    Android
                                 </a>
                             
                             
@@ -1453,8 +1052,8 @@ public protocol JXPagingViewListViewDelegate &#123;
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E6%B7%B7%E7%BC%96Flutter/" target="_blank">
-                        <span class="chip bg-color">混编Flutter</span>
+                    <a href="/tags/Android-%E9%AB%98%E5%BE%B7%E5%9C%B0%E5%9B%BE/" target="_blank">
+                        <span class="chip bg-color">Android 高德地图</span>
                     </a>
                     
                 </div>
@@ -1600,25 +1199,6 @@ public protocol JXPagingViewListViewDelegate &#123;
     
 
 </main>
-
-
-<script src="https://cdn.bootcss.com/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-<script>
-    MathJax.Hub.Config({
-        tex2jax: {inlineMath: [['$', '$'], ['\(', '\)']]}
-    });
-</script>
-
-<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
-<!-- 代码语言 -->
-<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
-<!-- 代码块复制 -->
-<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
-<script type="text/javascript" src="/libs/codeBlock/clipboard.min.js"></script>
-<!-- 代码块收缩 -->
-<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script> 
-<!-- 代码块折行 -->
-<style type="text/css">code[class*="language-"], pre[class*="language-"] { white-space: pre !important; }</style>
 
 
     <footer class="page-footer bg-color">
