@@ -21,9 +21,9 @@ Gitee基于SwiftUI和OpenApi的iOS客户端项目。
 | <img src=1.png> | <img src=2.png> | <img src=3.png> |
 | <img src=4.png> | <img src=5.png> | <img src=6.png> |
 
-## 3 首页架构
+## 3 首页相关
 
-这里是底部3个Tab，首页展示一个工作台消息中心，你的团队的入库。应该是写死的布局。
+这里是底部3个Tab，首页展示一个工作台消息中心，你的团队的入口。应该是写死的布局。
 
 第二个tab是好友动态，这里展示一个列表，展示动态列表。
 
@@ -31,6 +31,11 @@ Gitee基于SwiftUI和OpenApi的iOS客户端项目。
 
 关于App和Scene代码结构，可以参考这篇文章：
 [SwiftUI2.0 —— App、Scene及新的代码结构（一）](https://zhuanlan.zhihu.com/p/152624613)。
+
+### 3.1 首页基础架构
+
+就是下面这个页面架构：
+<img src=1.png>
 
 应用初始化代码：
 ```Swift
@@ -128,7 +133,6 @@ func getNavBarTitle() -> String{
 }
 ```
 这里配置tab具体数据。
-![](./iOS-swift-Gitee%E5%AE%A2%E6%88%B7%E7%AB%AF-%E5%AE%8C%E6%95%B4%E9%A1%B9%E7%9B%AE%E5%88%86%E6%9E%90%E4%B9%8B%E4%B8%80/tab1.png)
 <img src=tab1.png>
 这里Form是表格。
 Section是组别。
@@ -176,6 +180,9 @@ var body: some View {
 这里面的NavigationLink自带的箭头哦。
 
 ### 3.2 仓库页面
+是这个页面：
+<img src=gitee_01_02.png>
+
 前面用了一个NavigationLink包裹，那么点击这个之后应该是跳转到目标页面。
 
 这里是先跳转到你的仓库页面。
@@ -508,6 +515,8 @@ struct RepoItemView:View{
 注意到这里的菜单是一个Button，里面配置了action，然后在顶部配置了NavigationLink，实现跳转。
 
 ### 3.3 提交记录 
+这里是长按，弹出菜单，第一个item是提交记录，会进入一个列表。
+<img src=gitee_01_01.png>
 
 比如点击了提交记录：
 这里显示body:
@@ -730,6 +739,8 @@ struct CommitItemView:View{
 ```
 
 ### 3.4 Pull Request
+看下页面效果：
+<img src=gitee_01_03.png>
 
 整个body定义：
 ```Swift
@@ -979,6 +990,9 @@ struct PullRequestItemView:View{
 ```
 
 ### 3.5 查看Issues
+
+这里效果图如下：
+<img src=gitee_01_04.png>
 
 body定义：
 ```Swift

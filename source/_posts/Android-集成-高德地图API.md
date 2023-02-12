@@ -2799,7 +2799,7 @@ public void onBusRouteSearched(BusRouteResult busRouteResult, int code) {
 }
 ```
 
-### 10 总结
+## 10 总结
 
 * 首先是配置依赖，可以远程或者本地引用，前提是配置key，注意配置SHA1安全码。
 * 然后是地图使用，主要是在布局中声明Map，这个Map本质上是一个ViewGroup。
