@@ -8,7 +8,10 @@
     <meta name="baidu-site-verification" content="fmlEuI34ir" />
     <meta name="google-site-verification" content="yCy2azpds5XSuGZvis6OuA-XIGF5GuGpYRAaGfD6o48" />
     <meta name="360-site-verification" content="b7c11a830ef90fd1464ad6206bb7b6e7" />
-    <meta name="description" content="iOS swift Gitee客户端 完整项目分析之二 | JasonToJan&#39;s Blog">
+    <meta name="description" content="1 项目地址
+https://gitee.com/open-gitee/gitee_iosGitee基于SwiftUI和OpenApi的iOS客户端项目。
+
+2 首页其他列表2.1 Issues点击Issues这个item后，会跳转到所有I">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -444,11 +447,24 @@
                 <div class="col s7">
                     
                     <div class="article-tag">
-                        <span class="chip bg-color">无标签</span>
+                        
+                        <a href="/tags/%E5%AE%8C%E6%95%B4%E9%A1%B9%E7%9B%AE-SwiftUI/" target="_blank">
+                            <span class="chip bg-color">完整项目 SwiftUI</span>
+                        </a>
+                        
                     </div>
                     
                 </div>
                 <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fa fa-bookmark fa-fw icon-category"></i>
+                        
+                        <a href="/categories/iOS/" class="post-category" target="_blank">
+                            iOS
+                        </a>
+                        
+                    </div>
                     
                 </div>
             </div>
@@ -470,14 +486,14 @@
                 
                 <div class="info-break-policy">
                     <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    0
+                    5.3k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    1 分
+                    28 分
                 </div>
                 
                 
@@ -493,7 +509,976 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
+                <h2 id="1-项目地址"><a href="#1-项目地址" class="headerlink" title="1 项目地址"></a>1 项目地址</h2><blockquote>
+<p><a target="_blank" rel="noopener" href="https://gitee.com/open-gitee/gitee_ios">https://gitee.com/open-gitee/gitee_ios</a><br>Gitee基于SwiftUI和OpenApi的iOS客户端项目。</p>
+</blockquote>
+<h2 id="2-首页其他列表"><a href="#2-首页其他列表" class="headerlink" title="2 首页其他列表"></a>2 首页其他列表</h2><h3 id="2-1-Issues"><a href="#2-1-Issues" class="headerlink" title="2.1 Issues"></a>2.1 Issues</h3><p>点击Issues这个item后，会跳转到所有Issures的列表页：<br><img src=gitee_02_1.png></p>
+<pre><code class="line-numbers language-Swift">struct IssuesView: View &#123;
+    @State var issuesList: [IssueModel] = []
+    @State var waitPlease = false
+    @State var isRefreshing = false
+    @State var isLoading: Bool = false
+    @State var isModal: Bool = false
+    @State var message: String = &quot;数据加载中&quot;
+    @State var isFilterShow = false
+    @State var page = 1
+    @State var repoPath: String = &quot;&quot;
+    @State var title: String? = &quot;Issues&quot;
+    @State var isInserIssueShow:Bool = false
+</code></pre>
+<p>首先继承View，声明动态数据，因为swift是静态语言，这里通过注解@State实现动态监听。</p>
+<blockquote>
+<p>@State 是 SwiftUI 中的一个注解，它用于声明一个状态变量。SwiftUI 框架在渲染界面时会自动监测状态变量的变化，并且自动更新对应的界面元素。这样可以方便地管理界面状态和数据。</p>
+</blockquote>
+<p>然后是body声明：</p>
+<pre><code class="line-numbers language-Swift">var body: some View &#123;
+    LoadingView(isLoading:self.$isLoading,message: self.$message,isModal:self.$isModal) &#123;
+        VStack&#123;
+            ZStack&#123;
+                if issuesList.count == 0 &amp;&amp; !isLoading &#123;
+                    VStack&#123;
+                        Image(systemName: &quot;doc.text.magnifyingglass&quot;)
+                            .scaleEffect(3, anchor: .center)
+                        Text(&quot;暂无查询到的Issues&quot;).padding(.top,30)
+                    &#125;
+                &#125;
+                RefreshView(refreshing: $isRefreshing, action: &#123;
+                    self.page = 1
+                    self.getIssueList(page: self.page)
+                &#125;) &#123;
+                    LazyVStack&#123;
+                        ForEach(self.issuesList)&#123; item in
+                            NavigationLink(destination: IssueItemView(issueItem: item)) &#123;
+                                IssueItemView(issueItem: item)
+                                    .onAppear()&#123;
+                                        if !waitPlease &amp;&amp; item.id == issuesList[issuesList.count - 1].id &#123;
+                                            self.page = self.page + 1
+                                            self.getIssueList(page: self.page)
+                                        &#125;
+                                    &#125;
+                            &#125;
+                        &#125;
+                    &#125;
+                &#125;
+            &#125;
+            if self.repoPath != &quot;&quot; &#123;
+                Spacer()
+                HStack&#123;
+                    Spacer()
+                    Button &#123;
+                        self.isInserIssueShow = true
+                    &#125; label: &#123;
+                        Image(systemName: &quot;square.and.pencil&quot;)
+                            .scaleEffect(1.2, anchor: .center)
+                    &#125;
+                    .padding(12)
+                    .background(Color.yellow)
+                    .foregroundColor(Color.black)
+                    .cornerRadius(100)
+                    .sheet(isPresented: $isInserIssueShow) &#123;
+                        let arr = self.repoPath.components(separatedBy: &quot;/&quot;)
+                        IssueInsertView(repoNamespacePath: arr[0], repoPath: arr[1])
+                    &#125;
+                &#125;
+                .padding(.trailing,20)
+            &#125;
+        &#125;
+    &#125;
+    .padding(.top,5)
+    .navigationBarTitle(Text(title!), displayMode: .inline)
+    .navigationBarItems(
+        trailing:
+            HStack &#123;
+                Button(action: &#123;
+                    self.isFilterShow.toggle()
+                &#125;) &#123;
+                    Image(systemName: &quot;rectangle.and.text.magnifyingglass&quot;)
+                        
+                        .scaleEffect(1, anchor: .center)
+                &#125;
+            &#125;
+            .sheet(isPresented: $isFilterShow,onDismiss: &#123;
+                self.isLoading = true
+                self.page = 1
+                self.getIssueList(page: self.page)
+            &#125;)&#123;
+                IssueFilterView()
+                    .modifier(DisableModalDismiss(disabled: false))
+            &#125;
+    )
+    .onAppear()&#123;
+        localConfig.setValue(&quot;all&quot;, forKey: giteeConfig.issue_filter)
+        localConfig.setValue(&quot;open&quot;, forKey: giteeConfig.issue_state)
+        localConfig.setValue(&quot;created&quot;, forKey: giteeConfig.issue_sort)
+        localConfig.setValue(&quot;desc&quot;, forKey: giteeConfig.issue_direction)
+        self.page = 1
+        self.getIssueList(page: self.page)
+    &#125;
+&#125;
+</code></pre>
+<p>上面是定义了整个Issues列表的UI。<br>内部用了自定义的下拉刷新控件：RefreshView。<br>然后里面是通过一个ForEach循环，里面装载了IssueItemView，就是单个item布局效果。</p>
+<p>这个跟前面分析的IssueItemView一致。</p>
+<p>这里Issue页面，标题栏右边有个筛选按钮：</p>
+<pre><code class="line-numbers language-Swift">.navigationBarItems(
+        trailing:
+            HStack &#123;
+                Button(action: &#123;
+                    self.isFilterShow.toggle()
+                &#125;) &#123;
+                    Image(systemName: &quot;rectangle.and.text.magnifyingglass&quot;)
+                        
+                        .scaleEffect(1, anchor: .center)
+                &#125;
+            &#125;
+            .sheet(isPresented: $isFilterShow,onDismiss: &#123;
+                self.isLoading = true
+                self.page = 1
+                self.getIssueList(page: self.page)
+            &#125;)&#123;
+                IssueFilterView()
+                    .modifier(DisableModalDismiss(disabled: false))
+            &#125;
+    )
+</code></pre>
+<p>是通过给View扩展，添加trailing尾部，配置图标，以及点击后的响应view: IssureFilterView。</p>
+<p>这里看下筛选View:<br><img src=gitee_02_filter.png></p>
+<p>对应的代码如下：</p>
+<pre><code class="line-numbers language-Swift">
+struct IssueFilterView: View &#123;
+    @Environment(\.presentationMode) var mode
+    @State var filter = 0;
+    @State var filterList = [&quot;所有来源的Issues&quot;,&quot;只显示指派给我的&quot;,&quot;只显示我创建的&quot;];
+    @State var filterKey = [&quot;all&quot;,&quot;assigned&quot;,&quot;created&quot;];
+    @State var state = 1;
+    @State var stateList = [&quot;所有状态的Issues&quot;,&quot;只显示已开启的&quot;,&quot;只显示进行中的&quot;,&quot;只显示已完成的&quot;,&quot;只显示被拒绝的&quot;];
+    @State var stateKey = [&quot;all&quot;,&quot;open&quot;,&quot;progressing&quot;,&quot;closed&quot;,&quot;rejected&quot;];
+    @State var sort = 0;
+    @State var sortList = [&quot;创建时间&quot;,&quot;更新时间&quot;];
+    @State var sortKey = [&quot;created&quot;,&quot;updated&quot;];
+    @State var direction = 0;
+    @State var directionList = [&quot;从最新开始&quot;,&quot;从最早开始&quot;];
+    @State var directionKey = [&quot;desc&quot;,&quot;asc&quot;];
+    var body: some View &#123;
+        NavigationView&#123;
+            Form&#123;
+                Section(header: Text(&quot;条件&quot;)) &#123;
+                    Picker(selection: self.$filter, label: Text(&quot;Issues来源&quot;)) &#123;
+                        ForEach(0 ..&lt; self.filterList.count)&#123;
+                            Text(self.filterList[$0]).tag($0)
+                        &#125;
+                    &#125;
+                    Picker(selection: self.$state, label: Text(&quot;当前状态&quot;)) &#123;
+                        ForEach(0 ..&lt; self.stateList.count)&#123;
+                            Text(self.stateList[$0]).tag($0)
+                        &#125;
+                    &#125;
+                &#125;
+                Section(header: Text(&quot;排序&quot;)) &#123;
+                    Picker(selection: self.$sort, label: Text(&quot;排序依据&quot;)) &#123;
+                        ForEach(0 ..&lt; self.sortList.count)&#123;
+                            Text(self.sortList[$0]).tag($0)
+                        &#125;
+                    &#125;
+                    Picker(selection: self.$direction, label: Text(&quot;排序方式&quot;)) &#123;
+                        ForEach(0 ..&lt; self.directionList.count)&#123;
+                            Text(self.directionList[$0]).tag($0)
+                        &#125;
+                    &#125;
+                &#125;
+            &#125;
+            .navigationBarTitle(Text(&quot;筛选Issues&quot;), displayMode: .large)
+            .navigationBarItems(trailing:
+                                    Button(action: &#123;
+                                        // 存储这部分配置
+                                        localConfig.setValue(self.filterKey[self.filter], forKey: giteeConfig.issue_filter)
+                                        localConfig.setValue(self.stateKey[self.state], forKey: giteeConfig.issue_state)
+                                        localConfig.setValue(self.sortKey[self.sort], forKey: giteeConfig.issue_sort)
+                                        localConfig.setValue(self.directionKey[self.direction], forKey: giteeConfig.issue_direction)
+                                        self.mode.wrappedValue.dismiss()
+                                    &#125;) &#123;
+                                        Text(&quot;筛选&quot;).foregroundColor(.yellow)
+                                    &#125;)
+        &#125;
+        .onAppear()&#123;
+            
+        &#125;
+        .preferredColorScheme(.dark)
+    &#125;
+&#125;
+</code></pre>
+<p>这里是跳转到一个系统的Picker视图页：<br><img src=gitee_02_02.png></p>
+<p>然后是右侧按钮点击事件：</p>
+<pre><code class="line-numbers language-Swift"> .navigationBarItems(trailing:
+        Button(action: &#123;
+            // 存储这部分配置
+            localConfig.setValue(self.filterKey[self.filter], forKey: giteeConfig.issue_filter)
+            localConfig.setValue(self.stateKey[self.state], forKey: giteeConfig.issue_state)
+            localConfig.setValue(self.sortKey[self.sort], forKey: giteeConfig.issue_sort)
+            localConfig.setValue(self.directionKey[self.direction], forKey: giteeConfig.issue_direction)
+            self.mode.wrappedValue.dismiss()
+        &#125;) &#123;
+            Text(&quot;筛选&quot;).foregroundColor(.yellow)
+        &#125;)
+</code></pre>
+<p>点击后，先存储配置，然后怎么通知列表更新的呢？</p>
+<p>应该是这里：</p>
+<pre><code class="line-numbers language-Swift">.navigationBarItems(
+        trailing:
+            HStack &#123;
+                Button(action: &#123;
+                    self.isFilterShow.toggle()
+                &#125;) &#123;
+                    Image(systemName: &quot;rectangle.and.text.magnifyingglass&quot;)
+                        
+                        .scaleEffect(1, anchor: .center)
+                &#125;
+            &#125;
+            .sheet(isPresented: $isFilterShow,onDismiss: &#123;
+                self.isLoading = true
+                self.page = 1
+                self.getIssueList(page: self.page)
+            &#125;)&#123;
+                IssueFilterView()
+                    .modifier(DisableModalDismiss(disabled: false))
+            &#125;
+    )
+</code></pre>
+<p>通过配置sheet方法，在里面的view发送dissmiss后，会触发sheet里面的onDismiss回调，这里就重新走接口了。走接口的话应该会重新拿localConfig里面的值。</p>
+<blockquote>
+<p>sheet 方法是 SwiftUI 中的一个视图方法，用于从当前视图弹出一个新的视图作为模态视图。模态视图是一种浮现在当前界面之上的视图，通常用于呈现额外的内容或提供选项等。模态视图不会阻碍用户对当前界面的操作，但必须关闭模态视图才能继续对当前界面的操作。</p>
+</blockquote>
+<p>然后就是如何获取网络层数据的？</p>
+<pre><code class="line-numbers language-Swift">.onAppear()&#123;
+        print(&quot;这里appear了&quot;)
+        localConfig.setValue(&quot;all&quot;, forKey: giteeConfig.issue_filter)
+        localConfig.setValue(&quot;open&quot;, forKey: giteeConfig.issue_state)
+        localConfig.setValue(&quot;created&quot;, forKey: giteeConfig.issue_sort)
+        localConfig.setValue(&quot;desc&quot;, forKey: giteeConfig.issue_direction)
+        self.page = 1
+        self.getIssueList(page: self.page)
+    &#125;
+</code></pre>
+<p>主要还是这里，在onAppear的时候，去拿接口数据了。</p>
+<pre><code class="line-numbers language-Swift">func getIssueList(page: Int)&#123;
+    if self.waitPlease &#123; return &#125;
+    self.waitPlease = true
+    if issuesList.count == 0 &#123;
+        self.isLoading = true
+    &#125;
+    let state = localConfig.string(forKey: giteeConfig.issue_state)
+    let filter = localConfig.string(forKey: giteeConfig.issue_filter)
+    let direction = localConfig.string(forKey: giteeConfig.issue_direction)
+    let sort = localConfig.string(forKey: giteeConfig.issue_sort)
+    var url = &quot;user/issues?page=&quot; + String(page)
+    
+    if self.repoPath != &quot;&quot; &#123;
+        url = &quot;repos/&quot; + self.repoPath + &quot;/issues?page=&quot; + String(page)
+    &#125;
+    
+    url = url + &quot;&amp;state=&quot; + state!
+    url = url + &quot;&amp;filter=&quot; + filter!
+    url = url + &quot;&amp;direction=&quot; + direction!
+    url = url + &quot;&amp;sort=&quot; + sort!
+    
+    
+    HttpRequest(url: url, withAccessToken: true)
+        .doGet &#123; (value) in
+            let json = JSON(value)
+            if json[&quot;message&quot;].string != nil &#123;
+                print(&quot;error&quot;)
+                DispatchQueue.main.async &#123;
+                    UIAlertController.confirm(message: json[&quot;message&quot;].stringValue, title: &quot;发生错误&quot;, confirmText: &quot;重新登录&quot;, cancelText: &quot;返回&quot;) &#123; (action) in
+                        Helper.relogin()
+                    &#125;
+                &#125;
+            &#125;else&#123;
+                var tempList = self.issuesList
+                if page == 1&#123;
+                    tempList = []
+                &#125;
+                for (_,subJson):(String, JSON) in json &#123;
+                    let repoNamespace = RepoNamespace(id: Int(subJson[&quot;repository&quot;][&quot;namespace&quot;][&quot;id&quot;].stringValue)!, name: String(subJson[&quot;repository&quot;][&quot;namespace&quot;][&quot;name&quot;].stringValue), path:  String(subJson[&quot;repository&quot;][&quot;namespace&quot;][&quot;path&quot;].stringValue))
+                    let repoInfo = RepoModel(id: Int(subJson[&quot;repository&quot;][&quot;id&quot;].stringValue)!, repoName: String(subJson[&quot;repository&quot;][&quot;name&quot;].stringValue),repoPath:  String(subJson[&quot;repository&quot;][&quot;path&quot;].stringValue),repoNamespace: repoNamespace, repoDesc:  String(subJson[&quot;repository&quot;][&quot;description&quot;].stringValue), repoForks:  String(subJson[&quot;repository&quot;][&quot;forks_count&quot;].stringValue), repoStars:  String(subJson[&quot;repository&quot;][&quot;stargazers_count&quot;].stringValue), repoWatches:  String(subJson[&quot;repository&quot;][&quot;watchers_count&quot;].stringValue), repoLicense:  String(subJson[&quot;repository&quot;][&quot;license&quot;].stringValue), repoLanguage:  String(subJson[&quot;repository&quot;][&quot;language&quot;].stringValue), repoPushDate:  String(subJson[&quot;repository&quot;][&quot;pushed_at&quot;].stringValue), repoIsFork:  Bool(subJson[&quot;repository&quot;][&quot;fork&quot;].boolValue), repoIsOpenSource:  Bool(subJson[&quot;repository&quot;][&quot;public&quot;].boolValue), repoIssues:  String(subJson[&quot;repository&quot;][&quot;open_issues_count&quot;].stringValue), repoDefaultBranch:  String(subJson[&quot;repository&quot;][&quot;default_branch&quot;].stringValue))
+                    let userInfo = UserItemModel(id: Int(subJson[&quot;user&quot;][&quot;id&quot;].stringValue)!, userHead: String(subJson[&quot;user&quot;][&quot;avatar_url&quot;].stringValue), userName: String(subJson[&quot;user&quot;][&quot;name&quot;].stringValue), userAccount: String(subJson[&quot;user&quot;][&quot;login&quot;].stringValue))
+                    let issueInfo = IssueModel(id: Int(subJson[&quot;id&quot;].stringValue)!, issueId: String(subJson[&quot;number&quot;].stringValue), issueTitle: String(subJson[&quot;title&quot;].stringValue), issueTime: Helper.getDateFromString(str: String(subJson[&quot;created_at&quot;].stringValue)), issueDesc: String(subJson[&quot;body&quot;].stringValue), issueStatus: getIssueStatus(status: subJson[&quot;state&quot;].stringValue), repoInfo:repoInfo, userInfo: userInfo)
+                    tempList.append(
+                        issueInfo
+                    )
+                &#125;
+                self.issuesList = tempList
+            &#125;
+            self.isRefreshing = false
+            self.isLoading = false
+            self.waitPlease = false
+        &#125; errorCallback: &#123;
+            self.isRefreshing = false
+            self.isLoading = false
+            self.waitPlease = false
+            
+        &#125;
+&#125;
+</code></pre>
+<p>这里利用localConfig拿到了存储的筛选数据，通过HttpRequest实现获取数据。</p>
+<h3 id="2-2-你的私信"><a href="#2-2-你的私信" class="headerlink" title="2.2 你的私信"></a>2.2 你的私信</h3><pre><code class="line-numbers language-Swift">Section(header: Text(&quot;消息中心&quot;)) &#123;
+            NavigationLink(destination: MailView()) &#123;
+                HomeListItem(title: &quot;你的私信&quot;,icon:&quot;envelope.circle&quot;, color: Color(hex: 0x16c3fc))
+            &#125;
+            NavigationLink(destination: NotificationView()) &#123;
+                HomeListItem(title: &quot;你的通知&quot;,icon:&quot;bell.circle&quot;, color: Color(hex: 0xf83860))
+            &#125;
+        &#125;
+</code></pre>
+<p>这里是首页的入口。</p>
+<p>点击你的私信会跳转到MailView页面。<br>首先看下声明的状态变量：</p>
+<pre><code class="line-numbers language-Swift">struct MailView: View &#123;
+    @State var mailList: [MailModel] = []
+    @State var waitPlease = false
+    @State var isRefreshing = false
+    @State var isLoading: Bool = false
+    @State var isModal: Bool = false
+    @State var message: String = &quot;数据加载中&quot;
+    @State var page = 1
+</code></pre>
+<p>然后是body声明：</p>
+<pre><code class="line-numbers language-Swift">var body: some View &#123;
+    LoadingView(isLoading:self.$isLoading,message: self.$message,isModal:self.$isModal) &#123;
+        ZStack&#123;
+            if mailList.count == 0 &amp;&amp; !isLoading &#123;
+                VStack&#123;
+                    Image(systemName: &quot;doc.text.magnifyingglass&quot;)
+                        .scaleEffect(3, anchor: .center)
+                    Text(&quot;暂无查询到的私信&quot;).padding(.top,30)
+                &#125;
+            &#125;
+            RefreshView(refreshing: $isRefreshing, action: &#123;
+                self.page = 1
+                self.getMailList(page: self.page)
+            &#125;) &#123;
+                LazyVStack&#123;
+                    ForEach(self.mailList)&#123; item in
+                        MailItemView(mailItem: item)
+                            .onAppear()&#123;
+                                if !waitPlease &amp;&amp; item.id == mailList[mailList.count - 1].id &#123;
+                                    self.page = self.page + 1
+                                    self.getMailList(page: self.page)
+                                &#125;
+                            &#125;
+                    &#125;
+                &#125;
+            &#125;
+        &#125;
+    &#125;
+    .padding(.top,5)
+    .navigationBarTitle(Text(&quot;你的私信&quot;), displayMode: .inline)
+    .onAppear()&#123;
+        self.page = 1
+        self.getMailList(page: self.page)
+    &#125;
+&#125;
+</code></pre>
+<p>也是一个LoadingView负责加载loading的封装视图，然后是一个刷新RefreshView。<br>里面是循环的item。<br>可见的时候走getMailList接口。</p>
+<p>先看下item吧：</p>
+<pre><code class="line-numbers language-Swift">struct MailItemView:View&#123;
+    @State var mailItem: MailModel
+    @State var placeholderImage = UIImage(named: &quot;Logo&quot;)!
+    @State var isMessageReplyShow:Bool = false
+    var body: some View&#123;
+        ZStack&#123;
+            VStack&#123;
+
+            &#125;
+            .frame(width: 0, height: 0)
+            .opacity(0)
+            
+            VStack&#123;
+                HStack(alignment: .top) &#123;
+                    Image(uiImage: placeholderImage)
+                        .resizable()
+                        .scaledToFit()
+                        .frame(
+                            width:40,height:40,
+                            alignment: .center
+                        )
+                        .cornerRadius(5)
+                        .onAppear()&#123;
+                            guard let url = URL(string: mailItem.user.userHead) else &#123;
+                                return
+                            &#125;
+                            URLSession.shared.dataTask(with: url) &#123; (data, response, error) in
+                                if let data = data, let image = UIImage(data: data) &#123;
+                                    placeholderImage = image
+                                &#125;
+                            &#125;.resume()
+                        &#125;
+                    VStack(alignment: .leading)&#123;
+                        HStack(alignment:.top)&#123;
+                            Text(mailItem.user.userName)
+                                .padding(0)
+                            Spacer()
+                            Text(mailItem.time).font(.system(size:12)).foregroundColor(.gray)
+                        &#125;
+                        Text(mailItem.message).font(.system(size:14)).foregroundColor(.gray)
+                            .padding(.top,1)
+                            .lineLimit(10)
+                            .fixedSize(horizontal: false, vertical: true)
+                    &#125;
+                &#125;
+                .padding(10)
+            &#125;
+            .background(Color(red: 1, green: 1, blue: 1, opacity: 0.1))
+            .cornerRadius(10)
+            .padding(.horizontal,5)
+            .padding(.bottom,-3)
+            .onTapGesture &#123;
+                self.isMessageReplyShow = true
+            &#125;
+            .sheet(isPresented: $isMessageReplyShow,onDismiss: &#123;
+                //TODO
+            &#125;)&#123;
+                MailReplyView(user: mailItem.user)
+            &#125;
+        &#125;
+    &#125;
+&#125;
+</code></pre>
+<p>这里点击item后会展示MailReplyView回复私信界面：<br><img src=gitee_02_04.png></p>
+<p>对应代码如下：</p>
+<pre><code class="line-numbers language-Swift">struct MailReplyView: View &#123;
+    @Environment(\.presentationMode) var mode
+    @State var user: UserItemModel
+    @State var content: String = &quot;&quot;
+    @State var isLoading: Bool = false
+    @State var isModal: Bool = false
+    @State var message: String = &quot;回复中&quot;
+    
+    @State private var alertShow = false
+    @State var alertTitle:String = &quot;&quot;
+    @State var alertMessage:String = &quot;&quot;
+    func startAlert(title:String,message:String)&#123;
+        self.alertTitle = title
+        self.alertMessage = message
+        self.alertShow = true
+    &#125;
+    var body: some View &#123;
+        LoadingView(isLoading:self.$isLoading,message: self.$message,isModal:self.$isModal) &#123;
+            NavigationView&#123;
+                VStack&#123;
+                    Form&#123;
+                        Section(header: Text(&quot;你正在回复 @&quot; + user.userName)) &#123;
+                            TextEditor(text: $content)
+                                .foregroundColor(.white)
+                                .font(.system(size:16))
+                                .lineLimit(5)
+                        &#125;
+                    &#125;
+                    Spacer()
+                &#125;
+                .navigationBarTitle(Text(&quot;回复私信&quot;), displayMode: .inline)
+                .navigationBarItems(
+                    trailing:
+                        Button(action: &#123;
+                            if self.content.count &lt; 1 &#123;
+                                self.startAlert(title: &quot;回复失败&quot;, message: &quot;你确定不说点什么吗???&quot;)
+                                return
+                            &#125;
+                            self.isLoading = true
+                            self.isModal = true
+                            HttpRequest(url: &quot;notifications/messages&quot;,withAccessToken: true).doPost(postData: [&quot;username&quot;:user.userAccount,&quot;content&quot;:content]) &#123; (result) in
+                                let json = JSON(result)
+                                self.isLoading = false
+                                self.isModal = false
+                                if json[&quot;message&quot;].string != nil&#123;
+                                    self.startAlert(title: &quot;回复失败&quot;, message: json[&quot;message&quot;].stringValue)
+                                &#125;else&#123;
+                                    self.content = &quot;&quot;
+                                    self.startAlert(title: &quot;回复成功&quot;, message: &quot;你的消息回复成功&quot;)
+//                                    self.mode.wrappedValue.dismiss()
+                                &#125;
+                            &#125; errorCallback: &#123;
+                                self.isLoading = false
+                                self.isModal = false
+                                self.startAlert(title: &quot;回复失败&quot;, message:&quot;发生了一点小错误,请稍候再试&quot;)
+                            &#125;
+                        &#125;) &#123;
+                            Text(&quot;回复&quot;).foregroundColor(.yellow)
+                        &#125;)
                 
+            &#125;
+            .preferredColorScheme(.dark)
+            .alert(isPresented: $alertShow) &#123;
+                Alert(title: Text(alertTitle),message: Text(alertMessage),dismissButton: .default(Text(&quot;好的&quot;)))
+            &#125;
+        &#125;
+    &#125;
+&#125;
+</code></pre>
+<p>注意到这里有句代码：</p>
+<pre><code>@Environment(\.presentationMode) var mode
+</code></pre>
+<p>是什么意思呢？</p>
+<blockquote>
+<p>@Environment(.presentationMode) var mode 这句代码用于声明一个环境变量，它使用 @Environment 声明，后面跟着的是环境变量的键值：.presentationMode。<br>环境变量是 SwiftUI 中的一个特殊类型，它允许我们在不同的视图层次结构中访问一些全局的环境值。在这种情况下，我们声明的环境变量 mode 包含了一个名为 presentationMode 的环境值。这个环境值可以被用于管理当前视图的呈现模式，以便控制其是否显示或被关闭。<br>例如，如果您在模态视图中提供一个“取消”按钮，您可以在按钮的单击事件中使用 mode.dismiss 来关闭模态视图。</p>
+</blockquote>
+<h3 id="2-3-消息通知"><a href="#2-3-消息通知" class="headerlink" title="2.3 消息通知"></a>2.3 消息通知</h3><p>入口如下：</p>
+<pre><code class="line-numbers language-Swift"> Section(header: Text(&quot;消息中心&quot;)) &#123;
+    NavigationLink(destination: MailView()) &#123;
+        HomeListItem(title: &quot;你的私信&quot;,icon:&quot;envelope.circle&quot;, color: Color(hex: 0x16c3fc))
+    &#125;
+    NavigationLink(destination: NotificationView()) &#123;
+        HomeListItem(title: &quot;你的通知&quot;,icon:&quot;bell.circle&quot;, color: Color(hex: 0xf83860))
+    &#125;
+&#125;
+</code></pre>
+<p>这里点击你的通知后，会跳转到NotificationView。</p>
+<p>先声明几个状态变量：</p>
+<pre><code class="line-numbers language-Swift">struct NotificationView: View &#123;
+    @State var notificationList: [NotificationModel] = []
+    @State var waitPlease = false
+    @State var isRefreshing = false
+    @State var isLoading: Bool = false
+    @State var isModal: Bool = false
+    @State var message: String = &quot;数据加载中&quot;
+    @State var page = 1
+</code></pre>
+<p>然后是视图结构：</p>
+<pre><code class="line-numbers language-Swift">var body: some View &#123;
+    LoadingView(isLoading:self.$isLoading,message: self.$message,isModal:self.$isModal) &#123;
+        ZStack&#123;
+            if notificationList.count == 0 &amp;&amp; !isLoading &#123;
+                VStack&#123;
+                    Image(systemName: &quot;doc.text.magnifyingglass&quot;)
+                        .scaleEffect(3, anchor: .center)
+                    Text(&quot;暂无查询到的通知&quot;).padding(.top,30)
+                &#125;
+            &#125;
+            RefreshView(refreshing: $isRefreshing, action: &#123;
+                self.page = 1
+                self.getNotificationList(page: self.page)
+            &#125;) &#123;
+                LazyVStack&#123;
+                    ForEach(self.notificationList)&#123; item in
+                        NotificationItemView(notificationItem: item)
+                            .onAppear()&#123;
+                                if !waitPlease &amp;&amp; item.id == notificationList[notificationList.count - 1].id &#123;
+                                    self.page = self.page + 1
+                                    self.getNotificationList(page: self.page)
+                                &#125;
+                            &#125;
+                    &#125;
+                &#125;
+            &#125;
+        &#125;
+    &#125;
+    .padding(.top,5)
+    .navigationBarTitle(Text(&quot;消息通知&quot;), displayMode: .inline)
+    .onAppear()&#123;
+        self.page = 1
+        self.getNotificationList(page: self.page)
+    &#125;
+&#125;
+</code></pre>
+<p>注意到在onAppear的生命周期中调用了接口。</p>
+<p>然后对应的消息通知的item视图结构如下：</p>
+<pre><code class="line-numbers language-Swift">struct NotificationItemView:View&#123;
+    @State var notificationItem: NotificationModel
+    @State var placeholderImage = UIImage(named: &quot;Logo&quot;)!
+    @State var isRepoDetailShow:Bool = false
+    @State var isPullRequestShow:Bool = false
+    @State var isCommitShow:Bool = false
+    @State var isIssueShow:Bool = false
+    var body: some View&#123;
+        ZStack&#123;
+            VStack&#123;
+                NavigationLink(destination: RepoDetailView(repoFullPath: self.notificationItem.repo.fullName), isActive: $isRepoDetailShow) &#123; EmptyView() &#125;
+                NavigationLink(destination: PullRequestView(repoFullPath: self.notificationItem.repo.fullName), isActive: $isPullRequestShow) &#123; EmptyView() &#125;
+                NavigationLink(destination: CommitView(repoFullPath: self.notificationItem.repo.fullName, repoDefaultBranch: &quot;master&quot;), isActive: $isCommitShow) &#123; EmptyView() &#125;
+                NavigationLink(destination:  IssuesView(repoPath: self.notificationItem.repo.fullName), isActive: $isIssueShow) &#123; EmptyView() &#125;
+
+            &#125;
+            .frame(width: 0, height: 0)
+            .opacity(0)
+            VStack&#123;
+                HStack(alignment: .top) &#123;
+                    Image(uiImage: placeholderImage)
+                        .resizable()
+                        .scaledToFit()
+                        .frame(
+                            width:40,height:40,
+                            alignment: .center
+                        )
+                        .cornerRadius(5)
+                        .onAppear()&#123;
+                            guard let url = URL(string: notificationItem.user.userHead) else &#123;
+                                return
+                            &#125;
+                            URLSession.shared.dataTask(with: url) &#123; (data, response, error) in
+                                if let data = data, let image = UIImage(data: data) &#123;
+                                    placeholderImage = image
+                                &#125;
+                            &#125;.resume()
+                        &#125;
+                    VStack(alignment: .leading)&#123;
+                        HStack(alignment:.top)&#123;
+                            Text(notificationItem.user.userName)
+                                .padding(0)
+                            Spacer()
+                            Text(notificationItem.time).font(.system(size:12)).foregroundColor(.gray)
+                        &#125;
+                        Text(notificationItem.message).font(.system(size:14)).foregroundColor(.gray)
+                            .padding(.top,1)
+                            .lineLimit(10)
+                            .fixedSize(horizontal: false, vertical: true)
+                    &#125;
+                &#125;
+                .padding(10)
+            &#125;
+            .background(Color(red: 1, green: 1, blue: 1, opacity: 0.1))
+            .cornerRadius(10)
+            .padding(.horizontal,5)
+            .padding(.bottom,-3)
+            .onTapGesture &#123;
+            &#125;
+            .contextMenu(ContextMenu &#123;
+                Button(action: &#123;
+                    self.isRepoDetailShow = true
+                &#125;) &#123;
+                    HStack&#123;
+                        Image(systemName: &quot;archivebox.circle&quot;).scaleEffect(1, anchor: .center)
+                        Spacer()
+                        Text(&quot;进入仓库&quot;)
+                    &#125;
+                &#125;
+                Divider()
+                Button(action: &#123;
+                    self.isCommitShow = true
+                &#125;) &#123;
+                    HStack&#123;
+                        Image(systemName: &quot;icloud.and.arrow.up&quot;).scaleEffect(1, anchor: .center)
+                        Spacer()
+                        Text(&quot;查看提交&quot;)
+                    &#125;
+                &#125;
+                Button(action: &#123;
+                    self.isPullRequestShow = true
+                &#125;) &#123;
+                    HStack&#123;
+                        Image(systemName: &quot;shuffle.circle&quot;).scaleEffect(1, anchor: .center)
+                        Spacer()
+                        Text(&quot;查看Pull Request&quot;)
+                    &#125;
+                &#125;
+                Button(action: &#123;
+                    self.isIssueShow = true
+                &#125;) &#123;
+                    HStack&#123;
+                        Image(systemName: &quot;exclamationmark.circle&quot;).scaleEffect(1, anchor: .center)
+                        Spacer()
+                        Text(&quot;查看Issue&quot;)
+                    &#125;
+                &#125;
+                Divider()
+                Button(action: &#123;
+                &#125;) &#123;
+                    HStack&#123;
+                        Image(systemName: &quot;person.circle&quot;).scaleEffect(1, anchor: .center)
+                        Spacer()
+                        Text(&quot;用户资料&quot;)
+                    &#125;
+                &#125;
+            &#125;)
+        &#125;
+    &#125;
+&#125;
+</code></pre>
+<p>这里长按item后会弹出一个menu弹框：<br><img src=gitee_02_05.png></p>
+<p>这里怎么弹出来的呢？<br>答案是通过View的扩展函数contextMenu方法：</p>
+<blockquote>
+<p>contextMenu 方法是 SwiftUI 中的一个视图方法，可以在视图上创建一个上下文菜单。上下文菜单是当用户右键单击视图时显示的菜单。<br>您可以使用 contextMenu 方法创建一个上下文菜单，并在该菜单中显示选项。</p>
+</blockquote>
+<p>然后点击事件呢？<br>发现这里只是改变了一个状态变量而已哦。</p>
+<pre><code class="line-numbers language-Swift">Button(action: &#123;
+    self.isRepoDetailShow = true
+&#125;) &#123;
+    HStack&#123;
+        Image(systemName: &quot;archivebox.circle&quot;).scaleEffect(1, anchor: .center)
+        Spacer()
+        Text(&quot;进入仓库&quot;)
+    &#125;
+&#125;
+</code></pre>
+<p>改变了<code> self.isRepoDetailShow = true</code><br>这个变量就跳转了？</p>
+<p>原来答案在前面哦：</p>
+<pre><code class="line-numbers language-Swift">var body: some View&#123;
+    ZStack&#123;
+        VStack&#123;
+            NavigationLink(destination: RepoDetailView(repoFullPath: self.notificationItem.repo.fullName), isActive: $isRepoDetailShow) &#123; EmptyView() &#125;
+            NavigationLink(destination: PullRequestView(repoFullPath: self.notificationItem.repo.fullName), isActive: $isPullRequestShow) &#123; EmptyView() &#125;
+            NavigationLink(destination: CommitView(repoFullPath: self.notificationItem.repo.fullName, repoDefaultBranch: &quot;master&quot;), isActive: $isCommitShow) &#123; EmptyView() &#125;
+            NavigationLink(destination:  IssuesView(repoPath: self.notificationItem.repo.fullName), isActive: $isIssueShow) &#123; EmptyView() &#125;
+
+        &#125;
+        .frame(width: 0, height: 0)
+</code></pre>
+<p>这里相当于监听了 isRepoDetailShow变量，如果监听到了，需要跳转到：<br>RepoDetailView界面。</p>
+<p>其它item类似的。</p>
+<h3 id="2-4-加入的组织"><a href="#2-4-加入的组织" class="headerlink" title="2.4 加入的组织"></a>2.4 加入的组织</h3><p>入口在这里：</p>
+<pre><code class="line-numbers language-Swift">Section(header: Text(&quot;你的团队&quot;)) &#123;
+            NavigationLink(destination:  OrganizationView()) &#123;
+                HomeListItem(title: &quot;加入的组织&quot;,icon:&quot;person.2.circle&quot;, color: Color(hex: 0xb76dda))
+            &#125;
+//                NavigationLink(destination:  RepoView()) &#123;
+//                    HomeListItem(title: &quot;所在的企业&quot;,icon:&quot;paperplane.circle&quot;, color: Color(hex: 0xffc55a))
+//                &#125;
+        &#125;
+</code></pre>
+<p>这里会直接跳转到OrganizationView的页面。</p>
+<p>先看下状态变量：</p>
+<pre><code class="line-numbers language-Swift">struct OrganizationView: View &#123;
+    @State var orgList: [OrgModel] = []
+    @State var waitPlease = false
+    @State var isRefreshing = false
+    @State var isLoading: Bool = false
+    @State var isModal: Bool = false
+    @State var message: String = &quot;数据加载中&quot;
+    @State var page = 1
+</code></pre>
+<p>然后是视图结构：</p>
+<pre><code class="line-numbers language-Swift">var body: some View &#123;
+    LoadingView(isLoading:self.$isLoading,message: self.$message,isModal:self.$isModal) &#123;
+        ZStack&#123;
+            if orgList.count == 0 &amp;&amp; !isLoading &#123;
+                VStack&#123;
+                    Image(systemName: &quot;doc.text.magnifyingglass&quot;)
+                        .scaleEffect(3, anchor: .center)
+                    Text(&quot;暂无查询到的组织&quot;).padding(.top,30)
+                &#125;
+            &#125;
+            RefreshView(refreshing: $isRefreshing, action: &#123;
+                self.page = 1
+                self.getOrgList(page: self.page)
+            &#125;) &#123;
+                LazyVStack&#123;
+                    ForEach(self.orgList)&#123; item in
+                        OrgItemView(orgItem: item)
+                            .onAppear()&#123;
+                                if !waitPlease &amp;&amp; item.id == orgList[orgList.count - 1].id &#123;
+                                    self.page = self.page + 1
+                                    self.getOrgList(page: self.page)
+                                &#125;
+                            &#125;
+                    &#125;
+                &#125;
+            &#125;
+        &#125;
+    &#125;
+    .padding(.top,5)
+    .navigationBarTitle(Text(&quot;你的组织&quot;), displayMode: .inline)
+    .onAppear()&#123;
+        self.page = 1
+        self.getOrgList(page: self.page)
+    &#125;
+&#125;
+</code></pre>
+<p>item定义的视图：</p>
+<pre><code class="line-numbers language-Swift">struct OrgItemView:View&#123;
+    @State var orgItem: OrgModel
+    @State var placeholderImage = UIImage(named: &quot;Logo&quot;)!
+    var body: some View&#123;
+        ZStack&#123;
+            VStack&#123;
+
+            &#125;
+            .frame(width: 0, height: 0)
+            .opacity(0)
+            VStack&#123;
+                HStack(alignment: .top) &#123;
+                    Image(uiImage: placeholderImage)
+                        .resizable()
+                        .scaledToFit()
+                        .frame(
+                            width:80,height:80,
+                            alignment: .center
+                        )
+                        .cornerRadius(10)
+                        .onAppear()&#123;
+                            guard let url = URL(string: orgItem.head) else &#123;
+                                return
+                            &#125;
+                            URLSession.shared.dataTask(with: url) &#123; (data, response, error) in
+                                if let data = data, let image = UIImage(data: data) &#123;
+                                    placeholderImage = image
+                                &#125;
+                            &#125;.resume()
+                        &#125;
+                    VStack(alignment: .leading)&#123;
+                        HStack(alignment:.top)&#123;
+                            Text(orgItem.name)
+                                .padding(0)
+                            Spacer()
+                            Text(&quot;粉丝:&quot; + String(orgItem.fans)).font(.system(size:12)).foregroundColor(.gray)
+                        &#125;
+                        Text(orgItem.desc).font(.system(size:14)).foregroundColor(.gray)
+                            .padding(.top,1)
+                            .lineLimit(10)
+                            .fixedSize(horizontal: false, vertical: true)
+                    &#125;
+                &#125;
+                .padding(10)
+            &#125;
+            .background(Color(red: 1, green: 1, blue: 1, opacity: 0.1))
+            .cornerRadius(10)
+            .padding(.horizontal,5)
+            .padding(.bottom,-3)
+            
+</code></pre>
+<p>这个和其他列表页也比较相似。不再过多讲述了。</p>
+<h2 id="3-动态"><a href="#3-动态" class="headerlink" title="3 动态"></a>3 动态</h2><p>这是首页的第二个Tab页。<br>首先在这里定义：</p>
+<pre><code class="line-numbers language-Swift">struct TabBarView: View &#123;
+    @State var selectedBarIndex:Int
+    
+    var body: some View &#123;
+        NavigationView&#123;
+            TabView(selection: $selectedBarIndex) &#123;
+                HomeView()
+                .tabItem &#123;
+                    Image(systemName:&quot;briefcase&quot;)
+                    Text(&quot;首页&quot;)
+                &#125;
+                    .tag(0)
+                ActivityView()
+                .tabItem &#123;
+                    Image(systemName:&quot;stopwatch&quot;)
+                    Text(&quot;动态&quot;)
+                &#125;
+                    .tag(1)
+</code></pre>
+<p>这里叫做ActivityView。</p>
+<p>先声明动态变量：</p>
+<pre><code class="line-numbers language-Swift">struct ActivityView: View &#123;
+    @State var activityList: [ActivityModel] = []
+    @State var waitPlease = false
+    @State var isRefreshing = false
+    @State var isLoading: Bool = false
+    @State var isModal: Bool = false
+    @State var message: String = &quot;数据加载中&quot;
+    @State var isLoginShow = false
+    @State var lastId = 0 //331672539
+    
+    @State var myInfoString:JSON? = nil;
+</code></pre>
+<p>然后是视图结构定义：</p>
+<pre><code class="line-numbers language-Swift">var body: some View &#123;
+    LoadingView(isLoading:self.$isLoading,message: self.$message,isModal:self.$isModal) &#123;
+        ZStack&#123;
+            if activityList.count == 0 &amp;&amp; !isLoading &#123;
+                VStack&#123;
+                    Image(systemName: &quot;doc.text.magnifyingglass&quot;)
+                        .scaleEffect(3, anchor: .center)
+                    Text(&quot;动态读取中&quot;).padding(.top,30)
+                &#125;
+            &#125;
+            RefreshView(refreshing: $isRefreshing, action: &#123;
+                self.lastId = 0
+                self.getActivityList()
+            &#125;) &#123;
+                LazyVStack&#123;
+                    ForEach(self.activityList)&#123; item in
+                        ActivityItemView(activity: item)
+                        .onAppear()&#123;
+                            if !waitPlease &amp;&amp; item.id == activityList[activityList.count - 1].id &#123;
+                                self.getActivityList()
+                            &#125;
+                        &#125;
+                    &#125;
+                &#125;
+            &#125;
+        &#125;
+        .sheet(isPresented: $isLoginShow,onDismiss: &#123;
+            self.lastId = 0
+            self.getActivityList()
+        &#125;)&#123;
+            LoginView()
+                .modifier(DisableModalDismiss(disabled: true))
+        &#125;
+        .onAppear()&#123;
+            self.lastId = 0
+            self.getActivityList()
+        &#125;
+    &#125;
+&#125;
+</code></pre>
+<p>具体看下item:</p>
+<pre><code class="line-numbers language-Swift">struct ActivityItemView:View&#123;
+    @State var activity: ActivityModel
+    @State var placeholderImage = UIImage(named: &quot;nohead&quot;)!
+    @State var isActivePullRequest:Bool = false
+    @State var isActiveRepoDetail:Bool = false
+    @State var isActiveCommit:Bool = false
+    @State var isActiveIssues:Bool = false
+    var body: some View&#123;
+        NavigationLink(destination: PullRequestView(repoFullPath: activity.repoInfo.fullName), isActive: $isActivePullRequest) &#123; EmptyView() &#125;
+        NavigationLink(destination: RepoDetailView(repoFullPath: activity.repoInfo.fullName), isActive: $isActiveRepoDetail) &#123; EmptyView() &#125;
+        NavigationLink(destination:
+                        CommitView(repoFullPath: activity.repoInfo.fullName, repoDefaultBranch: &quot;master&quot;), isActive: $isActiveCommit) &#123; EmptyView() &#125;
+        NavigationLink(destination:  IssuesView(repoPath:activity.repoInfo.fullName), isActive: $isActiveIssues) &#123; EmptyView() &#125;
+        
+        VStack(alignment: .leading)&#123;
+            VStack(alignment: .leading)&#123;
+                HStack(alignment: .top) &#123;
+                    Image(uiImage: placeholderImage)
+                        .resizable()
+                        .scaledToFit()
+                        .frame(
+                            width:40,height:40,
+                            alignment: .center
+                        )
+                        .cornerRadius(5)
+                        .onAppear()&#123;
+                            guard let url = URL(string: activity.userInfo.userHead) else &#123;
+                                return
+                            &#125;
+                            URLSession.shared.dataTask(with: url) &#123; (data, response, error) in
+                                if let data = data, let image = UIImage(data: data) &#123;
+                                    placeholderImage = image
+                                &#125;
+                            &#125;.resume()
+                        &#125;
+                    VStack(alignment: .leading)&#123;
+                        HStack(alignment:.top)&#123;
+                            Text(activity.userInfo.userName)
+                                .padding(0)
+                            Spacer()
+                            Text(activity.createTime).font(.system(size:12)).foregroundColor(.gray)
+                        &#125;
+                        Text(getActivityContent(activity:activity)).font(.system(size:14)).foregroundColor(.gray)
+                            .padding(.top,1)
+                            .lineLimit(10)
+                            .fixedSize(horizontal: false, vertical: true)
+                    &#125;
+                &#125;
+            &#125;
+            .padding(10)
+            Spacer()
+        &#125;
+//        .frame(height:100)
+        .background(Color(red: 1, green: 1, blue: 1, opacity: 0.1))
+        .cornerRadius(10)
+        .padding(.horizontal,5)
+        .padding(.top,5)
+</code></pre>
+<h2 id="4-总结"><a href="#4-总结" class="headerlink" title="4 总结"></a>4 总结</h2><ul>
+<li><p>需要理解下@State注解用法，这个主要是一个状态变量，可以理解成 didSet，就是有一个回调作用，在Swift UI中会通知更新界面元素。 或者可以理解成Android中的LiveData变量。</p>
+</li>
+<li><p>View里面扩展了一个方法navigationBarItems，是标题栏的右侧点击事件，然后有个sheet方法，是类似模态框，里面的闭包View就是要弹出的视图。</p>
+</li>
+<li><p>Appear声明周期，就是首次可见的生命周期，一般可以在这里面请求网络。同时最好配合LoadingView进行网络加载，一般是用一个加载圈包裹列表视图，通过isLoading变量控制加载器的显示或隐藏。</p>
+</li>
+<li><p>这里有个Environment的注解，主要是定义了全局的环境值，我们可以用来管理当前视图的显示或关闭。</p>
+</li>
+<li><p>View里面扩展了一个contextMenu方法，可以用来显示上下文菜单。然后通过在顶部配置NavigationLink来监听isActive定义的变量，当点击某个上下文菜单，我们改变这个状态变量，然后通知到这里isActive，然后就可以跳转到destination定义的View页面了。</p>
+</li>
+</ul>
+
             </div>
             <hr />
 
@@ -994,7 +1979,10 @@
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            
+                            1 项目地址
+https://gitee.com/open-gitee/gitee_iosGitee基于SwiftUI和OpenApi的iOS客户端项目。
+
+2 首页其他列表2.1 Issues点击Issues这个item后，会跳转到所有I
                         
                     </div>
                     <div class="publish-info">
@@ -1003,10 +1991,25 @@
                             </span>
                         <span class="publish-author">
                             
+                            <i class="fa fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/iOS/" class="post-category" target="_blank">
+                                    iOS
+                                </a>
+                            
+                            
                         </span>
                     </div>
                 </div>
 
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E5%AE%8C%E6%95%B4%E9%A1%B9%E7%9B%AE-SwiftUI/" target="_blank">
+                        <span class="chip bg-color">完整项目 SwiftUI</span>
+                    </a>
+                    
+                </div>
                 
             </div>
         </div>
@@ -1201,6 +2204,25 @@ Github源码地址：https://github.com/lilongweidev/GaodeMapDemo博主博客地
 </main>
 
 
+<script src="https://cdn.bootcss.com/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script>
+    MathJax.Hub.Config({
+        tex2jax: {inlineMath: [['$', '$'], ['\(', '\)']]}
+    });
+</script>
+
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+<!-- 代码语言 -->
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+<!-- 代码块复制 -->
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+<script type="text/javascript" src="/libs/codeBlock/clipboard.min.js"></script>
+<!-- 代码块收缩 -->
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script> 
+<!-- 代码块折行 -->
+<style type="text/css">code[class*="language-"], pre[class*="language-"] { white-space: pre !important; }</style>
+
+
     <footer class="page-footer bg-color">
     <div class="container row center-align">
         <div class="col s12 m8 l8 copy-right">
@@ -1208,7 +2230,7 @@ Github源码地址：https://github.com/lilongweidev/GaodeMapDemo博主博客地
 
             
             &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-            <span class="white-color">111k</span>
+            <span class="white-color">116.3k</span>
             
 
             <br>
