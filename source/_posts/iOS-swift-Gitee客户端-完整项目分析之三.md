@@ -324,7 +324,7 @@ struct SettingQrcode: View {
 
 ### 2.4 关注列表
 效果如下：
-<img src=gitee_03_03 width=50%>
+<img src=gitee_03_03.png width=50%>
 
 代码如下：
 ```Swift

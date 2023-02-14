@@ -1142,7 +1142,7 @@ fun BannerItem(modifier: Modifier = Modifier, data: BannerResponse) {
 
 轮播完了，就是文章item了。
 主要是为了实现这种效果
-![](./%E7%8E%A9Android-Compose%E7%89%88%E6%9C%AC-%E9%A1%B9%E7%9B%AE%E5%88%86%E6%9E%90/home_item.jpeg)
+![](home_item.jpeg)
 
 ```Kotlin
  /**
