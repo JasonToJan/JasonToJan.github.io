@@ -4,12 +4,22 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="iOS swift 数据库realm实践, Android iOS Flutter">
+    <meta name="keywords" content="iOS Swift 经典面试题之一, Android iOS Flutter">
     <meta name="baidu-site-verification" content="fmlEuI34ir" />
     <meta name="google-site-verification" content="yCy2azpds5XSuGZvis6OuA-XIGF5GuGpYRAaGfD6o48" />
     <meta name="360-site-verification" content="b7c11a830ef90fd1464ad6206bb7b6e7" />
-    <meta name="description" content="1 需求定义需要获取服务端的条码数据库，存放到本地数据库。
-背景：集成了扫码功能，扫到的条码头需要匹配数据库中的条码列表，可以认为这个是一个离线数据库。不会实时判断，因为条码很多，这里先获取所有的条码，存放到本地数据库。然后扫码就按照数据库">
+    <meta name="description" content="以下是50个关于Swift的常见面试题：
+Swift和Objective-C的区别是什么？
+
+Swift的可选类型是什么？
+
+Swift如何在代码中使用可选类型？
+
+Swift的强制解包是什么？
+
+Swift强制解包的危险是什么？
+
+Swi">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -17,7 +27,7 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>iOS swift 数据库realm实践 | JasonToJan&#39;s Blog</title>
+    <title>iOS Swift 经典面试题之一 | JasonToJan&#39;s Blog</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/font-awesome.min.css">
@@ -329,13 +339,13 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/28.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/14.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
                     <div class="description center-align post-title">
-                        iOS swift 数据库realm实践
+                        iOS Swift 经典面试题之一
                     </div>
                 </div>
             </div>
@@ -446,8 +456,8 @@
                     
                     <div class="article-tag">
                         
-                        <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93-iOS/" target="_blank">
-                            <span class="chip bg-color">数据库 iOS</span>
+                        <a href="/tags/iOS-%E9%9D%A2%E8%AF%95%E9%A2%98-Swift/" target="_blank">
+                            <span class="chip bg-color">iOS 面试题 Swift</span>
                         </a>
                         
                     </div>
@@ -470,7 +480,7 @@
             <div class="post-info">
                 <div class="post-date info-break-policy">
                     <i class="fa fa-calendar-minus-o fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2023-01-30
+                    2023-02-18
                 </div>
 
                 <div class="post-author info-break-policy">
@@ -484,14 +494,14 @@
                 
                 <div class="info-break-policy">
                     <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    4.3k
+                    601
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    20 分
+                    2 分
                 </div>
                 
                 
@@ -507,626 +517,125 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="1-需求定义"><a href="#1-需求定义" class="headerlink" title="1 需求定义"></a>1 需求定义</h2><p>需要获取服务端的条码数据库，存放到本地数据库。</p>
-<p>背景：集成了扫码功能，扫到的条码头需要匹配数据库中的条码列表，可以认为这个是一个离线数据库。不会实时判断，因为条码很多，这里先获取所有的条码，存放到本地数据库。然后扫码就按照数据库中的关系表来匹配就好了。</p>
-<p>这里我们有两个表，一个商品库表，一个是关系表。为什么有2个表呢？因为我们有配套的关系，2个零件可以看做单个商品，他们组合了也可以看成单独商品哦，这种就是套机了。想必做个电商的人都懂这个道理。比如可以买一件上衣，一条裤子，它们都是独立商品，也可以配套组合一套商品，而且这一套也可以认为是一个商品。</p>
-<h2 id="2-需求分析"><a href="#2-需求分析" class="headerlink" title="2 需求分析"></a>2 需求分析</h2><p>这里我们采用 realm数据库。<br>realm非常简介，效率也是不错的。<br>github地址：<a target="_blank" rel="noopener" href="https://github.com/realm/realm-swift">https://github.com/realm/realm-swift</a></p>
-<p>简单描述下realm吧：Realm 是一个跨平台的移动数据库引擎，其性能要优于 Core Data 和 FMDB - 移动端数据库性能比较, 我们可以在 Android 端 realm-java，iOS端:Realm-Cocoa，同时支持 OC 和 Swift两种语言开发。其使用简单，免费，性能优异，跨平台的特点广受关注。</p>
-<p>这里我们会用到2个表。</p>
-<p>因为这是个离线数据库，我们需要考虑数据库变更，与服务端同步问题。<br>所以我们需要一个接口，判断有无新增或者变更的数据。</p>
-<p>需要考虑到增量更新，同时如果数据变更大于一个阙值，比如1000条数据，我们可以认为是全量更新。这时候全量更新的时间和增量插入数据时间几乎相同。</p>
-<p>另外如果第一次获取数据，数据量可能会很大，我们需要考虑压缩，与服务端商议，将json数据压缩，然后我们自行解析为实体类。</p>
-<p>另外增量更新的时候，要特别注意改数据是删除了还是新增的，还是变更的。<br>如果商品删除了，关系表也是要删除的哦。这点很重要，不然后期会导致匹配异常。</p>
-<h2 id="3-准备工作，会用Realm"><a href="#3-准备工作，会用Realm" class="headerlink" title="3 准备工作，会用Realm"></a>3 准备工作，会用Realm</h2><p>因为是从0开始，建议熟悉一下Realm使用方法。<br>可以参考下这篇博客：<a target="_blank" rel="noopener" href="https://juejin.cn/post/6844904117442215944">https://juejin.cn/post/6844904117442215944</a>,写得还是相当不错，有Demo，讲述得非常清晰易懂。</p>
-<p>这里就不讲解如何引用这个Realm了。</p>
-<p>这里需要会用一个工具：Realm Studio，<br>下载地址：<a target="_blank" rel="noopener" href="https://www.mongodb.com/docs/realm/studio/install/">https://www.mongodb.com/docs/realm/studio/install/</a><br>这里按照自己电脑版本下载相应软件就好了，这个也是免费的。</p>
-<p>如何分析真机里面的realm数据库呢？<br>可以参考下：<a target="_blank" rel="noopener" href="https://blog.csdn.net/asfasnjn/article/details/124714242">https://blog.csdn.net/asfasnjn/article/details/124714242</a> 很简单，打开XCode的window下的设备和模拟器，再 点击更多图标，再下载Container，然后下载后，查看包内容，就可以看到这个应用的realm文件了。然后可以右键，用我们下载好的Realm Studio来查看这个文件，文件以表格形式展示，清晰直观。</p>
-<h2 id="4-初始化配置数据库"><a href="#4-初始化配置数据库" class="headerlink" title="4 初始化配置数据库"></a>4 初始化配置数据库</h2><p>这里需要在AppDelegate中配置下realm数据库。<br>很简单的。<br>不过我们没有在AppDelegate初始化，因为我们这个绑定了userId，等用户登录后才初始化，当然也是可以的。</p>
-<p>重点是初始化这个动作要先于使用就行了。</p>
-<pre><code class="line-numbers language-Swift">func configRealm(userID: String?,
-                        keyWord: String? = nil,
-                        schemaVersion: UInt64 = 2, migrationBlock: MigrationBlock? = nil) &#123;
-    // 加密串128位结果为：464e5774625e64306771702463336e316a4074487442325145766477335e21346b715169364c406c6a4976346d695958396245346e356f6a62256d2637566126
-    // let key: Data = &quot;FNWtb^d0gqp$c3n1j@tHtB2QEvdw3^!4kqQi6L@ljIv4miYX9bE4n5ojb%m&amp;7Va&amp;&quot;.data(using: .utf8, allowLossyConversion: false)!
-    // 加密的key
-    // let key: Data = keyWord.data(using: .utf8, allowLossyConversion: false)!
-    // 打开加密文件
-    // (encryptionKey: key)
-    // 使用默认的目录，但是使用用户 ID 来替换默认的文件名
-    
-    //schemaVersion 数据库版本号从0开始
-    let manager = FileManager.default
-    let document = manager.urls(for: .documentDirectory, in: .userDomainMask)
-    let url = document[0] as URL
-    let urlStr = url.absoluteString
-    let path = urlStr + &quot;/&quot; + (&quot;\(userID!).realm&quot;)
-    let config = Realm.Configuration(fileURL: URL(string: path), schemaVersion: schemaVersion, migrationBlock: &#123; (migration, oldSchemaVersion) in
-        // 目前我们还未进行数据迁移，因此 oldSchemaVersion == 0
-        if oldSchemaVersion &lt; 100 &#123;
-            // 什么都不要做！Realm 会自行检测新增和需要移除的属性，然后自动更新硬盘上的数据库架构
-            // 属性重命名  migration.renameProperty(onType: Person.className(), from: &quot;yearsSinceBirth&quot;, to: &quot;age&quot;)
-            print(oldSchemaVersion)
-            print(&quot;end&quot;)
-        &#125;
-        // 低版本的数据库迁移......
-        if migrationBlock != nil &#123;
-            migrationBlock!(migration, oldSchemaVersion)
-        &#125;
-    &#125;)
-    // 告诉 Realm 为默认的 Realm 数据库使用这个新的配置对象
-    Realm.Configuration.defaultConfiguration = config
-    guard let realm = try? Realm(configuration: config) else &#123;
-        return
-    &#125;
-    currentSchemaVersion = schemaVersion
-    currentRealm = realm
-    currentKeyWord = keyWord
-&#125;
-</code></pre>
-<p>这个realm实际上以userId为名称了。<br>这样就有个弊端了，切换用户后，需要重新下载数据库，特别是数据库特别大的情况下，这对用户体验不是特别好。</p>
-<h2 id="5-走接口拿数据"><a href="#5-走接口拿数据" class="headerlink" title="5 走接口拿数据"></a>5 走接口拿数据</h2><p>这里就是拿商品数据了，这里服务端提供的接口，返回的是加密后的字符串。<br>类似这样：</p>
-<pre><code class="line-numbers language-Json">&#123;
-  &quot;message&quot; : &quot;请求成功&quot;,
-  &quot;code&quot; : 1000,
-  &quot;data&quot; : &quot;H4sIAAAAAAAAAKtWSiwoCCjKTylNLglKzQnz98ksLlGyio7VQZJAFk3OzytJzQ
-  NyDA2NdJRKC1IS\nS1JDMnNTlayUjAyMjHUNDHWNLBUMTaxMzaxMDJVqAQ0XaZphAAAA&quot;
-&#125;
-</code></pre>
-<p>比如我们接口是这样请求的，这里我们先扩展了一个方法给控制器：</p>
-<pre><code class="line-numbers language-Swift">extension GMBaseViewController &#123;
-    
-    open func updateOfflinePackageData(tips: String = &quot;&quot;, successful: @escaping Handler) &#123;
-        MBProgressHUD.showMessage(tips)
-        OfflinePackageManager.update &#123;
-            successful()
-            MBProgressHUD.hide()
-            MBProgressHUD.hide()
-        &#125; failure: &#123;
-            MBProgressHUD.hide()
-            MBProgressHUD.hide()
-            let alerVC = UIAlertController(
-                title: &quot;&quot;,
-                message: &quot;检测到商品信息变动，系统为您自动更新商品信息失败，请在网络良好的环境下，手动更新商品信息&quot;,
-                preferredStyle: .alert
-            )
-            alerVC.addAction(
-                UIAlertAction(
-                    title: &quot;下载商品信息&quot;,
-                    style: .default
-                ) &#123; (action) in
-                    self.updateOfflinePackageData(successful: successful)
-                &#125;
-            )
-            self.present(alerVC, animated: true, completion:nil)
-        &#125;
-        
-    &#125;
-    
-&#125;
-</code></pre>
-<p>这里我们的OfflinePackageManager就是我们封装好的专门去下载离线库的工具类。<br>成功后走successful的逃逸闭包，失败弹一个弹框。</p>
-<p>继续走进去：</p>
-<pre><code class="line-numbers language-Swift">class OfflinePackageManager: NSObject &#123;
-    
-    open class func update(
-        updateTime: String = Defaults[key: DefaultsKeys.updateTime] ?? &quot;&quot;,
-        successful: @escaping Handler,
-        failure: @escaping Handler
-    ) &#123;
-        let endTimeStr = Defaults[key: DefaultsKeys.updateTime]
-        let updateTimeStr = updateTime
-       
-        productProvider.requestJson(.getProductMetadataForAPP(updateTime: updateTimeStr)) &#123; response in
-            let jsonString = JSON(rawValue: response).jsonString
-            let result = GMBaseRequestModel.deserialize(from: jsonString)
-            if result?.code == 1000 &#123;
-                guard let data = result?.data?.gunzip?.data(using: .utf8) else &#123; return &#125;
-                
-                let file = &quot;zpi_offline_package_data.txt&quot;
-                let text = result?.data?.gunzip ?? &quot;&quot;
-                
-                if let dir = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first &#123;
-                    let fileURL = dir.appendingPathComponent(file)
-                    do &#123;
-                        try text.write(to: fileURL, atomically: false, encoding: .utf8)
-                    &#125; catch &#123;&#125;
-                &#125;
-                
-                guard let model = try? JSONDecoder().decode(StageOfflinePackageData.self, from: data) else &#123; return &#125;
-                
-                if endTimeStr != nil &amp;&amp; (model.appProductVOList.count &gt;= 1000 || model.appProductRelVOList.count &gt;= 1000) &#123;
-                    Defaults[key:DefaultsKeys.updateTime] = nil
-                    OfflinePackageManager.update(updateTime: &quot;&quot;, successful: successful, failure: failure)
-                &#125; else &#123;
-                    if endTimeStr == nil &#123;
-                        OfflinePackageManager.fullUpdate(model: model)
-                    &#125; else &#123;
-                        OfflinePackageManager.incrementalUpdate(model: model)
-                    &#125;
-                    Defaults[key: DefaultsKeys.updateTime] = model.updateTime
-                    successful()
-                &#125;
-            &#125; else &#123;
-                failure()
-            &#125;
-        &#125; failure: &#123; _ in
-            failure()
-        &#125;
-    &#125;
-</code></pre>
-<h2 id="6-解压缩字符串"><a href="#6-解压缩字符串" class="headerlink" title="6 解压缩字符串"></a>6 解压缩字符串</h2><p>这里服务端返回的一段加密后的字符串：</p>
-<pre><code class="line-numbers language-Json">&#123;
-  &quot;message&quot; : &quot;请求成功&quot;,
-  &quot;code&quot; : 1000,
-  &quot;data&quot; : &quot;H4sIAAAAAAAAAKtWSiwoCCjKTylNLglKzQnz98ksLlGyio7VQZJAFk3OzytJzQNyDA2NdJRKC1IS\nS1JDMnNTlayUjAyMjHUNDHWNLBUMTaxMzaxMDJVqAQ0XaZphAAAA&quot;
-&#125;
-</code></pre>
-<p>不过返回体还是json，我们先拿data里面的字符串。<br>再去解压缩。</p>
-<p>字符串解压缩可以参考这篇文章：<a target="_blank" rel="noopener" href="https://www.cnblogs.com/strengthen/p/10844466.html">https://www.cnblogs.com/strengthen/p/10844466.html</a></p>
-<p>这里我们用到了GzipSwift框架。</p>
-<p>这个框架地址为：<a target="_blank" rel="noopener" href="https://github.com/1024jp/GzipSwift">https://github.com/1024jp/GzipSwift</a> 还是有挺多人star的。</p>
-<p>具体细节就不讲解了。</p>
-<p>这里我们自己给String做了一个扩展，这样直接能拿到解压缩后的字符串：</p>
-<pre><code class="line-numbers language-Swift">extension String &#123;
-    var gunzip: String? &#123;
-        if let data = Data(base64Encoded: self, options: .ignoreUnknownCharacters) &#123;
-            if data.isGzipped &#123;
-                if let gun = try? data.gunzipped() &#123;
-                    return String(data: gun, encoding: String.Encoding.utf8)
-                &#125;
-            &#125;
-        &#125;
-        return nil
-    &#125;
-&#125;
-</code></pre>
-<p>这里解析后的字符串为：</p>
-<pre><code class="line-numbers language-Json">&#123;
-    &quot;appProductRelVOList&quot;:[],
-    &quot;appProductVOList&quot;:[],
-    &quot;content&quot;:112,
-    &quot;updateTime&quot;:&quot;2023-01-29 14:56:41&quot;
-&#125;
-</code></pre>
-<p>同样也是一个json数组哦。<br>所以我们还是得用Json解析下：</p>
-<pre><code class="line-numbers language-Swift">guard let model = try? JSONDecoder().decode(StageOfflinePackageData.self, from: data)
-                else &#123; return &#125;
-</code></pre>
-<p>这时候我们需要一个实体来接收下：</p>
-<pre><code class="line-numbers language-Swift">class StageOfflinePackageData:Codable&#123;
-    
-    var appProductVOList: [StageGoodsPackgeModelData] = []
-    
-    var appProductRelVOList: [StageGoodsSuitPackgeModelData] = []
-    
-    var updateTime: String = &quot;&quot;
-    
-    
-    private enum Codingkeys: String, CodingKey&#123;
-        case appProductVOList,appProductRelVOList,updateTime
-    &#125;
-    
-    func encode(to encoder: Encoder) throws &#123;&#125;
-    
-    required init(from decoder: Decoder) throws &#123;
-        let values = try decoder.container(keyedBy: Codingkeys.self)
-        appProductVOList = try values.decode(Array.self, forKey: .appProductVOList)
-        appProductRelVOList = try values.decode(Array.self, forKey: .appProductRelVOList)
-        updateTime = try values.decode(String.self, forKey: .updateTime)
-    &#125;
-&#125;
-</code></pre>
-<p>为啥要继承Codable呢？<br>Codable 协议在 Swift4.0 开始被引入，目标是取代现有的 NSCoding 协议，它对结构体，枚举和类都支持。Codable 的引入简化了JSON 和 Swift 类型之间相互转换的难度，能够把 JSON 这种弱类型数据转换成代码中使用的强类型数据。具体可以看这篇文章：<a target="_blank" rel="noopener" href="https://juejin.cn/post/6971997599725256734">https://juejin.cn/post/6971997599725256734</a>。</p>
-<p>解析后就拿到服务端的数据了，可能是增量数据，可能是全量数据。后面我们具体分析下。</p>
-<h2 id="7-数据处理"><a href="#7-数据处理" class="headerlink" title="7 数据处理"></a>7 数据处理</h2><p>解析完毕后，我们有一段逻辑是这样的：</p>
-<pre><code class="line-numbers language-Swift">if endTimeStr != nil &amp;&amp; (model.appProductVOList.count &gt;= 1000 || model.appProductRelVOList.count &gt;= 1000) &#123;
-                    Defaults[key:DefaultsKeys.updateTime] = nil
-                    OfflinePackageManager.update(updateTime: &quot;&quot;, successful: successful, failure: failure)
-                &#125; else &#123;
-                    if endTimeStr == nil &#123;
-                        OfflinePackageManager.fullUpdate(model: model)
-                    &#125; else &#123;
-                        OfflinePackageManager.incrementalUpdate(model: model)
-                    &#125;
-                    Defaults[key: DefaultsKeys.updateTime] = model.updateTime
-                    successful()
-                &#125;
-</code></pre>
-<p>这里如果数据大于1000条，我们重新走全量更新接口。<br>如果上次更新时间为空，我们默认为全量更新，将所有数据插入数据库。<br>如果上次更新时间不为空，而且小于1000条，我们就走增量更新逻辑。</p>
-<h3 id="7-1-Model层定义"><a href="#7-1-Model层定义" class="headerlink" title="7.1 Model层定义"></a>7.1 Model层定义</h3><p>这里是定义的Realm的基础模型。</p>
-<p>我们需要定义两个实体，一个是商品模型，一个是关系模型。</p>
-<p>商品模型为：</p>
-<pre><code class="line-numbers language-Swift">
-class StageGoodsPackgeModelData: Object,Codable&#123;
-    
-    @objc dynamic var barcode: String = &quot;&quot;
-    @objc dynamic var brand: String = &quot;&quot;
-    @objc dynamic var brandId: String = &quot;&quot;
-    @objc dynamic var category: String = &quot;&quot;
-    @objc dynamic var categoryId: Int = 0
-    @objc dynamic var createBy: String = &quot;&quot;
-    @objc dynamic var createTime: String = &quot;&quot;
-    @objc dynamic var delFlag: Int = 0
-    @objc dynamic var groupNum: Int = 1         //返回为&quot;&quot;时服务器需要传1
-    @objc dynamic var id: String = &quot;&quot;
-    @objc dynamic var isGreeProduct: Bool = false
-    @objc dynamic var isGroupedProduct: Bool = false
-    @objc dynamic var isSaleProduct: Bool = false
-    @objc dynamic var length: Double = 0.0
-    @objc dynamic var name: String = &quot;&quot;
-    @objc dynamic var orgId: String = &quot;&quot;
-    @objc dynamic var skuCode: String = &quot;&quot;
-    @objc dynamic var tall: Double = 0
-    @objc dynamic var unit: String = &quot;&quot;
-    @objc dynamic var updateBy: String = &quot;&quot;
-    @objc dynamic var updateTime: String = &quot;&quot;
-    @objc dynamic var volume: Double = 0.0
-    @objc dynamic var weight: Double = 0.0
-    @objc dynamic var wide: Double = 0.0
-    @objc dynamic var isMarketingProduct :Bool = false
-    
-    private enum Codingkeys: String, CodingKey&#123;
-        case barcode
-        ,brand
-        ,brandId
-        ,category
-        ,categoryId
-        ,createBy
-        ,createTime
-        ,delFlag
-        ,groupNum
-        ,id
-        ,isGreeProduct
-        ,isGroupedProduct
-        ,isSaleProduct
-        ,length
-        ,name
-        ,orgId
-        ,skuCode
-        ,tall
-        ,unit
-        ,updateBy
-        ,updateTime
-        ,volume
-        ,weight
-        ,wide,
-        isMarketingProduct
-    &#125;
-    
-    
-    required init(from decoder: Decoder) throws &#123;
-        let values = try decoder.container(keyedBy: Codingkeys.self)
-        
-        do &#123;
-            barcode = try values.decode(String.self, forKey: .barcode)
-        &#125; catch &#123;
-            barcode = &quot;&quot;
-        &#125;
-        do &#123;
-            brand = try values.decode(String.self, forKey: .brand)
-        &#125; catch &#123;
-            brand = &quot;&quot;
-        &#125;
-        do &#123;
-            brandId = try values.decode(String.self, forKey: .brandId)
-        &#125; catch &#123;
-            brandId = &quot;&quot;
-        &#125;
-        do &#123;
-            category = try values.decode(String.self, forKey: .category)
-        &#125; catch &#123;
-            category = &quot;&quot;
-        &#125;
-        do &#123;
-            categoryId = try values.decode(Int.self, forKey: .categoryId)
-        &#125; catch &#123;
-            categoryId = 0
-        &#125;
-        do &#123;
-            createBy = try values.decode(String.self, forKey: .createBy)
-        &#125; catch &#123;
-            createBy = &quot;&quot;
-        &#125;
-        do &#123;
-            createTime = try values.decode(String.self, forKey: .createTime)
-        &#125; catch &#123;
-            createTime = &quot;&quot;
-        &#125;
-        do &#123;
-            delFlag = try values.decode(Int.self, forKey: .delFlag)
-        &#125; catch &#123;
-            delFlag = 0
-        &#125;
-        do &#123;
-            groupNum = try values.decode(Int.self, forKey: .groupNum)
-        &#125; catch &#123;
-            groupNum = 1
-        &#125;
-        do &#123;
-            id = try values.decode(String.self, forKey: .id)
-        &#125; catch &#123;
-            id = &quot;&quot;
-        &#125;
-        do &#123;
-            isGreeProduct = try values.decode(Bool.self, forKey: .isGreeProduct)
-        &#125; catch &#123;
-            isGreeProduct = false
-        &#125;
-        do &#123;
-            isGroupedProduct = try values.decode(Bool.self, forKey: .isGroupedProduct)
-        &#125; catch &#123;
-            isGroupedProduct = false
-        &#125;
-        do &#123;
-            isSaleProduct = try values.decode(Bool.self, forKey: .isSaleProduct)
-        &#125; catch &#123;
-            isSaleProduct = false
-        &#125;
-        do &#123;
-            length = try values.decode(CGFloat.self, forKey: .length)
-        &#125; catch &#123;
-            length = 0.0
-        &#125;
-        do &#123;
-            name = try values.decode(String.self, forKey: .name)
-        &#125; catch &#123;
-            name = &quot;&quot;
-        &#125;
-        do &#123;
-            orgId = try values.decode(String.self, forKey: .orgId)
-        &#125; catch &#123;
-            orgId = &quot;&quot;
-        &#125;
-        do &#123;
-            skuCode = try values.decode(String.self, forKey: .skuCode)
-        &#125; catch &#123;
-            skuCode = &quot;&quot;
-        &#125;
-        do &#123;
-            tall = try values.decode(Double.self, forKey: .tall)
-        &#125; catch &#123;
-            tall = 0
-        &#125;
-        do &#123;
-            unit = try values.decode(String.self, forKey: .unit)
-        &#125; catch &#123;
-            unit = &quot;&quot;
-        &#125;
-        do &#123;
-            updateBy =  try values.decode(String.self, forKey: .updateBy)
-        &#125; catch &#123;
-            updateBy = &quot;&quot;
-        &#125;
-        do &#123;
-            updateTime = try values.decode(String.self, forKey: .updateTime)
-        &#125; catch &#123;
-            updateTime = &quot;&quot;
-        &#125;
-        do &#123;
-            volume = try values.decode(Double.self, forKey: .volume)
-        &#125; catch &#123;
-            volume = 0.0
-        &#125;
-        do &#123;
-            weight = try values.decode(Double.self, forKey: .weight)
-        &#125; catch &#123;
-            weight = 0.0
-        &#125;
-        do &#123;
-            wide = try values.decode(Double.self, forKey: .wide)
-        &#125; catch &#123;
-            wide = 0.0
-        &#125;
-        do &#123;
-            isMarketingProduct = try values.decode(Bool.self, forKey: .isMarketingProduct)
-        &#125; catch &#123;
-            isMarketingProduct = false
-        &#125;
-    &#125;
-    
-    func encode(to encoder: Encoder) throws &#123;&#125;
-    
-    override required init()&#123;&#125;
-&#125;
-</code></pre>
-<p>另外一个为：</p>
-<pre><code class="line-numbers language-Swift">
-class StageGoodsSuitPackgeModelData: Object,Codable&#123;
-
-    @objc dynamic var groupNum: Int = 0
-    @objc dynamic var id: String = &quot;&quot;
-    @objc dynamic var orgId: String = &quot;&quot;
-    @objc dynamic var productId: String = &quot;&quot;
-    @objc dynamic var subProductId: String = &quot;&quot;
-    
-    private enum Codingkeys: String, CodingKey &#123;
-        case groupNum
-        case id
-        case orgId
-        case productId
-        case subProductId
-    &#125;
-
-    required init(from decoder: Decoder) throws &#123;
-        let values = try decoder.container(keyedBy: Codingkeys.self)
-        
-        do &#123;
-            groupNum = try values.decode(Int.self, forKey: .groupNum)
-        &#125; catch &#123;
-            groupNum = 0
-        &#125;
-        do &#123;
-            id = try values.decode(String.self, forKey: .id)
-        &#125; catch &#123;
-            id = &quot;&quot;
-        &#125;
-        do &#123;
-            orgId = try values.decode(String.self, forKey: .orgId)
-        &#125; catch &#123;
-            orgId = &quot;&quot;
-        &#125;
-        do &#123;
-            productId = try values.decode(String.self, forKey: .productId)
-        &#125; catch &#123;
-            productId = &quot;&quot;
-        &#125;
-        do &#123;
-            subProductId = try values.decode(String.self, forKey: .subProductId)
-        &#125; catch &#123;
-            subProductId = &quot;&quot;
-        &#125;
-    &#125;
-
-    func encode(to encoder: Encoder) throws &#123;&#125;
-    
-    override required init()&#123;&#125;
-&#125;
-</code></pre>
-<h3 id="7-2-全量更新"><a href="#7-2-全量更新" class="headerlink" title="7.2 全量更新"></a>7.2 全量更新</h3><pre><code class="line-numbers language-Swift">private class func fullUpdate(model: StageOfflinePackageData) &#123;
-        let suitResult = objectWithAll(objct: StageGoodsPackgeModelData.self)
-        if suitResult.count != 0 &#123;
-            deleteList(suitResult) &#123;
-                print(&quot;StageGoodsPackgeModelData表数据清除成功&quot;)
-            &#125;
-        &#125;
-        addList(model.appProductVOList) &#123;
-            print(&quot;StageGoodsPackgeModelData 插入成功&quot;)
-        &#125;
-        
-        let relationResult = objectWithAll(objct: StageGoodsSuitPackgeModelData.self)
-        if relationResult.count != 0 &#123;
-            deleteList(relationResult) &#123;
-                print(&quot;StageGoodsSuitPackgeModelData表数据清除成功&quot;)
-            &#125;
-        &#125;
-        addList(model.appProductRelVOList) &#123;
-            print(&quot;StageGoodsSuitPackgeModelData 插入成功&quot;)
-        &#125;
-    &#125;
-</code></pre>
-<p>如果是全量更新就比较简单了。<br>先把之前的那两个删除掉，然后新增新的model就好了。</p>
-<h3 id="7-3-增量更新"><a href="#7-3-增量更新" class="headerlink" title="7.3 增量更新"></a>7.3 增量更新</h3><p>先声明一下sql</p>
-<pre><code class="line-numbers language-Swift">    private class func incrementalUpdate(model: StageOfflinePackageData) &#123;
-        print(&quot;增量处理开始时间----&gt;&quot;, Date().currentTime(0))
-        var addGoodsArr: [StageGoodsPackgeModelData] = []
-        var addRelationsArr: [StageGoodsSuitPackgeModelData] = []
-        var relationidArr: [String] = []
-        
-        var goodsSql = &quot;&quot;
-        var relationSql = &quot;&quot;
-        var deleteGoodsSql = &quot;&quot;
-        var deleteRelationSql = &quot;&quot;
-</code></pre>
-<p>遍历下服务端返回的增量数据库：</p>
-<pre><code class="line-numbers language-Swift">for (_,suitModel) in model.appProductVOList.enumerated() &#123;
-    // delFlag为0表示，不是删除哦，这里是新增商品
-    if suitModel.delFlag == 0 &#123;
-        if goodsSql == &quot;&quot; &#123;
-            let str1 = String(format:&quot;id = &#39;%@&#39;&quot;, suitModel.id)
-            let str2 = String(format:&quot;productId = &#39;%@&#39;&quot;, suitModel.id)
-            goodsSql.append(str1)
-            relationSql.append(str2)
-        &#125; else &#123;
-            let str1 = String(format:&quot;|| id = &#39;%@&#39;&quot;, suitModel.id)
-            let str2 = String(format:&quot;|| productId = &#39;%@&#39;&quot;, suitModel.id)
-            goodsSql.append(str1)
-            relationSql.append(str2)
-        &#125;
-        addGoodsArr.append(suitModel)
-        relationidArr.append(suitModel.id)
-    &#125; else &#123;
-        // delFlag为1表示删除了商品
-        if deleteGoodsSql == &quot;&quot; &#123;
-            let str1 = String(format:&quot;id = &#39;%@&#39;&quot;, suitModel.id)
-            let str2 = String(format:&quot;productId = &#39;%@&#39;&quot;, suitModel.id)
-            deleteGoodsSql.append(str1)
-            deleteRelationSql.append(str2)
-        &#125; else &#123;
-            let str1 = String(format:&quot;|| id = &#39;%@&#39;&quot;, suitModel.id)
-            let str2 = String(format:&quot;|| productId = &#39;%@&#39;&quot;, suitModel.id)
-            deleteGoodsSql.append(str1)
-            deleteRelationSql.append(str2)
-        &#125;
-    &#125;
-&#125;
-</code></pre>
-<p>有个一个delFlag变量，就是表示是否删除的意思。<br>如果是删除的话，将sql组合一下，就成为 id &#x3D; ‘12’ || id &#x3D; ‘13’ || id &#x3D; ‘14’ 这种。关系表就是 productId &#x3D; ‘12’ || productId &#x3D; ‘14’ 这种。</p>
-<p>这里就知道哪些商品要删除，哪些要加。哪些关系表要删除，哪些要加。</p>
-<p>这里先处理下新增的商品：</p>
-<pre><code class="line-numbers language-Swift">if goodsSql != &quot;&quot; &#123;
-    let predicate = NSPredicate(format:goodsSql)
-    let suitArr = objectsWithPredicate(object: StageGoodsPackgeModelData.self, predicate: predicate)
-    // 这里需要把可能之前存在相同的去掉
-    deleteList(suitArr)&#123;
-        print(&quot;删除商品成功&quot;)
-    &#125;
-    if addGoodsArr.count != 0 &#123;
-        addList(addGoodsArr)&#123;
-            print(&quot;增量更新商品数据成功&quot;)
-        &#125;
-    &#125;
-&#125;
-</code></pre>
-<p>这里用了系统的NSPredicate类来组合sql语句。它其实是用来过滤数据的类。<br>使用方法可以参考这篇文章：<a target="_blank" rel="noopener" href="https://juejin.cn/post/6844903540805074951">https://juejin.cn/post/6844903540805074951</a>。</p>
-<p>然后处理下要删除的商品：</p>
-<pre><code class="line-numbers language-Swift"> if deleteGoodsSql != &quot;&quot; &#123;
-    // NSPredicate是swift 过滤数据的类，类似数据库中的where字段
-    let predicate = NSPredicate(format:deleteGoodsSql)
-    let suitArr = objectsWithPredicate(object: StageGoodsPackgeModelData.self, predicate: predicate)
-    deleteList(suitArr)&#123;
-        print(&quot;删除商品成功&quot;)
-    &#125;
-&#125;
-</code></pre>
-<p>商品处理完成，剩下就是关系表了。</p>
-<p>这里先处理要新增的关系：</p>
-<pre><code class="line-numbers language-Swift">// 这里是新增的关系表
-for idStr in relationidArr &#123;
-    for relationModel in model.appProductRelVOList&#123;
-        if idStr == relationModel.productId &#123;
-            addRelationsArr.append(relationModel)
-        &#125;
-    &#125;
-&#125;
-
-// 新增的关系表
-if relationSql != &quot;&quot; &#123;
-    let relationPredicate = NSPredicate(format:relationSql)
-    let relationArr = objectsWithPredicate(object: StageGoodsSuitPackgeModelData.self, predicate: relationPredicate)
-    deleteList(relationArr)&#123;
-        print(&quot;删除套机关系模型成功&quot;)
-    &#125;
-    if addRelationsArr.count != 0 &#123;
-        addList(addRelationsArr)&#123;
-            print(&quot;增量更新套机关系模型成功&quot;)
-        &#125;
-    &#125;
-&#125;
-</code></pre>
-<p>然后处理下要删除的关系表：</p>
-<pre><code class="line-numbers language-Swift"> if deleteRelationSql != &quot;&quot; &#123;
-    let relationPredicate = NSPredicate(format:deleteRelationSql)
-    let relationArr = objectsWithPredicate(object: StageGoodsSuitPackgeModelData.self, predicate: relationPredicate)
-    deleteList(relationArr)&#123;
-        print(&quot;删除套机关系模型成功&quot;)
-    &#125;
-&#125;
-</code></pre>
-<p>这样增量数据就成功插入了。</p>
-<h2 id="8-预览realm数据库"><a href="#8-预览realm数据库" class="headerlink" title="8 预览realm数据库"></a>8 预览realm数据库</h2><p>插入数据成功后，我们可以用 Realm Studio 来预览数据。<br>上面有讲解如何使用这个可视化工具。</p>
-<p>这里我们就看下最终的结果吧：<br><img src=realm1.png><br><img src=realm2.png></p>
-<h2 id="9-总结"><a href="#9-总结" class="headerlink" title="9 总结"></a>9 总结</h2><ul>
-<li><p>iOS数据库可以考虑使用realm数据库，这个是跨平台，Android也有相应的三方库，使用非常简洁，可以考虑。</p>
-</li>
-<li><p>对于大量数据，我们务必要注意数据的修改，新增，最好采用增量更新的方式，而且如果全量，最好是先压缩下，减小对网络依赖。</p>
-</li>
-<li><p>realm数据库要注意数据库迁移的问题，升级的问题，使用前需要configRealm。</p>
-</li>
-<li><p>真机预览realm数据库可以使用Realm Studio。</p>
-</li>
-<li><p>增量更新一定要注意删除之前的记录，否则数据会很紊乱。</p>
-</li>
-</ul>
+                <p>以下是50个关于Swift的常见面试题：</p>
+<h3 id="Swift和Objective-C的区别是什么？"><a href="#Swift和Objective-C的区别是什么？" class="headerlink" title="Swift和Objective-C的区别是什么？"></a>Swift和Objective-C的区别是什么？</h3><blockquote>
+</blockquote>
+<h3 id="Swift的可选类型是什么？"><a href="#Swift的可选类型是什么？" class="headerlink" title="Swift的可选类型是什么？"></a>Swift的可选类型是什么？</h3><blockquote>
+</blockquote>
+<h3 id="Swift如何在代码中使用可选类型？"><a href="#Swift如何在代码中使用可选类型？" class="headerlink" title="Swift如何在代码中使用可选类型？"></a>Swift如何在代码中使用可选类型？</h3><blockquote>
+</blockquote>
+<h3 id="Swift的强制解包是什么？"><a href="#Swift的强制解包是什么？" class="headerlink" title="Swift的强制解包是什么？"></a>Swift的强制解包是什么？</h3><blockquote>
+</blockquote>
+<h3 id="Swift强制解包的危险是什么？"><a href="#Swift强制解包的危险是什么？" class="headerlink" title="Swift强制解包的危险是什么？"></a>Swift强制解包的危险是什么？</h3><blockquote>
+</blockquote>
+<h3 id="Swift的闭包是什么？"><a href="#Swift的闭包是什么？" class="headerlink" title="Swift的闭包是什么？"></a>Swift的闭包是什么？</h3><blockquote>
+</blockquote>
+<h3 id="Swift如何使用闭包？"><a href="#Swift如何使用闭包？" class="headerlink" title="Swift如何使用闭包？"></a>Swift如何使用闭包？</h3><blockquote>
+</blockquote>
+<h3 id="Swift如何实现单例模式？"><a href="#Swift如何实现单例模式？" class="headerlink" title="Swift如何实现单例模式？"></a>Swift如何实现单例模式？</h3><blockquote>
+</blockquote>
+<h3 id="Swift如何实现面向协议编程？"><a href="#Swift如何实现面向协议编程？" class="headerlink" title="Swift如何实现面向协议编程？"></a>Swift如何实现面向协议编程？</h3><blockquote>
+</blockquote>
+<h3 id="Swift中如何使用自动引用计数（ARC）？"><a href="#Swift中如何使用自动引用计数（ARC）？" class="headerlink" title="Swift中如何使用自动引用计数（ARC）？"></a>Swift中如何使用自动引用计数（ARC）？</h3><blockquote>
+</blockquote>
+<h3 id="Swift中如何进行内存管理？"><a href="#Swift中如何进行内存管理？" class="headerlink" title="Swift中如何进行内存管理？"></a>Swift中如何进行内存管理？</h3><blockquote>
+</blockquote>
+<h3 id="Swift中的结构体和类有什么区别？"><a href="#Swift中的结构体和类有什么区别？" class="headerlink" title="Swift中的结构体和类有什么区别？"></a>Swift中的结构体和类有什么区别？</h3><blockquote>
+</blockquote>
+<h3 id="Swift中如何使用错误处理？"><a href="#Swift中如何使用错误处理？" class="headerlink" title="Swift中如何使用错误处理？"></a>Swift中如何使用错误处理？</h3><blockquote>
+</blockquote>
+<h3 id="Swift中的字符串是如何实现的？"><a href="#Swift中的字符串是如何实现的？" class="headerlink" title="Swift中的字符串是如何实现的？"></a>Swift中的字符串是如何实现的？</h3><blockquote>
+</blockquote>
+<h3 id="Swift中的数组和字典是如何实现的？"><a href="#Swift中的数组和字典是如何实现的？" class="headerlink" title="Swift中的数组和字典是如何实现的？"></a>Swift中的数组和字典是如何实现的？</h3><blockquote>
+</blockquote>
+<h3 id="Swift中如何实现多继承？"><a href="#Swift中如何实现多继承？" class="headerlink" title="Swift中如何实现多继承？"></a>Swift中如何实现多继承？</h3><blockquote>
+</blockquote>
+<h3 id="Swift如何实现泛型？"><a href="#Swift如何实现泛型？" class="headerlink" title="Swift如何实现泛型？"></a>Swift如何实现泛型？</h3><blockquote>
+</blockquote>
+<h3 id="Swift如何实现类型推断？"><a href="#Swift如何实现类型推断？" class="headerlink" title="Swift如何实现类型推断？"></a>Swift如何实现类型推断？</h3><blockquote>
+</blockquote>
+<h3 id="Swift如何实现运算符重载？"><a href="#Swift如何实现运算符重载？" class="headerlink" title="Swift如何实现运算符重载？"></a>Swift如何实现运算符重载？</h3><blockquote>
+</blockquote>
+<h3 id="Swift中的值类型和引用类型有什么区别？"><a href="#Swift中的值类型和引用类型有什么区别？" class="headerlink" title="Swift中的值类型和引用类型有什么区别？"></a>Swift中的值类型和引用类型有什么区别？</h3><blockquote>
+</blockquote>
+<h3 id="Swift中的枚举类型是如何实现的？"><a href="#Swift中的枚举类型是如何实现的？" class="headerlink" title="Swift中的枚举类型是如何实现的？"></a>Swift中的枚举类型是如何实现的？</h3><blockquote>
+</blockquote>
+<h3 id="Swift如何实现类型别名？"><a href="#Swift如何实现类型别名？" class="headerlink" title="Swift如何实现类型别名？"></a>Swift如何实现类型别名？</h3><blockquote>
+</blockquote>
+<h3 id="Swift如何实现高阶函数？"><a href="#Swift如何实现高阶函数？" class="headerlink" title="Swift如何实现高阶函数？"></a>Swift如何实现高阶函数？</h3><blockquote>
+</blockquote>
+<h3 id="Swift中的懒加载是什么？"><a href="#Swift中的懒加载是什么？" class="headerlink" title="Swift中的懒加载是什么？"></a>Swift中的懒加载是什么？</h3><blockquote>
+</blockquote>
+<h3 id="Swift如何实现访问控制？"><a href="#Swift如何实现访问控制？" class="headerlink" title="Swift如何实现访问控制？"></a>Swift如何实现访问控制？</h3><blockquote>
+</blockquote>
+<h3 id="Swift如何使用拓展？"><a href="#Swift如何使用拓展？" class="headerlink" title="Swift如何使用拓展？"></a>Swift如何使用拓展？</h3><blockquote>
+</blockquote>
+<h3 id="Swift如何实现内部和外部参数名称？"><a href="#Swift如何实现内部和外部参数名称？" class="headerlink" title="Swift如何实现内部和外部参数名称？"></a>Swift如何实现内部和外部参数名称？</h3><blockquote>
+</blockquote>
+<h3 id="Swift如何实现默认参数？"><a href="#Swift如何实现默认参数？" class="headerlink" title="Swift如何实现默认参数？"></a>Swift如何实现默认参数？</h3><blockquote>
+</blockquote>
+<h3 id="Swift如何使用可变参数？"><a href="#Swift如何使用可变参数？" class="headerlink" title="Swift如何使用可变参数？"></a>Swift如何使用可变参数？</h3><blockquote>
+</blockquote>
+<h3 id="Swift中的guard语句是什么？"><a href="#Swift中的guard语句是什么？" class="headerlink" title="Swift中的guard语句是什么？"></a>Swift中的guard语句是什么？</h3><blockquote>
+</blockquote>
+<h3 id="Swift如何实现万能的init初始化方法？"><a href="#Swift如何实现万能的init初始化方法？" class="headerlink" title="Swift如何实现万能的init初始化方法？"></a>Swift如何实现万能的init初始化方法？</h3><blockquote>
+</blockquote>
+<h3 id="Swift如何使用字符串插值？"><a href="#Swift如何使用字符串插值？" class="headerlink" title="Swift如何使用字符串插值？"></a>Swift如何使用字符串插值？</h3><blockquote>
+</blockquote>
+<h3 id="Swift中的nil-coalescing运算符是什么？"><a href="#Swift中的nil-coalescing运算符是什么？" class="headerlink" title="Swift中的nil-coalescing运算符是什么？"></a>Swift中的nil-coalescing运算符是什么？</h3><blockquote>
+</blockquote>
+<h3 id="Swift如何使用运算符？"><a href="#Swift如何使用运算符？" class="headerlink" title="Swift如何使用运算符？"></a>Swift如何使用运算符？</h3><blockquote>
+</blockquote>
+<h3 id="Swift中的Tuple是什么？"><a href="#Swift中的Tuple是什么？" class="headerlink" title="Swift中的Tuple是什么？"></a>Swift中的Tuple是什么？</h3><blockquote>
+</blockquote>
+<h3 id="Swift如何使用Tuple？"><a href="#Swift如何使用Tuple？" class="headerlink" title="Swift如何使用Tuple？"></a>Swift如何使用Tuple？</h3><blockquote>
+</blockquote>
+<h3 id="Swift中的Type-Alias是什么？"><a href="#Swift中的Type-Alias是什么？" class="headerlink" title="Swift中的Type Alias是什么？"></a>Swift中的Type Alias是什么？</h3><blockquote>
+</blockquote>
+<h3 id="Swift如何使用Type-Alias？"><a href="#Swift如何使用Type-Alias？" class="headerlink" title="Swift如何使用Type Alias？"></a>Swift如何使用Type Alias？</h3><blockquote>
+</blockquote>
+<h3 id="Swift如何实现静态方法？"><a href="#Swift如何实现静态方法？" class="headerlink" title="Swift如何实现静态方法？"></a>Swift如何实现静态方法？</h3><blockquote>
+</blockquote>
+<h3 id="Swift如何使用隐式解包可选类型？"><a href="#Swift如何使用隐式解包可选类型？" class="headerlink" title="Swift如何使用隐式解包可选类型？"></a>Swift如何使用隐式解包可选类型？</h3><blockquote>
+</blockquote>
+<h3 id="Swift如何使用协议扩展？"><a href="#Swift如何使用协议扩展？" class="headerlink" title="Swift如何使用协议扩展？"></a>Swift如何使用协议扩展？</h3><blockquote>
+</blockquote>
+<h3 id="Swift如何使用泛型约束？"><a href="#Swift如何使用泛型约束？" class="headerlink" title="Swift如何使用泛型约束？"></a>Swift如何使用泛型约束？</h3><blockquote>
+</blockquote>
+<h3 id="Swift中的Lazy-Stored-Properties是什么？"><a href="#Swift中的Lazy-Stored-Properties是什么？" class="headerlink" title="Swift中的Lazy Stored Properties是什么？"></a>Swift中的Lazy Stored Properties是什么？</h3><blockquote>
+</blockquote>
+<h3 id="Swift如何使用可选链式调用？"><a href="#Swift如何使用可选链式调用？" class="headerlink" title="Swift如何使用可选链式调用？"></a>Swift如何使用可选链式调用？</h3><blockquote>
+</blockquote>
+<h3 id="Swift如何使用Optional-Binding？"><a href="#Swift如何使用Optional-Binding？" class="headerlink" title="Swift如何使用Optional Binding？"></a>Swift如何使用Optional Binding？</h3><blockquote>
+</blockquote>
+<h3 id="Swift如何使用do-catch语句进行错误处理？"><a href="#Swift如何使用do-catch语句进行错误处理？" class="headerlink" title="Swift如何使用do-catch语句进行错误处理？"></a>Swift如何使用do-catch语句进行错误处理？</h3><blockquote>
+</blockquote>
+<h3 id="Swift如何使用defer语句？"><a href="#Swift如何使用defer语句？" class="headerlink" title="Swift如何使用defer语句？"></a>Swift如何使用defer语句？</h3><blockquote>
+</blockquote>
+<h3 id="Swift中的可空属性是什么？"><a href="#Swift中的可空属性是什么？" class="headerlink" title="Swift中的可空属性是什么？"></a>Swift中的可空属性是什么？</h3><blockquote>
+</blockquote>
+<h3 id="Swift如何使用可空属性？"><a href="#Swift如何使用可空属性？" class="headerlink" title="Swift如何使用可空属性？"></a>Swift如何使用可空属性？</h3><blockquote>
+</blockquote>
+<h3 id="Swift中的非空断言是什么？"><a href="#Swift中的非空断言是什么？" class="headerlink" title="Swift中的非空断言是什么？"></a>Swift中的非空断言是什么？</h3><blockquote>
+</blockquote>
+<h3 id="Swift如何使用非空断言？"><a href="#Swift如何使用非空断言？" class="headerlink" title="Swift如何使用非空断言？"></a>Swift如何使用非空断言？</h3><blockquote>
+</blockquote>
+<h3 id="Swift中的静态存储属性是什么？"><a href="#Swift中的静态存储属性是什么？" class="headerlink" title="Swift中的静态存储属性是什么？"></a>Swift中的静态存储属性是什么？</h3><blockquote>
+</blockquote>
+<h3 id="Swift如何使用静态存储属性？"><a href="#Swift如何使用静态存储属性？" class="headerlink" title="Swift如何使用静态存储属性？"></a>Swift如何使用静态存储属性？</h3><blockquote>
+</blockquote>
+<h3 id="Swift如何使用枚举实现状态机？"><a href="#Swift如何使用枚举实现状态机？" class="headerlink" title="Swift如何使用枚举实现状态机？"></a>Swift如何使用枚举实现状态机？</h3><blockquote>
+</blockquote>
+<h3 id="Swift中的懒加载属性是什么？"><a href="#Swift中的懒加载属性是什么？" class="headerlink" title="Swift中的懒加载属性是什么？"></a>Swift中的懒加载属性是什么？</h3><blockquote>
+</blockquote>
+<h3 id="Swift如何使用懒加载属性？"><a href="#Swift如何使用懒加载属性？" class="headerlink" title="Swift如何使用懒加载属性？"></a>Swift如何使用懒加载属性？</h3><blockquote>
+</blockquote>
+<h3 id="Swift如何实现面向对象的三大特性：封装，继承，多态？"><a href="#Swift如何实现面向对象的三大特性：封装，继承，多态？" class="headerlink" title="Swift如何实现面向对象的三大特性：封装，继承，多态？"></a>Swift如何实现面向对象的三大特性：封装，继承，多态？</h3><blockquote>
+</blockquote>
+<h3 id="Swift如何使用运算符函数？"><a href="#Swift如何使用运算符函数？" class="headerlink" title="Swift如何使用运算符函数？"></a>Swift如何使用运算符函数？</h3><blockquote>
+</blockquote>
+<h3 id="Swift如何使用函数类型？"><a href="#Swift如何使用函数类型？" class="headerlink" title="Swift如何使用函数类型？"></a>Swift如何使用函数类型？</h3><blockquote>
+</blockquote>
 
             </div>
             <hr />
@@ -1285,9 +794,9 @@ if relationSql != &quot;&quot; &#123;
             <br/>
             <span xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/Text"
                   property="dct:title" rel="dct:type">
-                    《iOS swift 数据库realm实践》
+                    《iOS Swift 经典面试题之一》
                 </span> 由
-            <a xmlns:cc="http://creativecommons.org/ns#" href="/2023/01/30/iOS-swift-%E6%95%B0%E6%8D%AE%E5%BA%93realm%E5%AE%9E%E8%B7%B5/" property="cc:attributionName"
+            <a xmlns:cc="http://creativecommons.org/ns#" href="/2023/02/18/iOS-swift-%E7%BB%8F%E5%85%B8%E9%9D%A2%E8%AF%95%E9%A2%98%E4%B9%8B%E4%B8%80/" property="cc:attributionName"
                rel="cc:attributionURL">
                 Jason
             </a> 采用
@@ -1328,7 +837,7 @@ if relationSql != &quot;&quot; &#123;
         repo: 'jasontojan.github.io',
         owner: 'jasontojan',
         admin: "jasontojan",
-        id: '2023/01/30/iOS-swift-数据库realm实践/',
+        id: '2023/02/18/iOS-swift-经典面试题之一/',
         distractionFreeMode: false  // Facebook-like distraction free mode
     });
 
@@ -1611,29 +1120,41 @@ if relationSql != &quot;&quot; &#123;
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fa fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="fa fa-dot-circle-o"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/2023/01/31/iOS-swift-%E5%AE%9E%E7%8E%B0%E7%AE%80%E6%98%93%E5%9C%B0%E5%9B%BE%E5%8A%9F%E8%83%BD/">
+                <a href="/2023/02/18/iOS-swift-%E7%BB%8F%E5%85%B8%E9%9D%A2%E8%AF%95%E9%A2%98%E4%B9%8B%E4%B8%80/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/28.jpg" class="responsive-img" alt="iOS swift 实现简易地图功能">
+                        <img src="/medias/featureimages/14.jpg" class="responsive-img" alt="iOS Swift 经典面试题之一">
                         
-                        <span class="card-title">iOS swift 实现简易地图功能</span>
+                        <span class="card-title">iOS Swift 经典面试题之一</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            1 需求定义产品需要我们实现这样一个需求，就是根据一个地址（可能有经纬度也可能没有）,然后跳转到地图页面去，地图中间会显示这个地址。运行用户自行点击定位，这样中间会显示当前位置。允许左右滑动，地图中心也会随之变更。支持搜索功能，根据用户搜索
+                            以下是50个关于Swift的常见面试题：
+Swift和Objective-C的区别是什么？
+
+Swift的可选类型是什么？
+
+Swift如何在代码中使用可选类型？
+
+Swift的强制解包是什么？
+
+Swift强制解包的危险是什么？
+
+Swi
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="fa fa-clock-o fa-fw icon-date"></i>2023-01-31
-                        </span>
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2023-02-18
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fa fa-bookmark fa-fw icon-category"></i>
@@ -1646,11 +1167,12 @@ if relationSql != &quot;&quot; &#123;
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E5%9C%B0%E5%9B%BE/" target="_blank">
-                        <span class="chip bg-color">地图</span>
+                    <a href="/tags/iOS-%E9%9D%A2%E8%AF%95%E9%A2%98-Swift/" target="_blank">
+                        <span class="chip bg-color">iOS 面试题 Swift</span>
                     </a>
                     
                 </div>
@@ -1664,24 +1186,27 @@ if relationSql != &quot;&quot; &#123;
                 下一篇&nbsp;<i class="fa fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2023/01/29/iOS-swift-%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0%E6%89%AB%E7%A0%81%E5%8A%9F%E8%83%BD/">
+                <a href="/2023/02/15/iOS-swift-%E7%A0%81%E4%BA%91%E5%AE%A2%E6%88%B7%E7%AB%AF-%E5%AE%8C%E6%95%B4%E9%A1%B9%E7%9B%AE%E5%88%86%E6%9E%90%E4%B9%8B%E4%BA%8C/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/8.jpg" class="responsive-img" alt="iOS swift 如何实现扫码功能">
+                        <img src="/medias/featureimages/20.jpg" class="responsive-img" alt="iOS swift 码云客户端 完整项目分析之二">
                         
-                        <span class="card-title">iOS swift 如何实现扫码功能</span>
+                        <span class="card-title">iOS swift 码云客户端 完整项目分析之二</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            1 需求定义这里有个需求，就是继承扫码能力，可以识别到条形码里面的内容。首先我们需要下载一个离线库，这个库里面会包含很多条码Code，相机通过识别到条码跟离线库中的匹配，如果匹配上了，会提示用户。所以首先我们肯定要有一个识别能力，数据库先不
+                            1 项目地址
+https://gitee.com/oschina/git-osc-iphone使用Swift语言重构的码云iOS客户端，采用MVVM设计模式与POP(面向协议编程)，核心框架为RxSwift。 
+
+此篇文章讲解，如何构造一个
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="fa fa-clock-o fa-fw icon-date"></i>2023-01-29
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2023-02-15
                             </span>
                         <span class="publish-author">
                             
@@ -1698,8 +1223,8 @@ if relationSql != &quot;&quot; &#123;
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E6%9D%A1%E5%BD%A2%E7%A0%81%E8%AF%86%E5%88%AB-%E7%9B%B8%E6%9C%BA/" target="_blank">
-                        <span class="chip bg-color">条形码识别 相机</span>
+                    <a href="/tags/%E5%AE%8C%E6%95%B4%E9%A1%B9%E7%9B%AE-RxSwift/" target="_blank">
+                        <span class="chip bg-color">完整项目 RxSwift</span>
                     </a>
                     
                 </div>
