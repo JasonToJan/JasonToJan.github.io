@@ -1,6 +1,6 @@
 ---
 title: iOS swift 码云客户端 完整项目分析之二
-date: 2023-02-15 10:07:26
+date: 2023-02-18 10:07:26
 op: false
 cover: false
 toc: true
@@ -683,5 +683,685 @@ typealias Item = Object & Mappable & RenderableObject
 ### 4.4 关系图
 太多协议了，需要一个图来理解下。
 <img src=mayun_202.png>
+
+
+## 5 网络请求全过程
+
+### 5.1 在ProjectsController的viewDidLoad生命周期
+```Swift
+override func viewDidLoad() {
+        super.viewDidLoad()
+        setupSubViews() { [weak self] indexPath in
+            guard let project = self?.viewModel.itemsValue[indexPath.row] else { return }
+            self?.delegate?.pushItemControllerWith(type: ItemType.projsDetails(project.id), item: project, navigation: self?.navigationController)
+        }
+    }
+```
+这里调用了setupSubViews，初始化配置tableView了。
+而且在回调中，声明了点击item事件。这里通过自定义代理，跳转到了某个Item控制器里面了。
+
+这个setupSubViews方法是定义在ItemsController中的，这个就是上方第4点讲述的一个配置了很多协议的主要用来展示列表的一个通用控制器协议。
+
+### 5.2 通过ItemsController执行setupSubViews
+```Swift
+func setupSubViews(via requestParam: [String: Any]? = nil, itemSelected: @escaping (IndexPath)->() ) {
+        
+    if requestParam != nil {
+        viewModel.requestParam = requestParam
+    }
+    
+    if isRefreshable { setupRefreshHeader() }
+    
+    //viewConfig
+    setupTableView()
+    setupIndicatorWith(backgroundStyle: .normal)
+    setupErrorView()
+    setupTextHUD()
+    request()
+    
+    /*--------------------binding-----------------------*/
+    //标题
+    viewModel.navigationTitle.drive(navigationItem.rx.title).disposed(by: disposeBag)
+    //载入菊花是否显示
+    viewModel.isLocalDataExistd.drive(indicator.rx.isHidden).disposed(by: disposeBag)
+    //数据源
+    viewModel.contents.drive(tableView.rx.items(dataSource: dataSource)).disposed(by: disposeBag)
+    //cell高度
+    viewModel.cellHeight.drive(tableView.rx.cellHeights(delegate: tableViewDelegate)).disposed(by: disposeBag)
+    //cell点击
+    tableView.rx.itemSelected.bind { [weak self] index in
+        guard let self = self else { return }
+        self.tableView.deselectRow(at: index, animated: true)
+        itemSelected(index)
+    }.disposed(by: disposeBag)
+    
+    //是否添加footer
+    viewModel.dataSource.filter { $0.count == 20 }.asObservable().bind { [weak self] (_) in
+        guard let self = self, self.isPageable else { return }
+        self.setupRefreshFooter()
+    }.disposed(by: disposeBag)
+}
+```
+这里配置了很多关于Cell的属性，最关键的是一个 request方法，和 一个setupRefreshHeader方法。
+
+首先看这里：
+```Swift
+if isRefreshable { setupRefreshHeader() }       
+```
+对应：
+```Swift
+private func setupRefreshHeader() {
+    tableView.mj_header = MJRefreshNormalHeader()
+    /*通过直接订阅刷新事件来保证每次网络请求都能重新订阅Observable*/
+    //header
+    tableView.mj_header?.rx.refreshing.bind { [weak self] in
+        guard let s = self else { return }
+        //print(RxSwift.Resources.total)
+        s.bindRequestViews()
+        s.viewModel.request.bind(to: s.tableView.mj_header!.rx.endRefreshing).disposed(by: s.disposeBag)
+        }.disposed(by: disposeBag)
+}
+```
+这里判断它能否支持刷新，支持的话，在header的refreshing状态下，会触发viewModel走request方法。
+s就是自己，self的意思，通过自己的viewModel触发request。
+
+什么时候触发这个header走refreshing，不出意外应该是上面的request()方法：
+```Swift
+extension ItemsController {
+    
+    func request() {
+        if isRefreshable {
+            tableView.mj_header?.beginRefreshing()
+            return
+        }
+        bindRequestViews()
+    }
+```
+果然，这里直接利用header走beginRefreshing方法，触发上面的bind，再触发viewModel走request。
+
+### 5.3 viewModel走request
+首先我们要明白这个viewModel是哪个具体的viewModel。
+这个itemsController中定义的viewModel来自于这个NetAccessableControllerType协议：
+```Swift
+protocol BaseControllerType: ProtocolBindable, HasDelegate where Delegate == PushableControllerDelegate, Self: UIViewController { }
+
+protocol NetAccessableControllerType: BaseControllerType, NetAccessable {
+    /// 协议中使用泛型的解决方案
+    associatedtype V: BaseViewMoelType
+    var viewModel: V { get }
+}
+```
+
+这个ViewModel一定是BaseViewModelType类型的。
+```Swift
+protocol BaseViewMoelType: class {
+    
+    associatedtype E
+    
+    var errorViewConfig: Driver<(Bool, (String?, UIImage?))> { get }
+    
+    var textHUDConfig: Driver<(Bool, String?)> { get }
+    
+    var navigationTitle: Driver<String?> { get }
+    
+    /// request是指控制器在window显示后默认产生的网络请求数据流
+    var request: Observable<(E)> {get set}
+    
+    ///actionRequest是指与UI交互产生的次要网络请求数据流
+    func actionRequestWith<T>(api: ActionAPI) -> Observable<T>?
+}
+```
+这个协议定义的request返回的是Observable对象，这个是RxSwift中的类。
+
+回到具体的ProjectsController中，看到了如何定义ViewModel的：
+```Swift
+class ProjectsController: UIViewController, ItemsController {
+    
+    lazy var tableViewDelegate: RxTableViewSectionedReloadDelegate = .init(tableView: self.tableView)
+    
+    let isRefreshable: Bool = true
+    
+    let isPageable: Bool = true
+    
+    let tableView: UITableView = .init()
+    
+    let disposeBag: DisposeBag = DisposeBag()
+    
+    let cellInfo: [(String, RegisteredViewType)] = [("ProjectCell", .xib)]
+    
+    let viewModel: ItemsViewModel<ProjectsStore>
+```
+原来是ItemsViewModel，包了一个Store的实现类：ProjectsStore，这个ProjectsStore应该是用来本地网络缓存的，就是拿到网络数据后，磁盘缓存到本地。具体发起网络请求，应该是ItemsViewModel这个实现类。
+
+首先看下这个ItemsViewModel的实现类中的request属性如何定义吧：
+```Swift
+
+final class ItemsViewModel<S: ItemsStoreType>: ItemsViewModelType {
+    
+    let initItems: BehaviorRelay<[S.O]>
+    
+    let uuid = UUID()
+    
+    lazy var requestParam: [String : Any]? = { return self.defaultParam }()
+    
+    let store: S
+    
+    lazy var page = BehaviorRelay(value: 2)
+    
+    let data = BehaviorSubject<[[Item]]>.init(value: [])
+    
+    /*---------observable---------------------*/
+
+   //使用存储属性保证序列的唯一性
+    lazy var request: Observable<()> = {return self.requestObservable() }()
+```
+这里搞了个闭包，调用了自身的requestObservable方法：
+```Swift
+///获取网络请求的序列
+func requestObservable() -> Observable<()> {
+    let paramaters = requestParam == nil ? defaultParam : requestParam
+    return request(via: paramaters).share(replay: 1)
+}
+```
+这里是拿到了请求参数，继续走request方法：
+```Swift
+func request(via param: [String: Any]?) -> Observable<()> {
+    return Observable<()>.create { [weak self] (observer) in
+        guard let self = self else {
+            observer.onCompleted()
+            return Disposables.create()
+        }
+        //model持有网络
+        self.store.request(via: param, uuid: self.uuid, observer: observer)
+        return Disposables.create()
+    }
+}
+```
+最终是走到了上面这个方法，参数为请求接口的参数。
+
+最终将请求委托给自身的store来请求，看来这个store还是有用的，不仅仅用来缓存，网络请求也是它。
+
+### 5.4 ItemsStoreType走request
+上面因为ProjectController的viewModel是这样定义的：
+```Swift
+let viewModel: ItemsViewModel<ProjectsStore>
+```
+
+而这个ItemsViewModel中是这样要求Store的：
+```Swift
+final class ItemsViewModel<S: ItemsStoreType>: ItemsViewModelType {
+```
+所以这个Store应该是需要继承ItemsStoreType的。
+
+如果request方法没有被ProjectsStore重写，那么request方法一定会走ItemsStoreType的request里面。
+
+现在看下ItemsStoreType的request方法吧：
+```Swift
+//MARK:- 网络请求
+func request(via param: [String: Any]?, uuid: UUID, observer: AnyObserver<()>) {
+    HttpsManager.request(with: targetType, parameters: param).responseArray(completionHandler:
+        ResponseHandler.handlerArrayResponse(via: observer, target: self.targetType, success: { [weak self] (newItems: [O]) in
+            self?.handle(newItems: newItems, via: param, uuid: uuid)
+            //发送完成事件避免资源一直被占用
+            observer.onCompleted()
+    }))
+}
+```
+看了下ProjectsStore确实没有重写，而且这个ItemsStoreType自己扩展了这个request方法。
+
+这里通过调用HttpsManager去发起请求了，请求参数通过request参数传进来了。
+请求结果通过ResponseHandler工具类解析了。
+
+然后通过自身handle方法，调用store的saveItem保存到本地，这个应该是交给store的实现类具体实现。
+将json格式的数据转成了ItemsStoreType定义的items类型。
+
+items类型就是前面声明的泛型O：
+```Swift
+protocol ItemsStoreType: StoreType where T == ItemsType {
+    var items: [O] { get set }
+    var targetType: ItemsType { get }
+    func saveItems(via userInfo: [ResponseKey: Any])
+    init(type: ItemsType)
+}
+```
+这个泛型O,同样也是在ProjectsStore中进行具体实现：
+```Swift
+final class ProjectsStore: ItemsStoreType {
+    
+    typealias O = Project
+```
+这样，说明ProjectsStore中转换的json的目标实体就是Project实体。
+
+必须要声明typealias哦：
+```Swift
+protocol StoreType: class {
+    associatedtype O: Item
+    associatedtype T: TargetType
+    var targetType: T { get }
+    func request(via param: [String: Any]?, uuid: UUID, observer: AnyObserver<()>)   
+}
+```
+因为ProjectsStore继承ItemsStoreType集成StoreType，
+这样ProjectsStore就必须实现associatedtype类型了。
+> 是的，如果一个协议中声明了关联类型（associatedtype），
+那么在实现该协议的类型中必须要声明一个类型别名（typealias）来具体化该关联类型。
+这是因为协议中的关联类型是一个占位符，它表示该协议的某些方法或属性的返回值类型或参数类型可以是任何类型，具体的类型要由实现该协议的类型来指定。
+
+
+这里json转换，主要利用了一个Objectmapper来帮忙转换：
+```Swift
+
+struct ResponseHandler {
+    
+    static func handlerArrayResponse<T: Mappable>(via observer: AnyObserver<()>, target: TargetType, success: @escaping ([T]) -> ()) -> (AFDataResponse<[T]>) -> Void {
+        return { dataResponse in
+            if let error = dataResponse.error {
+                observer.onError(RequestError.requestFailed(error.localizedDescription))
+                return
+            }
+            if let objects = dataResponse.value {
+                objects.count == 0 ? observer.onError(RequestError.noData(target.noDataDescription)) : success(objects)
+            } else {observer.onError(RequestError.noData(String.Local.noPermission))}
+        }
+    }
+```
+上面就是将一个数组，转换成一个目标T的数组：
+ObjectMapper：github地址: [https://github.com/tristanhimmelman/ObjectMapper](https://github.com/tristanhimmelman/ObjectMapper)
+Alamofire: github地址：[https://github.com/Alamofire/Alamofire](https://github.com/Alamofire/Alamofire)
+
+如何使用：
+要使用ObjectMapper将Alamofire获取的JSON数据转换为目标实体，您可以按照以下步骤进行操作：
+
+1).确保您的项目已经集成了ObjectMapper和Alamofire库，并且您已经在文件顶部添加了所需的import语句。
+
+2).定义您的目标实体，并使其符合Mappable协议。例如，如果您有一个名为Person的目标实体，则可以按照以下方式定义它：
+
+```Swift
+import ObjectMapper
+
+class Person: Mappable {
+    var name: String?
+    var age: Int?
+    
+    required init?(map: Map) {}
+    
+    func mapping(map: Map) {
+        name <- map["name"]
+        age <- map["age"]
+    }
+}
+```
+在上面的代码中，我们定义了一个名为Person的类，并使其符合Mappable协议。该类包含name和age两个属性，它们将从JSON中映射到Person实例的相应属性中。
+
+3).在您的Alamofire请求中，将返回的JSON数据转换为目标实体。您可以按照以下方式进行操作：
+```Swift
+import Alamofire
+import ObjectMapper
+
+Alamofire.request("https://example.com/person").responseJSON { response in
+    guard let json = response.result.value as? [String: Any] else {
+        return
+    }
+    if let person = Mapper<Person>().map(JSON: json) {
+        // 将person实例用于您的应用程序逻辑
+    }
+}
+```
+在上面的代码中，我们使用Alamofire发出请求，并在响应中检查是否存在JSON数据。如果有数据，我们使用ObjectMapper将其映射到Person实例中。如果映射成功，我们可以使用person实例进行应用程序逻辑。
+
+这就是如何使用ObjectMapper将Alamofire获取的JSON数据转换为目标实体的步骤。请注意，这只是一个简单的示例，您可能需要根据您的应用程序逻辑进行适当的更改。
+
+### 5.5 自定义封装的HttpsManager
+```Swift
+
+fileprivate let key_urlUpdateDic = "URLUpdateDictionary"
+
+struct HttpsManager {
+    /// 不自动产生缓存的SessionManager
+    private static let defaultSession: Alamofire.Session = {
+        let configuration = URLSessionConfiguration.ephemeral
+        //更该其protocolClasses 才能拦截URLSession的网络请求
+        configuration.protocolClasses = [HttpsURLProtocol.self]
+        return Alamofire.Session(configuration: configuration)
+    }()
+    //https头
+    private static var headers: Alamofire.HTTPHeaders {
+        return Alamofire.HTTPHeaders(["User-Agent": userAgent])
+    }
+    
+    private static var userAgent: String {
+        let appVersion = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String ?? ""
+        let IDFV = UIDevice.current.identifierForVendor?.uuidString ?? ""
+        return String.init(format: "git.OSChina.NET/git_%@/%@/%@/%@/%@", appVersion, UIDevice.current.systemName, UIDevice.current.systemVersion, UIDevice.current.model, IDFV)
+    }
+    
+    static var urlUpdateDic: [String?: Date]? = {
+        return UserDefaults.standard.dictionary(forKey: key_urlUpdateDic) as? [String : Date] ?? nil
+    }()
+    
+    static func saveUpdateDic() {
+        UserDefaults.standard.set(urlUpdateDic, forKey: key_urlUpdateDic)
+    }
+    
+    static func request(with type: TargetType, parameters: [String: Any]? = nil) -> DataRequest {
+        let param = parameters == nil ? type.parameters : parameters
+        return HttpsManager.defaultSession.request(type.url, method: type.method, parameters: param)
+    }
+    
+}
+```
+
+这里我们倒推一下：
+外部触发了request方法：
+```Swift
+static func request(with type: TargetType, parameters: [String: Any]? = nil) -> DataRequest {
+    let param = parameters == nil ? type.parameters : parameters
+    return HttpsManager.defaultSession.request(type.url, method: type.method, parameters: param)
+}
+```
+这里走了这个管理方法中的默认session发起请求。
+
+这个session是这样定义的：
+```Swift
+/// 不自动产生缓存的SessionManager
+private static let defaultSession: Alamofire.Session = {
+    let configuration = URLSessionConfiguration.ephemeral
+    //更该其protocolClasses 才能拦截URLSession的网络请求
+    configuration.protocolClasses = [HttpsURLProtocol.self]
+    return Alamofire.Session(configuration: configuration)
+}()
+```
+是通过Alamofire类里面定义的一个Session。
+通过自己配置URLSession，传给Alamofire中，就拿到一个不自动产生缓存的SessionManager对象了。
+
+这个session走到了Alamofire中去请求了，下面就不涉及我们此篇文章的内容了。
+这里通过Alamofire，我们得到一个DataRequest返回体。
+```Swift
+// MARK: - Subclasses
+
+// MARK: - DataRequest
+
+/// `Request` subclass which handles in-memory `Data` download using `URLSessionDataTask`.
+public class DataRequest: Request {
+    /// `URLRequestConvertible` value used to create `URLRequest`s for this instance.
+    public let convertible: URLRequestConvertible
+    /// `Data` read from the server so far.
+    public var data: Data? { return protectedData.directValue }
+```
+可以看到，数据放在了data中。
+
+然后我们利用实体类去继承Mapper，他们就能成功转成自己要的实体了。
+
+## 6 磁盘缓存全过程
+
+### 6.1 网络请求拿到数据了
+在ItemsStoreType的request方法中，拿到数据后调用了一个handle方法：
+```Swift
+//MARK:- 网络请求
+func request(via param: [String: Any]?, uuid: UUID, observer: AnyObserver<()>) {
+    HttpsManager.request(with: targetType, parameters: param).responseArray(completionHandler:
+        ResponseHandler.handlerArrayResponse(via: observer, target: self.targetType, success: { [weak self] (newItems: [O]) in
+            self?.handle(newItems: newItems, via: param, uuid: uuid)
+            //发送完成事件避免资源一直被占用
+            observer.onCompleted()
+    }))
+}
+```
+
+这里继续走：
+```Swift
+func handle(newItems: [O], via param: [String: Any]?, uuid: UUID, sendNoti: Bool = true) {
+    var userInfo: [ResponseKey: Any] = [.tragetType: self.targetType, .identity: uuid]
+    //若参数存在page
+    if let page = param?["page"] as? Int {
+        var reason: ChangeReason
+        if page == 1 {
+            self.items = newItems
+            reason = .request
+        } else {
+            self.items.append(contentsOf: newItems)
+            reason = .loadMore
+        }
+        userInfo[.changeReason] = reason
+    }
+    else {
+        userInfo[.changeReason] = ChangeReason.request
+        self.items = newItems
+    }
+    //交由具体的StoreClasses实现持久化存储
+    self.saveItems(via: userInfo)
+    if sendNoti {
+        NotificationCenter.default.post(name: Self.itemsChangedNoti, object: self
+            .items, userInfo: userInfo)
+    }
+}
+```
+这里委托store的saveItems保存了。
+
+### 5.2 saveItems
+这里是交给了具体的Store去实现了：
+这里是ProjectsStore的saveItems方法：
+```Swift
+func saveItems(via userInfo: [ResponseKey : Any]) {
+    //只存储第一页的数据
+    if let changedReason = userInfo[ResponseKey.changeReason] as? ChangeReason, changedReason == .request, !(realm?.isInWriteTransaction ?? false) {
+        switch self.targetType {
+        case .userProjs(_): saveNormalItems()
+        case .staredProjs(_), .watchedProjs(_): saveOwnerdItems()
+        case .latestProjs, .popularProjs, .featuredProjs, .languagedProjs(_, _):
+            saveOrderedItems()
+        default: break
+        }
+    }
+}
+```
+这里根据类型，继续走到了saveOrderedItems：
+```Swift
+///定制的存储方法
+private func saveOrderedItems() {
+    //本地没有数据存在
+    if queryAllItems()?.count == 0 {
+        var index = 0
+        for item in items {
+            custom(item: item, index: index)
+            index += 1
+        }
+        update(items: items)
+    }
+    //本地存在数据
+    else {
+        var index = items.count - 1
+        var diff  = 0
+        var turn  = true
+        var newItems = [Project]()
+        //所有请求到的数据都是新数据（本地不存在）
+        //取本地第一条数据的index-新数据的count作为差值
+        if object(of: items[items.count - 1].id) == nil, let firstIndex = queryAllItems()?.first?.index(of: targetType) {
+            diff = firstIndex - items.count
+            turn = false
+        }
+        for _ in items {
+            let item = items[index]
+            //已经存在拥有序列的该类型数据(忽略，并计算新的index差)
+            if turn, let obj = object(of: item.id), let storedIndex = obj.index(of: targetType) {
+                diff = storedIndex - index
+            } else {
+                //不存在就新定制
+                custom(item: item, index: index + diff)
+                newItems.append(item)
+            }
+            index -= 1
+        }
+        update(items: newItems)
+    }
+}
+```
+
+这里先看下queryAllItems吧。
+
+### 5.3 ItemsStoreType的queryAllItems
+这里走到了ItemsStoreType方法中：
+```Swift
+func queryAllItems(limited: Int = 20) -> [O]? {
+    switch targetType {
+    case .featuredProjs:
+        return self.query(via: NSPredicate(format: "featuredIndex != nil"), sortedKey: "featuredIndex").toArray(limited: limited)
+    case .popularProjs:
+        return self.query(via: NSPredicate(format: "popularIndex != nil"), sortedKey: "popularIndex").toArray(limited: limited)
+    case .latestProjs:
+        return self.query(via: NSPredicate(format: "latestIndex != nil"), sortedKey: "latestIndex").toArray(limited: limited)
+    case .languagedProjs(_, let language):
+        return self.query(via: NSPredicate(format: "languageIndex != nil && language = %@", language), sortedKey: "languageIndex").toArray(limited: limited)
+    case .userEvents(let id):
+        return self.query(via: NSPredicate(format: "authorId = %ld", id), sortedKey: "createdDate", ascending: false).toArray(limited: limited)
+    case .selfEvents:
+        return self.query(via: NSPredicate(format: "authorId = %ld", CurrentUserManager.id), sortedKey: "createdDate", ascending: false).toArray(limited: limited)
+    case .userProjs(let id):
+        return self.query(via: NSPredicate(format: "owner.id = %ld", id), sortedKey: "createdAt", ascending: true).toArray(limited: limited)
+    case .staredProjs(let id):
+        return UserStore(type: .user(id)).item?.startedProjects.toArray(limited: 20) as? [Self.O]
+    case .watchedProjs(let id):
+        return UserStore(type: .user(id)).item?.watchedProjects.toArray(limited: 20) as? [Self.O]
+    default: return nil
+    }
+}
+```
+
+这里通过NSPredicate数据库语法，走query方法：
+
+### 5.4 StoreType的query方法
+因为这个走到了底层，所以应该在底层封装：
+```Swift
+func query(via predicate: NSPredicate, sortedKey: String? = nil, ascending: Bool = true) -> Results<O> {
+    if let key = sortedKey {
+        return realm.objects(O.self).filter(predicate).sorted(byKeyPath: key, ascending: ascending)
+    }
+    
+    return realm.objects(O.self).filter(predicate)
+}
+```
+这里终于找到罪魁祸首了，就是realm数据库。
+
+再看下update:
+```Swift
+func update(items: [O]) {
+        if realm.isInWriteTransaction { return }
+        do {
+            //save
+            try realm.write {
+                realm.add(items, update: .modified)
+                //realm.add(items, update: true)
+            }
+            
+        } catch(_) { return }
+        
+    }
+```
+
+realm来自于下方这里，当然可以在自己的实现Store中自定义，这里是默认实现。
+
+```Swift
+extension StoreType {
+var realm: Realm {
+    return Store.shared.realm
+}
+```
+应该是在Store的单例类中找到了realm。
+
+### 5.5 Store底层
+```Swift
+final class Store {
+    static let shared = Store()
+    let realm: Realm
+    private init() {
+        Store.set(realmName: "gitosc")
+        realm = try! Realm()
+    }
+    
+    static func deleteRealm(with realm: Realm = Store.shared.realm) {
+        if realm.isInWriteTransaction { return }
+        autoreleasepool {
+            do {
+                try realm.write {
+                    
+                    realm.deleteAll()
+                }
+            } catch(_) { return }
+        }
+        let realmURL = Realm.Configuration.defaultConfiguration.fileURL!
+        let realmURLs: [URL] = [
+            realmURL.appendingPathExtension("lock"),
+            realmURL.appendingPathExtension("note"),
+            realmURL.appendingPathExtension("management")
+        ]
+        for URL in realmURLs {
+            do {
+                try FileManager.default.removeItem(at: URL)
+            } catch {
+                // 错误处理
+            }
+        }
+    }
+    
+    private static func set(realmName: String) {
+        
+        var config = Realm.Configuration()
+        // 使用默认的目录，但是请将文件名替换为用户名
+        config.fileURL = config.fileURL!.deletingLastPathComponent().appendingPathComponent("\(realmName).realm")
+    
+        // 将该配置设置为默认 Realm 配置
+        Realm.Configuration.defaultConfiguration = config
+    }
+}
+```
+这里搞了一个单例类，存放了realm类，可以操作数据库。
+
+其实在我们自己实现的ProjectsStore也声明了realm:
+```Swift
+final class ProjectsStore: ItemsStoreType {
+    
+    typealias O = Project
+    
+    var items: [Project] = []
+    
+    var targetType: ItemsType
+    
+    var realm: Realm? = Store.shared.realm
+```
+其实不声明也可以，反正都是用的同一个单例类。
+
+就这样，使用realm把数据转换成功数据库了，持久化在本地了。
+
+## 6 总结
+
+* 本篇文章主要是窥探码云这个客户端网络请求和缓存的主流程，揭秘如何封装，一层一层环环相扣，将数据完美展现在UItableView里面。
+
+* 首先我们如果是一个上方多tab，每个tab有一个列表，这种架构，可以用一个DNSPageView来构造，只需要在这里添加tab的几个控制器，titles，其它工作很少。
+
+* 然后封装下子控制器，通过让这个子控制器继承UIViewController，和一个关键的ItemsController协议，这个协议我们自己定义的，主要用来请求网络，填充数据的。
+
+* 这个子控制器里面，主要做一个tableView相关的绑定工作，这里我们会在子控制器里面添加一个tableView。主要在viewDidLoad里面配置。通过view.addSubView一个table来实现。
+
+* 然后在第一次执行下下拉刷新事件，这个事件通过rxSwift绑定关系，来触发viewModel层走request。
+
+* 因为要viewModel，所以我们需要继续封装一下ItemsController，将网络相关的全部给它处理，viewModel也放在它里面。
+
+* 这里网络相关我们单独抽一个协议NetAccessableControllerType，这个叫网络可达，这里存放ViewModel，我们可以定义ViewModel基本协议方法，用一个BaseViewModelType来规范吧。
+
+* 然后还有一个TableViewPresentable就主要用来填充数据吧，还有一个HintViewsPresentable也处理UI方面的东西。
+
+* 然后的的ViewModel去继承ItemsViewModelType，上面定义的是BaseViewModelType是这个类型，这里需要声明继承关系。
+
+* 这个ItemsViewModelType，其实就配置了很多Driver事件驱动，在setupView的初始化配置中，利用viewModel.contents来驱动tableView.rx.item数据填充。这个数据源我们在TableVIewPresentable中配置。
+
+* 在网络请求成功后，给了ItemsStoreType中的items数据为网络数据，然后其实是给了ViewModel中的Store，就是说store有数据了，然后监听了dataSource其实是S.o，也就是items，这样就相当于监听了网络数据。
+
+* 拿到数据后，驱动ItemsViewModel中的dataSource，走dataSource方法，在setupViewModel中监听了数据源，实现tableView赋值过程。
+
+
+
+
+
+
 
 
