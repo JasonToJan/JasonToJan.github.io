@@ -1,6 +1,6 @@
 ---
 title: iOS swift 码云客户端 完整项目分析之一
-date: 2023-02-12 17:37:25
+date: 2023-02-13 17:37:25
 op: false
 cover: false
 toc: true
@@ -16,7 +16,7 @@ categories:
 使用Swift语言重构的码云iOS客户端，采用MVVM设计模式与POP(面向协议编程)，核心框架为RxSwift。 
 
 效果如下：
-| <img src=mayun_01.png> | <img src=mayun_01.png>  | <img src=mayun_01.png>  |
+| <img src=mayun_01.png> | <img src=mayun_02.png>  | <img src=mayun_03.png>  |
 | :---------------: | :---------------: | :---------------: |
 
 
@@ -108,7 +108,7 @@ print(str)
 ```
 
 国际化方面，可以参考下这篇文章：
-[https://www.fatbobman.com/posts/localizationApp-1/](https://www.fatbobman.com/posts/localizationApp-1/)
+[https://blog.csdn.net/M316625387/article/details/123083923](https://blog.csdn.net/M316625387/article/details/123083923)
 
 ### 2.3 Swift Compiler-General
 注意到这里有配置Objective-C Bridging Header 到某一个头文件。
