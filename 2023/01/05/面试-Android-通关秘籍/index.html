@@ -489,14 +489,14 @@ onCreate-&amp;gt;onStart-&amp;gt;onResume-&amp;gt;onPause-&amp;gt;onStop-&amp;gt
                 
                 <div class="info-break-policy">
                     <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    2.7k
+                    4.5k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    10 分
+                    16 分
                 </div>
                 
                 
@@ -581,16 +581,67 @@ onCreate-&amp;gt;onStart-&amp;gt;onResume-&amp;gt;onPause-&amp;gt;onStop-&amp;gt
 <h3 id="2-2-为什么Looper一直循环，不会卡死？"><a href="#2-2-为什么Looper一直循环，不会卡死？" class="headerlink" title="2.2 为什么Looper一直循环，不会卡死？"></a>2.2 为什么Looper一直循环，不会卡死？</h3><blockquote>
 <p>当没有消息的时候，会阻塞在queue.next()里面的nativePollOnce方法<br>这个方法从native层将线程挂起，释放CPU资源进入休眠状态。<br>另外，Android本身就是事件驱动，Looper.loop不断接收和处理事件，Looper就是支持Android应用能跑起来的关键，一般而言，不会说是looper循环导致卡顿，而是在消息处理里面做耗时操作，才会导致卡顿。</p>
 </blockquote>
-<h3 id="2-3-IntentService原理？"><a href="#2-3-IntentService原理？" class="headerlink" title="2.3 IntentService原理？"></a>2.3 IntentService原理？</h3><h3 id="2-4-HandlerThread原理？"><a href="#2-4-HandlerThread原理？" class="headerlink" title="2.4 HandlerThread原理？"></a>2.4 HandlerThread原理？</h3><h3 id="2-5-Kotlin协程怎么用？"><a href="#2-5-Kotlin协程怎么用？" class="headerlink" title="2.5 Kotlin协程怎么用？"></a>2.5 Kotlin协程怎么用？</h3><blockquote>
+<h3 id="2-3-HandlerThread原理？"><a href="#2-3-HandlerThread原理？" class="headerlink" title="2.3 HandlerThread原理？"></a>2.3 HandlerThread原理？</h3><blockquote>
+<p>先说下是什么：HandlerThread是Google帮我们封装好的异步处理工具，可以用来执行多个耗时操作，而不需要多次开启线程，里面是采用Handler和Looper实现的。<br>1.首先它继承了线程，那么一定就不是在主线程了，且这里面创建了一个自己的looper，开启了循环。<br>2.原理跟Android的主线程创建的Looper比较相似，可以说是简化版。</p>
+</blockquote>
+<h3 id="2-4-IntentService原理？"><a href="#2-4-IntentService原理？" class="headerlink" title="2.4 IntentService原理？"></a>2.4 IntentService原理？</h3><blockquote>
+<p>最好先回答下是什么：IntentService是一种特殊的Service，它继承了Service，因此它自然会比单纯的线程优先级要高，然后它自己依旧是一个抽象类，需要创建自己的子类。 IntentService可用于执行后台耗时任务，执行完毕后会自动停止。<br>1.提一下在这个服务的onCreate里面，new了一个HandlerThread，然后start。<br>2.自定义Handler叫做ServiceHandler, 然后将前面工作线程的Looper传到这个Handler中。<br>3.然后在Hander的handleMessage中，定义了抽象方法onHandeIntent交给子类处理。<br>4.任务通过onStartCommand中依次通过hander发送消息到子线程里面去处理。</p>
+</blockquote>
+<h3 id="2-5-Kotlin协程怎么用？"><a href="#2-5-Kotlin协程怎么用？" class="headerlink" title="2.5 Kotlin协程怎么用？"></a>2.5 Kotlin协程怎么用？</h3><blockquote>
 <p>首先一定要回答是什么：Kotlin 协程是一种轻量级的并发框架，可用于处理异步和非阻塞操作，而无需使用回调或显式线程管理。<br>然后提一下作用域，可以全局开，也可以在Activity里面自己创建一个作用域，或者使用ViewModel的作用域，通过launch函数即可开启协程。</p>
+</blockquote>
+<h3 id="2-6-为什么AsyncTask被遗弃了？"><a href="#2-6-为什么AsyncTask被遗弃了？" class="headerlink" title="2.6 为什么AsyncTask被遗弃了？"></a>2.6 为什么AsyncTask被遗弃了？</h3><blockquote>
+<p>1.容易导致内存泄漏<br>2.并发性能，默认是顺序执行的。<br>3.有更好的替代方案，比如RxJava，协程等。</p>
+</blockquote>
+<h3 id="2-7-如何适配？"><a href="#2-7-如何适配？" class="headerlink" title="2.7 如何适配？"></a>2.7 如何适配？</h3><blockquote>
+<p>为什么要适配？需要回答下Android碎片化问题。<br>1.布局控件选择，LinearLayout权重，ConstraintLayout约束布局。<br>2.dimens动态化。<br>3.资源限定符布局文件。<br>4.使用三方库，如头条的AndroidAutoSize，最好能说下原理：通过修改设备的屏幕密度来实现适配。<br>最好是能简单说下dp是独立于设备屏幕密度的像素单位；dpi是每英寸的像素数；density是单位长度内的像素数；标准屏幕的dpi是160，xxhdpi对应的density为3，也就是1个dp约等于3个px；</p>
+</blockquote>
+<h3 id="2-8-Android进程优先级？"><a href="#2-8-Android进程优先级？" class="headerlink" title="2.8 Android进程优先级？"></a>2.8 Android进程优先级？</h3><blockquote>
+<p>1.前台进程，正常和用户交互的进程。<br>2.可见进程，比如一个弹框弹出，后面的是可见的。<br>3.服务进程，已经启动的Service。<br>4.后台进程，切换到后台了。</p>
+</blockquote>
+<h3 id="2-9-Android进程间通信？"><a href="#2-9-Android进程间通信？" class="headerlink" title="2.9 Android进程间通信？"></a>2.9 Android进程间通信？</h3><blockquote>
+<p>1.直接使用intent可携带数据。<br>2.文件共享，如sp文件。<br>3.Messenger，底层AIDL。<br>4.AIDL文件。<br>5.ContentProvider，底层Binder+AIDL。<br>6.Socket。<br>最好是提到Linux操作系统直接的IPC方案：可以共享内存，管道（亲缘关系），消息队列，信号量。</p>
+</blockquote>
+<h3 id="2-10-RecyclerView复用机制？"><a href="#2-10-RecyclerView复用机制？" class="headerlink" title="2.10 RecyclerView复用机制？"></a>2.10 RecyclerView复用机制？</h3><blockquote>
+<p>1.一定要提到ViewHolder，理论上可以说ViewHolder就是itemView，一个itemView对应一个ViewHolder，一对一的关系，而我们后面多级缓存复用的就是这个ViewHolder。<br>2.最好是能提到四级缓存，<br>Srap（ 缓存屏幕中可见范围的ViewHolder）<br>Cache（缓存滑动时即将与RecyclerView分离的ViewHolder）<br>ViewCacheExtension（开发者自行实现的缓存）<br>RecycledViewPool（ViewHolder缓存池，本质上是一个SparseArray，）<br>缓存对象都是ViewHolder。</p>
 </blockquote>
 <h2 id="3-白银"><a href="#3-白银" class="headerlink" title="3 白银"></a>3 白银</h2><blockquote>
 <p>能够处理基本的性能优化。</p>
 </blockquote>
-<h3 id="3-1-Android-事件分发机制？"><a href="#3-1-Android-事件分发机制？" class="headerlink" title="3.1 Android 事件分发机制？"></a>3.1 Android 事件分发机制？</h3><h3 id="3-2-Android-绘制原理？"><a href="#3-2-Android-绘制原理？" class="headerlink" title="3.2 Android 绘制原理？"></a>3.2 Android 绘制原理？</h3><h3 id="3-3-Android进程优先级？内存不足时怎么回收？"><a href="#3-3-Android进程优先级？内存不足时怎么回收？" class="headerlink" title="3.3 Android进程优先级？内存不足时怎么回收？"></a>3.3 Android进程优先级？内存不足时怎么回收？</h3><h3 id="3-4-LruCache原理？"><a href="#3-4-LruCache原理？" class="headerlink" title="3.4 LruCache原理？"></a>3.4 LruCache原理？</h3><h2 id="4-黄金"><a href="#4-黄金" class="headerlink" title="4 黄金"></a>4 黄金</h2><blockquote>
-<p>了解系统API原理。</p>
+<h3 id="3-1-Android-事件分发机制？"><a href="#3-1-Android-事件分发机制？" class="headerlink" title="3.1 Android 事件分发机制？"></a>3.1 Android 事件分发机制？</h3><blockquote>
+<p>先说下事件分发的本质：将点击事件向某个View进行传递并最终得到处理。<br>然后需要提到：在哪些对象传递，Activity-&gt;ViewGroup-&gt;View。<br>然后需要具体分析下三个重要方法：dispatchTouchEvent-&gt; onInterceptTouchEvent-&gt;onTouchEvent。<br>最好分析下三个返回值：<br>dispatchTouchEvent，返回true，不传了；返回false，不传了，返回给上层onTouchEvent处理；默认走super.dispatchTouchEvent；<br>onInterceptTouchEvent，需要提到只有ViewGroup才有，主要作用是拦截，返回true，交给自己onTouchEvent处理；返回false，不拦截，加个子View处理。<br>onTouchEvent: 处理事件，返回true，消费；false回传给上层onTouchEvent。<br>可以幽默地说有点V。</p>
 </blockquote>
-<h3 id="4-1-Android-Binder原理？"><a href="#4-1-Android-Binder原理？" class="headerlink" title="4.1 Android Binder原理？"></a>4.1 Android Binder原理？</h3><h3 id="4-2-Android-IPC方案和Linux-IPC方案？"><a href="#4-2-Android-IPC方案和Linux-IPC方案？" class="headerlink" title="4.2 Android IPC方案和Linux IPC方案？"></a>4.2 Android IPC方案和Linux IPC方案？</h3><h2 id="5-铂金"><a href="#5-铂金" class="headerlink" title="5 铂金"></a>5 铂金</h2><blockquote>
+<h3 id="3-2-滑动冲突处理？"><a href="#3-2-滑动冲突处理？" class="headerlink" title="3.2 滑动冲突处理？"></a>3.2 滑动冲突处理？</h3><blockquote>
+<p>先说下：一般是有两种方案，外部拦截法，内部拦截法。<br>1.外部拦截法，直接在指定ViewGroup中重写onInterceptTouchEvent，如果要拦截，返回true。<br>2.内部拦截费，在目标View的dispatchTouchEvent，禁止外部拦截，调用parent.requestDisallowInterceptTouchEvent(true);</p>
+</blockquote>
+<h3 id="3-3-Android-绘制原理？"><a href="#3-3-Android-绘制原理？" class="headerlink" title="3.3 Android 绘制原理？"></a>3.3 Android 绘制原理？</h3><blockquote>
+<p>重点提一下三个过程即可。<br>测量Measure: 必须必须提一下测量模式，用了2位表示3种测量模式，Exactly,精确的，对应matchparent和写死的长度；AT_MOST,不确定的，一般对应wrap_content；还有一种用得比较少，UNSPECIFIED对应无限制的，如ScrollView。<br>布局阶段layout: 重点提下是干啥的，确定四个坐标点，通过setFrame方法，自上而下确定自身位置。先确定自己，再确定子View。<br>绘制阶段onDraw: 重点提下过程即可。先绘制背景，再自己，在子View，最后装饰。</p>
+</blockquote>
+<h3 id="3-5-LruCache原理？"><a href="#3-5-LruCache原理？" class="headerlink" title="3.5 LruCache原理？"></a>3.5 LruCache原理？</h3><blockquote>
+<p>说下核心思想即可：<br>当缓存满的时候，会优先淘汰那些最近最少使用的缓存对象。<br>最好说下数据结构：LinkedHashMap是由数组+双向链表的数据结构来实现的.<br>然后就是维护一个缓存对象列表，其中对象的排列方式是按照访问顺序实现的。即一直没访问的对象，将放在队尾。</p>
+</blockquote>
+<h3 id="3-6-卡顿的根本原因？"><a href="#3-6-卡顿的根本原因？" class="headerlink" title="3.6 卡顿的根本原因？"></a>3.6 卡顿的根本原因？</h3><blockquote>
+<p>主线程有耗时操作，导致doFrame方法没有在垂直同步信号发出后的16ms内完成.</p>
+</blockquote>
+<h3 id="3-7-UI优化？"><a href="#3-7-UI优化？" class="headerlink" title="3.7 UI优化？"></a>3.7 UI优化？</h3><blockquote>
+<p>1.布局优化，merge标签减少不必要的层级，ViewStub按需加载；include复用。<br>2.层级优化，可以用ConstraintLayout减少层级。<br>3.使用最新稳定的视图控件，比如ViewPage2，RecyclerView这种google比较推荐的控件。<br>4.如果是一些间隙，可以用Space代替View，因为这个draw为空了。</p>
+</blockquote>
+<h3 id="3-8-内存优化？"><a href="#3-8-内存优化？" class="headerlink" title="3.8 内存优化？"></a>3.8 内存优化？</h3><blockquote>
+<p>1.优化图片资源，这个最重要，一定要提到，图片占用空间比较大，可以采用压缩图片。<br>2.减少内存泄漏，可以通过leakCanary检测分析，弱引用等。<br>3.使用google推荐的数据库：如用SparseArray替代HashMap等，用Pair等。<br>4.少用枚举类，占用内存较大。<br>5.利用工具分析Android Profiler可以检测内存占用率。<br>6.减少内存抖动，会加剧系统GC，创建大量临时对象会导致内存抖动。<br>7.onDraw里面避免创建对象，会频繁调用。<br>8.大图局部加载方案，BitmapRegionDecoder。</p>
+</blockquote>
+<h3 id="3-9-内存泄漏原因？"><a href="#3-9-内存泄漏原因？" class="headerlink" title="3.9 内存泄漏原因？"></a>3.9 内存泄漏原因？</h3><blockquote>
+<p>本质原因：短生命周期中持有长生命周期引用，短生命周期销毁，长生命周期对象无法被释放。<br>场景说一下：<br>1.资源对象未关闭：Cursor，File对象。<br>2.注册的对象未销毁：广播，EventBus，回调监听。<br>3.类的静态变量持有大量数据。<br>4.非静态内部类，持有外部类引用。<br>5.Handler<br>6.容器的对象没有清理<br>7.WebView使用单进程。</p>
+</blockquote>
+<h2 id="4-黄金"><a href="#4-黄金" class="headerlink" title="4 黄金"></a>4 黄金</h2><blockquote>
+<p>了解系统API原理和解决项目难点。</p>
+</blockquote>
+<h3 id="4-1-Android-Binder原理？"><a href="#4-1-Android-Binder原理？" class="headerlink" title="4.1 Android Binder原理？"></a>4.1 Android Binder原理？</h3><h3 id="4-2-三方库报错？"><a href="#4-2-三方库报错？" class="headerlink" title="4.2 三方库报错？"></a>4.2 三方库报错？</h3><blockquote>
+<p>可以提一下用了一个弹框的三方库。<br>主要是分析源码，定位问题点，然后我们通过跳转弹出弹框时机解决了。</p>
+</blockquote>
+<h3 id="4-3-网络超时30s，loading结束并提示？"><a href="#4-3-网络超时30s，loading结束并提示？" class="headerlink" title="4.3 网络超时30s，loading结束并提示？"></a>4.3 网络超时30s，loading结束并提示？</h3><blockquote>
+<p>因为我们loading用了一个三方库，每个请求都是单独弹出loading，而且设置okHttp超时时间不是很准。<br>我就自己封装了一个工具类，借鉴了Glide用一个空的Fragment绑定生命周期，内部包装了handler，每个请求计算时间，超过60s后，处理逻辑。</p>
+</blockquote>
+<h2 id="5-铂金"><a href="#5-铂金" class="headerlink" title="5 铂金"></a>5 铂金</h2><blockquote>
 <p>对热修复，插件化，组件化有过深入分析。</p>
 </blockquote>
 <h2 id="6-钻石"><a href="#6-钻石" class="headerlink" title="6 钻石"></a>6 钻石</h2><blockquote>
@@ -1352,7 +1403,7 @@ onCreate-&amp;gt;onStart-&amp;gt;onResume-&amp;gt;onPause-&amp;gt;onStop-&amp;gt
 
             
             &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-            <span class="white-color">207.9k</span>
+            <span class="white-color">209.7k</span>
             
 
             <br>
