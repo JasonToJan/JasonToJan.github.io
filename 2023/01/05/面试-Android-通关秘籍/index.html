@@ -334,7 +334,7 @@ onCreate-&amp;gt;onStart-&amp;gt;onResume-&amp;gt;onPause-&amp;gt;onStop-&amp;gt
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/20.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/21.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
@@ -737,7 +737,9 @@ onCreate-&amp;gt;onStart-&amp;gt;onResume-&amp;gt;onPause-&amp;gt;onStop-&amp;gt
 <h3 id="7-3-apk安装过程？"><a href="#7-3-apk安装过程？" class="headerlink" title="7.3 apk安装过程？"></a>7.3 apk安装过程？</h3><blockquote>
 <p>1.复制APK到&#x2F;data&#x2F;app目录下，解压并扫描安装包<br>2.将APP的dex文件拷贝到&#x2F;data&#x2F;dalvik-cache目录，再在&#x2F;data&#x2F;data&#x2F;目录下创建应用程序的数据目录（以应用包名命令），用来存放应用的数据库、xml文件、cache、二进制的so动态库等<br>3.解析apk的AndroidManifest.xml文件，注册四大组件，将apk的权限、应用包名、apk的安装位置、版本、userID等重要信息保存在&#x2F;data&#x2F;system&#x2F;packages.xml文件中。这些操作都是在PackageManagerService中完成。<br>4.资源管理器解析APK里的资源文件。<br>5.dex2oat操作，对dex文件进行优化，并保存在dalvik-cache目录下。<br>6.更新权限信息。<br>7.安装完成后，发送Intent.ACTION_PACKAGE_ADDED广播。<br>8.显示icon图标，应用程序经过PMS中的逻辑处理后，相当于已经注册好了，如果想要在Android桌面上看到icon图标，则需要Launcher将系统中已经安装的程序展现在桌面上。</p>
 </blockquote>
-<h3 id="7-4-apk打包流程？"><a href="#7-4-apk打包流程？" class="headerlink" title="7.4 apk打包流程？"></a>7.4 apk打包流程？</h3><p>1.打包资源文件，生成R.java文件（aapt工具，生成resource.arsc）<br>2.处理aidl文件，生成相应Java文件<br>3.编译java文件，生成class文件（java编译器）<br>4.将class文件生成dex文件（dx工具）<br>5.将资源文件和dex文件合并打包，生成apk文件（apkBuilder工具）<br>6.对apk文件进行签名<br>7.对前面后的文件进行对齐（zipalign,作用是减少运行时内存）</p>
+<h3 id="7-4-apk打包流程？"><a href="#7-4-apk打包流程？" class="headerlink" title="7.4 apk打包流程？"></a>7.4 apk打包流程？</h3><blockquote>
+<p>1.打包资源文件，生成R.java文件（aapt工具，生成resource.arsc）<br>2.处理aidl文件，生成相应Java文件<br>3.编译java文件，生成class文件（java编译器）<br>4.将class文件生成dex文件（dx工具）<br>5.将资源文件和dex文件合并打包，生成apk文件（apkBuilder工具）<br>6.对apk文件进行签名<br>7.对前面后的文件进行对齐（zipalign,作用是减少运行时内存）</p>
+</blockquote>
 <h2 id="8-宗师"><a href="#8-宗师" class="headerlink" title="8 宗师"></a>8 宗师</h2><blockquote>
 <p>熟悉Framework。</p>
 </blockquote>
@@ -1236,7 +1238,7 @@ onCreate-&amp;gt;onStart-&amp;gt;onResume-&amp;gt;onPause-&amp;gt;onStop-&amp;gt
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/25.jpg" class="responsive-img" alt="面试 Java 通关秘籍">
+                        <img src="/medias/featureimages/24.jpg" class="responsive-img" alt="面试 Java 通关秘籍">
                         
                         <span class="card-title">面试 Java 通关秘籍</span>
                     </div>
@@ -1244,7 +1246,11 @@ onCreate-&amp;gt;onStart-&amp;gt;onResume-&amp;gt;onPause-&amp;gt;onStop-&amp;gt
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            1 黑铁2 青铜3 白银4 黄金5 铂金6 钻石7 大师8 宗师9 王者
+                            1 黑铁
+对象，集合，泛型，反射的理解。
+
+1.1 什么是多态？
+面向对象的三大特性：封装、继承、多态。从一定角度来看，封装和继承几乎都是为多态而准备的。多态的定义：指允许不同类的对象对同一消息做出响应。即同一消息可以根据发送对象的不同而采
                         
                     </div>
                     <div class="publish-info">
@@ -1285,7 +1291,7 @@ onCreate-&amp;gt;onStart-&amp;gt;onResume-&amp;gt;onPause-&amp;gt;onStop-&amp;gt
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/12.jpg" class="responsive-img" alt="Android 2022头条面经">
+                        <img src="/medias/featureimages/13.jpg" class="responsive-img" alt="Android 2022头条面经">
                         
                         <span class="card-title">Android 2022头条面经</span>
                     </div>
@@ -1491,7 +1497,7 @@ onCreate-&amp;gt;onStart-&amp;gt;onResume-&amp;gt;onPause-&amp;gt;onStop-&amp;gt
 
             
             &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-            <span class="white-color">216.2k</span>
+            <span class="white-color">221.4k</span>
             
 
             <br>
