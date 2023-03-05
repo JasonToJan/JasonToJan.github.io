@@ -332,7 +332,7 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/24.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/1.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
@@ -487,14 +487,14 @@
                 
                 <div class="info-break-policy">
                     <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    5.2k
+                    6.3k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    19 分
+                    23 分
                 </div>
                 
                 
@@ -707,6 +707,21 @@ class Consumer implements Runnable &#123;
 </code></pre>
 <h2 id="4-黄金"><a href="#4-黄金" class="headerlink" title="4 黄金"></a>4 黄金</h2><blockquote>
 <p>了解虚拟机相关知识。</p>
+</blockquote>
+<h3 id="4-1-对象的创建，内存布局，和访问定位？"><a href="#4-1-对象的创建，内存布局，和访问定位？" class="headerlink" title="4.1 对象的创建，内存布局，和访问定位？"></a>4.1 对象的创建，内存布局，和访问定位？</h3><blockquote>
+<p>1.对象的创建：<br>1.1 虚拟机遇到一个new指令时，首先将去检查这个指令的参数是否能在常量池中定位到一个类的符号引用；<br>1.2 检查这个符号引用代表的类是否已经被加载，解析和初始化过。如果没有，那必须先执行响应的类加载过程；<br>1.3 在类加载检查功通过后，为新生对象分配内存。对象所需的内存大小在类加载完成后便可完全确定。<br><br>2.对象的内存布局：<br>2.1 对象头：对象自身的运行时数据，如线程持有的锁，synchronized原理基于这个。+第二部分是类型指针。<br>2.2 实例数据：真正存储的有效数据。<br>2.3 对象填充： 刚好8个字节整数倍。<br><br>3.对象的访问定位：<br>3.1 句柄访问<br>3.2 直接指针，存的就是对象的地址。</p>
+</blockquote>
+<h3 id="4-2-Java类加载机制详解？"><a href="#4-2-Java类加载机制详解？" class="headerlink" title="4.2 Java类加载机制详解？"></a>4.2 Java类加载机制详解？</h3><blockquote>
+<p>首先最好说下生命周期。<br>加载-&gt;验证-&gt;准备-&gt;解析-&gt;初始化-&gt;使用-&gt;卸载。<br><br>最好说下什么时候触发类加载：<br>1.遇到new，getstatic,putstatic,invokestaic这4个字节码指令时，主要就是new一个对象，读取或设置一个类的静态字段，调用静态方法，也会触发。<br>2.反射也会触发。<br>3.初始化一个子类，会先初始化父类。<br>4.虚拟机启动，用户指定要执行的main函数对应的类。<br><br>然后类加载器的分类可以说下：<br>1.启动类加载器：负责加载Java的核心类。<br>2.扩展类加载器，负责加载Java扩展的核心类之外的类。<br>3.应用程序类加载器：没有自定义加载器都是使用这个加载器。<br>4.自定义加载器<br><br><br>最好再补仓下双亲委派机制：<br>双亲委派模型的工作流程是：如果一个类加载器收到了类加载的请求，它首先不会自己去尝试加载这个类，而是把请求委托给父加载器去完成，依次向上，<br>因此，所有的类加载请求最终都应该被传递到顶层的启动类加载器中，只有当父加载器在它的搜索范围中没有找到所需的类时，即无法完成该加载，子加载器才会尝试自己去加载该类。</p>
+</blockquote>
+<h3 id="4-3-Java垃圾回收算法详解？"><a href="#4-3-Java垃圾回收算法详解？" class="headerlink" title="4.3 Java垃圾回收算法详解？"></a>4.3 Java垃圾回收算法详解？</h3><blockquote>
+<p>1.标记清除算法<br>①首先标记出所有需要回收的对象<br>②在标记完成后统一回收所有被标记的对象。<br>不足：1.效率低，生成内存碎片。<br><br>2.复制算法<br>将可用内存分层大小相等的两块，每次只使用其中一块。<br>不足：将内存缩小了一半。<br><br>3.标记整理算法<br>先走标记清除算法逻辑，再将存活对象向一端移动，再统一清除。<br><br>4.分代收集算法<br>在新生代中，每次垃圾收集时都发现有大批对象死去，只有少量存活，那就选用复制算法。<br>在老年代中，因为对象存活率高、没有额外空间对它进行分配担保，就必须采用“标记-清除”或“标记-整理”算法来进行回收。</p>
+</blockquote>
+<h3 id="4-4-你知道哪些垃圾收集器？"><a href="#4-4-你知道哪些垃圾收集器？" class="headerlink" title="4.4 你知道哪些垃圾收集器？"></a>4.4 你知道哪些垃圾收集器？</h3><blockquote>
+<p>1.Serial收集器：单线程收集器。简单而高效。<br>2.ParNew收集器：Serial的多线程版本。<br>3.Parallel Scavenge收集器： 新生代收集器，并行多线程收集器。<br>4.Serial Old收集器：使用了标记整理算法。</p>
+</blockquote>
+<h3 id="4-5-JVM怎么判断对象已经死亡？"><a href="#4-5-JVM怎么判断对象已经死亡？" class="headerlink" title="4.5 JVM怎么判断对象已经死亡？"></a>4.5 JVM怎么判断对象已经死亡？</h3><blockquote>
+<p>采用了可达性分析算法。<br>通过一些列的称为“GC Roots”的对象作为起始点，从这些节点开始向下搜索，搜索所走过的路径称为引用链，当一个对象到GC Roots没有任何引用链相连时（就是从GC Roots 到这个对象是不可达），则证明此对象是不可用的。</p>
 </blockquote>
 <h2 id="5-铂金"><a href="#5-铂金" class="headerlink" title="5 铂金"></a>5 铂金</h2><h2 id="6-钻石"><a href="#6-钻石" class="headerlink" title="6 钻石"></a>6 钻石</h2><h2 id="7-大师"><a href="#7-大师" class="headerlink" title="7 大师"></a>7 大师</h2><h2 id="8-宗师"><a href="#8-宗师" class="headerlink" title="8 宗师"></a>8 宗师</h2><h2 id="9-王者"><a href="#9-王者" class="headerlink" title="9 王者"></a>9 王者</h2>
             </div>
@@ -1200,7 +1215,7 @@ class Consumer implements Runnable &#123;
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/17.jpg" class="responsive-img" alt="面试 设计模式和算法 通关秘籍">
+                        <img src="/medias/featureimages/11.jpg" class="responsive-img" alt="面试 设计模式和算法 通关秘籍">
                         
                         <span class="card-title">面试 设计模式和算法 通关秘籍</span>
                     </div>
@@ -1249,7 +1264,7 @@ class Consumer implements Runnable &#123;
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/21.jpg" class="responsive-img" alt="面试 Android 通关秘籍">
+                        <img src="/medias/featureimages/15.jpg" class="responsive-img" alt="面试 Android 通关秘籍">
                         
                         <span class="card-title">面试 Android 通关秘籍</span>
                     </div>
@@ -1460,7 +1475,7 @@ onCreate-&gt;onStart-&gt;onResume-&gt;onPause-&gt;onStop-&gt;onDestory
 
             
             &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-            <span class="white-color">221.4k</span>
+            <span class="white-color">222.4k</span>
             
 
             <br>
