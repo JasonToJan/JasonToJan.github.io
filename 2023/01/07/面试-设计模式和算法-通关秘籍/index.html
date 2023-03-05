@@ -8,7 +8,11 @@
     <meta name="baidu-site-verification" content="fmlEuI34ir" />
     <meta name="google-site-verification" content="yCy2azpds5XSuGZvis6OuA-XIGF5GuGpYRAaGfD6o48" />
     <meta name="360-site-verification" content="b7c11a830ef90fd1464ad6206bb7b6e7" />
-    <meta name="description" content="1 黑铁2 青铜3 白银4 黄金5 铂金6 钻石7 大师8 宗师9 王者">
+    <meta name="description" content="1 黑铁1.1 如何使用单例模式的饿汉式和饱汉式？
+```Java
+// 饿汉式
+class SingleTon &amp;#123;
+    private static final SingleTon instance = SingleTon(">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -483,14 +487,14 @@
                 
                 <div class="info-break-policy">
                     <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    27
+                    5.1k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    1 分
+                    23 分
                 </div>
                 
                 
@@ -506,7 +510,700 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="1-黑铁"><a href="#1-黑铁" class="headerlink" title="1 黑铁"></a>1 黑铁</h2><h2 id="2-青铜"><a href="#2-青铜" class="headerlink" title="2 青铜"></a>2 青铜</h2><h2 id="3-白银"><a href="#3-白银" class="headerlink" title="3 白银"></a>3 白银</h2><h2 id="4-黄金"><a href="#4-黄金" class="headerlink" title="4 黄金"></a>4 黄金</h2><h2 id="5-铂金"><a href="#5-铂金" class="headerlink" title="5 铂金"></a>5 铂金</h2><h2 id="6-钻石"><a href="#6-钻石" class="headerlink" title="6 钻石"></a>6 钻石</h2><h2 id="7-大师"><a href="#7-大师" class="headerlink" title="7 大师"></a>7 大师</h2><h2 id="8-宗师"><a href="#8-宗师" class="headerlink" title="8 宗师"></a>8 宗师</h2><h2 id="9-王者"><a href="#9-王者" class="headerlink" title="9 王者"></a>9 王者</h2>
+                <h2 id="1-黑铁"><a href="#1-黑铁" class="headerlink" title="1 黑铁"></a>1 黑铁</h2><h3 id="1-1-如何使用单例模式的饿汉式和饱汉式？"><a href="#1-1-如何使用单例模式的饿汉式和饱汉式？" class="headerlink" title="1.1 如何使用单例模式的饿汉式和饱汉式？"></a>1.1 如何使用单例模式的饿汉式和饱汉式？</h3><pre><code class="line-numbers language-Java">
+```Java
+// 饿汉式
+class SingleTon &#123;
+    private static final SingleTon instance = SingleTon();
+    private SingleTon();
+
+    public SingleTon getInstance() &#123;
+        return instance;
+    &#125;
+&#125;
+</code></pre>
+<pre><code class="line-numbers language-Java">// 懒汉式
+class SingleTon2 &#123;
+    private static volatile SingleTon2 instance;
+
+    private SingleTon2();
+    
+    public SingleTon2 getInstance() &#123;
+        if (instance == null) &#123;
+            synchronized(SingleTon2.class) &#123;
+                if (instance == null) &#123;
+                    return new SingleTon2();
+                &#125;
+            &#125;
+        &#125;
+        return instance;
+    &#125;
+
+&#125;
+</code></pre>
+<h3 id="1-2-单例模式的双重检验锁和静态内部类和枚举？"><a href="#1-2-单例模式的双重检验锁和静态内部类和枚举？" class="headerlink" title="1.2 单例模式的双重检验锁和静态内部类和枚举？"></a>1.2 单例模式的双重检验锁和静态内部类和枚举？</h3><p>1.双重检验锁单例模式：避免了每次都加锁的性能问题。</p>
+<pre><code class="line-numbers language-Java">public class Singleton &#123;
+    private static volatile Singleton instance;
+
+    private Singleton() &#123;
+        // 私有构造函数
+    &#125;
+
+    public static Singleton getInstance() &#123;
+        if (instance == null) &#123;
+            synchronized (Singleton.class) &#123;
+                if (instance == null) &#123;
+                    instance = new Singleton();
+                &#125;
+            &#125;
+        &#125;
+        return instance;
+    &#125;
+&#125;
+</code></pre>
+<p>2.静态内部类单例模式：延迟加载，且线程安全。</p>
+<pre><code class="line-numbers language-Java">public class Singleton &#123;
+    private Singleton() &#123;
+        // 私有构造函数
+    &#125;
+
+    private static class SingletonHolder &#123;
+        private static final Singleton instance = new Singleton();
+    &#125;
+
+    public static Singleton getInstance() &#123;
+        return SingletonHolder.instance;
+    &#125;
+&#125;
+</code></pre>
+<p>3.枚举单例模式</p>
+<pre><code class="line-numbers language-Java">public enum Singleton &#123;
+    INSTANCE;
+
+    public void doSomething() &#123;
+        // 实例方法
+    &#125;
+&#125;
+</code></pre>
+<h2 id="2-青铜"><a href="#2-青铜" class="headerlink" title="2 青铜"></a>2 青铜</h2><h3 id="2-1-常见的设计模式有哪些？"><a href="#2-1-常见的设计模式有哪些？" class="headerlink" title="2.1 常见的设计模式有哪些？"></a>2.1 常见的设计模式有哪些？</h3><blockquote>
+<p>1.Builder（建造者）模式：将一个复杂对象的构建过程分解成多个简单对象的构建过程，并将它们逐步构建成一个复杂对象。在 Android 中，常用于创建复杂的对象，例如 AlertDialog.Builder。<br><br>2.Factory Method（工厂方法）模式：定义一个用于创建对象的接口，让子类决定实例化哪一个类。在 Android 中，常用于创建一系列相关对象，例如不同类型的 Dialog。<br><br>3.Adapter（适配器）模式：将一个类的接口转换成客户希望的另一个接口，使得原本由于接口不兼容而无法在一起工作的类可以一起工作。在 Android 中，常用于将不同类型的数据适配到 ListView、4.RecyclerView 等控件中显示。<br><br>4.Observer（观察者）模式：定义对象间的一种一对多的依赖关系，当一个对象的状态发生改变时，所有依赖它的对象都得到通知并自动更新。在 Android 中，常用于实现事件监听器和广播机制。<br><br>5.Singleton（单例）模式：保证一个类仅有一个实例，并提供一个全局访问点。在 Android 中，常用于管理全局的状态信息，例如应用程序的配置信息。<br><br>6.Decorator（装饰）模式：动态地给一个对象添加一些额外的职责，而不需要修改类的代码。在 Android 中，常用于对 View 或者 Drawable 进行装饰，例如使用 Drawable 和 ColorFilter 实现带圆角或者阴影的图片。<br><br>7.Facade（外观）模式：为子系统中的一组接口提供一个统一的接口，以便更方便地使用子系统。在 Android 中，常用于简化复杂的库或者系统的使用，例如在 MediaStore 中封装各种类型的媒体查询接口。<br><br>8.Template Method（模板方法）模式：定义一个操作中的算法的骨架，而将一些步骤延迟到子类中。在 Android 中，常用于封装通用的流程或者算法，例如 AsyncTask 中的 doInBackground 方法。<br><br>9.Strategy（策略）模式：定义一系列的算法，把它们一个个封装起来，并使它们可以相互替换。在 Android 中，常用于实现不同的业务逻辑或者算法，例如实现不同的排序方式。<br><br>10.Iterator（迭代器）模式：提供一种方法来访问聚合对象中的各个元素，而又不需要暴露该对象的内部表示。在 Android 中，常用于对数据结构进行遍历，例如使用 Cursor 对查询结果进行遍历。</p>
+</blockquote>
+<h2 id="3-白银"><a href="#3-白银" class="headerlink" title="3 白银"></a>3 白银</h2><blockquote>
+<p>常见的排序算法</p>
+</blockquote>
+<h3 id="3-1-冒泡排序"><a href="#3-1-冒泡排序" class="headerlink" title="3.1 冒泡排序"></a>3.1 冒泡排序</h3><p>基本思路：比较相邻的元素。如果第一个比第二个大，就交换他们两个。</p>
+<pre><code class="line-numbers language-Java">public static void bubbleSort(int[] numbers) &#123;
+    int temp = 0;
+    int size = numbers.length;
+    boolean flag = true;
+    for (int i = 0; i &lt; size - 1&amp;&amp;flag; i++) &#123;
+        flag = false;
+        for (int j = 0; j &lt; size - 1 - i; j++) &#123;
+            if (numbers[j] &gt; numbers[j + 1]) // 交换两数位置
+            &#123;
+                temp = numbers[j];
+                numbers[j] = numbers[j + 1];
+                numbers[j + 1] = temp;
+                flag = true;
+            &#125;
+        &#125;
+    &#125;
+&#125;
+</code></pre>
+<p>时间复杂度O(n^2)</p>
+<h3 id="3-2-选择排序"><a href="#3-2-选择排序" class="headerlink" title="3.2 选择排序"></a>3.2 选择排序</h3><p>选出最小的一个数与第一个位置的数交换；然后在剩下的数当中再找最小的与第二个位置的数交换，如此循环到倒数第二个数和最后一个数比较为止。</p>
+<pre><code class="line-numbers language-Java">public static void selectSort(int[] numbers) &#123;
+    int size = numbers.length; // 数组长度
+    int temp = 0; // 中间变量
+    for (int i = 0; i &lt; size-1; i++) &#123;
+        int k = i; // 待确定的位置
+        // 选择出应该在第i个位置的数
+        for (int j = size - 1; j &gt; i; j--) &#123;
+            if (numbers[j] &lt; numbers[k]) &#123;
+                k = j;
+            &#125;
+        &#125;
+        // 交换两个数
+        temp = numbers[i];
+        numbers[i] = numbers[k];
+        numbers[k] = temp;
+    &#125;
+&#125;
+</code></pre>
+<p>时间复杂度O(n*n) 性能上优于冒泡排序 交换次数少</p>
+<h3 id="3-3-插入排序算法？"><a href="#3-3-插入排序算法？" class="headerlink" title="3.3 插入排序算法？"></a>3.3 插入排序算法？</h3><p>每步将一个待排序的记录，按其顺序码大小插入到前面已经排序的字序列的合适位置（从后向前找到合适位置后），直到全部插入排序完为止。</p>
+<pre><code class="line-numbers language-Java">public static void insertSort(int[] numbers) &#123;
+    int size = numbers.length;
+    int temp = 0;
+    int j = 0;
+    for (int i = 1; i &lt; size; i++) &#123;
+        temp = numbers[i];
+        // 假如temp比前面的值小，则将前面的值后移
+        for (j = i; j &gt; 0 &amp;&amp; temp &lt; numbers[j - 1]; j--) &#123;
+            numbers[j] = numbers[j - 1];
+        &#125;
+        numbers[j] = temp;
+    &#125;
+&#125;
+</code></pre>
+<p>时间复杂度<br>O(n*n) 性能上优于冒泡排序和选择排序</p>
+<h3 id="3-4-快速排序算法"><a href="#3-4-快速排序算法" class="headerlink" title="3.4 快速排序算法"></a>3.4 快速排序算法</h3><p>通过一趟排序将待排序记录分割成独立的两部分，其中一部分记录的关键字均比另一部分关键字小，则分别对这两部分继续进行排序，直到整个序列有序。</p>
+<pre><code class="line-numbers language-Java">/**
+ * 快速排序
+ * 
+ * @param numbers
+ *            带排序数组
+ */
+public static void quick(int[] numbers) &#123;
+    if (numbers.length &gt; 0) // 查看数组是否为空
+    &#123;
+        quickSort(numbers, 0, numbers.length - 1);
+    &#125;
+&#125;
+/**
+ * 
+ * @param numbers
+ *            带排序数组
+ * @param low
+ *            开始位置
+ * @param high
+ *            结束位置
+ */
+public static void quickSort(int[] numbers, int low, int high) &#123;
+    if (low &gt;= high) &#123;
+        return;
+    &#125;
+    int middle = getMiddle(numbers, low, high); // 将numbers数组进行一分为二
+    quickSort(numbers, low, middle - 1); // 对低字段表进行递归排序
+    quickSort(numbers, middle + 1, high); // 对高字段表进行递归排序
+&#125;
+/**
+ * 查找出中轴（默认是最低位low）的在numbers数组排序后所在位置
+ * 
+ * @param numbers
+ *            带查找数组
+ * @param low
+ *            开始位置
+ * @param high
+ *            结束位置
+ * @return 中轴所在位置
+ */
+public static int getMiddle(int[] numbers, int low, int high) &#123;
+    int temp = numbers[low]; // 数组的第一个作为中轴
+    while (low &lt; high) &#123;
+        while (low &lt; high &amp;&amp; numbers[high] &gt; temp) &#123;
+            high--;
+        &#125;
+        numbers[low] = numbers[high];// 比中轴小的记录移到低端
+        while (low &lt; high &amp;&amp; numbers[low] &lt; temp) &#123;
+            low++;
+        &#125;
+        numbers[high] = numbers[low]; // 比中轴大的记录移到高端
+    &#125;
+    numbers[low] = temp; // 中轴记录到尾
+    return low; // 返回中轴的位置
+&#125;
+</code></pre>
+<p>时间复杂度O(nlogn）<br>快速排序在序列中元素很少时，效率将比较低，不如插入排序，因此一般在序列中元素很少时使用插入排序，这样可以提高整体效率。</p>
+<h3 id="3-5-希尔排序"><a href="#3-5-希尔排序" class="headerlink" title="3.5 希尔排序"></a>3.5 希尔排序</h3><p>先将整个待排序的记录序列分割成为若干子序列分别进行直接插入排序，待整个序列中的记录“基本有序”时，再对全体记录进行依次直接插入排序。</p>
+<pre><code class="line-numbers language-Java">/**
+ * 希尔排序的原理:根据需求，如果你想要结果从小到大排列，它会首先将数组进行分组，然后将较小值移到前面，较大值
+ * 移到后面，最后将整个数组进行插入排序，这样比起一开始就用插入排序减少了数据交换和移动的次数，
+ * 可以说希尔排序是加强 版的插入排序 拿数组5, 2,8, 9, 1, 3，4来说，数组长度为7，当increment为3时，数组分为两个序列
+ * 5，2，8和9，1，3，4，第一次排序，9和5比较，1和2比较，3和8比较，4和比其下标值小increment的数组值相比较
+ * 此例子是按照从小到大排列，所以小的会排在前面，第一次排序后数组为5, 1, 3, 4, 2, 8，9
+ * 第一次后increment的值变为3/2=1,此时对数组进行插入排序， 实现数组从大到小排
+ */
+public static void shellSort(int[] data) &#123;
+    int j = 0;
+    int temp = 0;
+    // 每次将步长缩短为原来的一半
+    for (int increment = data.length / 2; increment &gt; 0; increment /= 2) &#123;
+        for (int i = increment; i &lt; data.length; i++) &#123;
+            temp = data[i];
+            for (j = i; j &gt;= increment; j -= increment) &#123;
+                if (temp &lt; data[j - increment])// 从小到大排
+                &#123;
+                    data[j] = data[j - increment];
+                &#125; else &#123;
+                    break;
+                &#125;
+            &#125;
+            data[j] = temp;
+        &#125;
+    &#125;
+</code></pre>
+<p>时间复杂度O(n^1.5）</p>
+<h3 id="3-6-堆排序算法"><a href="#3-6-堆排序算法" class="headerlink" title="3.6 堆排序算法"></a>3.6 堆排序算法</h3><blockquote>
+<p>堆排序是一种树形选择排序，是对直接选择排序的有效改进。<br>**思想:**初始时把要排序的数的序列看作是一棵顺序存储的二叉树，调整它们的存储序，使之成为一个 堆，这时堆的根节点的数最大。然后将根节点与堆的最后一个节点交换。然后对前面(n-1)个数重新调整使之成为堆。依此类推，直到只有两个节点的堆，并对 它们作交换，最后得到有n个节点的有序序列。从算法描述来看，堆排序需要两个过程，一是建立堆，二是堆顶与堆的最后一个元素交换位置。所以堆排序有两个函数组成。一是建堆的渗透函数，二是反复调用渗透函数实现排序的函数。</p>
+</blockquote>
+<pre><code class="line-numbers language-Java">public static void heapSort(int[] a)&#123;
+    int arrayLength = a.length;
+    // 循环建堆
+    for (int i = 0; i &lt; arrayLength - 1; i++) &#123;
+        // 建堆
+        buildMaxHeap(a, arrayLength - 1 - i);
+        // 交换堆顶和最后一个元素
+        swap(a, 0, arrayLength - 1 - i);
+        System.out.println(Arrays.toString(a));
+    &#125;
+&#125;
+// 对data数组从0到lastIndex建大顶堆
+public static void buildMaxHeap(int[] data, int lastIndex) &#123;
+    // 从lastIndex处节点（最后一个节点）的父节点开始
+    for (int i = (lastIndex - 1) / 2; i &gt;= 0; i--) &#123;
+        // k保存正在判断的节点
+        int k = i;
+        // 如果当前k节点的子节点存在
+        while (k * 2 + 1 &lt;= lastIndex) &#123;
+            // k节点的左子节点的索引
+            int biggerIndex = 2 * k + 1;
+            // 如果biggerIndex小于lastIndex，即biggerIndex+1代表的k节点的右子节点存在
+            if (biggerIndex &lt; lastIndex) &#123;
+                // 若果右子节点的值较大
+                if (data[biggerIndex] &lt; data[biggerIndex + 1]) &#123;
+                    // biggerIndex总是记录较大子节点的索引
+                    biggerIndex++;
+                &#125;
+            &#125;
+            // 如果k节点的值小于其较大的子节点的值
+            if (data[k] &lt; data[biggerIndex]) &#123;
+                // 交换他们
+                swap(data, k, biggerIndex);
+                // 将biggerIndex赋予k，开始while循环的下一次循环，重新保证k节点的值大于其左右子节点的值
+                k = biggerIndex;
+            &#125; else &#123;
+                break;
+            &#125;
+        &#125;
+    &#125;
+&#125;
+// 交换
+private static void swap(int[] data, int i, int j) &#123;
+    int tmp = data[i];
+    data[i] = data[j];
+    data[j] = tmp;
+&#125;
+</code></pre>
+<p>时间复杂度O(nlogn）不适合待排序序列较少的情况</p>
+<h3 id="3-7-归并排序"><a href="#3-7-归并排序" class="headerlink" title="3.7 归并排序"></a>3.7 归并排序</h3><p>归并（Merge）排序法是将两个（或两个以上）有序表合并成一个新的有序表，即把待排序序列分为若干个子序列，每个子序列是有序的。然后再把有序子序列合并为整体有序序列。</p>
+<pre><code class="line-numbers language-Java">/**
+ * 归并排序
+ * 简介:将两个（或两个以上）有序表合并成一个新的有序表 即把待排序序列分为若干个子序列，每个子序列是有序的。然后再把有序子序列合并为整体有序序列
+ * 时间复杂度为O(nlogn)
+ * 稳定排序方式
+ * @param nums 待排序数组
+ * @return 输出有序数组
+ */
+public static int[] sort(int[] nums, int low, int high) &#123;
+    int mid = (low + high) / 2;
+    if (low &lt; high) &#123;
+        // 左边
+        sort(nums, low, mid);
+        // 右边
+        sort(nums, mid + 1, high);
+        // 左右归并
+        merge(nums, low, mid, high);
+    &#125;
+    return nums;
+&#125;
+/**
+ * 将数组中low到high位置的数进行排序
+ * @param nums 待排序数组
+ * @param low 待排的开始位置
+ * @param mid 待排中间位置
+ * @param high 待排结束位置
+ */
+public static void merge(int[] nums, int low, int mid, int high) &#123;
+    int[] temp = new int[high - low + 1];
+    int i = low;// 左指针
+    int j = mid + 1;// 右指针
+    int k = 0;
+    // 把较小的数先移到新数组中
+    while (i &lt;= mid &amp;&amp; j &lt;= high) &#123;
+        if (nums[i] &lt; nums[j]) &#123;
+            temp[k++] = nums[i++];
+        &#125; else &#123;
+            temp[k++] = nums[j++];
+        &#125;
+    &#125;
+    // 把左边剩余的数移入数组
+    while (i &lt;= mid) &#123;
+        temp[k++] = nums[i++];
+    &#125;
+    // 把右边边剩余的数移入数组
+    while (j &lt;= high) &#123;
+        temp[k++] = nums[j++];
+    &#125;
+    // 把新数组中的数覆盖nums数组
+    for (int k2 = 0; k2 &lt; temp.length; k2++) &#123;
+        nums[k2 + low] = temp[k2];
+    &#125;
+&#125;
+</code></pre>
+<p>间复杂度O(nlogn）</p>
+<h2 id="4-黄金"><a href="#4-黄金" class="headerlink" title="4 黄金"></a>4 黄金</h2><h3 id="4-1-求二叉树第n层节点数"><a href="#4-1-求二叉树第n层节点数" class="headerlink" title="4.1 求二叉树第n层节点数?"></a>4.1 求二叉树第n层节点数?</h3><pre><code class="line-numbers language-Java">public static int getNodesAtLevel(TreeNode root, int level) &#123;
+    if (root == null) &#123;
+        return 0;
+    &#125;
+    if (level == 1) &#123;
+        return 1;
+    &#125;
+    int leftNodes = getNodesAtLevel(root.left, level - 1);
+    int rightNodes = getNodesAtLevel(root.right, level - 1);
+    return leftNodes + rightNodes;
+&#125;
+</code></pre>
+<h3 id="4-2-二叉树深度算法"><a href="#4-2-二叉树深度算法" class="headerlink" title="4.2 二叉树深度算法?"></a>4.2 二叉树深度算法?</h3><pre><code class="line-numbers language-Java">class TreeNode &#123;
+    int val;
+    TreeNode left;
+    TreeNode right;
+    TreeNode(int x) &#123; val = x; &#125;
+&#125;
+
+public int maxDepth(TreeNode root) &#123;
+    if (root == null) &#123;
+        return 0;
+    &#125;
+    int leftDepth = maxDepth(root.left);
+    int rightDepth = maxDepth(root.right);
+    return Math.max(leftDepth, rightDepth) + 1;
+&#125;
+</code></pre>
+<h3 id="4-3-负数全部移动左侧-快速排序？-？"><a href="#4-3-负数全部移动左侧-快速排序？-？" class="headerlink" title="4.3 负数全部移动左侧(快速排序？)？"></a>4.3 负数全部移动左侧(快速排序？)？</h3><p>有一个整形数组，包含正数和负数，然后要求把数组内的所有负数移至正数的左边，且保证相对位置不变，要求时间复杂度为O𝑛<br>, 空间复杂度为O1<br>。例如，{10, -2, 5, 8, -4, 2, -3, 7, 12, -88, -23, 35}变化后是{-2, -4，-3, -88, -23,5, 8 ,10, 2, 7, 12, 35}。</p>
+<pre><code class="line-numbers language-Java"> public void setParted(int[] a)&#123;  
+    int temp=0;  
+    int border=-1;  
+
+    for(int i=0;i&lt;a.length;i++)&#123;  
+        if(a[i]&lt;0)&#123;  
+            temp=a[i];  
+            a[i]=a[border+1];  
+            a[border+1]=temp;  
+            border++;  
+        &#125;  
+    &#125;  
+    for(int j=0;j&lt;a.length;j++)&#123;  
+        System.out.println(a[j]);  
+    &#125;  
+&#125;
+</code></pre>
+<p>有点像快速排序二分法，选择的基准元素为0而已。遍历整个列表，每次将小于0的移动到依次递增的左侧。</p>
+<h3 id="4-4-两个有序链表合并？"><a href="#4-4-两个有序链表合并？" class="headerlink" title="4.4 两个有序链表合并？"></a>4.4 两个有序链表合并？</h3><pre><code class="line-numbers language-Java">class ListNode &#123;
+    int val;
+    ListNode next;
+    ListNode(int val) &#123;
+        this.val = val;
+    &#125;
+&#125;
+
+public class MergeTwoSortedLists &#123;
+    public ListNode mergeTwoLists(ListNode l1, ListNode l2) &#123;
+        ListNode dummy = new ListNode(0);
+        ListNode current = dummy;
+        while (l1 != null &amp;&amp; l2 != null) &#123;
+            if (l1.val &lt; l2.val) &#123;
+                current.next = l1;
+                l1 = l1.next;
+            &#125; else &#123;
+                current.next = l2;
+                l2 = l2.next;
+            &#125;
+            current = current.next;
+        &#125;
+        if (l1 != null) &#123;
+            current.next = l1;
+        &#125; else &#123;
+            current.next = l2;
+        &#125;
+        return dummy.next;
+    &#125;
+&#125;
+</code></pre>
+<h3 id="4-5-用Java实现：二叉树输出第-k-层节点元素？"><a href="#4-5-用Java实现：二叉树输出第-k-层节点元素？" class="headerlink" title="4.5 用Java实现：二叉树输出第 k 层节点元素？"></a>4.5 用Java实现：二叉树输出第 k 层节点元素？</h3><p>实现二叉树输出第 k 层节点元素的Java代码，可以通过遍历二叉树并记录每个节点所在的层数来实现。以下是一个使用递归实现的例子：</p>
+<pre><code class="line-numbers language-Java">public class TreeNode &#123;
+    int val;
+    TreeNode left;
+    TreeNode right;
+    TreeNode(int x) &#123; val = x; &#125;
+&#125;
+
+public static void printKthLevel(TreeNode root, int k) &#123;
+    if (root == null) &#123;
+        return;
+    &#125;
+    if (k == 1) &#123;
+        System.out.print(root.val + &quot; &quot;);
+    &#125; else &#123;
+        printKthLevel(root.left, k - 1);
+        printKthLevel(root.right, k - 1);
+    &#125;
+&#125;
+
+// 该方法接受一个二叉树的根节点和一个整数 k 作为输入，输出该二叉树中第 k 层的所有节点元素。
+
+// 我们首先检查根节点是否为空，如果为空，直接返回。如果 k 等于 1，输出当前节点的值。否则，递归遍历左子树和右子树，并将 k 的值减一，直到 k 等于 1 时输出当前节点的值。这样就可以输出指定层数的所有节点元素。
+
+// 调用如下：
+public static void main(String[] args) &#123;
+    TreeNode root = new TreeNode(1);
+    root.left = new TreeNode(2);
+    root.right = new TreeNode(3);
+    root.left.left = new TreeNode(4);
+    root.left.right = new TreeNode(5);
+    root.right.left = new TreeNode(6);
+    root.right.right = new TreeNode(7);
+
+    int k = 3;
+    System.out.print(&quot;The elements in level &quot; + k + &quot; are: &quot;);
+    printKthLevel(root, k);
+&#125;
+</code></pre>
+<h3 id="4-6-Java实现两个有序的链表的合并？"><a href="#4-6-Java实现两个有序的链表的合并？" class="headerlink" title="4.6 Java实现两个有序的链表的合并？"></a>4.6 Java实现两个有序的链表的合并？</h3><blockquote>
+<p>可以使用递归来实现两个有序链表的合并，具体步骤如下：<br>1.如果两个链表都为空，则返回空。<br>2.如果其中一个链表为空，则返回另一个链表。<br>3.如果两个链表都不为空，比较它们的头节点，将较小的头节点作为合并后的头节点。<br>4.对于剩下的链表部分，递归地调用步骤3，将结果连接到合并后的头节点后面。<br>5.返回合并后的链表头节点。</p>
+</blockquote>
+<pre><code class="line-numbers language-Java">public class ListNode &#123;
+    int val;
+    ListNode next;
+    ListNode(int val) &#123;
+        this.val = val;
+    &#125;
+&#125;
+
+public class Solution &#123;
+    public ListNode mergeTwoLists(ListNode l1, ListNode l2) &#123;
+        if (l1 == null) &#123;
+            return l2;
+        &#125;
+        if (l2 == null) &#123;
+            return l1;
+        &#125;
+        if (l1.val &lt; l2.val) &#123;
+            l1.next = mergeTwoLists(l1.next, l2);
+            return l1;
+        &#125; else &#123;
+            l2.next = mergeTwoLists(l1, l2.next);
+            return l2;
+        &#125;
+    &#125;
+&#125;
+</code></pre>
+<p>在这个代码中，我们首先判断两个链表是否为空，如果其中一个为空，则直接返回另一个链表。接着，我们比较两个链表的头节点，将较小的头节点作为合并后的头节点，并递归地将剩下的链表部分合并到后面。最后，我们返回合并后的链表头节点。</p>
+<pre><code class="line-numbers language-Java">ListNode l1 = new ListNode(1);
+l1.next = new ListNode(2);
+l1.next.next = new ListNode(4);
+
+ListNode l2 = new ListNode(1);
+l2.next = new ListNode(3);
+l2.next.next = new ListNode(4);
+
+Solution solution = new Solution();
+ListNode mergedList = solution.mergeTwoLists(l1, l2);
+
+while (mergedList != null) &#123;
+    System.out.print(mergedList.val + &quot; &quot;);
+    mergedList = mergedList.next;
+&#125;
+
+// 输出：1 1 2 3 4 4 
+</code></pre>
+<h3 id="4-7-二叉树层序遍历，奇数层逆序遍历节点，偶数层正序遍历"><a href="#4-7-二叉树层序遍历，奇数层逆序遍历节点，偶数层正序遍历" class="headerlink" title="4.7 二叉树层序遍历，奇数层逆序遍历节点，偶数层正序遍历?"></a>4.7 二叉树层序遍历，奇数层逆序遍历节点，偶数层正序遍历?</h3><pre><code class="line-numbers language-Java">import java.util.*;
+
+public class Solution &#123;
+    public List&lt;Integer&gt; levelOrderTraversal(TreeNode root) &#123;
+        if (root == null) &#123;
+            return Collections.emptyList();
+        &#125;
+
+        Queue&lt;Pair&lt;TreeNode, Integer&gt;&gt; queue = new LinkedList&lt;&gt;();
+        List&lt;List&lt;Integer&gt;&gt; levelNodes = new ArrayList&lt;&gt;();
+        queue.add(new Pair&lt;&gt;(root, 0));
+        while (!queue.isEmpty()) &#123;
+            Pair&lt;TreeNode, Integer&gt; pair = queue.poll();
+            TreeNode node = pair.getKey();
+            int depth = pair.getValue();
+            if (depth &gt;= levelNodes.size()) &#123;
+                levelNodes.add(new ArrayList&lt;&gt;());
+            &#125;
+            levelNodes.get(depth).add(node.val);
+            if (node.left != null) &#123;
+                queue.add(new Pair&lt;&gt;(node.left, depth + 1));
+            &#125;
+            if (node.right != null) &#123;
+                queue.add(new Pair&lt;&gt;(node.right, depth + 1));
+            &#125;
+        &#125;
+
+        List&lt;Integer&gt; result = new ArrayList&lt;&gt;();
+        for (int i = 0; i &lt; levelNodes.size(); i++) &#123;
+            List&lt;Integer&gt; nodes = levelNodes.get(i);
+            if (i % 2 == 0) &#123;
+                result.addAll(nodes);
+            &#125; else &#123;
+                Collections.reverse(nodes);
+                result.addAll(nodes);
+            &#125;
+        &#125;
+
+        return result;
+    &#125;
+&#125;
+</code></pre>
+<h2 id="5-铂金"><a href="#5-铂金" class="headerlink" title="5 铂金"></a>5 铂金</h2><h3 id="5-1-求无序数组中的中位数-快速选择算法"><a href="#5-1-求无序数组中的中位数-快速选择算法" class="headerlink" title="5.1 求无序数组中的中位数?(快速选择算法)"></a>5.1 求无序数组中的中位数?(快速选择算法)</h3><pre><code class="line-numbers language-Java">import java.util.Arrays;
+
+public class MedianOfUnsortedArray &#123;
+
+    public static double findMedian(int[] nums) &#123;
+        int n = nums.length;
+        int k = n / 2;
+
+        int left = 0;
+        int right = n - 1;
+
+        while (left &lt;= right) &#123;
+            int pivotIndex = partition(nums, left, right);
+            if (pivotIndex == k) &#123;
+                break;
+            &#125; else if (pivotIndex &lt; k) &#123;
+                left = pivotIndex + 1;
+            &#125; else &#123;
+                right = pivotIndex - 1;
+            &#125;
+        &#125;
+
+        if (n % 2 == 0) &#123;
+            return (nums[k] + nums[k-1]) / 2.0;
+        &#125; else &#123;
+            return nums[k];
+        &#125;
+    &#125;
+
+    private static int partition(int[] nums, int left, int right) &#123;
+        int pivot = nums[right];
+        int i = left;
+        for (int j = left; j &lt; right; j++) &#123;
+            if (nums[j] &lt; pivot) &#123;
+                swap(nums, i, j);
+                i++;
+            &#125;
+        &#125;
+        swap(nums, i, right);
+        return i;
+    &#125;
+
+    private static void swap(int[] nums, int i, int j) &#123;
+        int temp = nums[i];
+        nums[i] = nums[j];
+        nums[j] = temp;
+    &#125;
+
+    public static void main(String[] args) &#123;
+        int[] nums = &#123;5, 2, 4, 1, 3&#125;;
+        System.out.println(findMedian(nums)); // 3.0
+    &#125;
+&#125;
+</code></pre>
+<h2 id="6-钻石"><a href="#6-钻石" class="headerlink" title="6 钻石"></a>6 钻石</h2><h3 id="6-1-手写HashMap"><a href="#6-1-手写HashMap" class="headerlink" title="6.1 手写HashMap"></a>6.1 手写HashMap</h3><pre><code class="line-numbers language-Java">public class MyHashMap&lt;K, V&gt; &#123;
+    private static final int DEFAULT_CAPACITY = 16;
+    private Node&lt;K, V&gt;[] buckets;
+    private int size = 0;
+
+    public MyHashMap() &#123;
+        this(DEFAULT_CAPACITY);
+    &#125;
+
+    public MyHashMap(int capacity) &#123;
+        buckets = new Node[capacity];
+    &#125;
+
+    public void put(K key, V value) &#123;
+        int bucketIndex = getBucketIndex(key);
+        Node&lt;K, V&gt; currentNode = buckets[bucketIndex];
+
+        while (currentNode != null) &#123;
+            if (currentNode.key.equals(key)) &#123;
+                currentNode.value = value;
+                return;
+            &#125;
+            currentNode = currentNode.next;
+        &#125;
+
+        Node&lt;K, V&gt; newNode = new Node&lt;&gt;(key, value);
+        newNode.next = buckets[bucketIndex];
+        buckets[bucketIndex] = newNode;
+        size++;
+    &#125;
+
+    public V get(K key) &#123;
+        int bucketIndex = getBucketIndex(key);
+        Node&lt;K, V&gt; currentNode = buckets[bucketIndex];
+
+        while (currentNode != null) &#123;
+            if (currentNode.key.equals(key)) &#123;
+                return currentNode.value;
+            &#125;
+            currentNode = currentNode.next;
+        &#125;
+
+        return null;
+    &#125;
+
+    public void remove(K key) &#123;
+        int bucketIndex = getBucketIndex(key);
+        Node&lt;K, V&gt; currentNode = buckets[bucketIndex];
+        Node&lt;K, V&gt; prevNode = null;
+
+        while (currentNode != null) &#123;
+            if (currentNode.key.equals(key)) &#123;
+                if (prevNode == null) &#123;
+                    buckets[bucketIndex] = currentNode.next;
+                &#125; else &#123;
+                    prevNode.next = currentNode.next;
+                &#125;
+                size--;
+                return;
+            &#125;
+            prevNode = currentNode;
+            currentNode = currentNode.next;
+        &#125;
+    &#125;
+
+    public boolean containsKey(K key) &#123;
+        int bucketIndex = getBucketIndex(key);
+        Node&lt;K, V&gt; currentNode = buckets[bucketIndex];
+
+        while (currentNode != null) &#123;
+            if (currentNode.key.equals(key)) &#123;
+                return true;
+            &#125;
+            currentNode = currentNode.next;
+        &#125;
+
+        return false;
+    &#125;
+
+    public int size() &#123;
+        return size;
+    &#125;
+
+    private int getBucketIndex(K key) &#123;
+        int hashCode = key.hashCode();
+        return hashCode % buckets.length;
+    &#125;
+
+    private static class Node&lt;K, V&gt; &#123;
+        private final K key;
+        private V value;
+        private Node&lt;K, V&gt; next;
+
+        public Node(K key, V value) &#123;
+            this.key = key;
+            this.value = value;
+        &#125;
+    &#125;
+&#125;
+</code></pre>
+<h2 id="7-大师"><a href="#7-大师" class="headerlink" title="7 大师"></a>7 大师</h2><h2 id="8-宗师"><a href="#8-宗师" class="headerlink" title="8 宗师"></a>8 宗师</h2><h2 id="9-王者"><a href="#9-王者" class="headerlink" title="9 王者"></a>9 王者</h2>
             </div>
             <hr />
 
@@ -1256,7 +1953,7 @@
 
             
             &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-            <span class="white-color">222.4k</span>
+            <span class="white-color">227.5k</span>
             
 
             <br>
