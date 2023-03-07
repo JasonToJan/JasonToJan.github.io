@@ -489,14 +489,14 @@ onCreate-&amp;gt;onStart-&amp;gt;onResume-&amp;gt;onPause-&amp;gt;onStop-&amp;gt
                 
                 <div class="info-break-policy">
                     <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    11.1k
+                    11.9k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    40 分
+                    43 分
                 </div>
                 
                 
@@ -573,7 +573,7 @@ onCreate-&amp;gt;onStart-&amp;gt;onResume-&amp;gt;onPause-&amp;gt;onStop-&amp;gt
 <p>let: let it go,就是让它来，扩展函数，括号里面就是让它来做什么事情，可以执行它自己的函数，返回值为最后一行。<br>also: also let it go，也让它来，扩展函数，也让它来，说明它很牛逼，返回值就是它自己了。<br>with: with this object，和这个对象，非扩展函数，里面可以直接访问这个对象的成员变量，返回值为最后一行。<br>run: let it come, run with this object, 让她来，和这个对象一起跑， 扩展函数，里面可以直接访问成员变量，返回值为最后一行。<br>apply: apply run with this object，扩展函数，与run类似，但最终结果不同，返回的是他自己，对象跑了，留他孤身走暗巷。</p>
 </blockquote>
 <h3 id="1-20-LiveData怎么使用？"><a href="#1-20-LiveData怎么使用？" class="headerlink" title="1.20 LiveData怎么使用？"></a>1.20 LiveData怎么使用？</h3><blockquote>
-<p>首先一定要说，它可以感知生命周期，回调只会发生在活跃状态。<br>优点可以说下：<br>数据符合页面状态<br>不会发生内存泄露<br>不会因 activity 停止而导致崩溃<br>不再需要手动处理生命周期<br>数据始终保持最新状态<br>可以用来做资源共享<br><br>一般我们在viewModel中创建一个MutableLiveData对象，然后在View层通过ViewModel实例访问到这个LiveData，通过observe方法观察数据变更情况。<br>在需要的地方setValue，子线程的话postValue。</p>
+<p>首先一定要说，它可以感知生命周期，回调只会发生在活跃状态。<br>优点可以说下：<br>数据符合页面状态<br>不会发生内存泄露<br>不会因 activity 停止而导致崩溃<br>不再需要手动处理生命周期<br>数据始终保持最新状态<br>可以用来做资源共享<br><br>一般我们在viewModel中创建一个MutableLiveData对象，然后在View层通过ViewModel实例访问到这个LiveData，通过observe方法观察数据变更情况。<br>在需要的地方setValue，子线程的话postValue。<br><br>1.确保界面符合数据状态<br>LiveData遵循观察者模式。当生命周期状态发生变化时，LiveData 会根据宿主状态和注册类型通知 [Observer]对象并把最新数据派发给它。观察者可以在收到onChanged事件时更新界面，而不是在每次数据发生更改时立即更新界面。<br>2.不再需要手动处理生命周期<br>只需要观察相关数据，不用手动停止或恢复观察。LiveData 会自动管理Observer的反注册，因为它能感知宿主生命周期的变化，并在宿主生命周期的onDestory自动进行反注册。因此使用LiveData做消息分发不会发生内存泄漏<br>3.数据始终保持最新状态<br>如果宿主的生命周期变为非活跃状态，它会在再次变为活跃状态时接收最新的数据。例如，在后台的 Activity会在返回前台后立即接收最新的数据。<br>4.支持黏性事件的分发<br>即先发送一条数据，后注册一个观察者，默认是能够收到最后发送的那条数据<br>5.共享资源<br>可以使用单例模式拓展 LiveData，实现全局的消息分发总线。</p>
 </blockquote>
 <h2 id="2-青铜"><a href="#2-青铜" class="headerlink" title="2 青铜"></a>2 青铜</h2><blockquote>
 <p>多线程编程，会用三方库，懂得适配，了解常用UI组件。</p>
@@ -727,6 +727,12 @@ onCreate-&amp;gt;onStart-&amp;gt;onResume-&amp;gt;onPause-&amp;gt;onStop-&amp;gt
 </blockquote>
 <h3 id="6-7-GreenDao实现原理？"><a href="#6-7-GreenDao实现原理？" class="headerlink" title="6.7 GreenDao实现原理？"></a>6.7 GreenDao实现原理？</h3><blockquote>
 <p>是什么必须说：是一个轻便快捷的ORM(对象映射)框架，可以将Java对象映射到数据库中。<br>优点可以提一下：<br>对Android进行了高度优化，最小的内存开销，依赖体积小，支持数据库加密。<br><br>一定要说这几个类的作用，使用的时候动态生成：<br>DaoMaster：所有Dao类的主人，负责整个库的运行，内部的静态抽象子类DevOpenHelper继承并重写了Android的SqliteOpenHelper。<br>DaoSession：作为一个会话层的角色，用于生成相应的Dao对象、Dao对象的注册，操作Dao的具体对象。<br>xxDao（HistoryDataDao）：生成的Dao对象，用于进行具体的数据库操作。<br><br>首先，它通过使用自身的插件配套相应的freemarker模板生成所需的静态代码，避免了反射等消耗性能的操作。<br>其次，它内部提供了实体数据的映射缓存机制，能够进一步加快查询速度。对于不同数据库对应的SQL语句，也使用了不同的DataBaseStatement实现类结合代理模式进行了封装，屏蔽了数据库操作等繁琐的细节。<br>最后，它使用了sqlcipher提供了加密数据库的功能，在一定程度确保了安全性，同时，结合RxJava，我们便能更简洁地实现异步的数据库操作。</p>
+</blockquote>
+<h3 id="6-8-ViewModel实现原理？"><a href="#6-8-ViewModel实现原理？" class="headerlink" title="6.8 ViewModel实现原理？"></a>6.8 ViewModel实现原理？</h3><blockquote>
+<p>最重要的，应该是反射获取ViewModel实例。<br>通过Lifecycle感知生命周期。<br>我们的Activity 的父类 ComponentActivity  实现了 ViewModelStoreOwner 接口，通过 ViewModelProvider 使用默认工厂 创建了 viewModel ，并通过唯一Key值 进行标识，存储到了 ViewModelStore 中。等下次需要的时候即可通过唯一Key值进行获取。<br><br>由于ComponentActivity  实现了ViewModelStoreOwner 接口，实现了  getViewModelStore 方法，当屏幕旋转的时候，会先调用<br>onRetainNonConfigurationInstance() 方法将 viewModelStore 保存起来，然后再调用 getLastNonConfigurationInstance 方法将数据恢复，如果为空的话，会重新创建 viewModelStore ，并存储在全局中，以便以下次发生变化的时候，能够通过onRetainNonConfigurationInstance 保存起来。<br><br>最后当页面销毁并且没有配置更改的时候，会将viewModelStore 中的数据 进行清除操作。</p>
+</blockquote>
+<h3 id="6-9-LiveData的实现原理？"><a href="#6-9-LiveData的实现原理？" class="headerlink" title="6.9 LiveData的实现原理？"></a>6.9 LiveData的实现原理？</h3><blockquote>
+<p>只有MutableLiveData 对象可以发送消息，LiveData 对象只能接收消息。<br>MediatorLiveData: 可以统一观察多个 LiveData 发射的数据进行统一的处理，同时也可以做为一个 LiveData，被其他 Observer 观察。<br>然后一般情况下说下observe方法实现原理即可：<br>首先这个方法只能在主线程注册观察。<br>官方文档说LiveData仅处于活跃生命周期才有效，所以一开始就开始判断是否为 Lifecycle.Stete.DESTROYED，是的话就没有然后了，直接return。<br>接下来就是 创建 LifecycleBoundObserver ，生命周期变化逻辑在这里面。<br>然后就是最后一行注册观察。</p>
 </blockquote>
 <h2 id="7-大师"><a href="#7-大师" class="headerlink" title="7 大师"></a>7 大师</h2><blockquote>
 <p>对AMS,PMS有一定深入分析。</p>
@@ -1500,7 +1506,7 @@ onCreate-&amp;gt;onStart-&amp;gt;onResume-&amp;gt;onPause-&amp;gt;onStop-&amp;gt
 
             
             &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-            <span class="white-color">247.6k</span>
+            <span class="white-color">248.4k</span>
             
 
             <br>
