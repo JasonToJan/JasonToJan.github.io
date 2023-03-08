@@ -334,7 +334,7 @@ onCreate-&amp;gt;onStart-&amp;gt;onResume-&amp;gt;onPause-&amp;gt;onStop-&amp;gt
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/17.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/18.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
@@ -651,7 +651,7 @@ onCreate-&amp;gt;onStart-&amp;gt;onResume-&amp;gt;onPause-&amp;gt;onStop-&amp;gt
 <p>首先最好用比喻描述下：有点像埋一个定时炸弹，到时间了就爆炸，结果成功拆弹就不会爆炸了。<br>1.埋炸弹：在系统服务进程里面，启动一个倒计时，用户输入事件是5s，ContentProvider和广播是10s，服务是20s。<br>2.拆炸弹：在规定时间内处理完事件，并及时向系统服务进程报告，请求解除炸弹，就不会引爆了。<br>3.引爆炸弹：当没有在规定时间处理完事件，系统服务进程会搜集各个进程占用资源情况，已经相关日志，便于分析原因，然后就弹出ANR提示框。</p>
 </blockquote>
 <h3 id="4-3-Android-Crash处理流程？"><a href="#4-3-Android-Crash处理流程？" class="headerlink" title="4.3 Android Crash处理流程？"></a>4.3 Android Crash处理流程？</h3><blockquote>
-<p>目标应用在创建的时候会有一个默认的未捕获异常的Handler，当然可以自定义处理，如果没有则会走默认实现。<br>1.调用ActivityManagerNative里面的一个handleApplicationCrash方法，通过binder ipc机制，传递到系统服务进程。<br>2.到了系统服务进程，继续走到AMS底handleApplicationCrash<br>3.然后此时AMS会忽略当前应用的广播，冻结该进程的屏幕消息。<br>4.然后通过UIHandler发送一个错误消息，弹出crash对话框。<br>5.此时系统服务进程完成。走到Crash进程中，它主要用来杀掉当前进程的操作。<br>6.当进程被杀，通过binder死亡通知，告知系统服务进程做一些回收工作。</p>
+<p>目标应用在创建的时候会有一个默认的未捕获异常的Handler，当然可以自定义处理，如果没有则会走默认实现。<br>1.在应用进程里面，先走ActivityThread里面的handleApplicationCrash方法<br>2.然后通过binder ipc机制，传递到系统服务进程，调用ActivityManagerNative里面的一个handleApplicationCrash方法。<br>3.然后此时AMS会忽略当前应用的广播，冻结该进程的屏幕消息。<br>4.然后通过UIHandler发送一个错误消息，弹出crash对话框。<br>5.此时系统服务进程完成。走到Crash进程中，它主要用来杀掉当前进程的操作。<br>6.当进程被杀，通过binder死亡通知，告知系统服务进程做一些回收工作。</p>
 </blockquote>
 <h3 id="4-4-Native崩溃如何处理？"><a href="#4-4-Native崩溃如何处理？" class="headerlink" title="4.4 Native崩溃如何处理？"></a>4.4 Native崩溃如何处理？</h3><blockquote>
 <p>先提一下过程：native crash时，操作系统会向进程发送一个signal信号，崩溃data下某个文件下面。<br>如何定位：可以使用ndk工具addr2line工具或者ndk-stack来定位。<br>xCrash: 捕获native崩溃。<br>addr2line可以干嘛：根据地址进行一个符号反解的过程。</p>
@@ -1247,7 +1247,7 @@ onCreate-&amp;gt;onStart-&amp;gt;onResume-&amp;gt;onPause-&amp;gt;onStop-&amp;gt
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/28.jpg" class="responsive-img" alt="面试 Java 通关秘籍">
+                        <img src="/medias/featureimages/27.jpg" class="responsive-img" alt="面试 Java 通关秘籍">
                         
                         <span class="card-title">面试 Java 通关秘籍</span>
                     </div>
@@ -1300,7 +1300,7 @@ onCreate-&amp;gt;onStart-&amp;gt;onResume-&amp;gt;onPause-&amp;gt;onStop-&amp;gt
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/9.jpg" class="responsive-img" alt="Android 2022头条面经">
+                        <img src="/medias/featureimages/10.jpg" class="responsive-img" alt="Android 2022头条面经">
                         
                         <span class="card-title">Android 2022头条面经</span>
                     </div>
