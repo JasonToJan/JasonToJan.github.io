@@ -131,6 +131,27 @@ with: with this object，和这个对象，非扩展函数，里面可以直接�
 run: let it come, run with this object, 让她来，和这个对象一起跑， 扩展函数，里面可以直接访问成员变量，返回值为最后一行。
 apply: apply run with this object，扩展函数，与run类似，但最终结果不同，返回的是他自己，对象跑了，留他孤身走暗巷。
 
+### 1.20 LiveData怎么使用？
+> 首先一定要说，它可以感知生命周期，回调只会发生在活跃状态。
+优点可以说下：
+数据符合页面状态
+不会发生内存泄露
+不会因 activity 停止而导致崩溃
+不再需要手动处理生命周期
+数据始终保持最新状态
+可以用来做资源共享<br>
+一般我们在viewModel中创建一个MutableLiveData对象，然后在View层通过ViewModel实例访问到这个LiveData，通过observe方法观察数据变更情况。
+在需要的地方setValue，子线程的话postValue。<br>
+1.确保界面符合数据状态
+LiveData遵循观察者模式。当生命周期状态发生变化时，LiveData 会根据宿主状态和注册类型通知 [Observer]对象并把最新数据派发给它。观察者可以在收到onChanged事件时更新界面，而不是在每次数据发生更改时立即更新界面。
+2.不再需要手动处理生命周期
+只需要观察相关数据，不用手动停止或恢复观察。LiveData 会自动管理Observer的反注册，因为它能感知宿主生命周期的变化，并在宿主生命周期的onDestory自动进行反注册。因此使用LiveData做消息分发不会发生内存泄漏
+3.数据始终保持最新状态
+如果宿主的生命周期变为非活跃状态，它会在再次变为活跃状态时接收最新的数据。例如，在后台的 Activity会在返回前台后立即接收最新的数据。
+4.支持黏性事件的分发
+即先发送一条数据，后注册一个观察者，默认是能够收到最后发送的那条数据
+5.共享资源
+可以使用单例模式拓展 LiveData，实现全局的消息分发总线。
 
 ## 2 青铜
 > 多线程编程，会用三方库，懂得适配，了解常用UI组件。
@@ -195,10 +216,10 @@ Looper: 通过looper函数创建一个死循环，不断轮训消息，分发到
 ### 2.10 RecyclerView复用机制？
 > 1.一定要提到ViewHolder，理论上可以说ViewHolder就是itemView，一个itemView对应一个ViewHolder，一对一的关系，而我们后面多级缓存复用的就是这个ViewHolder。
 2.最好是能提到四级缓存，
-Srap（ 缓存屏幕中可见范围的ViewHolder）
-Cache（缓存滑动时即将与RecyclerView分离的ViewHolder）
+Srap（ Scrap缓存是RecyclerView的第一级缓存，它缓存的是滑出屏幕但还未被回收的View。当RecyclerView需要新的View时，它会先检查Scrap缓存中是否有可用的View，如果有，就会从Scrap缓存中取出并进行复用，否则才会去其他缓存中查找。）
+Cache（Cache缓存是RecyclerView的第二级缓存，它缓存的是已经被回收的View。当RecyclerView需要新的View时，它会先检查Scrap缓存，如果没有可用的View，则会检查Cache缓存中是否有可用的View。Cache缓存的作用是避免重复创建View，因为创建View是一个昂贵的操作。）
 ViewCacheExtension（开发者自行实现的缓存）
-RecycledViewPool（ViewHolder缓存池，本质上是一个SparseArray，）
+RecycledViewPool（ViewHolder缓存池，本质上是一个SparseArray，RecycledViewPool缓存是RecyclerView的第四级缓存，它是一个全局的缓存池。当一个RecyclerView被回收时，其中的所有View都会被放入RecycledViewPool缓存中。当RecyclerView需要新的View时，它会先检查Scrap、Cache和ViewCacheExtension缓存，如果都没有可用的View，则会从RecycledViewPool缓存中获取可复用的View。）
 缓存对象都是ViewHolder。
 
 ## 3 白银
@@ -222,8 +243,12 @@ onTouchEvent: 处理事件，返回true，消费；false回传给上层onTouchEv
 ### 3.3 Android 绘制原理？
 > 重点提一下三个过程即可。
 测量Measure: 必须必须提一下测量模式，用了2位表示3种测量模式，Exactly,精确的，对应matchparent和写死的长度；AT_MOST,不确定的，一般对应wrap_content；还有一种用得比较少，UNSPECIFIED对应无限制的，如ScrollView。
+performMeasure->measureChildren->measure <br>
 布局阶段layout: 重点提下是干啥的，确定四个坐标点，通过setFrame方法，自上而下确定自身位置。先确定自己，再确定子View。
-绘制阶段onDraw: 重点提下过程即可。先绘制背景，再自己，在子View，最后装饰。
+performLayout->layout
+<br>绘制阶段onDraw: 重点提下过程即可。先绘制背景，再自己，在子View，最后装饰。
+performDraw->darw
+setWillNotDraw的作用: 如果一个View不需要绘制任何内容，那么设置这个标记位为true以后，系统会进行相应的优化。
 
 ### 3.5 LruCache原理？
 > 说下核心思想即可：
@@ -287,6 +312,89 @@ onTouchEvent: 处理事件，返回true，消费；false回传给上层onTouchEv
 用过uiAutomator
 用过Espresso，google开源，体积小
 
+### 3.12 Android单元测试-jsonchao
+> [https://juejin.cn/post/6844903635655065607](https://juejin.cn/post/6844903635655065607)
+单元测试（Junit4、Mockito、PowerMockito、Robolectric）
+UI测试（Espresso、UI Automator）
+压力测试（Monkey）<br>
+Junit4: 重要注解，断言，自定义Junit Rule，实现TestRule接口重写apply方法。<br>
+Mockito: mock网络数据，解除耦合。<br>
+powermock: 静态方法mock <br>
+robolectric: 模拟Activity <br>
+代码覆盖率： jacoco 
+
+### 3.13 内存抖动
+> 定义：
+    内存抖动是由于短时间内有大量对象进出新生区导致的，它伴随着频繁的GC，gc会大量占用ui线程和cpu资源，会导致app整体卡顿。<br>
+避免发生内存抖动的几点建议：
+    尽量避免在循环体内创建对象，应该把对象创建移到循环体外。
+    注意自定义View的onDraw()方法会被频繁调用，所以在这里面不应该频繁的创建对象。
+    当需要大量使用Bitmap的时候，试着把它们缓存在数组或容器中实现复用。
+    对于能够复用的对象，同理可以使用对象池将它们缓存起来。
+
+### 3.14 进程和线程的关系？
+ >  Android中进程和线程的关系？区别？
+    线程是CPU调度的最小单元，同时线程是一种有限的系统资源；而进程一般指一个执行单元，在PC和移动设备上指一个程序或者一个应用。
+    一般来说，一个App程序至少有一个进程，一个进程至少有一个线程，通俗来讲就是，在App这个工厂里面有一个进程，线程就是里面的生产线，但主线程（即主生产线）只有一条，而子线程（即副生产线）可以有多个。
+    进程有自己独立的地址空间，而进程中的线程共享此地址空间，都可以并发执行。
+
+### 3.15 动画原理？
+> 分类：
+    frame 帧动画：AnimationDrawable控制animation-list.xml布局。
+    tween 补间动画：通过指定View的初末状态和变化方式，对View的内容完成一系列的图形变换来实现动画效果， Alpha, Scale ,Translate, Rotate。
+    PropertyAnimation 属性动画：3.0引入，属性动画核心思想是对值的变化。<br>
+ 属性动画&&补间动画的性能差异：
+    属性动画操作的是对象的实例属性，例如translationX,然后反射调用set,geView动画:t方法，多个属性动画同时执行，会频繁反射调用类方法，降低性能。
+    补间动画只产生了一个动画效果，其真实的坐标并没有发生改变，是效果一直在发生变化，没有频繁反射调用方法的耗费性能操作。<br>
+原理及特点：
+    帧动画：
+        是在xml中定义好一系列图片之后，使用AnimatonDrawable来播放的动画。
+    View动画：
+        只是影像变化，view的实际位置还在原来地方。
+    属性动画：
+        插值器：作用是根据时间流逝的百分比来计算属性变化的百分比。
+        估值器：在1的基础上由这个东西来计算出属性到底变化了多少数值的类。
+        其实就是利用插值器和估值器，来计出各个时刻View的属性，然后通过改变View的属性来实现View的动画效果。  <br> 
+区别：
+    属性动画才是真正的实现了 view 的移动，补间动画对view 的移动更像是在不同地方绘制了一个影子，实际对象还是处于原来的地方。 当动画的 repeatCount 设置为无限循环时，如果在Activity退出时没有及时将动画停止，属性动画会导致Activity无法释放而导致内存泄漏，而补间动画却没问题。 xml 文件实现的补间动画，复用率极高。在 Activity切换，窗口弹出时等情景中有着很好的效果。 使用帧动画时需要注意，不要使用过多特别大的图，容导致内存不足。<br>
+为什么属性动画移动后仍可点击？
+    播放补间动画的时候，我们所看到的变化，都只是临时的。而属性动画呢，它所改变的东西，却会更新到这个View所对应的矩阵中，所以当ViewGroup分派事件的时候，会正确的将当前触摸坐标，转换成矩阵变化后的坐标，这就是为什么播放补间动画不会改变触摸区域的原因了。    
+
+### 3.16 启动速度优化
+> 启动速度分析工具 — TraceView （Android Profile里面与一个Trace按钮）   
+TraceView小结
+    特点:
+        1、图形的形式展示执行时间、调用栈等。
+        2、信息全面，包含所有线程。
+        3、运行时开销严重，整体都会变慢，得出的结果并不真实。
+    作用
+        主要做热点分析，得到两种数据
+            单次执行最耗时的方法。
+            执行次数最多的方法。<br>
+Systrace:   
+特性:
+    结合Android内核的数据，生成Html报告。
+    系统版本越高，Android Framework中添加的系统可用Label就越多，能够支持和分析的系统模块也就越多。
+    必须手动缩小范围，会帮助你加速收敛问题的分析过程，进而快速地定位和解决问题。
+作用：
+    主要用于分析绘制性能方面的问题。
+    分析系统关键方法和应用方法耗时。
+
+### 3.17 布局优化
+> 工具Layout Inspector。（AndroidStudio自带）查看层级。
+比如说，我要统计线上的FPS，我使用的就是Choreographer这个类，它具有以下特性：
+1、能够获取整体的帧率。
+2、能够带到线上使用。
+3、它获取的帧率几乎是实时的，能够满足我们的需求。
+同时，在线下，如果要去优化布局加载带来的时间消耗，那就需要检测每一个布局的耗时，对此我使用的是AOP的方式，它没有侵入性，同时也不需要别的开发同学进行接入，就可以方便地获取每一个布局加载的耗时。如果还要更细粒度地去检测每一个控件的加载耗时，那么就需要使用LayoutInflaterCompat.setFactory2这个方法去进行Hook。
+此外，我还使用了LayoutInspector和Systrace这两个工具，Systrace可以很方便地看到每帧的具体耗时以及这一帧在布局当中它真正做了什么。而LayoutInspector可以很方便地看到每一个界面的布局层级，帮助我们对层级进行优化。
+
+### 3.18 耗电优化
+> JobScheduler
+定位相关
+计算优化
+灭屏时停止动画
+
 ## 4 黄金
 > 了解系统API原理和解决项目难点和安全相关问题，音视频等。
 
@@ -311,8 +419,8 @@ onTouchEvent: 处理事件，返回true，消费；false回传给上层onTouchEv
 
 ### 4.3 Android Crash处理流程？
 > 目标应用在创建的时候会有一个默认的未捕获异常的Handler，当然可以自定义处理，如果没有则会走默认实现。
-1.调用ActivityManagerNative里面的一个handleApplicationCrash方法，通过binder ipc机制，传递到系统服务进程。
-2.到了系统服务进程，继续走到AMS底handleApplicationCrash
+1.在应用进程里面，先走ActivityThread里面的handleApplicationCrash方法
+2.然后通过binder ipc机制，传递到系统服务进程，调用ActivityManagerNative里面的一个handleApplicationCrash方法。
 3.然后此时AMS会忽略当前应用的广播，冻结该进程的屏幕消息。
 4.然后通过UIHandler发送一个错误消息，弹出crash对话框。
 5.此时系统服务进程完成。走到Crash进程中，它主要用来杀掉当前进程的操作。
@@ -478,12 +586,12 @@ EventBus最核心的逻辑就是利用了 subscriptionsByEventType 这个重要�
 支持自定义的网络请求缓存策略。
 能够有效地防止图片变形和拉伸。<br>
 然后才说原理：
-1.Glide的with方法
+1.Glide的with方法 生成RequestManager
 1.1 初始化各式各样的配置信息（包括缓存，请求线程池，大小，图片格式等等）以及glide对象。
 1.2 将Glide请求和某个Fragment生命周期绑定<br>
-2.Glide.load方法
-主要是设置请求url。
-3.Glide.into方法
+2.Glide.load方法 生成RequestBuilder
+主要是设置请求url。<br>
+3.Glide.into方法 创建单个请求对象
 3.1 首先根据转码类transcodeClass类型返回不同的ImageViewTarget：BitmapImageViewTarget、DrawableImageViewTarget。
 3.2 递归建立缩略图请求，没有缩略图请求，则直接进行正常请求。
 3.3 如果没指定宽高，会根据ImageView的宽高计算出图片宽高，最终执行到onSizeReay()方法中的engine.load()方法。
@@ -538,6 +646,22 @@ xxDao（HistoryDataDao）：生成的Dao对象，用于进行具体的数据库�
 其次，它内部提供了实体数据的映射缓存机制，能够进一步加快查询速度。对于不同数据库对应的SQL语句，也使用了不同的DataBaseStatement实现类结合代理模式进行了封装，屏蔽了数据库操作等繁琐的细节。
 最后，它使用了sqlcipher提供了加密数据库的功能，在一定程度确保了安全性，同时，结合RxJava，我们便能更简洁地实现异步的数据库操作。
 
+### 6.8 ViewModel实现原理？
+> 最重要的，应该是反射获取ViewModel实例。
+通过Lifecycle感知生命周期。
+我们的Activity 的父类 ComponentActivity  实现了 ViewModelStoreOwner 接口，通过 ViewModelProvider 使用默认工厂 创建了 viewModel ，并通过唯一Key值 进行标识，存储到了 ViewModelStore 中。等下次需要的时候即可通过唯一Key值进行获取。<br>
+由于ComponentActivity  实现了ViewModelStoreOwner 接口，实现了  getViewModelStore 方法，当屏幕旋转的时候，会先调用
+onRetainNonConfigurationInstance() 方法将 viewModelStore 保存起来，然后再调用 getLastNonConfigurationInstance 方法将数据恢复，如果为空的话，会重新创建 viewModelStore ，并存储在全局中，以便以下次发生变化的时候，能够通过onRetainNonConfigurationInstance 保存起来。<br>
+最后当页面销毁并且没有配置更改的时候，会将viewModelStore 中的数据 进行清除操作。
+
+### 6.9 LiveData的实现原理？
+> 只有MutableLiveData 对象可以发送消息，LiveData 对象只能接收消息。
+MediatorLiveData: 可以统一观察多个 LiveData 发射的数据进行统一的处理，同时也可以做为一个 LiveData，被其他 Observer 观察。
+然后一般情况下说下observe方法实现原理即可：
+首先这个方法只能在主线程注册观察。
+官方文档说LiveData仅处于活跃生命周期才有效，所以一开始就开始判断是否为 Lifecycle.Stete.DESTROYED，是的话就没有然后了，直接return。
+接下来就是 创建 LifecycleBoundObserver ，生命周期变化逻辑在这里面。
+然后就是最后一行注册观察。
 
 ## 7 大师
 > 对AMS,PMS有一定深入分析。
