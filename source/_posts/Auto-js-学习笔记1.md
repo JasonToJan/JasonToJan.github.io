@@ -499,6 +499,11 @@ var str = colors.toString(col);
 toast(str);
 ```
 
+### 4.11 在图片中寻找颜色以及Point对象讲解
+images.findColor(image, color, options)
+
+
+
 
 
 
