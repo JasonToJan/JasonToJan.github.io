@@ -1,0 +1,2238 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="面试 设计模式和算法 通关秘籍, Android iOS Flutter">
+    <meta name="baidu-site-verification" content="fmlEuI34ir" />
+    <meta name="google-site-verification" content="yCy2azpds5XSuGZvis6OuA-XIGF5GuGpYRAaGfD6o48" />
+    <meta name="360-site-verification" content="b7c11a830ef90fd1464ad6206bb7b6e7" />
+    <meta name="description" content="1 黑铁1.1 如何使用单例模式的饿汉式和饱汉式？
+```Java
+// 饿汉式
+class SingleTon &amp;#123;
+    private static final SingleTon instance = SingleTon(">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>面试 设计模式和算法 通关秘籍 | JasonToJan&#39;s Blog</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+    <style type="text/css">
+        
+    </style>
+
+    <script src="/libs/jquery/jquery-2.2.0.min.js"></script>
+    <script src="https://sdk.jinrishici.com/v2/browser/jinrishici.js" charset="utf-8"></script>
+    <script>
+        var _hmt = _hmt || [];
+        (function () {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?ce84511d3df71640a9378a69f6293044";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+    
+        <script>
+            (function(){
+                var bp = document.createElement('script');
+                var curProtocol = window.location.protocol.split(':')[0];
+                if (curProtocol === 'https') {
+                    bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+                }
+                else {
+                    bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+                }
+                var s = document.getElementsByTagName("script")[0];
+                s.parentNode.insertBefore(bp, s);
+            })();
+        </script>
+    
+
+    <script>
+        (function(){
+        var src = "https://jspassport.ssl.qhimg.com/11.0.1.js?d182b3f28525f2db83acfaaf6e696dba";
+        document.write('<script src="' + src + '" id="sozz"><\/script>');
+        })();
+    </script>
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">JasonToJan's Blog</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fa fa-navicon"></i></a>
+<ul class="right">
+    
+    <li class="hide-on-med-and-down">
+        <a href="/" class="waves-effect waves-light">
+            
+            <i class="fa fa-home"></i>
+            
+            <span>首页</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/tags" class="waves-effect waves-light">
+            
+            <i class="fa fa-tags"></i>
+            
+            <span>标签</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/categories" class="waves-effect waves-light">
+            
+            <i class="fa fa-bookmark"></i>
+            
+            <span>分类</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/archives" class="waves-effect waves-light">
+            
+            <i class="fa fa-archive"></i>
+            
+            <span>归档</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/about" class="waves-effect waves-light">
+            
+            <i class="fa fa-user-circle-o"></i>
+            
+            <span>关于</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/friends" class="waves-effect waves-light">
+            
+            <i class="fa fa-address-book"></i>
+            
+            <span>友情链接</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/contact" class="waves-effect waves-light">
+            
+            <i class="fa fa-comments"></i>
+            
+            <span>留言板</span>
+        </a>
+    </li>
+    
+    <li>
+        <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+            <i id="searchIcon" class="fa fa-search" title="搜索"></i>
+        </a>
+    </li>
+</ul>
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">JasonToJan's Blog</div>
+        <div class="logo-desc">
+            
+            专注移动端，热爱生活，热衷开发。
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li>
+            <a href="/" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-home"></i>
+                
+                首页
+            </a>
+        </li>
+        
+        <li>
+            <a href="/tags" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-tags"></i>
+                
+                标签
+            </a>
+        </li>
+        
+        <li>
+            <a href="/categories" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-bookmark"></i>
+                
+                分类
+            </a>
+        </li>
+        
+        <li>
+            <a href="/archives" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-archive"></i>
+                
+                归档
+            </a>
+        </li>
+        
+        <li>
+            <a href="/about" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-user-circle-o"></i>
+                
+                关于
+            </a>
+        </li>
+        
+        <li>
+            <a href="/friends" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-address-book"></i>
+                
+                友情链接
+            </a>
+        </li>
+        
+        <li>
+            <a href="/contact" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-comments"></i>
+                
+                留言板
+            </a>
+        </li>
+        
+        
+        <li><div class="divider"></div></li>
+        <li>
+            <a href="https://github.com/JasonToJan/hexo-matery-modified" class="waves-effect waves-light" target="_blank">
+                <i class="fa fa-github-square fa-fw"></i>Fork Me
+            </a>
+        </li>
+        
+    </ul>
+</div>
+
+        </div>
+
+        
+            <style>
+    .nav-transparent .github-corner {
+        display: none !important;
+    }
+
+    .github-corner {
+        position: absolute;
+        z-index: 10;
+        top: 0;
+        right: 0;
+        border: 0;
+        transform: scale(1.1);
+    }
+
+    .github-corner svg {
+        color: #0f9d58;
+        fill: #fff;
+        height: 64px;
+        width: 64px;
+    }
+
+    .github-corner:hover .octo-arm {
+        animation: a 0.56s ease-in-out;
+    }
+
+    .github-corner .octo-arm {
+        animation: none;
+    }
+
+    @keyframes a {
+        0%,
+        to {
+            transform: rotate(0);
+        }
+        20%,
+        60% {
+            transform: rotate(-25deg);
+        }
+        40%,
+        80% {
+            transform: rotate(10deg);
+        }
+    }
+</style>
+
+<a href="https://github.com/JasonToJan/hexo-matery-modified" class="github-corner tooltipped hide-on-med-and-down" target="_blank"
+   data-tooltip="Fork Me" data-position="left" data-delay="50">
+    <svg viewBox="0 0 250 250" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
+              fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
+              fill="currentColor" class="octo-body"></path>
+    </svg>
+</a>
+        
+    </nav>
+
+</header>
+
+    
+<script src="/libs/cryptojs/crypto-js.min.js"></script>
+<script>
+    (function() {
+        let pwd = '';
+        if (pwd && pwd.length > 0) {
+            if (pwd !== CryptoJS.SHA256(prompt('请输入访问本文章的密码')).toString(CryptoJS.enc.Hex)) {
+                alert('密码错误，将返回主页！');
+                location.href = '/';
+            }
+        }
+    })();
+</script>
+
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/13.jpg')">
+    <div class="container">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <div class="description center-align post-title">
+                        面试 设计模式和算法 通关秘籍
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        margin: 35px 0 15px 0;
+        padding-left: 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #toc-content .is-active-link::before {
+        background-color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 20px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                        <a href="/tags/%E9%9D%A2%E8%AF%95%E9%A2%98-%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E7%AE%97%E6%B3%95/" target="_blank">
+                            <span class="chip bg-color">面试题 设计模式 算法</span>
+                        </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fa fa-bookmark fa-fw icon-category"></i>
+                        
+                        <a href="/categories/%E9%9D%A2%E8%AF%95/" class="post-category" target="_blank">
+                            面试
+                        </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                <div class="post-date info-break-policy">
+                    <i class="fa fa-calendar-minus-o fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2023-01-07
+                </div>
+
+                <div class="post-author info-break-policy">
+                    <i class="fa fa-user-o fa-fw"></i>作者:&nbsp;&nbsp;
+                    
+                    Jason
+                    
+                </div>
+
+                
+                
+                <div class="info-break-policy">
+                    <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
+                    5.8k
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
+                    26 分
+                </div>
+                
+                
+
+                
+                <div id="busuanzi_container_page_pv" class="info-break-policy">
+                    <i class="fa fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
+                    <span id="busuanzi_value_page_pv"></span>
+                </div>
+                
+            </div>
+        </div>
+        <hr class="clearfix">
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h2 id="1-黑铁"><a href="#1-黑铁" class="headerlink" title="1 黑铁"></a>1 黑铁</h2><h3 id="1-1-如何使用单例模式的饿汉式和饱汉式？"><a href="#1-1-如何使用单例模式的饿汉式和饱汉式？" class="headerlink" title="1.1 如何使用单例模式的饿汉式和饱汉式？"></a>1.1 如何使用单例模式的饿汉式和饱汉式？</h3><pre><code class="line-numbers language-Java">
+```Java
+// 饿汉式
+class SingleTon &#123;
+    private static final SingleTon instance = SingleTon();
+    private SingleTon();
+
+    public SingleTon getInstance() &#123;
+        return instance;
+    &#125;
+&#125;
+</code></pre>
+<pre><code class="line-numbers language-Java">// 懒汉式
+class SingleTon2 &#123;
+    private static volatile SingleTon2 instance;
+
+    private SingleTon2();
+    
+    public SingleTon2 getInstance() &#123;
+        if (instance == null) &#123;
+            synchronized(SingleTon2.class) &#123;
+                if (instance == null) &#123;
+                    return new SingleTon2();
+                &#125;
+            &#125;
+        &#125;
+        return instance;
+    &#125;
+
+&#125;
+</code></pre>
+<h3 id="1-2-单例模式的双重检验锁和静态内部类和枚举？"><a href="#1-2-单例模式的双重检验锁和静态内部类和枚举？" class="headerlink" title="1.2 单例模式的双重检验锁和静态内部类和枚举？"></a>1.2 单例模式的双重检验锁和静态内部类和枚举？</h3><p>1.双重检验锁单例模式：避免了每次都加锁的性能问题。</p>
+<pre><code class="line-numbers language-Java">public class Singleton &#123;
+    private static volatile Singleton instance;
+
+    private Singleton() &#123;
+        // 私有构造函数
+    &#125;
+
+    public static Singleton getInstance() &#123;
+        if (instance == null) &#123;
+            synchronized (Singleton.class) &#123;
+                if (instance == null) &#123;
+                    instance = new Singleton();
+                &#125;
+            &#125;
+        &#125;
+        return instance;
+    &#125;
+&#125;
+</code></pre>
+<p>2.静态内部类单例模式：延迟加载，且线程安全。</p>
+<pre><code class="line-numbers language-Java">public class Singleton &#123;
+    private Singleton() &#123;
+        // 私有构造函数
+    &#125;
+
+    private static class SingletonHolder &#123;
+        private static final Singleton instance = new Singleton();
+    &#125;
+
+    public static Singleton getInstance() &#123;
+        return SingletonHolder.instance;
+    &#125;
+&#125;
+</code></pre>
+<p>3.枚举单例模式</p>
+<pre><code class="line-numbers language-Java">public enum Singleton &#123;
+    INSTANCE;
+
+    public void doSomething() &#123;
+        // 实例方法
+    &#125;
+&#125;
+</code></pre>
+<h2 id="2-青铜"><a href="#2-青铜" class="headerlink" title="2 青铜"></a>2 青铜</h2><h3 id="2-1-常见的设计模式有哪些？"><a href="#2-1-常见的设计模式有哪些？" class="headerlink" title="2.1 常见的设计模式有哪些？"></a>2.1 常见的设计模式有哪些？</h3><blockquote>
+<p>1.Builder（建造者）模式：将一个复杂对象的构建过程分解成多个简单对象的构建过程，并将它们逐步构建成一个复杂对象。在 Android 中，常用于创建复杂的对象，例如 AlertDialog.Builder。<br><br>2.Factory Method（工厂方法）模式：定义一个用于创建对象的接口，让子类决定实例化哪一个类。在 Android 中，常用于创建一系列相关对象，例如不同类型的 Dialog。<br><br>3.Adapter（适配器）模式：将一个类的接口转换成客户希望的另一个接口，使得原本由于接口不兼容而无法在一起工作的类可以一起工作。在 Android 中，常用于将不同类型的数据适配到 ListView、4.RecyclerView 等控件中显示。<br><br>4.Observer（观察者）模式：定义对象间的一种一对多的依赖关系，当一个对象的状态发生改变时，所有依赖它的对象都得到通知并自动更新。在 Android 中，常用于实现事件监听器和广播机制。<br><br>5.Singleton（单例）模式：保证一个类仅有一个实例，并提供一个全局访问点。在 Android 中，常用于管理全局的状态信息，例如应用程序的配置信息。<br><br>6.Decorator（装饰）模式：动态地给一个对象添加一些额外的职责，而不需要修改类的代码。在 Android 中，常用于对 View 或者 Drawable 进行装饰，例如使用 Drawable 和 ColorFilter 实现带圆角或者阴影的图片。<br><br>7.Facade（外观）模式：为子系统中的一组接口提供一个统一的接口，以便更方便地使用子系统。在 Android 中，常用于简化复杂的库或者系统的使用，例如在 MediaStore 中封装各种类型的媒体查询接口。<br><br>8.Template Method（模板方法）模式：定义一个操作中的算法的骨架，而将一些步骤延迟到子类中。在 Android 中，常用于封装通用的流程或者算法，例如 AsyncTask 中的 doInBackground 方法。<br><br>9.Strategy（策略）模式：定义一系列的算法，把它们一个个封装起来，并使它们可以相互替换。在 Android 中，常用于实现不同的业务逻辑或者算法，例如实现不同的排序方式。<br><br>10.Iterator（迭代器）模式：提供一种方法来访问聚合对象中的各个元素，而又不需要暴露该对象的内部表示。在 Android 中，常用于对数据结构进行遍历，例如使用 Cursor 对查询结果进行遍历。</p>
+</blockquote>
+<h3 id="2-2-设计模式分类"><a href="#2-2-设计模式分类" class="headerlink" title="2.2 设计模式分类"></a>2.2 设计模式分类</h3><blockquote>
+<p>1.创建型模式：创建型模式(Creational Pattern)对类的实例化过程进行了抽象，能够将软件模块中对象的创建和对象的使用分离。<br>2.结构型模式：结构型模式(Structural Pattern)描述如何将类或者对 象结合在一起形成更大的结构，就像搭积木，可以通过 简单积木的组合形成复杂的、功能更为强大的结构。<br>3.行为型模式：行为型模式(Behavioral Pattern)是对在不同的对象之间划分责任和算法的抽象化。</p>
+</blockquote>
+<h3 id="2-3-创建型模式的设计模式有哪几种？"><a href="#2-3-创建型模式的设计模式有哪几种？" class="headerlink" title="2.3 创建型模式的设计模式有哪几种？"></a>2.3 创建型模式的设计模式有哪几种？</h3><blockquote>
+<p>简单工厂模式（Simple Factory）<br>工厂方法模式（Factory Method）<br>抽象工厂模式（Abstract Factory）<br>建造者模式（Builder）<br>原型模式（Prototype）<br>单例模式（Singleton）</p>
+</blockquote>
+<h3 id="2-4-结构型模式的设计模式有哪几种？"><a href="#2-4-结构型模式的设计模式有哪几种？" class="headerlink" title="2.4 结构型模式的设计模式有哪几种？"></a>2.4 结构型模式的设计模式有哪几种？</h3><blockquote>
+<p>适配器模式(Adapter)<br>桥接模式(Bridge)<br>组合模式(Composite)<br>装饰模式(Decorator)<br>外观模式(Facade)<br>享元模式(Flyweight)<br>代理模式(Proxy)</p>
+</blockquote>
+<h3 id="2-5-行为型模式的设计模式有哪几种？"><a href="#2-5-行为型模式的设计模式有哪几种？" class="headerlink" title="2.5 行为型模式的设计模式有哪几种？"></a>2.5 行为型模式的设计模式有哪几种？</h3><blockquote>
+<p>职责链模式(Chain of Responsibility)<br>命令模式(Command)<br>解释器模式(Interpreter)<br>迭代器模式(Iterator)<br>中介者模式(Mediator)<br>备忘录模式(Memento)<br>观察者模式(Observer)<br>状态模式(State)<br>策略模式(Strategy)<br>模板方法模式(Template Method)<br>访问者模式(Visitor) </p>
+</blockquote>
+<h2 id="3-白银"><a href="#3-白银" class="headerlink" title="3 白银"></a>3 白银</h2><blockquote>
+<p>常见的排序算法</p>
+</blockquote>
+<h3 id="3-1-冒泡排序"><a href="#3-1-冒泡排序" class="headerlink" title="3.1 冒泡排序"></a>3.1 冒泡排序</h3><p>基本思路：比较相邻的元素。如果第一个比第二个大，就交换他们两个。</p>
+<pre><code class="line-numbers language-Java">public static void bubbleSort(int[] numbers) &#123;
+    int temp = 0;
+    int size = numbers.length;
+    boolean flag = true;
+    for (int i = 0; i &lt; size - 1&amp;&amp;flag; i++) &#123;
+        flag = false;
+        for (int j = 0; j &lt; size - 1 - i; j++) &#123;
+            if (numbers[j] &gt; numbers[j + 1]) // 交换两数位置
+            &#123;
+                temp = numbers[j];
+                numbers[j] = numbers[j + 1];
+                numbers[j + 1] = temp;
+                flag = true;
+            &#125;
+        &#125;
+    &#125;
+&#125;
+</code></pre>
+<p>时间复杂度O(n^2)</p>
+<h3 id="3-2-选择排序"><a href="#3-2-选择排序" class="headerlink" title="3.2 选择排序"></a>3.2 选择排序</h3><p>选出最小的一个数与第一个位置的数交换；然后在剩下的数当中再找最小的与第二个位置的数交换，如此循环到倒数第二个数和最后一个数比较为止。</p>
+<pre><code class="line-numbers language-Java">public static void selectSort(int[] numbers) &#123;
+    int size = numbers.length; // 数组长度
+    int temp = 0; // 中间变量
+    for (int i = 0; i &lt; size-1; i++) &#123;
+        int k = i; // 待确定的位置
+        // 选择出应该在第i个位置的数
+        for (int j = size - 1; j &gt; i; j--) &#123;
+            if (numbers[j] &lt; numbers[k]) &#123;
+                k = j;
+            &#125;
+        &#125;
+        // 交换两个数
+        temp = numbers[i];
+        numbers[i] = numbers[k];
+        numbers[k] = temp;
+    &#125;
+&#125;
+</code></pre>
+<p>时间复杂度O(n*n) 性能上优于冒泡排序 交换次数少</p>
+<h3 id="3-3-插入排序算法？"><a href="#3-3-插入排序算法？" class="headerlink" title="3.3 插入排序算法？"></a>3.3 插入排序算法？</h3><p>每步将一个待排序的记录，按其顺序码大小插入到前面已经排序的字序列的合适位置（从后向前找到合适位置后），直到全部插入排序完为止。</p>
+<pre><code class="line-numbers language-Java">public static void insertSort(int[] numbers) &#123;
+    int size = numbers.length;
+    int temp = 0;
+    int j = 0;
+    for (int i = 1; i &lt; size; i++) &#123;
+        temp = numbers[i];
+        // 假如temp比前面的值小，则将前面的值后移
+        for (j = i; j &gt; 0 &amp;&amp; temp &lt; numbers[j - 1]; j--) &#123;
+            numbers[j] = numbers[j - 1];
+        &#125;
+        numbers[j] = temp;
+    &#125;
+&#125;
+</code></pre>
+<p>时间复杂度<br>O(n*n) 性能上优于冒泡排序和选择排序</p>
+<h3 id="3-4-快速排序算法"><a href="#3-4-快速排序算法" class="headerlink" title="3.4 快速排序算法"></a>3.4 快速排序算法</h3><p>通过一趟排序将待排序记录分割成独立的两部分，其中一部分记录的关键字均比另一部分关键字小，则分别对这两部分继续进行排序，直到整个序列有序。</p>
+<pre><code class="line-numbers language-Java">/**
+ * 快速排序
+ * 
+ * @param numbers
+ *            带排序数组
+ */
+public static void quick(int[] numbers) &#123;
+    if (numbers.length &gt; 0) // 查看数组是否为空
+    &#123;
+        quickSort(numbers, 0, numbers.length - 1);
+    &#125;
+&#125;
+/**
+ * 
+ * @param numbers
+ *            带排序数组
+ * @param low
+ *            开始位置
+ * @param high
+ *            结束位置
+ */
+public static void quickSort(int[] numbers, int low, int high) &#123;
+    if (low &gt;= high) &#123;
+        return;
+    &#125;
+    int middle = getMiddle(numbers, low, high); // 将numbers数组进行一分为二
+    quickSort(numbers, low, middle - 1); // 对低字段表进行递归排序
+    quickSort(numbers, middle + 1, high); // 对高字段表进行递归排序
+&#125;
+/**
+ * 查找出中轴（默认是最低位low）的在numbers数组排序后所在位置
+ * 
+ * @param numbers
+ *            带查找数组
+ * @param low
+ *            开始位置
+ * @param high
+ *            结束位置
+ * @return 中轴所在位置
+ */
+public static int getMiddle(int[] numbers, int low, int high) &#123;
+    int temp = numbers[low]; // 数组的第一个作为中轴
+    while (low &lt; high) &#123;
+        while (low &lt; high &amp;&amp; numbers[high] &gt; temp) &#123;
+            high--;
+        &#125;
+        numbers[low] = numbers[high];// 比中轴小的记录移到低端
+        while (low &lt; high &amp;&amp; numbers[low] &lt; temp) &#123;
+            low++;
+        &#125;
+        numbers[high] = numbers[low]; // 比中轴大的记录移到高端
+    &#125;
+    numbers[low] = temp; // 中轴记录到尾
+    return low; // 返回中轴的位置
+&#125;
+</code></pre>
+<p>时间复杂度O(nlogn）<br>快速排序在序列中元素很少时，效率将比较低，不如插入排序，因此一般在序列中元素很少时使用插入排序，这样可以提高整体效率。</p>
+<h3 id="3-5-希尔排序"><a href="#3-5-希尔排序" class="headerlink" title="3.5 希尔排序"></a>3.5 希尔排序</h3><p>先将整个待排序的记录序列分割成为若干子序列分别进行直接插入排序，待整个序列中的记录“基本有序”时，再对全体记录进行依次直接插入排序。</p>
+<pre><code class="line-numbers language-Java">/**
+ * 希尔排序的原理:根据需求，如果你想要结果从小到大排列，它会首先将数组进行分组，然后将较小值移到前面，较大值
+ * 移到后面，最后将整个数组进行插入排序，这样比起一开始就用插入排序减少了数据交换和移动的次数，
+ * 可以说希尔排序是加强 版的插入排序 拿数组5, 2,8, 9, 1, 3，4来说，数组长度为7，当increment为3时，数组分为两个序列
+ * 5，2，8和9，1，3，4，第一次排序，9和5比较，1和2比较，3和8比较，4和比其下标值小increment的数组值相比较
+ * 此例子是按照从小到大排列，所以小的会排在前面，第一次排序后数组为5, 1, 3, 4, 2, 8，9
+ * 第一次后increment的值变为3/2=1,此时对数组进行插入排序， 实现数组从大到小排
+ */
+public static void shellSort(int[] data) &#123;
+    int j = 0;
+    int temp = 0;
+    // 每次将步长缩短为原来的一半
+    for (int increment = data.length / 2; increment &gt; 0; increment /= 2) &#123;
+        for (int i = increment; i &lt; data.length; i++) &#123;
+            temp = data[i];
+            for (j = i; j &gt;= increment; j -= increment) &#123;
+                if (temp &lt; data[j - increment])// 从小到大排
+                &#123;
+                    data[j] = data[j - increment];
+                &#125; else &#123;
+                    break;
+                &#125;
+            &#125;
+            data[j] = temp;
+        &#125;
+    &#125;
+</code></pre>
+<p>时间复杂度O(n^1.5）</p>
+<h3 id="3-6-堆排序算法"><a href="#3-6-堆排序算法" class="headerlink" title="3.6 堆排序算法"></a>3.6 堆排序算法</h3><blockquote>
+<p>堆排序是一种树形选择排序，是对直接选择排序的有效改进。<br>**思想:**初始时把要排序的数的序列看作是一棵顺序存储的二叉树，调整它们的存储序，使之成为一个 堆，这时堆的根节点的数最大。然后将根节点与堆的最后一个节点交换。然后对前面(n-1)个数重新调整使之成为堆。依此类推，直到只有两个节点的堆，并对 它们作交换，最后得到有n个节点的有序序列。从算法描述来看，堆排序需要两个过程，一是建立堆，二是堆顶与堆的最后一个元素交换位置。所以堆排序有两个函数组成。一是建堆的渗透函数，二是反复调用渗透函数实现排序的函数。</p>
+</blockquote>
+<pre><code class="line-numbers language-Java">public static void heapSort(int[] a)&#123;
+    int arrayLength = a.length;
+    // 循环建堆
+    for (int i = 0; i &lt; arrayLength - 1; i++) &#123;
+        // 建堆
+        buildMaxHeap(a, arrayLength - 1 - i);
+        // 交换堆顶和最后一个元素
+        swap(a, 0, arrayLength - 1 - i);
+        System.out.println(Arrays.toString(a));
+    &#125;
+&#125;
+// 对data数组从0到lastIndex建大顶堆
+public static void buildMaxHeap(int[] data, int lastIndex) &#123;
+    // 从lastIndex处节点（最后一个节点）的父节点开始
+    for (int i = (lastIndex - 1) / 2; i &gt;= 0; i--) &#123;
+        // k保存正在判断的节点
+        int k = i;
+        // 如果当前k节点的子节点存在
+        while (k * 2 + 1 &lt;= lastIndex) &#123;
+            // k节点的左子节点的索引
+            int biggerIndex = 2 * k + 1;
+            // 如果biggerIndex小于lastIndex，即biggerIndex+1代表的k节点的右子节点存在
+            if (biggerIndex &lt; lastIndex) &#123;
+                // 若果右子节点的值较大
+                if (data[biggerIndex] &lt; data[biggerIndex + 1]) &#123;
+                    // biggerIndex总是记录较大子节点的索引
+                    biggerIndex++;
+                &#125;
+            &#125;
+            // 如果k节点的值小于其较大的子节点的值
+            if (data[k] &lt; data[biggerIndex]) &#123;
+                // 交换他们
+                swap(data, k, biggerIndex);
+                // 将biggerIndex赋予k，开始while循环的下一次循环，重新保证k节点的值大于其左右子节点的值
+                k = biggerIndex;
+            &#125; else &#123;
+                break;
+            &#125;
+        &#125;
+    &#125;
+&#125;
+// 交换
+private static void swap(int[] data, int i, int j) &#123;
+    int tmp = data[i];
+    data[i] = data[j];
+    data[j] = tmp;
+&#125;
+</code></pre>
+<p>时间复杂度O(nlogn）不适合待排序序列较少的情况</p>
+<h3 id="3-7-归并排序"><a href="#3-7-归并排序" class="headerlink" title="3.7 归并排序"></a>3.7 归并排序</h3><p>归并（Merge）排序法是将两个（或两个以上）有序表合并成一个新的有序表，即把待排序序列分为若干个子序列，每个子序列是有序的。然后再把有序子序列合并为整体有序序列。</p>
+<pre><code class="line-numbers language-Java">/**
+ * 归并排序
+ * 简介:将两个（或两个以上）有序表合并成一个新的有序表 即把待排序序列分为若干个子序列，每个子序列是有序的。然后再把有序子序列合并为整体有序序列
+ * 时间复杂度为O(nlogn)
+ * 稳定排序方式
+ * @param nums 待排序数组
+ * @return 输出有序数组
+ */
+public static int[] sort(int[] nums, int low, int high) &#123;
+    int mid = (low + high) / 2;
+    if (low &lt; high) &#123;
+        // 左边
+        sort(nums, low, mid);
+        // 右边
+        sort(nums, mid + 1, high);
+        // 左右归并
+        merge(nums, low, mid, high);
+    &#125;
+    return nums;
+&#125;
+/**
+ * 将数组中low到high位置的数进行排序
+ * @param nums 待排序数组
+ * @param low 待排的开始位置
+ * @param mid 待排中间位置
+ * @param high 待排结束位置
+ */
+public static void merge(int[] nums, int low, int mid, int high) &#123;
+    int[] temp = new int[high - low + 1];
+    int i = low;// 左指针
+    int j = mid + 1;// 右指针
+    int k = 0;
+    // 把较小的数先移到新数组中
+    while (i &lt;= mid &amp;&amp; j &lt;= high) &#123;
+        if (nums[i] &lt; nums[j]) &#123;
+            temp[k++] = nums[i++];
+        &#125; else &#123;
+            temp[k++] = nums[j++];
+        &#125;
+    &#125;
+    // 把左边剩余的数移入数组
+    while (i &lt;= mid) &#123;
+        temp[k++] = nums[i++];
+    &#125;
+    // 把右边边剩余的数移入数组
+    while (j &lt;= high) &#123;
+        temp[k++] = nums[j++];
+    &#125;
+    // 把新数组中的数覆盖nums数组
+    for (int k2 = 0; k2 &lt; temp.length; k2++) &#123;
+        nums[k2 + low] = temp[k2];
+    &#125;
+&#125;
+</code></pre>
+<p>间复杂度O(nlogn）</p>
+<h2 id="4-黄金"><a href="#4-黄金" class="headerlink" title="4 黄金"></a>4 黄金</h2><h3 id="4-1-求二叉树第n层节点数"><a href="#4-1-求二叉树第n层节点数" class="headerlink" title="4.1 求二叉树第n层节点数?"></a>4.1 求二叉树第n层节点数?</h3><pre><code class="line-numbers language-Java">public static int getNodesAtLevel(TreeNode root, int level) &#123;
+    if (root == null) &#123;
+        return 0;
+    &#125;
+    if (level == 1) &#123;
+        return 1;
+    &#125;
+    int leftNodes = getNodesAtLevel(root.left, level - 1);
+    int rightNodes = getNodesAtLevel(root.right, level - 1);
+    return leftNodes + rightNodes;
+&#125;
+</code></pre>
+<h3 id="4-2-二叉树深度算法"><a href="#4-2-二叉树深度算法" class="headerlink" title="4.2 二叉树深度算法?"></a>4.2 二叉树深度算法?</h3><pre><code class="line-numbers language-Java">class TreeNode &#123;
+    int val;
+    TreeNode left;
+    TreeNode right;
+    TreeNode(int x) &#123; val = x; &#125;
+&#125;
+
+public int maxDepth(TreeNode root) &#123;
+    if (root == null) &#123;
+        return 0;
+    &#125;
+    int leftDepth = maxDepth(root.left);
+    int rightDepth = maxDepth(root.right);
+    return Math.max(leftDepth, rightDepth) + 1;
+&#125;
+</code></pre>
+<h3 id="4-3-负数全部移动左侧-快速排序？-？"><a href="#4-3-负数全部移动左侧-快速排序？-？" class="headerlink" title="4.3 负数全部移动左侧(快速排序？)？"></a>4.3 负数全部移动左侧(快速排序？)？</h3><p>有一个整形数组，包含正数和负数，然后要求把数组内的所有负数移至正数的左边，且保证相对位置不变，要求时间复杂度为O𝑛<br>, 空间复杂度为O1<br>。例如，{10, -2, 5, 8, -4, 2, -3, 7, 12, -88, -23, 35}变化后是{-2, -4，-3, -88, -23,5, 8 ,10, 2, 7, 12, 35}。</p>
+<pre><code class="line-numbers language-Java"> public void setParted(int[] a)&#123;  
+    int temp=0;  
+    int border=-1;  
+
+    for(int i=0;i&lt;a.length;i++)&#123;  
+        if(a[i]&lt;0)&#123;  
+            temp=a[i];  
+            a[i]=a[border+1];  
+            a[border+1]=temp;  
+            border++;  
+        &#125;  
+    &#125;  
+    for(int j=0;j&lt;a.length;j++)&#123;  
+        System.out.println(a[j]);  
+    &#125;  
+&#125;
+</code></pre>
+<p>有点像快速排序二分法，选择的基准元素为0而已。遍历整个列表，每次将小于0的移动到依次递增的左侧。</p>
+<h3 id="4-4-两个有序链表合并？"><a href="#4-4-两个有序链表合并？" class="headerlink" title="4.4 两个有序链表合并？"></a>4.4 两个有序链表合并？</h3><pre><code class="line-numbers language-Java">class ListNode &#123;
+    int val;
+    ListNode next;
+    ListNode(int val) &#123;
+        this.val = val;
+    &#125;
+&#125;
+
+public class MergeTwoSortedLists &#123;
+    public ListNode mergeTwoLists(ListNode l1, ListNode l2) &#123;
+        ListNode dummy = new ListNode(0);
+        ListNode current = dummy;
+        while (l1 != null &amp;&amp; l2 != null) &#123;
+            if (l1.val &lt; l2.val) &#123;
+                current.next = l1;
+                l1 = l1.next;
+            &#125; else &#123;
+                current.next = l2;
+                l2 = l2.next;
+            &#125;
+            current = current.next;
+        &#125;
+        if (l1 != null) &#123;
+            current.next = l1;
+        &#125; else &#123;
+            current.next = l2;
+        &#125;
+        return dummy.next;
+    &#125;
+&#125;
+</code></pre>
+<h3 id="4-5-用Java实现：二叉树输出第-k-层节点元素？"><a href="#4-5-用Java实现：二叉树输出第-k-层节点元素？" class="headerlink" title="4.5 用Java实现：二叉树输出第 k 层节点元素？"></a>4.5 用Java实现：二叉树输出第 k 层节点元素？</h3><p>实现二叉树输出第 k 层节点元素的Java代码，可以通过遍历二叉树并记录每个节点所在的层数来实现。以下是一个使用递归实现的例子：</p>
+<pre><code class="line-numbers language-Java">public class TreeNode &#123;
+    int val;
+    TreeNode left;
+    TreeNode right;
+    TreeNode(int x) &#123; val = x; &#125;
+&#125;
+
+public static void printKthLevel(TreeNode root, int k) &#123;
+    if (root == null) &#123;
+        return;
+    &#125;
+    if (k == 1) &#123;
+        System.out.print(root.val + &quot; &quot;);
+    &#125; else &#123;
+        printKthLevel(root.left, k - 1);
+        printKthLevel(root.right, k - 1);
+    &#125;
+&#125;
+
+// 该方法接受一个二叉树的根节点和一个整数 k 作为输入，输出该二叉树中第 k 层的所有节点元素。
+
+// 我们首先检查根节点是否为空，如果为空，直接返回。如果 k 等于 1，输出当前节点的值。否则，递归遍历左子树和右子树，并将 k 的值减一，直到 k 等于 1 时输出当前节点的值。这样就可以输出指定层数的所有节点元素。
+
+// 调用如下：
+public static void main(String[] args) &#123;
+    TreeNode root = new TreeNode(1);
+    root.left = new TreeNode(2);
+    root.right = new TreeNode(3);
+    root.left.left = new TreeNode(4);
+    root.left.right = new TreeNode(5);
+    root.right.left = new TreeNode(6);
+    root.right.right = new TreeNode(7);
+
+    int k = 3;
+    System.out.print(&quot;The elements in level &quot; + k + &quot; are: &quot;);
+    printKthLevel(root, k);
+&#125;
+</code></pre>
+<h3 id="4-6-Java实现两个有序的链表的合并？"><a href="#4-6-Java实现两个有序的链表的合并？" class="headerlink" title="4.6 Java实现两个有序的链表的合并？"></a>4.6 Java实现两个有序的链表的合并？</h3><blockquote>
+<p>可以使用递归来实现两个有序链表的合并，具体步骤如下：<br>1.如果两个链表都为空，则返回空。<br>2.如果其中一个链表为空，则返回另一个链表。<br>3.如果两个链表都不为空，比较它们的头节点，将较小的头节点作为合并后的头节点。<br>4.对于剩下的链表部分，递归地调用步骤3，将结果连接到合并后的头节点后面。<br>5.返回合并后的链表头节点。</p>
+</blockquote>
+<pre><code class="line-numbers language-Java">public class ListNode &#123;
+    int val;
+    ListNode next;
+    ListNode(int val) &#123;
+        this.val = val;
+    &#125;
+&#125;
+
+public class Solution &#123;
+    public ListNode mergeTwoLists(ListNode l1, ListNode l2) &#123;
+        if (l1 == null) &#123;
+            return l2;
+        &#125;
+        if (l2 == null) &#123;
+            return l1;
+        &#125;
+        if (l1.val &lt; l2.val) &#123;
+            l1.next = mergeTwoLists(l1.next, l2);
+            return l1;
+        &#125; else &#123;
+            l2.next = mergeTwoLists(l1, l2.next);
+            return l2;
+        &#125;
+    &#125;
+&#125;
+</code></pre>
+<p>在这个代码中，我们首先判断两个链表是否为空，如果其中一个为空，则直接返回另一个链表。接着，我们比较两个链表的头节点，将较小的头节点作为合并后的头节点，并递归地将剩下的链表部分合并到后面。最后，我们返回合并后的链表头节点。</p>
+<pre><code class="line-numbers language-Java">ListNode l1 = new ListNode(1);
+l1.next = new ListNode(2);
+l1.next.next = new ListNode(4);
+
+ListNode l2 = new ListNode(1);
+l2.next = new ListNode(3);
+l2.next.next = new ListNode(4);
+
+Solution solution = new Solution();
+ListNode mergedList = solution.mergeTwoLists(l1, l2);
+
+while (mergedList != null) &#123;
+    System.out.print(mergedList.val + &quot; &quot;);
+    mergedList = mergedList.next;
+&#125;
+
+// 输出：1 1 2 3 4 4 
+</code></pre>
+<h3 id="4-7-二叉树层序遍历，奇数层逆序遍历节点，偶数层正序遍历"><a href="#4-7-二叉树层序遍历，奇数层逆序遍历节点，偶数层正序遍历" class="headerlink" title="4.7 二叉树层序遍历，奇数层逆序遍历节点，偶数层正序遍历?"></a>4.7 二叉树层序遍历，奇数层逆序遍历节点，偶数层正序遍历?</h3><pre><code class="line-numbers language-Java">import java.util.*;
+
+public class Solution &#123;
+    public List&lt;Integer&gt; levelOrderTraversal(TreeNode root) &#123;
+        if (root == null) &#123;
+            return Collections.emptyList();
+        &#125;
+
+        Queue&lt;Pair&lt;TreeNode, Integer&gt;&gt; queue = new LinkedList&lt;&gt;();
+        List&lt;List&lt;Integer&gt;&gt; levelNodes = new ArrayList&lt;&gt;();
+        queue.add(new Pair&lt;&gt;(root, 0));
+        while (!queue.isEmpty()) &#123;
+            Pair&lt;TreeNode, Integer&gt; pair = queue.poll();
+            TreeNode node = pair.getKey();
+            int depth = pair.getValue();
+            if (depth &gt;= levelNodes.size()) &#123;
+                levelNodes.add(new ArrayList&lt;&gt;());
+            &#125;
+            levelNodes.get(depth).add(node.val);
+            if (node.left != null) &#123;
+                queue.add(new Pair&lt;&gt;(node.left, depth + 1));
+            &#125;
+            if (node.right != null) &#123;
+                queue.add(new Pair&lt;&gt;(node.right, depth + 1));
+            &#125;
+        &#125;
+
+        List&lt;Integer&gt; result = new ArrayList&lt;&gt;();
+        for (int i = 0; i &lt; levelNodes.size(); i++) &#123;
+            List&lt;Integer&gt; nodes = levelNodes.get(i);
+            if (i % 2 == 0) &#123;
+                result.addAll(nodes);
+            &#125; else &#123;
+                Collections.reverse(nodes);
+                result.addAll(nodes);
+            &#125;
+        &#125;
+
+        return result;
+    &#125;
+&#125;
+</code></pre>
+<h2 id="5-铂金"><a href="#5-铂金" class="headerlink" title="5 铂金"></a>5 铂金</h2><h3 id="5-1-求无序数组中的中位数-快速选择算法"><a href="#5-1-求无序数组中的中位数-快速选择算法" class="headerlink" title="5.1 求无序数组中的中位数?(快速选择算法)"></a>5.1 求无序数组中的中位数?(快速选择算法)</h3><pre><code class="line-numbers language-Java">import java.util.Arrays;
+
+public class MedianOfUnsortedArray &#123;
+
+    public static double findMedian(int[] nums) &#123;
+        int n = nums.length;
+        int k = n / 2;
+
+        int left = 0;
+        int right = n - 1;
+
+        while (left &lt;= right) &#123;
+            int pivotIndex = partition(nums, left, right);
+            if (pivotIndex == k) &#123;
+                break;
+            &#125; else if (pivotIndex &lt; k) &#123;
+                left = pivotIndex + 1;
+            &#125; else &#123;
+                right = pivotIndex - 1;
+            &#125;
+        &#125;
+
+        if (n % 2 == 0) &#123;
+            return (nums[k] + nums[k-1]) / 2.0;
+        &#125; else &#123;
+            return nums[k];
+        &#125;
+    &#125;
+
+    private static int partition(int[] nums, int left, int right) &#123;
+        int pivot = nums[right];
+        int i = left;
+        for (int j = left; j &lt; right; j++) &#123;
+            if (nums[j] &lt; pivot) &#123;
+                swap(nums, i, j);
+                i++;
+            &#125;
+        &#125;
+        swap(nums, i, right);
+        return i;
+    &#125;
+
+    private static void swap(int[] nums, int i, int j) &#123;
+        int temp = nums[i];
+        nums[i] = nums[j];
+        nums[j] = temp;
+    &#125;
+
+    public static void main(String[] args) &#123;
+        int[] nums = &#123;5, 2, 4, 1, 3&#125;;
+        System.out.println(findMedian(nums)); // 3.0
+    &#125;
+&#125;
+</code></pre>
+<h2 id="6-钻石"><a href="#6-钻石" class="headerlink" title="6 钻石"></a>6 钻石</h2><h3 id="6-1-手写HashMap"><a href="#6-1-手写HashMap" class="headerlink" title="6.1 手写HashMap"></a>6.1 手写HashMap</h3><pre><code class="line-numbers language-Java">public class MyHashMap&lt;K, V&gt; &#123;
+    private static final int DEFAULT_CAPACITY = 16;
+    private Node&lt;K, V&gt;[] buckets;
+    private int size = 0;
+
+    public MyHashMap() &#123;
+        this(DEFAULT_CAPACITY);
+    &#125;
+
+    public MyHashMap(int capacity) &#123;
+        buckets = new Node[capacity];
+    &#125;
+
+    public void put(K key, V value) &#123;
+        int bucketIndex = getBucketIndex(key);
+        Node&lt;K, V&gt; currentNode = buckets[bucketIndex];
+
+        while (currentNode != null) &#123;
+            if (currentNode.key.equals(key)) &#123;
+                currentNode.value = value;
+                return;
+            &#125;
+            currentNode = currentNode.next;
+        &#125;
+
+        Node&lt;K, V&gt; newNode = new Node&lt;&gt;(key, value);
+        newNode.next = buckets[bucketIndex];
+        buckets[bucketIndex] = newNode;
+        size++;
+    &#125;
+
+    public V get(K key) &#123;
+        int bucketIndex = getBucketIndex(key);
+        Node&lt;K, V&gt; currentNode = buckets[bucketIndex];
+
+        while (currentNode != null) &#123;
+            if (currentNode.key.equals(key)) &#123;
+                return currentNode.value;
+            &#125;
+            currentNode = currentNode.next;
+        &#125;
+
+        return null;
+    &#125;
+
+    public void remove(K key) &#123;
+        int bucketIndex = getBucketIndex(key);
+        Node&lt;K, V&gt; currentNode = buckets[bucketIndex];
+        Node&lt;K, V&gt; prevNode = null;
+
+        while (currentNode != null) &#123;
+            if (currentNode.key.equals(key)) &#123;
+                if (prevNode == null) &#123;
+                    buckets[bucketIndex] = currentNode.next;
+                &#125; else &#123;
+                    prevNode.next = currentNode.next;
+                &#125;
+                size--;
+                return;
+            &#125;
+            prevNode = currentNode;
+            currentNode = currentNode.next;
+        &#125;
+    &#125;
+
+    public boolean containsKey(K key) &#123;
+        int bucketIndex = getBucketIndex(key);
+        Node&lt;K, V&gt; currentNode = buckets[bucketIndex];
+
+        while (currentNode != null) &#123;
+            if (currentNode.key.equals(key)) &#123;
+                return true;
+            &#125;
+            currentNode = currentNode.next;
+        &#125;
+
+        return false;
+    &#125;
+
+    public int size() &#123;
+        return size;
+    &#125;
+
+    private int getBucketIndex(K key) &#123;
+        int hashCode = key.hashCode();
+        return hashCode % buckets.length;
+    &#125;
+
+    private static class Node&lt;K, V&gt; &#123;
+        private final K key;
+        private V value;
+        private Node&lt;K, V&gt; next;
+
+        public Node(K key, V value) &#123;
+            this.key = key;
+            this.value = value;
+        &#125;
+    &#125;
+&#125;
+</code></pre>
+<h2 id="7-大师"><a href="#7-大师" class="headerlink" title="7 大师"></a>7 大师</h2><h3 id="7-1-华为od-字符串最后一个单词的长度"><a href="#7-1-华为od-字符串最后一个单词的长度" class="headerlink" title="7.1 华为od-字符串最后一个单词的长度?"></a>7.1 华为od-字符串最后一个单词的长度?</h3><pre><code class="line-numbers language-Java">import java.util.Scanner;
+
+// 注意类名必须为 Main, 不要有任何 package xxx 信息
+public class Main &#123;
+    public static void main(String[] args) &#123;
+        Scanner in = new Scanner(System.in);
+
+        String str = in.nextLine();
+        int length = lengthOfLastWord(str);
+        System.out.println(length);
+    &#125;
+
+    // 计算最后一个单词的长度
+    public static int lengthOfLastWord(String s) &#123;
+        // 先去掉字符末尾的空格
+        s = s.trim();
+
+        int end = s.length() - 1;
+        int start = end;
+        // 依次从后往前遍历
+        while (start &gt;= 0 &amp;&amp; s.charAt(start) != &#39; &#39;) &#123;
+            start--;
+        &#125;
+
+        return end - start;
+    &#125;
+&#125;
+</code></pre>
+<h3 id="7-2-华为od-计算字符串出现次数？"><a href="#7-2-华为od-计算字符串出现次数？" class="headerlink" title="7.2 华为od-计算字符串出现次数？"></a>7.2 华为od-计算字符串出现次数？</h3><pre><code class="line-numbers language-Java">import java.util.Scanner;
+
+// 注意类名必须为 Main, 不要有任何 package xxx 信息
+public class Main &#123;
+    public static void main(String[] args) &#123;
+        Scanner in = new Scanner(System.in);
+        String str = in.nextLine().toLowerCase();
+        char c = in.nextLine().toLowerCase().charAt(0);
+
+        int count = displayTimes(str, c);
+        System.out.println(count);
+    &#125;
+
+    // 字符显示个数
+    public static int displayTimes(String s, char c) &#123;
+        int count = 0;
+        for (int i = 0; i &lt; s.length(); i++) &#123;
+            if (s.charAt(i) == c) &#123;
+                count++;
+            &#125;
+        &#125;
+        return count;
+    &#125;
+&#125;
+</code></pre>
+<h3 id="7-3-华为od-明明的随机数？"><a href="#7-3-华为od-明明的随机数？" class="headerlink" title="7.3 华为od-明明的随机数？"></a>7.3 华为od-明明的随机数？</h3><pre><code class="line-numbers language-Java">import java.util.Scanner;
+
+// 注意类名必须为 Main, 不要有任何 package xxx 信息
+public class Main &#123;
+    public static void main(String[] args) &#123;
+        Scanner in = new Scanner(System.in);
+
+        // 获取输入数据
+        int n = in.nextInt();
+        int[] nums = new int[501];
+        
+        for (int i = 0; i &lt; n; i++) &#123;
+            int input = in.nextInt();
+            nums[input] = 1;
+        &#125;
+
+        // 结果输出
+        for (int i = 0; i &lt;= 500; i++) &#123;
+            if (nums[i] == 1) &#123;
+                System.out.println(i + &quot; &quot;);
+            &#125;
+        &#125;
+
+    &#125;
+&#125;
+</code></pre>
+<h3 id="7-4"><a href="#7-4" class="headerlink" title="7.4"></a>7.4</h3><h2 id="8-宗师"><a href="#8-宗师" class="headerlink" title="8 宗师"></a>8 宗师</h2><h2 id="9-王者"><a href="#9-王者" class="headerlink" title="9 王者"></a>9 王者</h2>
+            </div>
+            <hr />
+
+            
+            <style>
+    #reward {
+        margin: 40px 0;
+        text-align: center;
+    }
+
+    #reward .reward-link {
+        font-size: 1.88rem;
+    }
+
+    #reward .btn-floating:hover {
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2), 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    #rewardModal {
+        width: 320px;
+        height: 350px;
+    }
+
+    #rewardModal .reward-title {
+        margin: 15px auto;
+        padding-bottom: 5px;
+    }
+
+    #rewardModal .modal-content {
+        padding: 10px;
+    }
+
+    #rewardModal .close {
+        position: absolute;
+        right: 15px;
+        top: 15px;
+        color: rgba(0, 0, 0, 0.5);
+        font-size: 1.3rem;
+        line-height: 20px;
+        cursor: pointer;
+    }
+
+    #rewardModal .close:hover {
+        color: #ef5350;
+        transform: scale(1.3);
+        -moz-transform:scale(1.3);
+        -webkit-transform:scale(1.3);
+        -o-transform:scale(1.3);
+    }
+
+    #rewardModal .reward-tabs {
+        margin: 0 auto;
+        width: 210px;
+    }
+
+    .reward-tabs .tabs {
+        height: 38px;
+        margin: 10px auto;
+        padding-left: 0;
+    }
+
+    .reward-content ul {
+        padding-left: 0 !important;
+    }
+
+    .reward-tabs .tabs .tab {
+        height: 38px;
+        line-height: 38px;
+    }
+
+    .reward-tabs .tab a {
+        color: #fff;
+        background-color: #ccc;
+    }
+
+    .reward-tabs .tab a:hover {
+        background-color: #ccc;
+        color: #fff;
+    }
+
+    .reward-tabs .wechat-tab .active {
+        color: #fff !important;
+        background-color: #22AB38 !important;
+    }
+
+    .reward-tabs .alipay-tab .active {
+        color: #fff !important;
+        background-color: #019FE8 !important;
+    }
+
+    .reward-tabs .reward-img {
+        width: 210px;
+        height: 210px;
+    }
+</style>
+
+<div id="reward">
+    <a href="#rewardModal" class="reward-link modal-trigger btn-floating btn-large waves-effect waves-light red">赏</a>
+
+    <!-- Modal Structure -->
+    <div id="rewardModal" class="modal">
+        <div class="modal-content">
+            <a class="close modal-close"><i class="fa fa-close"></i></a>
+            <h4 class="reward-title">写作不易，客官能否打赏一杯奶茶？</h4>
+            <div class="reward-content">
+                <div class="reward-tabs">
+                    <ul class="tabs row">
+                        <li class="tab col s6 alipay-tab waves-effect waves-light"><a href="#alipay">支付宝</a></li>
+                        <li class="tab col s6 wechat-tab waves-effect waves-light"><a href="#wechat">微 信</a></li>
+                    </ul>
+                    <div id="alipay">
+                        <img src="/medias/reward/alipay.jpg" class="reward-img" alt="支付宝打赏二维码">
+                    </div>
+                    <div id="wechat">
+                        <img src="/medias/reward/wechat.png" class="reward-img" alt="微信打赏二维码">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $('.tabs').tabs();
+    });
+</script>
+            
+
+            <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+
+<div id="article-share">
+    
+    <div class="social-share" data-disabled="qzone" data-wechat-qrcode-helper="<p>微信里点“发现”->“扫一扫”二维码便可查看分享。</p>"></div>
+    
+</div>
+
+<script src="/libs/share/js/social-share.min.js"></script>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        <p class="reprint-tip">
+            <i class="fa fa-exclamation-triangle"></i>&nbsp;&nbsp;
+            <span>转载规则</span>
+        </p>
+        
+            <div class="center-align">
+                <a rel="license noopener" target="_blank" href="https://creativecommons.org/licenses/by/4.0/deed.zh">
+                    <img alt=""
+                         style="border-width:0"
+                         src="https://i.creativecommons.org/l/by/4.0/88x31.png"/>
+                </a>
+            </div>
+            <br/>
+            <span xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/Text"
+                  property="dct:title" rel="dct:type">
+                    《面试 设计模式和算法 通关秘籍》
+                </span> 由
+            <a xmlns:cc="http://creativecommons.org/ns#" href="/2023/01/07/%E9%9D%A2%E8%AF%95-%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E5%92%8C%E7%AE%97%E6%B3%95-%E9%80%9A%E5%85%B3%E7%A7%98%E7%B1%8D/" property="cc:attributionName"
+               rel="cc:attributionURL">
+                Jason
+            </a> 采用
+            <a rel="license noopener" target="_blank" href="https://creativecommons.org/licenses/by/4.0/deed.zh">
+                知识共享署名 4.0 国际许可协议
+            </a>进行许可。
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+        </div>
+    </div>
+
+    
+    <link rel="stylesheet" href="/libs/gitalk/gitalk.css">
+<link rel="stylesheet" href="/css/my-gitalk.css">
+
+<div class="card gitalk-card" data-aos="fade-up">
+    <div id="gitalk-container" class="card-content"></div>
+</div>
+
+<script src="/libs/gitalk/gitalk.min.js"></script>
+<script>
+    let gitalk = new Gitalk({
+        clientID: 'fe0ccf043e8b41eb62ea',
+        clientSecret: '9ca1dd3be79bdf6123d4aa8ca81753570fe870e1',
+        repo: 'jasontojan.github.io',
+        owner: 'jasontojan',
+        admin: "jasontojan",
+        id: '2023/01/07/面试-设计模式和算法-通关秘籍/',
+        distractionFreeMode: false  // Facebook-like distraction free mode
+    });
+
+    gitalk.render('gitalk-container');
+</script>
+    
+
+    
+
+    
+
+    
+
+    
+    <style>
+    .valine-card {
+        margin: 1.5rem auto;
+    }
+
+    .valine-card .card-content {
+        padding: 20px 20px 5px 20px;
+    }
+
+    #vcomments input[type=text],
+    #vcomments input[type=email],
+    #vcomments input[type=url],
+    #vcomments textarea {
+        box-sizing: border-box;
+    }
+
+    #vcomments p {
+        margin: 2px 2px 10px;
+        font-size: 1.05rem;
+        line-height: 1.78rem;
+    }
+
+    #vcomments blockquote p {
+        text-indent: 0.2rem;
+    }
+
+    #vcomments a {
+        padding: 0 2px;
+        color: #42b983;
+        font-weight: 500;
+        text-decoration: underline;
+    }
+
+    #vcomments img {
+        max-width: 100%;
+        height: auto;
+        cursor: pointer;
+    }
+
+    #vcomments ol li {
+        list-style-type: decimal;
+    }
+
+    #vcomments ol,
+    ul {
+        display: block;
+        padding-left: 2em;
+        word-spacing: 0.05rem;
+    }
+
+    #vcomments ul li,
+    ol li {
+        display: list-item;
+        line-height: 1.8rem;
+        font-size: 1rem;
+    }
+
+    #vcomments ul li {
+        list-style-type: disc;
+    }
+
+    #vcomments ul ul li {
+        list-style-type: circle;
+    }
+
+    #vcomments table, th, td {
+        padding: 12px 13px;
+        border: 1px solid #dfe2e5;
+    }
+
+    #vcomments table, th, td {
+        border: 0;
+    }
+
+    table tr:nth-child(2n), thead {
+        background-color: #fafafa;
+    }
+
+    #vcomments table th {
+        background-color: #f2f2f2;
+        min-width: 80px;
+    }
+
+    #vcomments table td {
+        min-width: 80px;
+    }
+
+    #vcomments h1 {
+        font-size: 1.85rem;
+        font-weight: bold;
+        line-height: 2.2rem;
+    }
+
+    #vcomments h2 {
+        font-size: 1.65rem;
+        font-weight: bold;
+        line-height: 1.9rem;
+    }
+
+    #vcomments h3 {
+        font-size: 1.45rem;
+        font-weight: bold;
+        line-height: 1.7rem;
+    }
+
+    #vcomments h4 {
+        font-size: 1.25rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    #vcomments h5 {
+        font-size: 1.1rem;
+        font-weight: bold;
+        line-height: 1.4rem;
+    }
+
+    #vcomments h6 {
+        font-size: 1rem;
+        line-height: 1.3rem;
+    }
+
+    #vcomments p {
+        font-size: 1rem;
+        line-height: 1.5rem;
+    }
+
+    #vcomments hr {
+        margin: 12px 0;
+        border: 0;
+        border-top: 1px solid #ccc;
+    }
+
+    #vcomments blockquote {
+        margin: 15px 0;
+        border-left: 5px solid #42b983;
+        padding: 1rem 0.8rem 0.3rem 0.8rem;
+        color: #666;
+        background-color: rgba(66, 185, 131, .1);
+    }
+
+    #vcomments pre {
+        font-family: monospace, monospace;
+        padding: 1.2em;
+        margin: .5em 0;
+        background: #272822;
+        overflow: auto;
+        border-radius: 0.3em;
+        tab-size: 4;
+    }
+
+    #vcomments code {
+        font-family: monospace, monospace;
+        padding: 1px 3px;
+        font-size: 0.92rem;
+        color: #e96900;
+        background-color: #f8f8f8;
+        border-radius: 2px;
+    }
+
+    #vcomments pre code {
+        font-family: monospace, monospace;
+        padding: 0;
+        color: #e8eaf6;
+        background-color: #272822;
+    }
+
+    #vcomments pre[class*="language-"] {
+        padding: 1.2em;
+        margin: .5em 0;
+    }
+
+    #vcomments code[class*="language-"],
+    pre[class*="language-"] {
+        color: #e8eaf6;
+    }
+
+    #vcomments [type="checkbox"]:not(:checked), [type="checkbox"]:checked {
+        position: inherit;
+        margin-left: -1.3rem;
+        margin-right: 0.4rem;
+        margin-top: -1px;
+        vertical-align: middle;
+        left: unset;
+        visibility: visible;
+    }
+
+    #vcomments b,
+    strong {
+        font-weight: bold;
+    }
+
+    #vcomments dfn {
+        font-style: italic;
+    }
+
+    #vcomments small {
+        font-size: 85%;
+    }
+
+    #vcomments cite {
+        font-style: normal;
+    }
+
+    #vcomments mark {
+        background-color: #fcf8e3;
+        padding: .2em;
+    }
+
+    #vcomments table, th, td {
+        padding: 12px 13px;
+        border: 1px solid #dfe2e5;
+    }
+
+    table tr:nth-child(2n), thead {
+        background-color: #fafafa;
+    }
+
+    #vcomments table th {
+        background-color: #f2f2f2;
+        min-width: 80px;
+    }
+
+    #vcomments table td {
+        min-width: 80px;
+    }
+
+    #vcomments [type="checkbox"]:not(:checked), [type="checkbox"]:checked {
+        position: inherit;
+        margin-left: -1.3rem;
+        margin-right: 0.4rem;
+        margin-top: -1px;
+        vertical-align: middle;
+        left: unset;
+        visibility: visible;
+    }
+</style>
+
+<div class="card valine-card" data-aos="fade-up">
+    <div id="vcomments" class="card-content"></div>
+</div>
+
+<script src="/libs/valine/av-min.js"></script>
+<script src="/libs/valine/Valine.min.js"></script>
+<!-- <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script> -->
+
+<script>
+    new Valine({
+        el: '#vcomments',
+        appId: '查教程获取',
+        appKey: '查教程获取',
+        notify: 'false' === 'true',
+        verify: 'false' === 'true',
+        visitor: 'false' === 'true',
+        avatar: 'wavatar',
+        pageSize: '10',
+        lang: 'zh-cn',
+        placeholder: '如果你没有GitHub账号，还可以在这里评论啦！'
+    });
+</script>
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fa fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/2023/01/08/%E9%9D%A2%E8%AF%95-%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%92%8C%E7%BD%91%E7%BB%9C-%E9%80%9A%E5%85%B3%E7%A7%98%E7%B1%8D/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/26.jpg" class="responsive-img" alt="面试 操作系统和网络 通关秘籍">
+                        
+                        <span class="card-title">面试 操作系统和网络 通关秘籍</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            1 黑铁
+网络相关常识。
+
+1.1 简单介绍下Https的原理？
+HTTPS是HTTP协议的加密版本，它使用SSL&#x2F;TLS协议来保护Web通信的安全性。HTTPS基于公开密钥加密和数字证书认证技术，它通过在通信过程中使用SSL&#
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="fa fa-clock-o fa-fw icon-date"></i>2023-01-08
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fa fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E9%9D%A2%E8%AF%95/" class="post-category" target="_blank">
+                                    面试
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E9%9D%A2%E8%AF%95%E9%A2%98-%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F-%E7%BD%91%E7%BB%9C/" target="_blank">
+                        <span class="chip bg-color">面试题 操作系统 网络</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fa fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2023/01/06/%E9%9D%A2%E8%AF%95-Java-%E9%80%9A%E5%85%B3%E7%A7%98%E7%B1%8D/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/28.jpg" class="responsive-img" alt="面试 Java 通关秘籍">
+                        
+                        <span class="card-title">面试 Java 通关秘籍</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            1 黑铁
+对象，集合，泛型，反射的理解。
+
+1.1 什么是多态？
+面向对象的三大特性：封装、继承、多态。从一定角度来看，封装和继承几乎都是为多态而准备的。多态的定义：指允许不同类的对象对同一消息做出响应。即同一消息可以根据发送对象的不同而采
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2023-01-06
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fa fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E9%9D%A2%E8%AF%95/" class="post-category" target="_blank">
+                                    面试
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E9%9D%A2%E8%AF%95%E9%A2%98-Java/" target="_blank">
+                        <span class="chip bg-color">面试题 Java</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+</div>
+
+
+<script>
+    $('#articleContent').on('copy', function (e) {
+        // IE8 or earlier browser is 'undefined'
+        if (typeof window.getSelection === 'undefined') return;
+
+        var selection = window.getSelection();
+        // if the selection is short let's not annoy our users.
+        if (('' + selection).length < Number.parseInt('120')) {
+            return;
+        }
+
+        // create a div outside of the visible area and fill it with the selected text.
+        var bodyElement = document.getElementsByTagName('body')[0];
+        var newdiv = document.createElement('div');
+        newdiv.style.position = 'absolute';
+        newdiv.style.left = '-99999px';
+        bodyElement.appendChild(newdiv);
+        newdiv.appendChild(selection.getRangeAt(0).cloneContents());
+
+        // we need a <pre> tag workaround.
+        // otherwise the text inside "pre" loses all the line breaks!
+        if (selection.getRangeAt(0).commonAncestorContainer.nodeName === 'PRE') {
+            newdiv.innerHTML = "<pre>" + newdiv.innerHTML + "</pre>";
+        }
+
+        var url = document.location.href;
+        newdiv.innerHTML += '<br />'
+            + '来源: JasonToJan's Blog<br />'
+            + '作者: Jason<br />'
+            + '链接: <a href="' + url + '">' + url + '</a><br />'
+            + '本文章著作权归作者所有，任何形式的转载都请注明出处。';
+
+        selection.selectAllChildren(newdiv);
+        window.setTimeout(function () { bodyElement.removeChild(newdiv); }, 200);
+    });
+</script>
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget">
+            <div class="toc-title"><i class="fa fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fa fa-list"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            // headingsOffset: -205,
+            headingSelector: 'h1, h2, h3, h4'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h1, h2, h3, h4').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).slideUp(500);
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).slideDown(500);
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+    
+
+</main>
+
+
+<script src="https://cdn.bootcss.com/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script>
+    MathJax.Hub.Config({
+        tex2jax: {inlineMath: [['$', '$'], ['\(', '\)']]}
+    });
+</script>
+
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+<!-- 代码语言 -->
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+<!-- 代码块复制 -->
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+<script type="text/javascript" src="/libs/codeBlock/clipboard.min.js"></script>
+<!-- 代码块收缩 -->
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script> 
+<!-- 代码块折行 -->
+<style type="text/css">code[class*="language-"], pre[class*="language-"] { white-space: pre !important; }</style>
+
+
+    <footer class="page-footer bg-color">
+    <div class="container row center-align">
+        <div class="col s12 m8 l8 copy-right">
+            &copy; 2023-2023 JasonJan. 版权所有
+
+            
+            &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
+            <span class="white-color">274.7k</span>
+            
+
+            <br>
+            <span id="sitetime"></span>
+
+            
+            
+            <br>
+            
+            <span id="busuanzi_container_site_pv" style='display:none'>
+                <i class="fa fa-heart-o"></i>
+                本站总访问量 <span id="busuanzi_value_site_pv" class="white-color"></span>
+            </span>
+            
+            
+            <span id="busuanzi_container_site_uv" style='display:none'>
+                人次,&nbsp;访客数 <span id="busuanzi_value_site_uv" class="white-color"></span> 人.
+            </span>
+            
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/JasonToJan" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fa fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:jason1211241203@gmail.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fa fa-envelope-open"></i>
+    </a>
+
+
+
+    <a href="https://zhihu.com/people/JasonJan" class="tooltipped" target="_blank" data-tooltip="访问我的知乎" data-position="top" data-delay="50">
+        <i class="fa fa-inverse">知</i>
+    </a>
+
+
+
+    <a href="http://wpa.qq.com/msgrd?v=3&uin=1211241203&site=qq&menu=yes" class="tooltipped" target="_blank" data-tooltip="访问我的知乎" data-position="top" data-delay="50">
+        <i class="fa fa-qq"></i>
+    </a>
+
+
+
+    <a href="https://weibo.com/JasonJan" class="tooltipped" target="_blank" data-tooltip="关注我的微博" data-position="top" data-delay="50">
+        <i class="fa fa-weibo"></i>
+    </a>
+
+
+
+    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
+        <i class="fa fa-rss"></i>
+    </a>
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+<!-- 不蒜子计数初始值纠正 -->
+<script>
+    $(document).ready(function () {
+
+        var int = setInterval(fixCount, 50);
+        var pvcountOffset = 80000;
+        var uvcountOffset = 20000;
+
+        function fixCount() {
+            if (document.getElementById("busuanzi_container_site_pv").style.display != "none") {
+                $("#busuanzi_value_site_pv").html(parseInt($("#busuanzi_value_site_pv").html()) + pvcountOffset);
+                clearInterval(int);
+            }
+            if ($("#busuanzi_container_site_pv").css("display") != "none") {
+                $("#busuanzi_value_site_uv").html(parseInt($("#busuanzi_value_site_uv").html()) + uvcountOffset); // 加上初始数据 
+                clearInterval(int);
+            }
+        }
+    });
+</script>
+
+<script language=javascript>
+    function siteTime() {
+        window.setTimeout("siteTime()", 1000);
+        var seconds = 1000;
+        var minutes = seconds * 60;
+        var hours = minutes * 60;
+        var days = hours * 24;
+        var years = days * 365;
+        var today = new Date();
+        var todayYear = today.getFullYear();
+        var todayMonth = today.getMonth() + 1;
+        var todayDate = today.getDate();
+        var todayHour = today.getHours();
+        var todayMinute = today.getMinutes();
+        var todaySecond = today.getSeconds();
+        /* Date.UTC() -- 返回date对象距世界标准时间(UTC)1970年1月1日午夜之间的毫秒数(时间戳)
+        year - 作为date对象的年份，为4位年份值
+        month - 0-11之间的整数，做为date对象的月份
+        day - 1-31之间的整数，做为date对象的天数
+        hours - 0(午夜24点)-23之间的整数，做为date对象的小时数
+        minutes - 0-59之间的整数，做为date对象的分钟数
+        seconds - 0-59之间的整数，做为date对象的秒数
+        microseconds - 0-999之间的整数，做为date对象的毫秒数 */
+        var t1 = Date.UTC(2017, 09, 11, 00, 00, 00); //北京时间2018-2-13 00:00:00
+        var t2 = Date.UTC(todayYear, todayMonth, todayDate, todayHour, todayMinute, todaySecond);
+        var diff = t2 - t1;
+        var diffYears = Math.floor(diff / years);
+        var diffDays = Math.floor((diff / days) - diffYears * 365);
+        var diffHours = Math.floor((diff - (diffYears * 365 + diffDays) * days) / hours);
+        var diffMinutes = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours) / minutes);
+        var diffSeconds = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours - diffMinutes * minutes) / seconds);
+        document.getElementById("sitetime").innerHTML = "本站已运行 " + diffYears + " 年 " + diffDays + " 天 " + diffHours + " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+    }/*因为建站时间还没有一年，就将之注释掉了。需要的可以取消*/
+    siteTime();
+</script>
+
+<link rel="stylesheet" href="/css/prism.css">
+<script src="/js/prism.js" async></script>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fa fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script src="/js/search.js"></script>
+<script type="text/javascript">
+$(function () {
+    searchFunc("/" + "search.xml", 'searchInput', 'searchResult');
+});
+</script>
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fa fa-angle-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    <script type="text/javascript"> var OriginTitile = document.title, st; document.addEventListener("visibilitychange", function () { document.hidden ? (document.title = "Σ(っ °Д °;)っ喔哟，崩溃啦！", clearTimeout(st)) : (document.title = "φ(゜▽゜*)♪咦，又好了！", st = setTimeout(function () { document.title = OriginTitile }, 3e3)) })
+    </script>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=查教程获取"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+        dataLayer.push(arguments);
+    }
+
+    gtag('js', new Date());
+    gtag('config', '查教程获取');
+</script>
+
+
+
+    
+    <script src="/libs/others/clicklove.js"></script>
+    
+
+    
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    <!-- 雪花特效 -->
+    
+
+</body>
+
+</html>

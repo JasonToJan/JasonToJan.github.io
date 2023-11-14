@@ -1,0 +1,2613 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="iOS swift 实现简易地图功能, Android iOS Flutter">
+    <meta name="baidu-site-verification" content="fmlEuI34ir" />
+    <meta name="google-site-verification" content="yCy2azpds5XSuGZvis6OuA-XIGF5GuGpYRAaGfD6o48" />
+    <meta name="360-site-verification" content="b7c11a830ef90fd1464ad6206bb7b6e7" />
+    <meta name="description" content="1 需求定义产品需要我们实现这样一个需求，就是根据一个地址（可能有经纬度也可能没有）,然后跳转到地图页面去，地图中间会显示这个地址。运行用户自行点击定位，这样中间会显示当前位置。允许左右滑动，地图中心也会随之变更。支持搜索功能，根据用户搜索">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>iOS swift 实现简易地图功能 | JasonToJan&#39;s Blog</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+    <style type="text/css">
+        
+    </style>
+
+    <script src="/libs/jquery/jquery-2.2.0.min.js"></script>
+    <script src="https://sdk.jinrishici.com/v2/browser/jinrishici.js" charset="utf-8"></script>
+    <script>
+        var _hmt = _hmt || [];
+        (function () {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?ce84511d3df71640a9378a69f6293044";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+    
+        <script>
+            (function(){
+                var bp = document.createElement('script');
+                var curProtocol = window.location.protocol.split(':')[0];
+                if (curProtocol === 'https') {
+                    bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+                }
+                else {
+                    bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+                }
+                var s = document.getElementsByTagName("script")[0];
+                s.parentNode.insertBefore(bp, s);
+            })();
+        </script>
+    
+
+    <script>
+        (function(){
+        var src = "https://jspassport.ssl.qhimg.com/11.0.1.js?d182b3f28525f2db83acfaaf6e696dba";
+        document.write('<script src="' + src + '" id="sozz"><\/script>');
+        })();
+    </script>
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">JasonToJan's Blog</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fa fa-navicon"></i></a>
+<ul class="right">
+    
+    <li class="hide-on-med-and-down">
+        <a href="/" class="waves-effect waves-light">
+            
+            <i class="fa fa-home"></i>
+            
+            <span>首页</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/tags" class="waves-effect waves-light">
+            
+            <i class="fa fa-tags"></i>
+            
+            <span>标签</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/categories" class="waves-effect waves-light">
+            
+            <i class="fa fa-bookmark"></i>
+            
+            <span>分类</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/archives" class="waves-effect waves-light">
+            
+            <i class="fa fa-archive"></i>
+            
+            <span>归档</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/about" class="waves-effect waves-light">
+            
+            <i class="fa fa-user-circle-o"></i>
+            
+            <span>关于</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/friends" class="waves-effect waves-light">
+            
+            <i class="fa fa-address-book"></i>
+            
+            <span>友情链接</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/contact" class="waves-effect waves-light">
+            
+            <i class="fa fa-comments"></i>
+            
+            <span>留言板</span>
+        </a>
+    </li>
+    
+    <li>
+        <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+            <i id="searchIcon" class="fa fa-search" title="搜索"></i>
+        </a>
+    </li>
+</ul>
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">JasonToJan's Blog</div>
+        <div class="logo-desc">
+            
+            专注移动端，热爱生活，热衷开发。
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li>
+            <a href="/" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-home"></i>
+                
+                首页
+            </a>
+        </li>
+        
+        <li>
+            <a href="/tags" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-tags"></i>
+                
+                标签
+            </a>
+        </li>
+        
+        <li>
+            <a href="/categories" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-bookmark"></i>
+                
+                分类
+            </a>
+        </li>
+        
+        <li>
+            <a href="/archives" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-archive"></i>
+                
+                归档
+            </a>
+        </li>
+        
+        <li>
+            <a href="/about" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-user-circle-o"></i>
+                
+                关于
+            </a>
+        </li>
+        
+        <li>
+            <a href="/friends" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-address-book"></i>
+                
+                友情链接
+            </a>
+        </li>
+        
+        <li>
+            <a href="/contact" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-comments"></i>
+                
+                留言板
+            </a>
+        </li>
+        
+        
+        <li><div class="divider"></div></li>
+        <li>
+            <a href="https://github.com/JasonToJan/hexo-matery-modified" class="waves-effect waves-light" target="_blank">
+                <i class="fa fa-github-square fa-fw"></i>Fork Me
+            </a>
+        </li>
+        
+    </ul>
+</div>
+
+        </div>
+
+        
+            <style>
+    .nav-transparent .github-corner {
+        display: none !important;
+    }
+
+    .github-corner {
+        position: absolute;
+        z-index: 10;
+        top: 0;
+        right: 0;
+        border: 0;
+        transform: scale(1.1);
+    }
+
+    .github-corner svg {
+        color: #0f9d58;
+        fill: #fff;
+        height: 64px;
+        width: 64px;
+    }
+
+    .github-corner:hover .octo-arm {
+        animation: a 0.56s ease-in-out;
+    }
+
+    .github-corner .octo-arm {
+        animation: none;
+    }
+
+    @keyframes a {
+        0%,
+        to {
+            transform: rotate(0);
+        }
+        20%,
+        60% {
+            transform: rotate(-25deg);
+        }
+        40%,
+        80% {
+            transform: rotate(10deg);
+        }
+    }
+</style>
+
+<a href="https://github.com/JasonToJan/hexo-matery-modified" class="github-corner tooltipped hide-on-med-and-down" target="_blank"
+   data-tooltip="Fork Me" data-position="left" data-delay="50">
+    <svg viewBox="0 0 250 250" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
+              fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
+              fill="currentColor" class="octo-body"></path>
+    </svg>
+</a>
+        
+    </nav>
+
+</header>
+
+    
+<script src="/libs/cryptojs/crypto-js.min.js"></script>
+<script>
+    (function() {
+        let pwd = '';
+        if (pwd && pwd.length > 0) {
+            if (pwd !== CryptoJS.SHA256(prompt('请输入访问本文章的密码')).toString(CryptoJS.enc.Hex)) {
+                alert('密码错误，将返回主页！');
+                location.href = '/';
+            }
+        }
+    })();
+</script>
+
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/24.jpg')">
+    <div class="container">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <div class="description center-align post-title">
+                        iOS swift 实现简易地图功能
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        margin: 35px 0 15px 0;
+        padding-left: 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #toc-content .is-active-link::before {
+        background-color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 20px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                        <a href="/tags/%E5%9C%B0%E5%9B%BE/" target="_blank">
+                            <span class="chip bg-color">地图</span>
+                        </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fa fa-bookmark fa-fw icon-category"></i>
+                        
+                        <a href="/categories/iOS/" class="post-category" target="_blank">
+                            iOS
+                        </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                <div class="post-date info-break-policy">
+                    <i class="fa fa-calendar-minus-o fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2023-01-31
+                </div>
+
+                <div class="post-author info-break-policy">
+                    <i class="fa fa-user-o fa-fw"></i>作者:&nbsp;&nbsp;
+                    
+                    Jason
+                    
+                </div>
+
+                
+                
+                <div class="info-break-policy">
+                    <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
+                    6.7k
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
+                    32 分
+                </div>
+                
+                
+
+                
+                <div id="busuanzi_container_page_pv" class="info-break-policy">
+                    <i class="fa fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
+                    <span id="busuanzi_value_page_pv"></span>
+                </div>
+                
+            </div>
+        </div>
+        <hr class="clearfix">
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h2 id="1-需求定义"><a href="#1-需求定义" class="headerlink" title="1 需求定义"></a>1 需求定义</h2><p>产品需要我们实现这样一个需求，就是根据一个地址（可能有经纬度也可能没有）,然后跳转到地图页面去，地图中间会显示这个地址。运行用户自行点击定位，这样中间会显示当前位置。允许左右滑动，地图中心也会随之变更。支持搜索功能，根据用户搜索关键词，获取一个搜索列表。然后就是一个提交功能，这样需要将经纬度提交到服务端。</p>
+<p>大致是这样的需求。<br>实现效果是这样的：<br><img src=map.png></p>
+<h2 id="2-需求分析"><a href="#2-需求分析" class="headerlink" title="2 需求分析"></a>2 需求分析</h2><p>根据产品的需求，我们考虑接入高德地图。所以我们需要事先调研下如何接入高德才行。</p>
+<p>其实这个应该非常简单，高德提供了Map，我们只需要将中间的坐标设置为我们自己的坐标。如果没有坐标，我们也调研高德的搜索接口，将搜索结果默认第一条，这应该是最准的吧，然后设置给高德的中间坐标即可。</p>
+<p>支持用户滑动，高德就应该支持的，这里应该会提供一个代理，我们在这个代理的回调类里面重新去调用下搜索接口，就能出现附近10条地址。</p>
+<p>二指放大，高德应该也是支持的，不需要我们额外设置啥。</p>
+<p>另外就是定位可能复杂一点，需要实现获取下定位权限，如果没有权限，需要跳转到系统设置。定位就不需要高德支持了，我们直接调用系统接口，获取经纬度，然后设置给高德就行了。</p>
+<h2 id="3-准备工作：了解高德"><a href="#3-准备工作：了解高德" class="headerlink" title="3 准备工作：了解高德"></a>3 准备工作：了解高德</h2><p>首先附上高德官方文档：<a target="_blank" rel="noopener" href="https://lbs.amap.com/api/ios-sdk/summary">https://lbs.amap.com/api/ios-sdk/summary</a></p>
+<p>申请key这些工作就不用交给我们了，让产品自己申请吧。</p>
+<p>接入高德地图，做很复杂的需求，可以参考这篇文档，写得还不错：<br><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/770728626874">https://www.jianshu.com/p/770728626874</a> 但是这个是objective-C，不过基本原理是类似的，还是有参考价值的。</p>
+<p>另外附上高德地图可配置参数：</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>logoCenter</td>
+<td>CGPoint</td>
+<td>可设置Logo的位置。必须在mapView.bounds之内，否则会被忽略。</td>
+</tr>
+<tr>
+<td>showsCompass</td>
+<td>Bool</td>
+<td>是否显示指南针。</td>
+</tr>
+<tr>
+<td>compassOrigin</td>
+<td>CGPoint</td>
+<td>设置指南针的位置。</td>
+</tr>
+<tr>
+<td>showsScale</td>
+<td>Bool</td>
+<td>是否显示比例值。</td>
+</tr>
+<tr>
+<td>scaleOrigin</td>
+<td>CGPoint</td>
+<td>设置比例尺的位置。</td>
+</tr>
+<tr>
+<td>zoomEnabled</td>
+<td>Bool</td>
+<td>是否开启缩放手势，默认true。</td>
+</tr>
+<tr>
+<td>scrollEnabled</td>
+<td>Bool</td>
+<td>是否开启滑动手势，默认true。</td>
+</tr>
+<tr>
+<td>rotateEnabled</td>
+<td>Bool</td>
+<td>是否开启旋转手势，默认true。</td>
+</tr>
+<tr>
+<td>rotateCameraEnabled</td>
+<td>Bool</td>
+<td>是否开启倾斜旋转手势，默认true。用户可以在地图上放置两个手指，移动它们一起向下或向上去增加或减小倾斜角。</td>
+</tr>
+<tr>
+<td>setZoomLevel</td>
+<td>CGFloat</td>
+<td>改变地图缩放级别。范围从3级到19级，共17级。级别越高，展示的内容越细，例如街道等等。</td>
+</tr>
+<tr>
+<td>setCenter</td>
+<td>CLLocationCoordinate2D</td>
+<td>改变地图中心的位置。传递具体的经纬度。</td>
+</tr>
+</tbody>
+</table>
+
+<p>另外一个就是需要我们在AppDelegate中注册key：</p>
+<pre><code class="line-numbers language-Swift"> /// 设置高德地图
+func configAMap() &#123;
+    AMapServices.shared().apiKey = &quot;你申请的key&quot;
+    AMapServices.shared().enableHTTPS = true
+&#125;
+</code></pre>
+<p>这里，准备工作基本就完成了。</p>
+<h2 id="4-代码实现"><a href="#4-代码实现" class="headerlink" title="4 代码实现"></a>4 代码实现</h2><h3 id="4-1-新建两个实体类"><a href="#4-1-新建两个实体类" class="headerlink" title="4.1 新建两个实体类"></a>4.1 新建两个实体类</h3><pre><code class="line-numbers language-Swift">class GMLocationPickerLocationResult: NSObject &#123;
+    
+    //MARK: - property
+    
+    var coordinate: CLLocationCoordinate2D?     // 经纬度
+    
+    var poiName: String = &quot;&quot;                    // 名称
+    
+    var province: String = &quot;&quot;                   // 省
+    var provinceCode: String = &quot;&quot;               // 省编码
+    var city: String = &quot;&quot;                       // 市
+    var citycode: String = &quot;&quot;                   // 市编码
+    var district: String = &quot;&quot;                   // 区
+    var adcode: String = &quot;&quot;                     // 区编码
+    var township: String = &quot;&quot;                   // 乡镇街道
+    var towncode: String = &quot;&quot;                   // 乡镇街道编码(截取前9位)
+    
+    var detailAddress: String = &quot;&quot;              // 详细地址
+    var formattedAddress: String = &quot;&quot;           // 格式化全地址(4级+详细)
+    
+    var locationInfo: GMLocationPickerLocationInfo? //
+    
+    /// 模型转换
+    convenience init(location: AMapGeoPoint, reGeocode: AMapReGeocode, locationInfo: GMLocationPickerLocationInfo?) &#123;
+        self.init()
+        
+        let latitude = location.latitude
+        let longitude = location.longitude
+        self.coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+        
+        if let locationInfo = locationInfo &#123;
+            // 1.转换基础信息
+            self.poiName = locationInfo.poiName
+            self.province = locationInfo.province
+            self.city = locationInfo.city
+            self.district = locationInfo.district
+            self.township = locationInfo.street
+            self.detailAddress = locationInfo.address
+            self.formattedAddress = locationInfo.province + locationInfo.city + locationInfo.district + locationInfo.address
+        &#125;
+        if let addressComponent = reGeocode.addressComponent &#123;
+            // 2.转换所有信息
+            var poiName = &quot;&quot;
+            if let locationInfo = locationInfo &#123;
+                poiName = locationInfo.poiName
+            &#125; else if let aoisName = reGeocode.aois.first?.name &#123;
+                poiName = aoisName
+            &#125; else if let roadinterName = reGeocode.roadinters.first?.firstName &#123;
+                poiName = roadinterName
+            &#125; else &#123;
+                poiName = addressComponent.township ?? &quot;&quot;
+            &#125;
+            self.poiName = self.poiName.ty_forEmpty(poiName)
+            
+            self.province = self.province.ty_forEmpty(addressComponent.province ?? &quot;&quot;)
+            self.city = self.city.ty_forEmpty(addressComponent.city ?? &quot;&quot;)
+            self.district = self.district.ty_forEmpty(addressComponent.district ?? &quot;&quot;)
+            self.township = self.township.ty_forEmpty(addressComponent.township ?? &quot;&quot;)
+            self.formattedAddress = self.formattedAddress.ty_forEmpty(reGeocode.formattedAddress ?? &quot;&quot;)
+        &#125;
+        if let addressComponent = reGeocode.addressComponent &#123;
+            // 设置编码
+            self.citycode = addressComponent.citycode ?? &quot;&quot;
+            self.adcode = addressComponent.adcode ?? &quot;&quot;
+            self.towncode = String(addressComponent.towncode.prefix(9)) // 截取前九位
+        &#125;
+        // 设置省份编码 用自带plist
+        if let globalAddressModel = globalAddressModel &#123;
+            for currProvince in globalAddressModel.data &#123;
+                if currProvince.name == self.province &#123;
+                    self.provinceCode = currProvince.code
+                    break
+                &#125;
+            &#125;
+        &#125;
+        self.locationInfo = locationInfo
+    &#125;
+&#125;
+</code></pre>
+<p>这个用了一个convenience关键字来声明init，主要是覆写的作用，重载。可以参考这篇文章：<a target="_blank" rel="noopener" href="https://www.jianshu.com/p/09c6c88ed61e">https://www.jianshu.com/p/09c6c88ed61e</a>。这里面初始化已经用了高德的实体类AMapGeoPoint,这个包含了经纬度；AMapReGeocode，这个是逆地址编码；然后还有一个自定义实体，这个是Info，上面那个是result，info如下定义：</p>
+<pre><code class="line-numbers language-Swift">
+class GMLocationPickerLocationInfo: NSObject &#123;
+    
+    //MARK: - property
+    
+    var coordinate: CLLocationCoordinate2D?     // 经纬度
+    
+    var poiName: String = &quot;&quot;                    // 名称
+    var province: String = &quot;&quot;                   // 省
+    var city: String = &quot;&quot;                       // 市
+    var district: String = &quot;&quot;                   // 区
+    var street: String = &quot;&quot;                     // 街道(*)
+    var number: String = &quot;&quot;                     // 门牌号(*)
+    
+    var address: String = &quot;&quot;                    // 地址(街道 + 门牌)
+    
+    var distance: Int = 0                       // 与选中点距离
+    
+    // UI
+    
+    var ui_isSelected = false                   // cell是否选中中
+    
+    //MARK: - life cycle
+    
+    // ------------------------- map 内转换 -------------------------
+    
+    /// 模型转换 根据 [实时定位]获取的 经纬度 &amp; 逆地理信息
+    convenience init(coordinate: CLLocationCoordinate2D?, reGeocode: AMapLocationReGeocode?) &#123;
+        self.init()
+        
+        self.coordinate = coordinate
+        
+        self.poiName = reGeocode?.poiName ?? &quot;&quot;
+        self.province = reGeocode?.province ?? &quot;&quot;
+        self.city = reGeocode?.city ?? &quot;&quot;
+        self.district = reGeocode?.district ?? &quot;&quot;
+        self.street = reGeocode?.street ?? &quot;&quot;
+        self.number = reGeocode?.number ?? &quot;&quot;
+        self.address = (self.street + self.number)
+        if self.street.isEmpty || self.number.isEmpty &#123;
+            let detailAddress = reGeocode?.formattedAddress ?? &quot;&quot;
+            self.address = abbreviationAddressIn(detailAddress: detailAddress, province: province, city: city, district: district)
+        &#125;
+        
+        self.distance = 0
+    &#125;
+    
+    /// 模型转换 根据 [搜索&#123;附近|关键词&#125;]获取的 POI模型
+    convenience init(mapPOI: AMapPOI) &#123;
+        self.init()
+        
+        if let location = mapPOI.location &#123;
+            let latitude = location.latitude
+            let longitude = location.longitude
+            self.coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+        &#125;
+        
+        self.poiName = mapPOI.name
+        self.province = mapPOI.province
+        self.city = mapPOI.city
+        self.district = mapPOI.district
+        self.street = &quot;&quot;
+        self.number = &quot;&quot;
+        self.address = mapPOI.address
+        
+        self.distance = mapPOI.distance // 周边搜索可用
+    &#125;
+    
+    /// 模型转换 根据 [逆地理编码]获取的 经纬度 &amp; 逆地理编码结果
+    convenience init(location: AMapGeoPoint, reGeocode: AMapReGeocode) &#123;
+        self.init()
+        
+        let addressComponent = reGeocode.addressComponent
+        
+        let latitude = location.latitude
+        let longitude = location.longitude
+        self.coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+        
+        if let aoisName = reGeocode.aois.first?.name &#123;
+            self.poiName = aoisName
+        &#125; else if let roadinterName = reGeocode.roadinters.first?.firstName &#123;
+            self.poiName = roadinterName
+        &#125; else &#123;
+            self.poiName = addressComponent?.township ?? &quot;&quot;
+        &#125;
+        self.province = addressComponent?.province ?? &quot;&quot;
+        self.city = addressComponent?.city ?? &quot;&quot;
+        self.district = addressComponent?.district ?? &quot;&quot;
+        self.street = addressComponent?.streetNumber?.street ?? &quot;&quot;
+        self.number = addressComponent?.streetNumber?.number ?? &quot;&quot;
+        self.address = (self.street + self.number)
+        if self.street.isEmpty || self.number.isEmpty &#123;
+            let detailAddress = reGeocode.formattedAddress ?? &quot;&quot;
+            self.address = abbreviationAddressIn(detailAddress: detailAddress, province: province, city: city, district: district)
+        &#125;
+        self.distance = 0
+    &#125;
+    
+    /// 详细地址中获取缩略地址
+    /// - Parameters:
+    ///   - detailAddress: 详细地址
+    ///   - province: 省份
+    ///   - city: 城市
+    ///   - district: 区域
+    private func abbreviationAddressIn(detailAddress: String, province: String, city: String, district: String) -&gt; String &#123;
+        var address = detailAddress
+        address = address.replacingOccurrences(of: province, with: &quot;&quot;)
+        address = address.replacingOccurrences(of: city, with: &quot;&quot;)
+        address = address.replacingOccurrences(of: city, with: &quot;&quot;)
+        return address
+    &#125;
+    
+    // ------------------------- model 转换 -------------------------
+    
+    /// 模型转换 根据 地理信息结果模型
+    convenience init(locationResult: GMLocationPickerLocationResult) &#123;
+        self.init()
+        
+        self.coordinate = locationResult.coordinate
+        
+        self.poiName = locationResult.poiName
+        self.province = locationResult.province
+        self.city = locationResult.city
+        self.district = locationResult.district
+        let street = locationResult.township
+        self.address = street
+        
+        self.distance = 0
+    &#125;
+    
+    /// 模型转换 根据 仓库模型
+    convenience init(warehouseInfo: GMWarehouseInfoHomeList) &#123;
+        self.init()
+        
+        self.coordinate = warehouseInfo.cus_coordinate
+        
+        self.poiName = warehouseInfo.name
+        self.province = warehouseInfo.province
+        self.city = warehouseInfo.city
+        self.district = warehouseInfo.region
+        self.street = &quot;&quot;
+        self.number = &quot;&quot;
+        self.address = warehouseInfo.address
+        
+        self.distance = 0
+    &#125;
+    
+    /// 模型转换 根据 门店模型
+    convenience init(storeInfo: GMStoreInfoHomeModel) &#123;
+        self.init()
+        
+        self.coordinate = storeInfo.cus_coordinate
+        
+        self.poiName = storeInfo.shopName
+        self.province = storeInfo.shopProvince
+        self.city = storeInfo.shopCity
+        self.district = storeInfo.shopCounty
+        self.street = storeInfo.shopStreet
+        self.number = &quot;&quot;
+        self.address = storeInfo.shopAddress
+        
+        self.distance = 0
+    &#125;
+&#125;
+</code></pre>
+<p>这个是地图内部使用，上面那个实体，是为了更好对接服务端设定的一个实体。</p>
+<h3 id="4-2-外部类定义"><a href="#4-2-外部类定义" class="headerlink" title="4.2 外部类定义"></a>4.2 外部类定义</h3><pre><code class="line-numbers language-Swift">/// 地图选择 闭包，向外吐出去
+typealias GMLocationResultHandler = (GMLocationPickerLocationResult?) -&gt; Swift.Void
+
+protocol GMLocationPickerControllerDelegate: AnyObject &#123;
+    /// 提交所选位置
+    func locationPickerController(_ collection: GMLocationPickerController, didSubmit locationInfo: GMLocationPickerLocationResult)
+    
+    /// 页面将要pop出
+    func locationPickerControllerWillPop(_ collection: GMLocationPickerController)
+&#125;
+
+/// 从哪里进来的 枚举类
+enum GMLocationPickerFor &#123;
+    case warehouseCreate                                        // 仓库创建
+    case warehouseEdit(warehouseInfo: GMWarehouseInfoHomeList)  // 仓库编辑
+    case storeEdit(storeInfo: GMStoreInfoHomeModel)             // 门店编辑
+&#125;
+
+/// 选择地理位置的原因 什么时候走高德接口
+enum GMLocationPickerRegionChageFor &#123;
+    case located                                                // 实时定位
+    case itemSelected                                           // 搜索项选择
+    case keywordSearchSelected                                  // 关键词搜索 自动选择(第一个)
+    case slideByCustomer                                        // 用户滑动逆地理
+&#125;
+</code></pre>
+<p>这里定义了可能需要的枚举类和协议。<br>枚举类主要跟我们自己业务有关系了，协议也是跟业务有关系。这里并不是实现地图的必须。</p>
+<h3 id="4-3-UI声明"><a href="#4-3-UI声明" class="headerlink" title="4.3 UI声明"></a>4.3 UI声明</h3><pre><code class="line-numbers language-Swift">class GMLocationPickerController: GMBaseViewController &#123;
+
+    //MARK: - property
+    
+    // UI
+    
+    private weak var btn_submit: UIButton!                      // 提交按钮
+    private weak var mapView: MAMapView!                        // 地图
+    private weak var textF_search: UITextField!                 // 搜索 输入栏
+    private weak var tableView: TYTableView!                    // 搜索 列表
+    private weak var ai_spinner: UIActivityIndicatorView!       // 加载loading
+    private weak var btn_located: UIButton!                     // 定位按钮
+    
+    private weak var imgV_pointAnnotation: UIImageView!         // 自定义大头针
+</code></pre>
+<p>这里声明了实现地图用到的一些材料，当然最关键的是MAMapView了，这个View是高德提供的哦。</p>
+<h3 id="4-4-数据声明"><a href="#4-4-数据声明" class="headerlink" title="4.4 数据声明"></a>4.4 数据声明</h3><pre><code class="line-numbers language-Swift">// Data
+var navTitle: String?                                       // Nav标题 (可选)
+weak var delegate: GMLocationPickerControllerDelegate?      // 代理
+var locationResultBlock: GMLocationResultHandler?
+
+private var locationInfos = [GMLocationPickerLocationInfo]()// 搜索 地点信息
+private var selectingLocationInfo: GMLocationPickerLocationInfo? // 选中地点信息
+
+// Pre Data
+
+var preLocationInfo: GMLocationPickerLocationInfo?          // 预地理位置信息
+var preCoordinate: CLLocationCoordinate2D?                  // 预经纬度
+var preKeyword: String?                                     // 预搜索关键词
+var pickerFor: GMLocationPickerFor = .warehouseCreate       // 地图选择用于
+</code></pre>
+<p>这里大致列举了需要用的数据。<br>预数据，就是外部传过来的数据，然后我们新建了两个info实体报错搜索的地址和选中的地址。</p>
+<h3 id="4-5-其它成员声明"><a href="#4-5-其它成员声明" class="headerlink" title="4.5 其它成员声明"></a>4.5 其它成员声明</h3><pre><code class="line-numbers language-Swift">// Tool
+private var search: AMapSearchAPI!                          // 地图 搜索功能
+private var locationManager: AMapLocationManager!           // 地图 定位功能
+private var authorizationManager = TYLocationAuthorization()// 权限管理
+
+// flag
+
+private var lastSearchKey = &quot;&quot;                              // 最后搜索字段
+private var isRegionChangedFromCustomer = false             // 地图领域变化原因为用户手动滑动
+private var isReGeoRequestForSubmit = false                 // 逆地理请求用于提交
+private var viewDidAppear = false  
+</code></pre>
+<p>这里是一些工具和一些flag变量，工具包含地图搜索接口和地图定位功能工具，这些都是高德提供，另外权限是自定义的一个工具来处理的。</p>
+<h3 id="4-6-生命周期之viewDidLoad"><a href="#4-6-生命周期之viewDidLoad" class="headerlink" title="4.6 生命周期之viewDidLoad"></a>4.6 生命周期之viewDidLoad</h3><p>这个走一次，看下做了什么：</p>
+<pre><code class="line-numbers language-Swift">override func viewDidLoad() &#123;
+        super.viewDidLoad()
+        self.layoutSubviews()
+        self.loadData()
+    &#125;
+</code></pre>
+<p>加载了子View，然后去加载数据。</p>
+<pre><code class="line-numbers language-Swift">private func layoutSubviews() &#123;
+        
+        self.view.backgroundColor = .white
+        
+        // ------------------------- 导航栏 -------------------------
+        let submitBtnF: UIFont = .pingFangRegular(size: 16.0)
+        
+        let btn_submit = UIButton()
+        btn_submit.isEnabled = false
+        btn_submit.ty_setButtonWith(text: &quot;提交&quot;, font: submitBtnF, color: .ty_409EFF, state: .normal)
+        btn_submit.ty_setButtonWith(text: &quot;提交&quot;, font: submitBtnF, color: .ty_409EFF.alpha(0.5), state: .disabled)
+        btn_submit.addTarget(self, action: #selector(act_submitBtnClicked(button:)), for: .touchUpInside)
+        let item_submit = UIBarButtonItem(customView: btn_submit)
+        self.navigationItem.rightBarButtonItem = item_submit
+        self.btn_submit = btn_submit
+        
+        // ------------------------- 底部控件 -------------------------
+        let searchListBGW: CGFloat = yScreenWidth
+        let searchListBGH: CGFloat = 104.0
+        let searchListBGR = CGRect(x: 0, y: 0, width: searchListBGW, height: searchListBGH)
+        let searchListBGRadius = 16.0
+        let searchListBGRadiusS = CGSize(width: searchListBGRadius, height: searchListBGRadius)
+        
+        let view_searchListBG = UIView.ty_viewWith(bgColor: .ty_ThemeWhite)
+        view_searchListBG.ty_setCornerWith(rect: searchListBGR, corners: [.topLeft, .topRight], radii: searchListBGRadiusS)
+        self.view.addSubview(view_searchListBG)
+        view_searchListBG.snp.makeConstraints &#123; make in
+            make.bottom.equalTo(self.view.snp.bottom)
+            make.centerX.equalTo(self.view)
+            make.width.equalTo(searchListBGW)
+            make.height.equalTo(searchListBGH)
+        &#125;
+        
+        // 搜索栏
+        let searchBtnF: UIFont = .pingFangRegular(size: 14.0)
+        let searchBtnW: CGFloat = 80.0
+        let searchBtnH: CGFloat = 32.0
+        let searchBarTextFF: UIFont = .pingFangRegular(size: 14.0)
+        let searchBarTextFLeftImageS = CGSize(width: 16.0, height: 16.0)
+        let searchBarTextFLeftViewS = CGSize(width: 32.0, height: 32.0)
+        let searchBarTextFR: CGFloat = 10.0
+        let searchBarTextFH: CGFloat = searchBtnH
+        
+        // 搜索按钮
+        let btn_search = UIButton()
+        btn_search.ty_setButtonWith(text: &quot;搜索&quot;, font: searchBtnF, color: .ty_TextWhite, state: .normal)
+        btn_search.ty_setBackgroundColor(.ty_409EFF, state: .normal)
+        btn_search.ty_setCornerRadius(searchBtnH/2.0)
+        btn_search.addTarget(self, action: #selector(act_searchBtnClicked(button:)), for: .touchUpInside)
+        
+        view_searchListBG.addSubview(btn_search)
+        btn_search.snp.makeConstraints &#123; make in
+            make.top.equalTo(view_searchListBG).offset(ySuperVerPad)
+            make.right.equalTo(view_searchListBG).offset(-ySuperHorPad)
+            make.width.equalTo(searchBtnW)
+            make.height.equalTo(searchBtnH)
+        &#125;
+        
+        // 搜索栏
+        let textF_search = UITextField.ty_textFieldWith(font: searchBarTextFF, color: .ty_222222)
+        textF_search.backgroundColor = .ty_F7F9FA
+        textF_search.ty_setPlaceholderWith(placeholder: &quot;请输入地址&quot;, color: .ty_9B9DA7, font: searchBarTextFF)
+        textF_search.ty_setLeftPaddingImage(imageName: &quot;locationPicker_img_search&quot;, imageSize: searchBarTextFLeftImageS, paddingSize: searchBarTextFLeftViewS)
+        textF_search.ty_setCornerRadius(searchBarTextFH/2.0)
+        
+        textF_search.addTarget(self, action: #selector(act_searchTextFEditChange(textF:)), for: .editingChanged)
+        textF_search.addObserver(self, forKeyPath: &quot;text&quot;, options: [.new, .old], context: nil)
+        
+        textF_search.delegate = self
+        textF_search.returnKeyType = .search
+        
+        view_searchListBG.addSubview(textF_search)
+        self.textF_search = textF_search
+        textF_search.snp.makeConstraints &#123; make in
+            make.top.equalTo(view_searchListBG).offset(ySuperVerPad)
+            make.left.equalTo(view_searchListBG).offset(ySuperHorPad)
+            make.right.equalTo(btn_search.snp.left).offset(-searchBarTextFR)
+            make.height.equalTo(searchBarTextFH)
+        &#125;
+        
+        // TableView
+        let tableViewT: CGFloat = 6.0
+        
+        let tableView = TYTableView(delegate: self, dataSource: self, style: .plain)
+        tableView.showsVerticalScrollIndicator = false
+        view_searchListBG.addSubview(tableView)
+        self.tableView = tableView
+        tableView.snp.makeConstraints &#123; make in
+            make.top.equalTo(textF_search.snp.bottom).offset(tableViewT)
+            make.left.equalTo(view_searchListBG)
+            make.right.equalTo(view_searchListBG)
+            make.bottom.equalTo(view_searchListBG)
+        &#125;
+        
+        // loading 旋转图
+        let indicatorStyle: UIActivityIndicatorView.Style
+        if #available(iOS 13.0, * ) &#123;
+            indicatorStyle = .medium
+        &#125; else &#123;
+            indicatorStyle = .gray
+        &#125;
+        let ai_spinner = UIActivityIndicatorView(style: indicatorStyle)
+        ai_spinner.startAnimating()
+        view_searchListBG.addSubview(ai_spinner)
+        self.ai_spinner = ai_spinner
+        ai_spinner.snp.makeConstraints &#123; make in
+            make.center.equalTo(view_searchListBG)
+        &#125;
+        
+        // ------------------------- mapView -------------------------
+        let mapViewW: CGFloat = yScreenWidth
+        let mapViewH: CGFloat = yScreenHeight - searchListBGH + searchListBGRadius/2.0
+        let cus_mapViewR = CGRect(x: 0, y: 0, width: mapViewW, height: mapViewH)
+        
+        // MapView
+        let mapView = MAMapView(frame: cus_mapViewR)
+        mapView.zoomLevel = 13.0                // 缩放比例
+        mapView.showsCompass = false            // 显示罗盘
+        mapView.showsScale = false              // 显示比例尺
+        mapView.delegate = self
+        self.view.addSubview(mapView)
+        self.mapView = mapView
+        
+        // 大头针
+        let pointAnnotationImgVW: CGFloat = 40.0
+        let pointAnnotationImgVH: CGFloat = 40.0
+        let imgV_pointAnnotation = UIImageView.ty_imageViewWith(imageName: &quot;locationPicker_icon_point_annotation&quot;)
+        self.view.addSubview(imgV_pointAnnotation)
+        self.imgV_pointAnnotation = imgV_pointAnnotation
+        imgV_pointAnnotation.snp.makeConstraints &#123; make in
+            make.centerX.equalTo(mapView)
+            make.centerY.equalTo(mapView).offset(-pointAnnotationImgVH/2.0)
+            make.width.equalTo(pointAnnotationImgVW)
+            make.height.equalTo(pointAnnotationImgVH)
+        &#125;
+        
+        // 回归定位按钮
+        let locatedBtnWH: CGFloat = 46.0
+        let locatedBtnR: CGFloat = 9.0
+        let locatedBtnB: CGFloat = 9.0
+        
+        let btn_located = UIButton()
+        btn_located.setImage(UIImage(named: &quot;locationPicker_btn_located_Blue&quot;), for: .selected)     // 在当前定位
+        btn_located.setImage(UIImage(named: &quot;locationPicker_btn_located_Black&quot;), for: .normal)      // 不在当前定位
+        btn_located.addTarget(self, action: #selector(act_locatedBtnClicked(button:)), for: .touchUpInside)
+        self.view.addSubview(btn_located)
+        self.btn_located = btn_located
+        btn_located.snp.makeConstraints &#123; make in
+            make.right.equalTo(self.view).offset(-locatedBtnR)
+            make.bottom.equalTo(view_searchListBG.snp.top).offset(-locatedBtnB)
+            make.width.equalTo(locatedBtnWH)
+            make.height.equalTo(locatedBtnWH)
+        &#125;
+        
+        self.view.bringSubviewToFront(view_searchListBG)
+    &#125;
+</code></pre>
+<p>逻辑也是非常清晰，一个一个把视图堆叠进去了。<br>这里大头针跟地图一点关系没有，这个只是把大头针放在中间而已。没有跟地图绑定任何关系。</p>
+<p>然后去加载数据：</p>
+<pre><code class="line-numbers language-Swift">private func loadData() &#123;
+    // 设置标题
+    if let navTitle = self.navTitle, !navTitle.isEmpty &#123;
+        self.title = &quot;\(navTitle) 地图定位&quot;
+    &#125; else &#123;
+        self.title = &quot;地图定位&quot;
+    &#125;
+    
+    // 定位功能
+    // 更新App是否显示隐私弹窗的状态，隐私弹窗是否包含高德SDK隐私协议内容的状态
+    AMapLocationManager.updatePrivacyShow(.didShow, privacyInfo: .didContain)
+    // 更新用户授权高德SDK隐私协议状态
+    AMapLocationManager.updatePrivacyAgree(.didAgree)
+    let locationManager = AMapLocationManager()
+    locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters
+    if #available(iOS 14.0, *) &#123;
+        locationManager.locationAccuracyMode = .fullAccuracy
+    &#125;
+    self.locationManager = locationManager
+    
+    // 搜索
+    let search = AMapSearchAPI()
+    search?.timeout = 10
+    search?.delegate = self
+    self.search = search
+    
+    // 预地理位置信息处理
+    self.data_preLocatedHandle(locationInfo: self.preLocationInfo,
+                                preCoordinate: self.preCoordinate,
+                                preKeyword: self.preKeyword)
+&#125;
+</code></pre>
+<p>这里设置了标题，然后就去走预地理位置信息处理的方法。这里的pre相关的数据，在跳转前，就给这个controller赋值了，这里跟Android不太一样，Android还要通过intent来传，它这个居然可以直接用controller的实例传值。</p>
+<p>具体预制方法为：</p>
+<pre><code class="line-numbers language-Swift">/// 根据预地理位置信息 按照优先级 决定预定位方式
+func data_preLocatedHandle(locationInfo: GMLocationPickerLocationInfo? = nil,
+                            preCoordinate: CLLocationCoordinate2D? = nil, preKeyword: String? = nil) &#123;
+    
+    // 预定位处理规则
+    // 完整数据 - 经纬度 - 位置关键词 - 实时定位 - 默认&#39;北京&#39;定位
+    if let preLocationInfo = locationInfo &#123;
+        // 1.完整信息
+        if let coordinate = preLocationInfo.coordinate,
+            coordinate.latitude != 0, coordinate.longitude != 0 &#123;
+            // 1.1 经纬度信息完整
+            self.data_changeRegionTo(preLocationInfo, for: .itemSelected)
+            self.map_searchLocationForNearby()  // 搜索附近
+        &#125; else if !preLocationInfo.address.isEmpty &#123;
+            // 1.2 无经纬度、有地名：搜索地名
+            let searchKey = &quot;\(preLocationInfo.city)\(preLocationInfo.district)\(preLocationInfo.address)&quot;
+            self.data_preLocatedHandle(preKeyword: searchKey)
+        &#125; else &#123;
+            // 1.3 都没有：默认操作
+            self.data_preLocatedHandle()
+        &#125;
+    &#125; else if let preCoordinate = preCoordinate &#123;
+        // 2.显示经纬度位置
+        self.mapView.centerCoordinate = preCoordinate
+        self.map_searchLocationForReGeo(isForSubmit: false) // 搜索逆地理编码
+    &#125; else if let preKeyword = preKeyword, preKeyword.count &gt; 0 &#123;
+        // 3.关键词配置
+        self.textF_search.text = preKeyword
+        self.act_searchBtnClicked(button: nil)
+    &#125; else &#123;
+        var isLocationEnable = self.authorizationManager.isLocationAuthroizationEnable()
+        if #available(iOS 14.0, *) &#123;
+            isLocationEnable = isLocationEnable &amp;&amp; self.authorizationManager.isAccuracyAuthorizationFull()
+        &#125;
+        if isLocationEnable &#123;
+            // 4.实时定位
+            self.act_locatedBtnClicked(button: nil)
+        &#125; else &#123;
+            // 5.默认北京
+            self.mapView.centerCoordinate = CLLocationCoordinate2D(latitude: 39.909115, longitude: 116.397535)
+            self.map_searchLocationForReGeo(isForSubmit: false) // 搜索逆地理编码
+        &#125;
+    &#125;
+&#125;
+</code></pre>
+<p>这里就是一段逻辑，如果之前有地址，然后如何去显示的逻辑。如何去移动地图。<br>主要是用了一个 self.mapView.centerCoordinate来设置地图中心坐标，然后这里调用搜索词是走了这个方法：</p>
+<pre><code class="line-numbers language-Swift">/// 根据当前地图中间位置 搜索逆地理
+/// - Parameter isForSubmit: 用于提交 or 用户滑动地理获取(顺带搜索附近)
+private func map_searchLocationForReGeo(isForSubmit: Bool) &#123;
+    self.isReGeoRequestForSubmit = isForSubmit
+    if isForSubmit &#123;
+        self.ty_showLoadingHUD()
+    &#125; else &#123;
+        // 清空列表数据
+        self.data_reloadTableViewToEmpty(forRequest: true)
+    &#125;
+    
+    // 取消上一个请求
+    self.search.cancelAllRequests()
+    
+    // 逆地理位置请求
+    let coordinate = self.mapView.centerCoordinate
+    let regeo = AMapReGeocodeSearchRequest()
+    regeo.location = AMapGeoPoint.location(withLatitude: coordinate.latitude, longitude: coordinate.longitude)
+    regeo.requireExtension = true
+    self.search.aMapReGoecodeSearch(regeo)
+&#125;
+</code></pre>
+<p>这里根据地图中心位置调用了搜索接口,具体请求在这里：</p>
+<pre><code class="line-numbers language-Swift">self.search.aMapReGoecodeSearch(regeo)
+</code></pre>
+<p>如何搜索附近地址呢？</p>
+<pre><code class="line-numbers language-Swift">/// 根据选中位置 搜索附近POI
+private func map_searchLocationForNearby() &#123;
+    guard let coordinate = self.selectingLocationInfo?.coordinate else &#123; return &#125;
+    // 清空列表数据
+    self.data_reloadTableViewToEmpty(forRequest: true)
+    
+    // 取消上一个请求
+    self.search.cancelAllRequests()
+    
+    // 附近搜索请求
+    let aroundRequest = AMapPOIAroundSearchRequest()
+    let geoPoint = AMapGeoPoint.location(withLatitude: coordinate.latitude,
+                                            longitude: coordinate.longitude)
+    aroundRequest.location = geoPoint
+//        aroundRequest.special = true
+    self.search.aMapPOIAroundSearch(aroundRequest)
+&#125;
+</code></pre>
+<p>跟上面方法也比较类似。</p>
+<h3 id="4-7-生命周期之viewWillAppear"><a href="#4-7-生命周期之viewWillAppear" class="headerlink" title="4.7 生命周期之viewWillAppear"></a>4.7 生命周期之viewWillAppear</h3><pre><code class="line-numbers language-Swift">override func viewWillAppear(_ animated: Bool) &#123;
+        super.viewWillAppear(animated)
+        setupWhiteNavBarColor()
+        setupWhiteClickCallBack()
+        
+        isHiddenNavBar(isHidden: false)
+    &#125;
+</code></pre>
+<p>主要处理了导航栏相关的。</p>
+<h3 id="4-8-生命周期之viewDidAppear"><a href="#4-8-生命周期之viewDidAppear" class="headerlink" title="4.8 生命周期之viewDidAppear"></a>4.8 生命周期之viewDidAppear</h3><pre><code class="line-numbers language-Swift">override func viewDidAppear(_ animated: Bool) &#123;
+        super.viewDidAppear(animated)
+        self.viewDidAppear = true
+    &#125;
+</code></pre>
+<p>这里没干啥，就设置了一个flag。</p>
+<h3 id="4-9-析构函数"><a href="#4-9-析构函数" class="headerlink" title="4.9 析构函数"></a>4.9 析构函数</h3><pre><code class="line-numbers language-Swift">deinit &#123;
+        self.tydev_logDeinit()
+    &#125;
+</code></pre>
+<p>这里也没干啥，打印下日志：</p>
+<pre><code class="line-numbers language-Swift">/// 输出对象销毁日志
+func tydev_logDeinit() &#123;
+    self.tydev_logDeinit(nil)
+&#125;
+
+/// 输出对象销毁日志
+/// - Parameter mark: 自定义标识
+func tydev_logDeinit(_ mark: String?) &#123;
+    if let mark = mark &#123;
+        print(&quot;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt; deinit view [\(self)] (\(mark) &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&quot;)
+    &#125; else &#123;
+        print(&quot;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt; deinit view [\(self)] &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&quot;)
+    &#125;
+&#125;
+</code></pre>
+<h3 id="4-10-地图代理"><a href="#4-10-地图代理" class="headerlink" title="4.10 地图代理"></a>4.10 地图代理</h3><p>前面我们设置了代理为自己，需要处理下：</p>
+<pre><code class="line-numbers language-Swift">// 地图Delegate - Map
+extension GMLocationPickerController : MAMapViewDelegate &#123;
+    
+    /// 地图区域改变完成后会调用此接口
+    func mapView(_ mapView: MAMapView!, regionDidChangeAnimated animated: Bool) &#123;
+        if !self.viewDidAppear &#123; return &#125;
+        
+        // 大头针动画
+        self.ui_pointAnnotationAnimate()
+        if self.isRegionChangedFromCustomer, self.mapView.userTrackingMode == .none &#123;
+            // 用户手动滑动模式
+            // 搜索逆地理编码(顺带搜索附近)
+            self.map_searchLocationForReGeo(isForSubmit: false)
+        &#125;
+        self.isRegionChangedFromCustomer = true
+    &#125;
+&#125;
+</code></pre>
+<p>这里是高德自己调用的，估计是滑动后区域改变，这里会走。<br>这里我们走完后需要顺带搜索下附近地址，所以需要加上我们自己逻辑哦。</p>
+<h3 id="4-11-搜索代理"><a href="#4-11-搜索代理" class="headerlink" title="4.11 搜索代理"></a>4.11 搜索代理</h3><pre><code class="line-numbers language-Swift">// 地图Delegate - Search
+extension GMLocationPickerController : AMapSearchDelegate &#123;
+    /// POI查询回调函数 [定位获取附近POI、搜索POI]
+    func onPOISearchDone(_ request: AMapPOISearchBaseRequest!, response: AMapPOISearchResponse!) &#123;
+//        if response.pois.count &lt;= 0 &#123;
+//            GMBannerTips.showWarningTips(&quot;没有找到定位&quot;)
+//            data_reloadTableViewToEmpty(forRequest: false)
+//            return
+//        &#125;
+        
+        let prefixPois = response.pois.prefix(20)     // 最多获取20个数据
+        var locationInfos = prefixPois.map(&#123; GMLocationPickerLocationInfo(mapPOI: $0) &#125;)
+        
+        if request.isKind(of: AMapPOIKeywordsSearchRequest.self) &#123;
+            // 1. 搜索关键词(搜索关键词)
+            
+            // 没有搜索到则提示
+            if response.pois.count &lt;= 0 &#123;
+                GMBannerTips.showWarningTips(&quot;没有找到定位&quot;)
+                data_reloadTableViewToEmpty(forRequest: false)
+                return
+            &#125;
+            
+            // 自动选择第一个位置
+            var selectingInfo = self.selectingLocationInfo
+            if let firstInfo = locationInfos.first &#123;
+                selectingInfo = firstInfo
+                // 移动地图位置
+                self.data_changeRegionTo(firstInfo, for: .keywordSearchSelected)
+            &#125;
+            // 搜索POI距离补全
+            if let selectingInfo = selectingInfo, let selectingCoordinate = selectingInfo.coordinate &#123;
+                let selectingPoint = MAMapPointForCoordinate(selectingCoordinate)
+                for currLocationInfo in locationInfos &#123;
+                    if selectingInfo == currLocationInfo &#123; continue &#125;
+                    if let currCoordinate = currLocationInfo.coordinate &#123;
+                        let currPoint = MAMapPointForCoordinate(currCoordinate)
+                        currLocationInfo.distance = Int(MAMetersBetweenMapPoints(selectingPoint,currPoint))
+                    &#125;
+                &#125;
+            &#125;
+            
+        &#125; else if request.isKind(of: AMapPOIAroundSearchRequest.self) &#123;
+            // 2. 搜索附近位置(定位or选中)
+            
+            // 没有找到定位 则选中当前选中的定位
+            if prefixPois.count &lt;= 0, let selectingInfo = self.selectingLocationInfo &#123;
+                locationInfos.insert(selectingInfo, at: 0)
+            &#125;
+            
+            // 则确保第一个选项为当前地理位置（不匹配则手动添加）
+            if let firstInfo = locationInfos.first, let selectingInfo = self.selectingLocationInfo,
+               firstInfo.poiName != selectingInfo.poiName, firstInfo.address != selectingInfo.address &#123;
+                // 当前第一个位置 非选中中位置
+                locationInfos.insert(selectingInfo, at: 0)
+            &#125;
+            if let firstInfo = locationInfos.first &#123;
+                // 纠正/同步选择中地理位置
+                self.selectingLocationInfo = firstInfo
+            &#125;
+        &#125;
+        
+        // 刷新TableView数据
+        self.data_reloadTableViewWith(locationInfos: locationInfos)
+    &#125;
+    
+    /// 逆地理编码回调 [手动滑动地图时用]
+    func onReGeocodeSearchDone(_ request: AMapReGeocodeSearchRequest!, response: AMapReGeocodeSearchResponse!) &#123;
+        if self.isReGeoRequestForSubmit &#123;
+            // 1. 用于提交的逆地理编码搜索
+            self.ty_hideLoadingHUD()
+            self.isReGeoRequestForSubmit = false
+            
+            guard let location = request.location, let regeocode = response.regeocode else &#123; return &#125;
+            
+            self.view.endEditing(true)
+            let selectingInfo = GMLocationPickerLocationResult(location: location, reGeocode: regeocode, locationInfo: self.selectingLocationInfo)
+            
+            // 提交地址
+            self.delegate?.locationPickerController(self, didSubmit: selectingInfo)
+            locationResultBlock?(selectingInfo)
+            self.popViewController()
+        &#125; else &#123;
+            // 2. 用于用户滑动的逆地理编码搜索
+            guard let location = request.location, let regeocode = response.regeocode else &#123; return &#125;
+            
+            // 设置 locationInfos
+            let prefixPois = regeocode.pois.prefix(20)     // 最多获取20个数据
+            var locationInfos = prefixPois.map(&#123; GMLocationPickerLocationInfo(mapPOI: $0) &#125;)
+            
+            let selectingInfo = GMLocationPickerLocationInfo(location: location, reGeocode: regeocode)
+            // 移动地图位置
+            self.data_changeRegionTo(selectingInfo, for: .slideByCustomer)
+            locationInfos.insert(selectingInfo, at: 0)
+            
+            // 刷新TableView数据
+            self.data_reloadTableViewWith(locationInfos: locationInfos)
+        &#125;
+    &#125;
+    
+    /// 当请求发生错误 (timeout)
+    func aMapSearchRequest(_ request: Any!, didFailWithError error: Error!) &#123;
+        let errorCode = error._code
+        
+        var errMsg = &quot;&quot;
+        if let searchErrorCode = AMapSearchErrorCode(rawValue: errorCode) &#123;
+            switch searchErrorCode &#123;
+            case .notConnectedToInternet:   break// 网络连接异常
+                //errMsg = AMapSearchError.errorInfo(with: searchErrorCode)
+            default:
+                break
+            &#125;
+        &#125; else &#123;
+            print(&quot;asdf&quot;)
+        &#125;
+        if !errMsg.isEmpty &#123;
+            self.ty_showMsgHud(errMsg)
+        &#125;
+    &#125;
+    
+&#125;
+</code></pre>
+<p>这里是高德提供的搜索代理。<br>一个是手动滑动，一个是自行搜索，走接口不一样哦。</p>
+<h3 id="4-12-其它代理"><a href="#4-12-其它代理" class="headerlink" title="4.12 其它代理"></a>4.12 其它代理</h3><pre><code class="line-numbers language-Swift">
+// TableView Delegate
+extension GMLocationPickerController: UITableViewDelegate, UITableViewDataSource &#123;
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -&gt; Int &#123;
+        return self.locationInfos.count
+    &#125;
+
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -&gt; UITableViewCell &#123;
+        let cell = GMLocationPickerCell.cellWithTableView(tableView)
+        cell.locationInfo = self.locationInfos[indexPath.row]
+        return cell
+    &#125;
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -&gt; CGFloat &#123;
+        return GMLocationPickerCell.cellHeight()
+    &#125;
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) &#123;
+        let locationInfo = self.locationInfos[indexPath.row]
+        // 清除搜索栏内容
+        self.ui_clearSearchTextF()
+        // 移动地图位置
+        self.data_changeRegionTo(locationInfo, for: .itemSelected)
+        // 搜索附近
+        self.map_searchLocationForNearby()
+    &#125;
+&#125;
+
+// 输入框 &amp; 自定义 Delegate
+extension GMLocationPickerController : UITextFieldDelegate
+&#123;
+    func textFieldShouldReturn(_ textField: UITextField) -&gt; Bool &#123;
+        // 搜索
+        self.act_searchBtnClicked(button: nil)
+        return true
+    &#125;
+&#125;
+</code></pre>
+<p>这里还用了2个代理，一个是搜索列表的tableView的列表展示，一个是搜索框代理。</p>
+<h3 id="4-13-如何定位"><a href="#4-13-如何定位" class="headerlink" title="4.13 如何定位"></a>4.13 如何定位</h3><pre><code class="line-numbers language-Swift">/// 定位当前位置
+private func map_requestLocation(_ completion: ((CLLocation?, AMapLocationReGeocode?) -&gt; ())?) &#123;
+    // 定位请求
+    func requestLocation(_ completion: ((CLLocation?, AMapLocationReGeocode?) -&gt; ())?) &#123;
+        // 单次定位
+        self.locationManager.requestLocation(withReGeocode: true, completionBlock: &#123; (location: CLLocation?, reGeocode: AMapLocationReGeocode?, error: Error?) in
+            // 定位回调
+            if let completion = completion &#123; completion(location, reGeocode) &#125;
+        &#125;)
+    &#125;
+    
+    let manager = self.authorizationManager
+    manager.verifyLocationAuthroization(showAlertIn: self, completion: &#123;
+        if #available(iOS 14.0, *) &#123;
+            manager.verifyAccuracyAuthroization(completion: &#123;
+                requestLocation(completion)
+            &#125;, failure: nil)
+        &#125; else &#123;
+            requestLocation(completion)
+        &#125;
+    &#125;, failure: nil)
+&#125;
+</code></pre>
+<p>别慌，高德也是提供了方法，支持去定位。</p>
+<h3 id="4-14-地址权限工具"><a href="#4-14-地址权限工具" class="headerlink" title="4.14 地址权限工具"></a>4.14 地址权限工具</h3><pre><code class="line-numbers language-Swift">/// 地址权限管理器 配置
+class TYLocationAuthorizationConfig: NSObject &#123;
+    
+    // info.plist 上配置的 精读权限获取描述
+    // &lt;key&gt;NSLocationTemporaryUsageDescriptionDictionary&lt;/key&gt;
+    var accuracyPurposeKey = &quot;AccuracyUsageDescription&quot;
+    
+    var locationAlertTitle = &quot;您需要开启GPS权限&quot;
+    var locationAlertMessage = &quot;地图定位需要获取您的GPS权限才能正常使用&quot;
+&#125;
+
+/// 地址权限管理器
+class TYLocationAuthorization: NSObject &#123;
+    
+    //MARK: - property
+    
+    // Data
+    
+    private var locationManager: CLLocationManager!             // 定位权限管理
+    
+    private var locationAuthVerifyCompletion: (() -&gt; ())?       // 定位权限获取完成Block (用于权限首次询问)
+    private var locationAuthVerifyFailure: (() -&gt; ())?          // 定位权限获取失败Block (用于权限首次请求)
+    
+    private var config = TYLocationAuthorizationConfig()              // 文本相关配置
+    
+    // State
+    
+    /// 定位权限状态
+    var locationAuthorization: CLAuthorizationStatus &#123;
+        if #available(iOS 14.0, *) &#123;
+            return self.locationManager.authorizationStatus
+        &#125; else &#123;
+            return CLLocationManager.authorizationStatus()
+        &#125;
+    &#125;
+    
+    /// 精读权限状态
+    @available(iOS 14.0, *)
+    var accuracyAuthorization: CLAccuracyAuthorization &#123;
+        return self.locationManager.accuracyAuthorization
+    &#125;
+    
+    
+    //MARK: - life cycle
+    
+    convenience init(config: TYLocationAuthorizationConfig) &#123;
+        self.init()
+        self.config = config
+    &#125;
+    
+    override init() &#123;
+        super.init()
+        self.loadData()
+    &#125;
+    
+    private func loadData() &#123;
+        // 定位权限管理
+        let locationManager = CLLocationManager()
+        locationManager.delegate = self
+        self.locationManager = locationManager
+    &#125;
+    
+    deinit &#123;
+        print(&quot;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt; deinit view [\(self)] &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&quot;)
+    &#125;
+    
+    //MARK: - public methods
+    
+    // ------------------------- 权限请求封装 -------------------------
+    
+    /// 定位权限判断
+    func verifyLocationAuthroization(showAlertIn controller: UIViewController? = nil,
+                                     completion: (() -&gt; ())? = nil,
+                                     failure: (() -&gt; ())? = nil) &#123;
+
+        switch self.locationAuthorization &#123;
+        case .notDetermined:                            // 1. 首次打开App时
+            self.locationAuthVerifyCompletion = completion
+            self.locationAuthVerifyFailure = failure
+            self.locationManager.requestWhenInUseAuthorization()    // 使用时 *
+        case .restricted, .denied:                      // 2. 父母限制 or 拒绝
+            self.ui_showAlertForDeniedLocationAuthorization(in: controller)
+            if let failure = failure &#123; failure() &#125;
+        case .authorizedAlways, .authorizedWhenInUse:   // 3. 已授权
+            if let completion  = completion &#123; completion() &#125;
+        @unknown default:                               // 4. 未知情况
+            self.ui_showAlertForDeniedLocationAuthorization(in: controller)
+            if let failure = failure &#123; failure() &#125;
+        &#125;
+    &#125;
+    
+    /// 精读权限判断(高精读)
+    @available(iOS 14.0, *)
+    func verifyAccuracyAuthroization(completion: (() -&gt; ())? = nil,
+                                     failure: (() -&gt; ())? = nil) &#123;
+        if self.isAccuracyAuthorizationFull() &#123;
+            if let completion = completion &#123; completion() &#125;
+        &#125; else &#123;
+            let key = self.config.accuracyPurposeKey
+            self.locationManager.requestTemporaryFullAccuracyAuthorization(withPurposeKey: key) &#123; err in
+                if self.isAccuracyAuthorizationFull() &#123;
+                    if let completion = completion &#123; completion() &#125;
+                &#125; else &#123;
+                    if let failure = failure &#123; failure() &#125;
+                &#125;
+            &#125;
+        &#125;
+    &#125;
+    
+    // ------------------------- 权限状态 -------------------------
+    
+    /// 定位权限是否被拒绝
+    func isLocationAuthroizationDenied() -&gt; Bool &#123;
+        switch self.locationAuthorization &#123;
+        case .notDetermined:                            // 1. 首次打开App时
+            return false
+        case .restricted, .denied:                      // 2. 父母限制 or 拒绝
+            return true
+        case .authorizedAlways, .authorizedWhenInUse:   // 3. 已授权
+            return false
+        @unknown default:                               // 4. 未知情况
+            return true
+        &#125;
+    &#125;
+    
+    /// 定位权限是否被允许
+    func isLocationAuthroizationEnable() -&gt; Bool &#123;
+        switch self.locationAuthorization &#123;
+        case .notDetermined:                            // 1. 首次打开App时
+            return false
+        case .restricted, .denied:                      // 2. 父母限制 or 拒绝
+            return false
+        case .authorizedAlways, .authorizedWhenInUse:   // 3. 已授权
+            return true
+        @unknown default:                               // 4. 未知情况
+            return false
+        &#125;
+    &#125;
+    
+    /// 精准定位
+    @available(iOS 14.0, *)
+    func isAccuracyAuthorizationFull() -&gt; Bool &#123;
+        return self.locationManager.accuracyAuthorization == .fullAccuracy
+    &#125;
+    
+    //MARK: - private methods
+    
+    /// 显示定位权限拒绝 Alert
+    private func ui_showAlertForDeniedLocationAuthorization(in controller: UIViewController?) &#123;
+        guard let controller = controller else &#123; return &#125;
+
+        let title = self.config.locationAlertTitle
+        let message = self.config.locationAlertMessage
+        let alertVC = UIAlertController.ty_doubleOptionAlertWith(title: title, message: message, optionTitle1: &quot;去设置&quot;, action1: &#123;
+            if let settingURL = URL(string: UIApplication.openSettingsURLString),
+                UIApplication.shared.canOpenURL(settingURL) &#123;
+                UIApplication.shared.open(settingURL, options: [:], completionHandler: nil)
+            &#125;
+        &#125;, optionTitle2: &quot;取消&quot;, action2: nil)
+        controller.present(alertVC, animated: true, completion: nil)
+    &#125;
+    
+    
+    /// 清空 定位权限获取Block
+    private func clearLocationAuthorizationBlock() &#123;
+        self.locationAuthVerifyCompletion = nil
+        self.locationAuthVerifyFailure = nil
+    &#125;
+&#125;
+
+extension TYLocationAuthorization : CLLocationManagerDelegate &#123;
+    
+    /// 定位权限修改 (iOS 4.2 - 14.0)
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) &#123;
+        self.data_locationAuthorizationDidChange()
+    &#125;
+    
+    /// 定位权限修改 (iOS 14.0+)
+    func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) &#123;
+        self.data_locationAuthorizationDidChange()
+    &#125;
+    
+    /// 权限状态修改
+    private func data_locationAuthorizationDidChange() &#123;
+        if self.locationAuthVerifyCompletion == nil, self.locationAuthVerifyFailure == nil &#123; return &#125;
+              
+        switch self.locationAuthorization &#123;
+        case .notDetermined:                            // 1. 首次打开App时
+            break
+        case .restricted, .denied:                      // 2. 父母限制 or 拒绝
+            if let failure = self.locationAuthVerifyFailure &#123; failure() &#125;
+            self.clearLocationAuthorizationBlock()
+        case .authorizedAlways, .authorizedWhenInUse:   // 3. 已授权
+            if let completion = self.locationAuthVerifyCompletion &#123; completion() &#125;
+            self.clearLocationAuthorizationBlock()
+        @unknown default:                               // 4. 未知情况
+            if let failure = self.locationAuthVerifyFailure &#123; failure() &#125;
+            self.clearLocationAuthorizationBlock()
+        &#125;
+        
+    &#125;
+&#125;
+</code></pre>
+<p>这里需要考虑到多种情况，是否拒绝权限，是否拥有了权限以及不同手机系统的问题。<br>用法也是相当简单：</p>
+<pre><code class="line-numbers language-Swift">let manager = self.authorizationManager
+manager.verifyLocationAuthroization(showAlertIn: self, completion: &#123;
+    if #available(iOS 14.0, *) &#123;
+        manager.verifyAccuracyAuthroization(completion: &#123;
+            requestLocation(completion)
+        &#125;, failure: nil)
+    &#125; else &#123;
+        requestLocation(completion)
+    &#125;
+&#125;, failure: nil)
+</code></pre>
+<p>这个manager就是我们的工具类。</p>
+<p>大致就是这么多了。</p>
+<h2 id="5-总结"><a href="#5-总结" class="headerlink" title="5 总结"></a>5 总结</h2><ul>
+<li><p>如果要做一个需要三方支持的东西，请务必要提前调研下，如地图，推送，埋点等，这些最后提前了解下三方的接入指南，这样更好去实现需求。</p>
+</li>
+<li><p>高德地图对接非常简单，拿到key后，主要工作就是对Map的处理，用户行为二指缩放这种高德自行实现，我们只需要设置坐标给中间的位置即可。</p>
+</li>
+<li><p>对于地图，一定要考虑是否有权限的情况，没有权限的情况也需要跳转到系统设置，这样才能加强用户体验。万万不可出现没有权限直接闪退的问题。</p>
+</li>
+<li><p>一般做地图都会有一个搜索能力，这样就需要高德搜索接口了，需要了解AMapSearchAPI 这个接口的用法，定位的话就用到AMapLocationManager。</p>
+</li>
+</ul>
+
+            </div>
+            <hr />
+
+            
+            <style>
+    #reward {
+        margin: 40px 0;
+        text-align: center;
+    }
+
+    #reward .reward-link {
+        font-size: 1.88rem;
+    }
+
+    #reward .btn-floating:hover {
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2), 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    #rewardModal {
+        width: 320px;
+        height: 350px;
+    }
+
+    #rewardModal .reward-title {
+        margin: 15px auto;
+        padding-bottom: 5px;
+    }
+
+    #rewardModal .modal-content {
+        padding: 10px;
+    }
+
+    #rewardModal .close {
+        position: absolute;
+        right: 15px;
+        top: 15px;
+        color: rgba(0, 0, 0, 0.5);
+        font-size: 1.3rem;
+        line-height: 20px;
+        cursor: pointer;
+    }
+
+    #rewardModal .close:hover {
+        color: #ef5350;
+        transform: scale(1.3);
+        -moz-transform:scale(1.3);
+        -webkit-transform:scale(1.3);
+        -o-transform:scale(1.3);
+    }
+
+    #rewardModal .reward-tabs {
+        margin: 0 auto;
+        width: 210px;
+    }
+
+    .reward-tabs .tabs {
+        height: 38px;
+        margin: 10px auto;
+        padding-left: 0;
+    }
+
+    .reward-content ul {
+        padding-left: 0 !important;
+    }
+
+    .reward-tabs .tabs .tab {
+        height: 38px;
+        line-height: 38px;
+    }
+
+    .reward-tabs .tab a {
+        color: #fff;
+        background-color: #ccc;
+    }
+
+    .reward-tabs .tab a:hover {
+        background-color: #ccc;
+        color: #fff;
+    }
+
+    .reward-tabs .wechat-tab .active {
+        color: #fff !important;
+        background-color: #22AB38 !important;
+    }
+
+    .reward-tabs .alipay-tab .active {
+        color: #fff !important;
+        background-color: #019FE8 !important;
+    }
+
+    .reward-tabs .reward-img {
+        width: 210px;
+        height: 210px;
+    }
+</style>
+
+<div id="reward">
+    <a href="#rewardModal" class="reward-link modal-trigger btn-floating btn-large waves-effect waves-light red">赏</a>
+
+    <!-- Modal Structure -->
+    <div id="rewardModal" class="modal">
+        <div class="modal-content">
+            <a class="close modal-close"><i class="fa fa-close"></i></a>
+            <h4 class="reward-title">写作不易，客官能否打赏一杯奶茶？</h4>
+            <div class="reward-content">
+                <div class="reward-tabs">
+                    <ul class="tabs row">
+                        <li class="tab col s6 alipay-tab waves-effect waves-light"><a href="#alipay">支付宝</a></li>
+                        <li class="tab col s6 wechat-tab waves-effect waves-light"><a href="#wechat">微 信</a></li>
+                    </ul>
+                    <div id="alipay">
+                        <img src="/medias/reward/alipay.jpg" class="reward-img" alt="支付宝打赏二维码">
+                    </div>
+                    <div id="wechat">
+                        <img src="/medias/reward/wechat.png" class="reward-img" alt="微信打赏二维码">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $('.tabs').tabs();
+    });
+</script>
+            
+
+            <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+
+<div id="article-share">
+    
+    <div class="social-share" data-disabled="qzone" data-wechat-qrcode-helper="<p>微信里点“发现”->“扫一扫”二维码便可查看分享。</p>"></div>
+    
+</div>
+
+<script src="/libs/share/js/social-share.min.js"></script>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        <p class="reprint-tip">
+            <i class="fa fa-exclamation-triangle"></i>&nbsp;&nbsp;
+            <span>转载规则</span>
+        </p>
+        
+            <div class="center-align">
+                <a rel="license noopener" target="_blank" href="https://creativecommons.org/licenses/by/4.0/deed.zh">
+                    <img alt=""
+                         style="border-width:0"
+                         src="https://i.creativecommons.org/l/by/4.0/88x31.png"/>
+                </a>
+            </div>
+            <br/>
+            <span xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/Text"
+                  property="dct:title" rel="dct:type">
+                    《iOS swift 实现简易地图功能》
+                </span> 由
+            <a xmlns:cc="http://creativecommons.org/ns#" href="/2023/01/31/iOS-swift-%E5%AE%9E%E7%8E%B0%E7%AE%80%E6%98%93%E5%9C%B0%E5%9B%BE%E5%8A%9F%E8%83%BD/" property="cc:attributionName"
+               rel="cc:attributionURL">
+                Jason
+            </a> 采用
+            <a rel="license noopener" target="_blank" href="https://creativecommons.org/licenses/by/4.0/deed.zh">
+                知识共享署名 4.0 国际许可协议
+            </a>进行许可。
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+        </div>
+    </div>
+
+    
+    <link rel="stylesheet" href="/libs/gitalk/gitalk.css">
+<link rel="stylesheet" href="/css/my-gitalk.css">
+
+<div class="card gitalk-card" data-aos="fade-up">
+    <div id="gitalk-container" class="card-content"></div>
+</div>
+
+<script src="/libs/gitalk/gitalk.min.js"></script>
+<script>
+    let gitalk = new Gitalk({
+        clientID: 'fe0ccf043e8b41eb62ea',
+        clientSecret: '9ca1dd3be79bdf6123d4aa8ca81753570fe870e1',
+        repo: 'jasontojan.github.io',
+        owner: 'jasontojan',
+        admin: "jasontojan",
+        id: '2023/01/31/iOS-swift-实现简易地图功能/',
+        distractionFreeMode: false  // Facebook-like distraction free mode
+    });
+
+    gitalk.render('gitalk-container');
+</script>
+    
+
+    
+
+    
+
+    
+
+    
+    <style>
+    .valine-card {
+        margin: 1.5rem auto;
+    }
+
+    .valine-card .card-content {
+        padding: 20px 20px 5px 20px;
+    }
+
+    #vcomments input[type=text],
+    #vcomments input[type=email],
+    #vcomments input[type=url],
+    #vcomments textarea {
+        box-sizing: border-box;
+    }
+
+    #vcomments p {
+        margin: 2px 2px 10px;
+        font-size: 1.05rem;
+        line-height: 1.78rem;
+    }
+
+    #vcomments blockquote p {
+        text-indent: 0.2rem;
+    }
+
+    #vcomments a {
+        padding: 0 2px;
+        color: #42b983;
+        font-weight: 500;
+        text-decoration: underline;
+    }
+
+    #vcomments img {
+        max-width: 100%;
+        height: auto;
+        cursor: pointer;
+    }
+
+    #vcomments ol li {
+        list-style-type: decimal;
+    }
+
+    #vcomments ol,
+    ul {
+        display: block;
+        padding-left: 2em;
+        word-spacing: 0.05rem;
+    }
+
+    #vcomments ul li,
+    ol li {
+        display: list-item;
+        line-height: 1.8rem;
+        font-size: 1rem;
+    }
+
+    #vcomments ul li {
+        list-style-type: disc;
+    }
+
+    #vcomments ul ul li {
+        list-style-type: circle;
+    }
+
+    #vcomments table, th, td {
+        padding: 12px 13px;
+        border: 1px solid #dfe2e5;
+    }
+
+    #vcomments table, th, td {
+        border: 0;
+    }
+
+    table tr:nth-child(2n), thead {
+        background-color: #fafafa;
+    }
+
+    #vcomments table th {
+        background-color: #f2f2f2;
+        min-width: 80px;
+    }
+
+    #vcomments table td {
+        min-width: 80px;
+    }
+
+    #vcomments h1 {
+        font-size: 1.85rem;
+        font-weight: bold;
+        line-height: 2.2rem;
+    }
+
+    #vcomments h2 {
+        font-size: 1.65rem;
+        font-weight: bold;
+        line-height: 1.9rem;
+    }
+
+    #vcomments h3 {
+        font-size: 1.45rem;
+        font-weight: bold;
+        line-height: 1.7rem;
+    }
+
+    #vcomments h4 {
+        font-size: 1.25rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    #vcomments h5 {
+        font-size: 1.1rem;
+        font-weight: bold;
+        line-height: 1.4rem;
+    }
+
+    #vcomments h6 {
+        font-size: 1rem;
+        line-height: 1.3rem;
+    }
+
+    #vcomments p {
+        font-size: 1rem;
+        line-height: 1.5rem;
+    }
+
+    #vcomments hr {
+        margin: 12px 0;
+        border: 0;
+        border-top: 1px solid #ccc;
+    }
+
+    #vcomments blockquote {
+        margin: 15px 0;
+        border-left: 5px solid #42b983;
+        padding: 1rem 0.8rem 0.3rem 0.8rem;
+        color: #666;
+        background-color: rgba(66, 185, 131, .1);
+    }
+
+    #vcomments pre {
+        font-family: monospace, monospace;
+        padding: 1.2em;
+        margin: .5em 0;
+        background: #272822;
+        overflow: auto;
+        border-radius: 0.3em;
+        tab-size: 4;
+    }
+
+    #vcomments code {
+        font-family: monospace, monospace;
+        padding: 1px 3px;
+        font-size: 0.92rem;
+        color: #e96900;
+        background-color: #f8f8f8;
+        border-radius: 2px;
+    }
+
+    #vcomments pre code {
+        font-family: monospace, monospace;
+        padding: 0;
+        color: #e8eaf6;
+        background-color: #272822;
+    }
+
+    #vcomments pre[class*="language-"] {
+        padding: 1.2em;
+        margin: .5em 0;
+    }
+
+    #vcomments code[class*="language-"],
+    pre[class*="language-"] {
+        color: #e8eaf6;
+    }
+
+    #vcomments [type="checkbox"]:not(:checked), [type="checkbox"]:checked {
+        position: inherit;
+        margin-left: -1.3rem;
+        margin-right: 0.4rem;
+        margin-top: -1px;
+        vertical-align: middle;
+        left: unset;
+        visibility: visible;
+    }
+
+    #vcomments b,
+    strong {
+        font-weight: bold;
+    }
+
+    #vcomments dfn {
+        font-style: italic;
+    }
+
+    #vcomments small {
+        font-size: 85%;
+    }
+
+    #vcomments cite {
+        font-style: normal;
+    }
+
+    #vcomments mark {
+        background-color: #fcf8e3;
+        padding: .2em;
+    }
+
+    #vcomments table, th, td {
+        padding: 12px 13px;
+        border: 1px solid #dfe2e5;
+    }
+
+    table tr:nth-child(2n), thead {
+        background-color: #fafafa;
+    }
+
+    #vcomments table th {
+        background-color: #f2f2f2;
+        min-width: 80px;
+    }
+
+    #vcomments table td {
+        min-width: 80px;
+    }
+
+    #vcomments [type="checkbox"]:not(:checked), [type="checkbox"]:checked {
+        position: inherit;
+        margin-left: -1.3rem;
+        margin-right: 0.4rem;
+        margin-top: -1px;
+        vertical-align: middle;
+        left: unset;
+        visibility: visible;
+    }
+</style>
+
+<div class="card valine-card" data-aos="fade-up">
+    <div id="vcomments" class="card-content"></div>
+</div>
+
+<script src="/libs/valine/av-min.js"></script>
+<script src="/libs/valine/Valine.min.js"></script>
+<!-- <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script> -->
+
+<script>
+    new Valine({
+        el: '#vcomments',
+        appId: '查教程获取',
+        appKey: '查教程获取',
+        notify: 'false' === 'true',
+        verify: 'false' === 'true',
+        visitor: 'false' === 'true',
+        avatar: 'wavatar',
+        pageSize: '10',
+        lang: 'zh-cn',
+        placeholder: '如果你没有GitHub账号，还可以在这里评论啦！'
+    });
+</script>
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fa fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/2023/02/01/iOS-swift-%E7%BD%91%E7%BB%9C%E8%AF%B7%E6%B1%82%E4%BA%8C%E6%AC%A1%E5%B0%81%E8%A3%85moya/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/5.jpg" class="responsive-img" alt="iOS-swift-网络请求二次封装moya">
+                        
+                        <span class="card-title">iOS-swift-网络请求二次封装moya</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            1 github地址
+https://github.com/chensx1993/moyaManager
+
+这个应该是一个小姐姐，我看到我们项目用了这个三方库，所以这边分析下封装细节。
+简单介绍下吧：
+moya是对Alamofire的再次封
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="fa fa-clock-o fa-fw icon-date"></i>2023-02-01
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fa fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/iOS/" class="post-category" target="_blank">
+                                    iOS
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E7%BD%91%E7%BB%9C%E8%AF%B7%E6%B1%82/" target="_blank">
+                        <span class="chip bg-color">网络请求</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fa fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2023/01/30/iOS-swift-%E6%95%B0%E6%8D%AE%E5%BA%93realm%E5%AE%9E%E8%B7%B5/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/3.jpg" class="responsive-img" alt="iOS swift 数据库realm实践">
+                        
+                        <span class="card-title">iOS swift 数据库realm实践</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            1 需求定义需要获取服务端的条码数据库，存放到本地数据库。
+背景：集成了扫码功能，扫到的条码头需要匹配数据库中的条码列表，可以认为这个是一个离线数据库。不会实时判断，因为条码很多，这里先获取所有的条码，存放到本地数据库。然后扫码就按照数据库
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2023-01-30
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fa fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/iOS/" class="post-category" target="_blank">
+                                    iOS
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93-iOS/" target="_blank">
+                        <span class="chip bg-color">数据库 iOS</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+</div>
+
+
+<script>
+    $('#articleContent').on('copy', function (e) {
+        // IE8 or earlier browser is 'undefined'
+        if (typeof window.getSelection === 'undefined') return;
+
+        var selection = window.getSelection();
+        // if the selection is short let's not annoy our users.
+        if (('' + selection).length < Number.parseInt('120')) {
+            return;
+        }
+
+        // create a div outside of the visible area and fill it with the selected text.
+        var bodyElement = document.getElementsByTagName('body')[0];
+        var newdiv = document.createElement('div');
+        newdiv.style.position = 'absolute';
+        newdiv.style.left = '-99999px';
+        bodyElement.appendChild(newdiv);
+        newdiv.appendChild(selection.getRangeAt(0).cloneContents());
+
+        // we need a <pre> tag workaround.
+        // otherwise the text inside "pre" loses all the line breaks!
+        if (selection.getRangeAt(0).commonAncestorContainer.nodeName === 'PRE') {
+            newdiv.innerHTML = "<pre>" + newdiv.innerHTML + "</pre>";
+        }
+
+        var url = document.location.href;
+        newdiv.innerHTML += '<br />'
+            + '来源: JasonToJan's Blog<br />'
+            + '作者: Jason<br />'
+            + '链接: <a href="' + url + '">' + url + '</a><br />'
+            + '本文章著作权归作者所有，任何形式的转载都请注明出处。';
+
+        selection.selectAllChildren(newdiv);
+        window.setTimeout(function () { bodyElement.removeChild(newdiv); }, 200);
+    });
+</script>
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget">
+            <div class="toc-title"><i class="fa fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fa fa-list"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            // headingsOffset: -205,
+            headingSelector: 'h1, h2, h3, h4'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h1, h2, h3, h4').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).slideUp(500);
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).slideDown(500);
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+    
+
+</main>
+
+
+<script src="https://cdn.bootcss.com/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script>
+    MathJax.Hub.Config({
+        tex2jax: {inlineMath: [['$', '$'], ['\(', '\)']]}
+    });
+</script>
+
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+<!-- 代码语言 -->
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+<!-- 代码块复制 -->
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+<script type="text/javascript" src="/libs/codeBlock/clipboard.min.js"></script>
+<!-- 代码块收缩 -->
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script> 
+<!-- 代码块折行 -->
+<style type="text/css">code[class*="language-"], pre[class*="language-"] { white-space: pre !important; }</style>
+
+
+    <footer class="page-footer bg-color">
+    <div class="container row center-align">
+        <div class="col s12 m8 l8 copy-right">
+            &copy; 2023-2023 JasonJan. 版权所有
+
+            
+            &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
+            <span class="white-color">274.7k</span>
+            
+
+            <br>
+            <span id="sitetime"></span>
+
+            
+            
+            <br>
+            
+            <span id="busuanzi_container_site_pv" style='display:none'>
+                <i class="fa fa-heart-o"></i>
+                本站总访问量 <span id="busuanzi_value_site_pv" class="white-color"></span>
+            </span>
+            
+            
+            <span id="busuanzi_container_site_uv" style='display:none'>
+                人次,&nbsp;访客数 <span id="busuanzi_value_site_uv" class="white-color"></span> 人.
+            </span>
+            
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/JasonToJan" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fa fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:jason1211241203@gmail.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fa fa-envelope-open"></i>
+    </a>
+
+
+
+    <a href="https://zhihu.com/people/JasonJan" class="tooltipped" target="_blank" data-tooltip="访问我的知乎" data-position="top" data-delay="50">
+        <i class="fa fa-inverse">知</i>
+    </a>
+
+
+
+    <a href="http://wpa.qq.com/msgrd?v=3&uin=1211241203&site=qq&menu=yes" class="tooltipped" target="_blank" data-tooltip="访问我的知乎" data-position="top" data-delay="50">
+        <i class="fa fa-qq"></i>
+    </a>
+
+
+
+    <a href="https://weibo.com/JasonJan" class="tooltipped" target="_blank" data-tooltip="关注我的微博" data-position="top" data-delay="50">
+        <i class="fa fa-weibo"></i>
+    </a>
+
+
+
+    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
+        <i class="fa fa-rss"></i>
+    </a>
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+<!-- 不蒜子计数初始值纠正 -->
+<script>
+    $(document).ready(function () {
+
+        var int = setInterval(fixCount, 50);
+        var pvcountOffset = 80000;
+        var uvcountOffset = 20000;
+
+        function fixCount() {
+            if (document.getElementById("busuanzi_container_site_pv").style.display != "none") {
+                $("#busuanzi_value_site_pv").html(parseInt($("#busuanzi_value_site_pv").html()) + pvcountOffset);
+                clearInterval(int);
+            }
+            if ($("#busuanzi_container_site_pv").css("display") != "none") {
+                $("#busuanzi_value_site_uv").html(parseInt($("#busuanzi_value_site_uv").html()) + uvcountOffset); // 加上初始数据 
+                clearInterval(int);
+            }
+        }
+    });
+</script>
+
+<script language=javascript>
+    function siteTime() {
+        window.setTimeout("siteTime()", 1000);
+        var seconds = 1000;
+        var minutes = seconds * 60;
+        var hours = minutes * 60;
+        var days = hours * 24;
+        var years = days * 365;
+        var today = new Date();
+        var todayYear = today.getFullYear();
+        var todayMonth = today.getMonth() + 1;
+        var todayDate = today.getDate();
+        var todayHour = today.getHours();
+        var todayMinute = today.getMinutes();
+        var todaySecond = today.getSeconds();
+        /* Date.UTC() -- 返回date对象距世界标准时间(UTC)1970年1月1日午夜之间的毫秒数(时间戳)
+        year - 作为date对象的年份，为4位年份值
+        month - 0-11之间的整数，做为date对象的月份
+        day - 1-31之间的整数，做为date对象的天数
+        hours - 0(午夜24点)-23之间的整数，做为date对象的小时数
+        minutes - 0-59之间的整数，做为date对象的分钟数
+        seconds - 0-59之间的整数，做为date对象的秒数
+        microseconds - 0-999之间的整数，做为date对象的毫秒数 */
+        var t1 = Date.UTC(2017, 09, 11, 00, 00, 00); //北京时间2018-2-13 00:00:00
+        var t2 = Date.UTC(todayYear, todayMonth, todayDate, todayHour, todayMinute, todaySecond);
+        var diff = t2 - t1;
+        var diffYears = Math.floor(diff / years);
+        var diffDays = Math.floor((diff / days) - diffYears * 365);
+        var diffHours = Math.floor((diff - (diffYears * 365 + diffDays) * days) / hours);
+        var diffMinutes = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours) / minutes);
+        var diffSeconds = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours - diffMinutes * minutes) / seconds);
+        document.getElementById("sitetime").innerHTML = "本站已运行 " + diffYears + " 年 " + diffDays + " 天 " + diffHours + " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+    }/*因为建站时间还没有一年，就将之注释掉了。需要的可以取消*/
+    siteTime();
+</script>
+
+<link rel="stylesheet" href="/css/prism.css">
+<script src="/js/prism.js" async></script>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fa fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script src="/js/search.js"></script>
+<script type="text/javascript">
+$(function () {
+    searchFunc("/" + "search.xml", 'searchInput', 'searchResult');
+});
+</script>
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fa fa-angle-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    <script type="text/javascript"> var OriginTitile = document.title, st; document.addEventListener("visibilitychange", function () { document.hidden ? (document.title = "Σ(っ °Д °;)っ喔哟，崩溃啦！", clearTimeout(st)) : (document.title = "φ(゜▽゜*)♪咦，又好了！", st = setTimeout(function () { document.title = OriginTitile }, 3e3)) })
+    </script>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=查教程获取"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+        dataLayer.push(arguments);
+    }
+
+    gtag('js', new Date());
+    gtag('config', '查教程获取');
+</script>
+
+
+
+    
+    <script src="/libs/others/clicklove.js"></script>
+    
+
+    
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    <!-- 雪花特效 -->
+    
+
+</body>
+
+</html>

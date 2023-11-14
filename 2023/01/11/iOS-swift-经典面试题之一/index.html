@@ -1,0 +1,1608 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="iOS Swift 经典面试题之一, Android iOS Flutter">
+    <meta name="baidu-site-verification" content="fmlEuI34ir" />
+    <meta name="google-site-verification" content="yCy2azpds5XSuGZvis6OuA-XIGF5GuGpYRAaGfD6o48" />
+    <meta name="360-site-verification" content="b7c11a830ef90fd1464ad6206bb7b6e7" />
+    <meta name="description" content="以下是50个关于Swift的常见面试题：
+Swift和Objective-C的区别是什么？
+Swift和Objective-C是苹果公司开发iOS和macOS应用程序的两种编程语言。它们有以下不同之处：语法：Swift的语法比Objecti">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>iOS Swift 经典面试题之一 | JasonToJan&#39;s Blog</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+    <style type="text/css">
+        
+    </style>
+
+    <script src="/libs/jquery/jquery-2.2.0.min.js"></script>
+    <script src="https://sdk.jinrishici.com/v2/browser/jinrishici.js" charset="utf-8"></script>
+    <script>
+        var _hmt = _hmt || [];
+        (function () {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?ce84511d3df71640a9378a69f6293044";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+    
+        <script>
+            (function(){
+                var bp = document.createElement('script');
+                var curProtocol = window.location.protocol.split(':')[0];
+                if (curProtocol === 'https') {
+                    bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+                }
+                else {
+                    bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+                }
+                var s = document.getElementsByTagName("script")[0];
+                s.parentNode.insertBefore(bp, s);
+            })();
+        </script>
+    
+
+    <script>
+        (function(){
+        var src = "https://jspassport.ssl.qhimg.com/11.0.1.js?d182b3f28525f2db83acfaaf6e696dba";
+        document.write('<script src="' + src + '" id="sozz"><\/script>');
+        })();
+    </script>
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">JasonToJan's Blog</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fa fa-navicon"></i></a>
+<ul class="right">
+    
+    <li class="hide-on-med-and-down">
+        <a href="/" class="waves-effect waves-light">
+            
+            <i class="fa fa-home"></i>
+            
+            <span>首页</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/tags" class="waves-effect waves-light">
+            
+            <i class="fa fa-tags"></i>
+            
+            <span>标签</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/categories" class="waves-effect waves-light">
+            
+            <i class="fa fa-bookmark"></i>
+            
+            <span>分类</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/archives" class="waves-effect waves-light">
+            
+            <i class="fa fa-archive"></i>
+            
+            <span>归档</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/about" class="waves-effect waves-light">
+            
+            <i class="fa fa-user-circle-o"></i>
+            
+            <span>关于</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/friends" class="waves-effect waves-light">
+            
+            <i class="fa fa-address-book"></i>
+            
+            <span>友情链接</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/contact" class="waves-effect waves-light">
+            
+            <i class="fa fa-comments"></i>
+            
+            <span>留言板</span>
+        </a>
+    </li>
+    
+    <li>
+        <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+            <i id="searchIcon" class="fa fa-search" title="搜索"></i>
+        </a>
+    </li>
+</ul>
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">JasonToJan's Blog</div>
+        <div class="logo-desc">
+            
+            专注移动端，热爱生活，热衷开发。
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li>
+            <a href="/" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-home"></i>
+                
+                首页
+            </a>
+        </li>
+        
+        <li>
+            <a href="/tags" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-tags"></i>
+                
+                标签
+            </a>
+        </li>
+        
+        <li>
+            <a href="/categories" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-bookmark"></i>
+                
+                分类
+            </a>
+        </li>
+        
+        <li>
+            <a href="/archives" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-archive"></i>
+                
+                归档
+            </a>
+        </li>
+        
+        <li>
+            <a href="/about" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-user-circle-o"></i>
+                
+                关于
+            </a>
+        </li>
+        
+        <li>
+            <a href="/friends" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-address-book"></i>
+                
+                友情链接
+            </a>
+        </li>
+        
+        <li>
+            <a href="/contact" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-comments"></i>
+                
+                留言板
+            </a>
+        </li>
+        
+        
+        <li><div class="divider"></div></li>
+        <li>
+            <a href="https://github.com/JasonToJan/hexo-matery-modified" class="waves-effect waves-light" target="_blank">
+                <i class="fa fa-github-square fa-fw"></i>Fork Me
+            </a>
+        </li>
+        
+    </ul>
+</div>
+
+        </div>
+
+        
+            <style>
+    .nav-transparent .github-corner {
+        display: none !important;
+    }
+
+    .github-corner {
+        position: absolute;
+        z-index: 10;
+        top: 0;
+        right: 0;
+        border: 0;
+        transform: scale(1.1);
+    }
+
+    .github-corner svg {
+        color: #0f9d58;
+        fill: #fff;
+        height: 64px;
+        width: 64px;
+    }
+
+    .github-corner:hover .octo-arm {
+        animation: a 0.56s ease-in-out;
+    }
+
+    .github-corner .octo-arm {
+        animation: none;
+    }
+
+    @keyframes a {
+        0%,
+        to {
+            transform: rotate(0);
+        }
+        20%,
+        60% {
+            transform: rotate(-25deg);
+        }
+        40%,
+        80% {
+            transform: rotate(10deg);
+        }
+    }
+</style>
+
+<a href="https://github.com/JasonToJan/hexo-matery-modified" class="github-corner tooltipped hide-on-med-and-down" target="_blank"
+   data-tooltip="Fork Me" data-position="left" data-delay="50">
+    <svg viewBox="0 0 250 250" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
+              fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
+              fill="currentColor" class="octo-body"></path>
+    </svg>
+</a>
+        
+    </nav>
+
+</header>
+
+    
+<script src="/libs/cryptojs/crypto-js.min.js"></script>
+<script>
+    (function() {
+        let pwd = '';
+        if (pwd && pwd.length > 0) {
+            if (pwd !== CryptoJS.SHA256(prompt('请输入访问本文章的密码')).toString(CryptoJS.enc.Hex)) {
+                alert('密码错误，将返回主页！');
+                location.href = '/';
+            }
+        }
+    })();
+</script>
+
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/10.jpg')">
+    <div class="container">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <div class="description center-align post-title">
+                        iOS Swift 经典面试题之一
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        margin: 35px 0 15px 0;
+        padding-left: 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #toc-content .is-active-link::before {
+        background-color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 20px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                        <a href="/tags/iOS-%E9%9D%A2%E8%AF%95%E9%A2%98-Swift/" target="_blank">
+                            <span class="chip bg-color">iOS 面试题 Swift</span>
+                        </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fa fa-bookmark fa-fw icon-category"></i>
+                        
+                        <a href="/categories/iOS/" class="post-category" target="_blank">
+                            iOS
+                        </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                <div class="post-date info-break-policy">
+                    <i class="fa fa-calendar-minus-o fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2023-01-11
+                </div>
+
+                <div class="post-author info-break-policy">
+                    <i class="fa fa-user-o fa-fw"></i>作者:&nbsp;&nbsp;
+                    
+                    Jason
+                    
+                </div>
+
+                
+                
+                <div class="info-break-policy">
+                    <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
+                    10.6k
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
+                    37 分
+                </div>
+                
+                
+
+                
+                <div id="busuanzi_container_page_pv" class="info-break-policy">
+                    <i class="fa fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
+                    <span id="busuanzi_value_page_pv"></span>
+                </div>
+                
+            </div>
+        </div>
+        <hr class="clearfix">
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <p>以下是50个关于Swift的常见面试题：</p>
+<h3 id="Swift和Objective-C的区别是什么？"><a href="#Swift和Objective-C的区别是什么？" class="headerlink" title="Swift和Objective-C的区别是什么？"></a>Swift和Objective-C的区别是什么？</h3><blockquote>
+<p>Swift和Objective-C是苹果公司开发iOS和macOS应用程序的两种编程语言。它们有以下不同之处：<br>语法：Swift的语法比Objective-C更简洁，易于阅读和编写。Swift支持类型推断，可以在代码中减少类型声明，而Objective-C需要显式声明类型。<br><br>安全性：Swift在设计时考虑了安全性，例如，它强制使用可选类型来处理空值，以防止因未处理的空值引起的崩溃。Objective-C则没有这种保护措施。<br><br>性能：Swift相对于Objective-C具有更高的性能，因为它使用了更现代的编译器和优化技术。<br><br>互操作性：由于Swift和Objective-C是苹果公司开发的，它们可以很好地互相交互和调用。在开发过程中，可以使用Swift和Objective-C编写的代码共存。<br><br>可读性：Swift代码在编写和阅读时更容易理解和维护，因为它使用更简洁的语法和现代编程技术。<br><br>总的来说，Swift是一种更现代、更安全、更高效的编程语言，而Objective-C则是一种更传统、更灵活、更适合老手的编程语言。但是，两者在iOS和macOS开发中都有其用途，具体取决于开发者的需求和偏好。</p>
+</blockquote>
+<h3 id="Swift的可选类型是什么？"><a href="#Swift的可选类型是什么？" class="headerlink" title="Swift的可选类型是什么？"></a>Swift的可选类型是什么？</h3><blockquote>
+<p>在Swift中，可选类型（Optional）是一种特殊的类型，它可以表示一个值是存在或不存在的状态。这种特殊类型的存在是为了防止程序因为处理不存在的值而导致崩溃。<br><br>在Swift中，一个可选类型的值可以包含一个具体的值，也可以为空（即不存在值）。可选类型用于在变量或常量中存储可能缺失值的情况，它通过在类型后面添加一个问号 “?” 来表示。</p>
+</blockquote>
+<h3 id="Swift如何在代码中使用可选类型？"><a href="#Swift如何在代码中使用可选类型？" class="headerlink" title="Swift如何在代码中使用可选类型？"></a>Swift如何在代码中使用可选类型？</h3><blockquote>
+<p>定义可选类型<br>定义可选类型需要在类型后面添加一个问号 “?”<br><br>强制解包可选类型<br>如果确定可选类型一定有值，可以使用感叹号 “!” 来强制解包可选类型。强制解包会将可选类型的值提取出来并转化为非可选类型，但是如果可选类型为空，会导致运行时错误。<br><br>可选绑定<br>为了避免因为强制解包可选类型而导致运行时错误，我们可以使用可选绑定（Optional Binding）来安全地解包可选类型。<br>可选绑定是一种检查可选类型是否包含值的方法，如果包含，可以将其赋值给一个常量或变量。<br><br>隐式解包可选类型<br>Swift还提供了一种特殊的可选类型，称为隐式解包可选类型。它的定义方式与普通的可选类型相同，但是它在使用时可以像非可选类型一样直接访问其值，而不需要使用感叹号 “!” 进行强制解包。</p>
+</blockquote>
+<h3 id="Swift的强制解包是什么？"><a href="#Swift的强制解包是什么？" class="headerlink" title="Swift的强制解包是什么？"></a>Swift的强制解包是什么？</h3><blockquote>
+<p>Swift中的强制解包（Force Unwrapping）是一种操作可选类型的方式，它通过感叹号 “!” 来将可选类型的值强制转换为非可选类型。<br><br>如果一个可选类型的值确定不为空，可以使用强制解包来提取其值。但是，如果该可选类型的值为空，那么强制解包操作将导致运行时错误。</p>
+</blockquote>
+<h3 id="Swift强制解包的危险是什么？"><a href="#Swift强制解包的危险是什么？" class="headerlink" title="Swift强制解包的危险是什么？"></a>Swift强制解包的危险是什么？</h3><blockquote>
+<p>强制解包一个空的可选类型会导致运行时错误，这种错误在代码测试不充分或者程序员疏忽的情况下很容易发生。此外，即使可选类型不为空，也可能在某些情况下导致未定义的行为或者其他问题。</p>
+</blockquote>
+<h3 id="Swift的闭包是什么？"><a href="#Swift的闭包是什么？" class="headerlink" title="Swift的闭包是什么？"></a>Swift的闭包是什么？</h3><blockquote>
+<p>在Swift中，闭包（Closure）是一种自包含的函数代码块，它可以在代码中被传递和使用。它们类似于函数，但没有名字，可以捕获和存储引用到变量和常量，可以在代码中作为参数或者返回值使用。<br><br>闭包可以被认为是一种轻量级的函数，它可以被当做变量传递给其他函数，也可以在函数中作为参数和返回值来使用。在Swift中，闭包有三种主要的形式：全局函数、嵌套函数和闭包表达式。</p>
+</blockquote>
+<h3 id="Swift如何使用闭包？"><a href="#Swift如何使用闭包？" class="headerlink" title="Swift如何使用闭包？"></a>Swift如何使用闭包？</h3><blockquote>
+<p>在Swift中，可以使用闭包来代替函数或方法，或者将它们作为参数传递给函数或方法。</p>
+</blockquote>
+<h3 id="Swift如何实现单例模式？"><a href="#Swift如何实现单例模式？" class="headerlink" title="Swift如何实现单例模式？"></a>Swift如何实现单例模式？</h3><blockquote>
+<p>在Swift中，可以使用 static 关键字和 lazy 关键字来实现单例模式。以下是一个简单的例子：<br><code>static let shared = MySingleton()</code><br><br>我们创建了一个名为 MySingleton 的单例类，它有一个 shared 的静态常量，用来存储唯一的单例实例。使用 static 关键字将 shared 声明为类级别的属性，使其可以在任何地方使用。private init() 可以确保不会在类外面创建实例，从而保证了单例模式的唯一性。</p>
+</blockquote>
+<h3 id="Swift如何实现面向协议编程？"><a href="#Swift如何实现面向协议编程？" class="headerlink" title="Swift如何实现面向协议编程？"></a>Swift如何实现面向协议编程？</h3><blockquote>
+<p>Swift支持面向协议编程，可以通过协议和扩展来实现接口的抽象和组合。<br>在这个例子中，我们首先定义了一个名为 Animal 的协议，它包含一个 name 属性和一个 makeSound() 方法。然后，我们使用扩展为 Animal 提供了一个默认的 makeSound() 实现。接下来，我们实现了两个类 Dog 和 Cat，它们都遵守了 Animal 协议，并提供了自己的 makeSound() 实现。最后，我们定义了一个名为 animalChorus 的函数，它接受一个 Animal 类型的数组，并遍历这个数组，调用每个对象的 makeSound() 方法。<br><br>通过使用协议和扩展，我们可以定义一组接口并为其提供默认实现，然后实现一组具体的类来遵守这些接口。这样，我们可以很容易地实现接口的抽象和组合，并实现面向协议编程的优点，比如代码的灵活性、可重用性和扩展性。</p>
+</blockquote>
+<h3 id="Swift中如何使用自动引用计数（ARC）？"><a href="#Swift中如何使用自动引用计数（ARC）？" class="headerlink" title="Swift中如何使用自动引用计数（ARC）？"></a>Swift中如何使用自动引用计数（ARC）？</h3><blockquote>
+<p>Swift使用自动引用计数（ARC）来管理内存。ARC是一种机制，用于在运行时自动管理类实例的内存。当一个类的实例不再被引用时，ARC会自动释放该实例占用的内存，从而避免内存泄漏。<br><br>在Swift中，使用ARC非常简单，不需要手动管理内存。在大多数情况下，只需要声明类的属性和变量，然后创建实例，ARC就会自动管理内存。<br><br>在这个例子中，我们创建了一个名为 MyClass 的类，它有一个 name 属性。然后，我们创建了一个 MyClass 的实例，并将它赋值给 myObject 变量。当 myObject 不再被使用时，我们将其设置为 nil，这会告诉ARC释放该实例占用的内存。<br><br>需要注意的是，在某些情况下，ARC可能会引起内存泄漏。例如，如果两个类实例相互持有对方的引用，就会导致循环引用，从而使它们的内存无法被释放。在这种情况下，可以使用弱引用（weak）或无主引用（unowned）来解决循环引用的问题。弱引用是一种非持久性的引用，当引用的对象被释放时，弱引用会自动变为nil；无主引用是一种强引用，但不会增加被引用对象的引用计数，因此当引用的对象被释放时，无主引用不会自动变为nil。使用弱引用或无主引用可以避免循环引用的问题，并确保ARC能够正确管理内存。</p>
+</blockquote>
+<h3 id="Swift中如何进行内存管理？"><a href="#Swift中如何进行内存管理？" class="headerlink" title="Swift中如何进行内存管理？"></a>Swift中如何进行内存管理？</h3><blockquote>
+<p>在 Swift 中，内存管理是自动完成的，使用的是自动引用计数（ARC）机制。ARC 是一种跟踪和计算代码中使用的每个对象的数量的技术，当对象不再需要时，ARC 会自动释放对象所占用的内存。<br><br>在大多数情况下，ARC 会自动处理内存管理，不需要手动管理内存。但是，开发者还是需要注意一些问题以确保 ARC 能够正确地管理内存：<br><br>强引用循环问题：当两个对象相互引用并且都使用强引用时，就会形成强引用循环。为了避免循环引用，可以使用弱引用或无主引用。<br>在适当的时候使用 weak 或 unowned：weak 引用会自动置空，而 unowned 引用不会。因此，在使用时，需要确定对象的生命周期，从而选择合适的引用方式。<br><br>释放资源：有些资源（比如文件、网络连接等）需要手动释放。在这种情况下，需要在适当的时候手动释放资源，否则可能会导致内存泄漏。<br><br>避免不必要的引用：持有对象的引用时，需要注意引用是否必要，如果不必要，可以及时释放引用。<br><br>避免使用循环引用：循环引用可能会导致内存泄漏。在需要使用循环引用的情况下，可以使用 weak 或 unowned 来避免问题。<br><br>尽量少使用闭包：闭包需要捕获外部对象的引用，可能会导致内存泄漏。因此，在使用闭包时，需要注意捕获的对象是否必要，以及如何避免内存泄漏。<br><br>总之，Swift 中的内存管理是自动完成的，使用 ARC 技术。开发者需要注意一些问题以确保 ARC 能够正确地管理内存，从而避免内存泄漏和其他内存问题。</p>
+</blockquote>
+<h3 id="Swift中的结构体和类有什么区别？"><a href="#Swift中的结构体和类有什么区别？" class="headerlink" title="Swift中的结构体和类有什么区别？"></a>Swift中的结构体和类有什么区别？</h3><blockquote>
+<p>Swift 中的结构体和类都是用于封装数据和功能的工具，但它们之间有一些区别。<br>继承：类支持继承，而结构体不支持继承。<br>类型转换：类可以通过类型转换实现多态性，而结构体不支持类型转换。<br>构造器：类有默认的构造器，结构体没有默认构造器。<br>存储属性：类可以定义存储属性，可以有默认值，而结构体中的存储属性必须在定义时初始化。<br>引用类型和值类型：类是引用类型，结构体是值类型。引用类型在传递和赋值时传递的是引用地址，而值类型传递的是值的副本。<br>复制：类的实例可以被多个变量或常量引用，而结构体的实例是被复制的。<br><br>在选择使用结构体还是类时，需要根据具体情况进行权衡。一般来说，当需要在不同的地方共享数据时，应该使用类。而当只需要传递值时，可以使用结构体。此外，在性能方面，结构体比类更加轻量级，可以提高代码的执行效率。</p>
+</blockquote>
+<h3 id="Swift中如何使用错误处理？"><a href="#Swift中如何使用错误处理？" class="headerlink" title="Swift中如何使用错误处理？"></a>Swift中如何使用错误处理？</h3><blockquote>
+<p>在 Swift 中，错误处理机制提供了一种传递和处理错误的方法。当一个函数执行过程中发生错误时，它会抛出一个错误，可以使用 try-catch 语句或者可选类型来处理这个错误。Swift 中的错误处理机制有三个核心部分：错误表示、错误抛出和错误捕捉。<br>错误表示：在 Swift 中，错误用遵循 Error 协议的类型表示。可以自定义错误类型，也可以使用系统提供的错误类型，如 NSError 等。<br><br>错误抛出：当一个函数遇到错误情况时，可以通过抛出错误来终止当前函数的执行。在 Swift 中，可以使用 throws 关键字标记一个函数抛出错误。<br><br>错误捕捉：在调用一个可能会抛出错误的函数时，需要使用 try、try? 或 try! 关键字来处理错误。try 用于捕捉可能抛出错误的函数的错误，并将错误传递给调用方。try? 返回一个可选值，如果函数执行成功，返回结果；如果函数执行失败，则返回 nil。try! 会强制执行函数，并在函数抛出错误时崩溃。</p>
+</blockquote>
+<h3 id="Swift中的字符串是如何实现的？"><a href="#Swift中的字符串是如何实现的？" class="headerlink" title="Swift中的字符串是如何实现的？"></a>Swift中的字符串是如何实现的？</h3><blockquote>
+<p>在 Swift 中，字符串是一个值类型，它是用 Unicode 编码的字符集序列。Swift 的字符串类型提供了一系列丰富的功能，包括字符串插值、字符串拼接、字符串分割、字符串截取、字符计数、字符查找等。<br>Swift 的字符串使用 Unicode 编码，可以处理任何语言的字符，包括 ASCII 字符、拉丁字母、汉字、韩文、日文等等。在 Swift 中，每个字符都是一个 Character 类型，可以通过 for-in 循环遍历字符串中的每个字符。<br>Swift 中的字符串也支持多行字符串字面量，可以使用三个双引号（”””）将字符串包裹起来，实现多行字符串的表示。<br>Swift 的字符串还提供了一些高效的操作方法，例如使用索引访问特定的字符，以及在字符串中查找和替换特定的子字符串。<br>Swift 的字符串还可以与其他数据类型进行转换，例如将字符串转换为整数或浮点数。可以使用字符串的 toInt() 或 toDouble() 方法将字符串转换为整数或浮点数，也可以使用字符串插值的方式将字符串转换为其他类型的值。<br>总的来说，Swift 的字符串类型提供了非常丰富的功能，可以轻松地处理不同语言的字符集，同时还提供了高效的操作方法和转换方法，非常适合开发各种类型的应用程序。</p>
+</blockquote>
+<h3 id="Swift中的数组和字典是如何实现的？"><a href="#Swift中的数组和字典是如何实现的？" class="headerlink" title="Swift中的数组和字典是如何实现的？"></a>Swift中的数组和字典是如何实现的？</h3><blockquote>
+<p>Swift 中的数组和字典是常用的数据结构，它们都是泛型集合类型。<br><br>数组<br>Swift 中的数组是一个有序的集合，可以存储多个相同类型的值。Swift 的数组实现基于值语义，即数组本身是一个值类型，而不是一个引用类型。这意味着，当数组被传递给函数或者赋值给其他变量时，都会创建一个新的副本。数组使用下标访问元素，下标从 0 开始，可以使用数组的 count 属性获取元素的数量。<br>Swift 的数组使用连续的存储空间来存储元素，因此可以通过下标直接访问元素。Swift 还提供了一些高效的数组操作，例如使用 map()、filter()、reduce() 等方法对数组进行变换和计算。<br><br>字典<br>Swift 中的字典是一种键值对集合，可以存储多个相同或不同类型的值。每个键都必须是唯一的，而值可以重复。Swift 的字典同样也是一个值类型，因此当字典被传递给函数或者赋值给其他变量时，都会创建一个新的副本。<br>Swift 的字典使用 key-value 对来存储元素，可以使用键来访问对应的值。字典提供了类似于数组的方法，例如 count 属性获取元素的数量、isEmpty 判断字典是否为空等等。Swift 还提供了一些高效的字典操作，例如使用 map()、filter()、reduce() 等方法对字典进行变换和计算。<br>Swift 的数组和字典都是基于泛型实现的，因此可以存储任何类型的数据，包括基本类型、自定义类型等等。这使得 Swift 的数组和字典非常灵活，适用于各种场景下的数据存储和处理。</p>
+</blockquote>
+<h3 id="Swift中如何实现多继承？"><a href="#Swift中如何实现多继承？" class="headerlink" title="Swift中如何实现多继承？"></a>Swift中如何实现多继承？</h3><blockquote>
+<p>在 Swift 中，类是支持单继承的，不支持多继承。这是由于多继承带来的复杂性和潜在的冲突。<br>不过，Swift 提供了协议（protocol）来实现多重继承的效果。协议可以看做是一组规范或者方法的集合，定义了一些属性和方法，类可以遵循（conform）这些协议来实现多重继承的效果。<br>在遵循协议时，类可以通过实现协议中的方法和属性来达到多重继承的效果。这样可以避免多继承带来的复杂性和冲突，同时也能够让代码更加灵活和可扩展。</p>
+</blockquote>
+<h3 id="Swift如何实现泛型？"><a href="#Swift如何实现泛型？" class="headerlink" title="Swift如何实现泛型？"></a>Swift如何实现泛型？</h3><blockquote>
+<p>Swift 中的泛型可以让我们编写灵活、可重用的代码。通过使用泛型，我们可以定义一个函数、方法、类或者结构体等，可以在这些代码中使用任意类型。<br><br>Swift 中的泛型使用关键字 T 表示类型，T 可以是任意类型，包括内置类型和自定义类型。同时，Swift 中也支持使用占位符泛型类型参数，用于表示未知的类型。<br><br>此外，Swift 中还支持对泛型类型进行约束，限定泛型类型只能是某些指定的类型或者满足特定的协议。这样可以保证泛型类型在编译时具有特定的属性和方法，增加了类型安全性和代码可读性。</p>
+</blockquote>
+<h3 id="Swift如何实现类型推断？"><a href="#Swift如何实现类型推断？" class="headerlink" title="Swift如何实现类型推断？"></a>Swift如何实现类型推断？</h3><blockquote>
+<p>Swift 中的类型推断是一种自动推断变量或常量类型的机制，可以让代码更加简洁、易读、安全。Swift 使用类型推断来确定变量和常量的类型，这样我们就不需要手动指定类型，使代码更加精简。<br><br>Swift 中的类型推断机制是基于变量或常量初始化值的类型推断。当我们声明一个变量或常量时，如果初始化值是一个字面量或者一个表达式，Swift 就会自动推断出该变量或常量的类型。</p>
+</blockquote>
+<h3 id="Swift如何实现运算符重载？"><a href="#Swift如何实现运算符重载？" class="headerlink" title="Swift如何实现运算符重载？"></a>Swift如何实现运算符重载？</h3><blockquote>
+<p>Swift 中可以对运算符进行重载（overloading），以便我们能够使用自定义类型进行运算。运算符重载可以让我们对自定义类型进行像 Swift 内置类型一样的运算。例如，我们可以定义一个 Vector 类型，并对 + 运算符进行重载，以便能够对 Vector 类型进行加法运算。<br><br>需要注意的是，Swift 中只有一部分运算符可以被重载。<br>需要注意的是，Swift 中只有一部分运算符可以被重载，这些运算符和对应的函数如下：<br>运算符对应的函数<br>    +	static func + (lhs: Self, rhs: Self) -&gt; Self<br>    -	static func - (lhs: Self, rhs: Self) -&gt; Self<br>    *	static func * (lhs: Self, rhs: Self) -&gt; Self<br>    &#x2F;	static func &#x2F; (lhs: Self, rhs: Self) -&gt; Self<br>    %	static func % (lhs: Self, rhs: Self) -&gt; Self<br>    +&#x3D;	static func +&#x3D; (lhs: inout Self, rhs: Self)<br>    -&#x3D;	static func -&#x3D; (lhs: inout Self, rhs: Self)<br>    *&#x3D;	static func *&#x3D; (lhs: inout Self, rhs: Self)<br>    &#x2F;&#x3D;	static func &#x2F;&#x3D; (lhs: inout Self, rhs: Self)<br>    %&#x3D;	static func %&#x3D; (lhs: inout Self, rhs: Self)<br>    &#x3D;&#x3D;	static func &#x3D;&#x3D; (lhs: Self, rhs: Self) -&gt; Bool<br>    !&#x3D;	static func !&#x3D; (lhs: Self, rhs: Self) -&gt; Bool<br>    &lt;	static func &lt; (lhs: Self, rhs: Self) -&gt; Bool<br>&#96;static func &gt; (lhs: Self, rhs:</p>
+</blockquote>
+<h3 id="Swift中的值类型和引用类型有什么区别？"><a href="#Swift中的值类型和引用类型有什么区别？" class="headerlink" title="Swift中的值类型和引用类型有什么区别？"></a>Swift中的值类型和引用类型有什么区别？</h3><blockquote>
+<p>在 Swift 中，值类型和引用类型是两种不同的数据类型。<br>值类型是在传递、赋值或传递给函数时被复制的数据类型。它们是通过结构体、枚举和基本数据类型（例如整数、布尔值和浮点数）来实现的。值类型具有如下特点：<br>在赋值、函数调用或传递给函数时，它们被复制。<br>每个拷贝都是独立的，所以一个值类型的变量的改变不会影响另一个值类型的变量。<br><br>引用类型是通过类来实现的，它们是指向对象的指针，不会直接复制对象本身。引用类型具有如下特点：<br>在赋值、函数调用或传递给函数时，它们不会被复制。相反，它们只是复制了一个指向对象的指针。<br>由于多个引用可能指向同一个对象，所以更改对象会影响所有引用该对象的变量。</p>
+</blockquote>
+<h3 id="Swift中的枚举类型是如何实现的？"><a href="#Swift中的枚举类型是如何实现的？" class="headerlink" title="Swift中的枚举类型是如何实现的？"></a>Swift中的枚举类型是如何实现的？</h3><blockquote>
+<p>Swift 中的枚举是一种特殊的类型，用于定义一组相关的值。枚举类型在 Swift 中是一等公民，它可以像其他类型一样使用，比如作为函数的参数和返回值、作为结构体或类的属性等。<br><br>Swift 的枚举类型有以下特点：<br>枚举可以包含一个或多个成员，每个成员都有一个相关的值。<br>枚举成员的类型可以是整数、字符串、浮点数等基本类型，也可以是其他的枚举类型。<br>枚举成员可以拥有方法，从而使其更具功能性。<br>枚举成员可以拥有关联值，这使得枚举类型更加灵活和通用。</p>
+</blockquote>
+<h3 id="Swift如何实现类型别名？"><a href="#Swift如何实现类型别名？" class="headerlink" title="Swift如何实现类型别名？"></a>Swift如何实现类型别名？</h3><blockquote>
+<p>在 Swift 中，可以使用 typealias 关键字来为一个已存在的类型定义一个别名。类型别名的主要作用是使代码更易读和易懂，同时也可以为将来对底层类型的修改提供一定的保护。</p>
+</blockquote>
+<h3 id="Swift如何实现高阶函数？"><a href="#Swift如何实现高阶函数？" class="headerlink" title="Swift如何实现高阶函数？"></a>Swift如何实现高阶函数？</h3><blockquote>
+<p>Swift 支持高阶函数，这意味着函数可以作为参数传递给另一个函数，或者函数可以返回另一个函数。在 Swift 中，有几个内置的高阶函数，例如 map、filter 和 reduce。<br>除了 map 函数之外，Swift 中还有其他的高阶函数，例如 filter 函数可以用于筛选数组中的元素，reduce 函数可以用于对数组中的元素进行累加操作。这些函数都接收闭包作为参数，并使用闭包中的代码对数组元素进行操作。<br><br>在 Swift 中使用高阶函数可以使代码更加简洁和可读，并且可以提高代码的复用性和可维护性。</p>
+</blockquote>
+<h3 id="Swift中的懒加载是什么？"><a href="#Swift中的懒加载是什么？" class="headerlink" title="Swift中的懒加载是什么？"></a>Swift中的懒加载是什么？</h3><blockquote>
+<p>在 Swift 中，懒加载指的是一种延迟加载的技术，即在对象被第一次访问时才进行初始化。这种技术可以用于那些创建成本较高的对象，以及需要在对象实际被使用之前进行一些准备工作的对象。<br><br>需要注意的是，只有当需要时才使用懒加载技术，因为这样可以减少对象的创建成本。对于那些创建成本低、需要在对象创建时进行初始化的属性，不需要使用懒加载技术。</p>
+</blockquote>
+<h3 id="Swift如何实现访问控制？"><a href="#Swift如何实现访问控制？" class="headerlink" title="Swift如何实现访问控制？"></a>Swift如何实现访问控制？</h3><blockquote>
+<p>在 Swift 中，可以使用访问控制来限制模块、类、结构体、枚举、属性、方法等的访问范围，以确保代码的安全性和可维护性。Swift 提供了以下 5 种访问控制级别：<br><br>open：最高访问级别，允许在定义实体的模块、其他模块中访问，允许其他模块继承、重写和使用该实体。<br>public：允许在定义实体的模块、其他模块中访问，允许其他模块使用该实体，但不允许其他模块继承和重写该实体。<br>internal：允许在定义实体的模块中访问，不允许其他模块访问该实体。<br>fileprivate：允许在定义实体的源文件中访问，不允许其他源文件中的代码访问该实体。<br>private：最低访问级别，允许在定义实体的作用域中访问，不允许其他作用域中的代码访问该实体。<br><br>默认情况下，Swift 中的访问级别为 internal，这意味着只有在同一模块中的代码才可以访问该实体。如果需要对实体的访问级别进行调整，可以使用关键字 open、public、internal、fileprivate 和 private 进行修饰。例如，以下是一个 Person 类的示例，其中 name 属性的访问级别为 private，表示只能在 Person 类中访问：</p>
+</blockquote>
+<h3 id="Swift如何使用拓展？"><a href="#Swift如何使用拓展？" class="headerlink" title="Swift如何使用拓展？"></a>Swift如何使用拓展？</h3><blockquote>
+<p>在 Swift 中，拓展（Extension）是一种可以向已有的类、结构体、枚举或协议添加新功能的方式。使用拓展可以使代码更加模块化和可读性更强，同时也可以在不修改原始代码的情况下增强其功能。以下是 Swift 中使用拓展的一些示例：<br><br>向类添加新方法<br>可以通过拓展向已有的类添加新方法。<br><br>向类添加新属性<br>除了可以向类添加新方法外，还可以向类添加新属性。<br><br>向协议添加新方法<br>除了向类添加新方法和属性之外，还可以向协议添加新方法。<br><br>总之，拓展是一种强大的语言特性，它可以让我们在不改变原始代码的情况下增强其功能，并且可以使代码更加模块化和易于维护。</p>
+</blockquote>
+<h3 id="Swift如何实现内部和外部参数名称？"><a href="#Swift如何实现内部和外部参数名称？" class="headerlink" title="Swift如何实现内部和外部参数名称？"></a>Swift如何实现内部和外部参数名称？</h3><blockquote>
+<p>在 Swift 中，函数的参数可以同时具有内部参数名和外部参数名。<br><br>内部参数名是函数内部使用的名称，用于区分函数中的不同参数，它是必须的。外部参数名是函数外部使用的名称，用于更好地描述函数的参数，并提高代码的可读性。外部参数名是可选的，如果没有指定，则使用默认的内部参数名。<br><br>如果不需要使用外部参数名，则可以使用下划线 _ 作为外部参数名的占位符。<br><br>总之，在 Swift 中，可以通过为函数的参数指定内部参数名和外部参数名来提高代码的可读性，并使代码更加易于理解。</p>
+</blockquote>
+<h3 id="Swift如何实现默认参数？"><a href="#Swift如何实现默认参数？" class="headerlink" title="Swift如何实现默认参数？"></a>Swift如何实现默认参数？</h3><blockquote>
+<p>在 Swift 中，可以为函数的参数指定默认值，从而将其定义为默认参数。这样，在调用函数时，如果不指定该参数的值，则使用默认值。</p>
+</blockquote>
+<h3 id="Swift如何使用可变参数？"><a href="#Swift如何使用可变参数？" class="headerlink" title="Swift如何使用可变参数？"></a>Swift如何使用可变参数？</h3><blockquote>
+<p>Swift中使用可变参数（Variadic Parameters）可以让你在定义函数时不确定参数个数，而可以让调用者传递任意数量的值。在Swift中，可以使用 … 符号来定义可变参数。<br><br>需要注意的是，一个函数只能拥有一个可变参数，而且它必须是参数列表中的最后一个参数。如果一个函数有其他参数，可变参数必须放在它们之后。</p>
+</blockquote>
+<h3 id="Swift中的guard语句是什么？"><a href="#Swift中的guard语句是什么？" class="headerlink" title="Swift中的guard语句是什么？"></a>Swift中的guard语句是什么？</h3><blockquote>
+<p>Swift中的 guard 语句是一种条件语句，它可以用于检查一个条件是否为真。guard 语句通常用于在函数中提前退出，以避免出现嵌套的条件语句。<br><br>guard 语句的作用是检查一个条件是否为真，如果条件不为真，则执行 else 代码块中的语句。通常，这些语句包括退出函数、抛出错误等操作，以防止函数继续执行。<br><br>如果条件为真，则执行 else 代码块之后的语句。由于 guard 语句的作用是检查条件并提前退出函数，所以在 guard 语句的作用域内，任何可选值都会被自动解包，因此在 guard 语句之后的代码块中可以直接使用解包后的值。</p>
+</blockquote>
+<h3 id="Swift如何实现万能的init初始化方法？"><a href="#Swift如何实现万能的init初始化方法？" class="headerlink" title="Swift如何实现万能的init初始化方法？"></a>Swift如何实现万能的init初始化方法？</h3><blockquote>
+<p>在Swift中，如果你想要创建一个能够处理所有可能情况的初始化方法，你可以使用 “failable initializer” 和 “convenience initializer”。<br><br>Failable initializer是一个可选类型的初始化方法，用于在初始化时可能会发生错误的情况。这种初始化方法使用 init? 关键字进行声明，如果初始化过程中出现错误，它会返回 nil。<br><br>Convenience initializer是一个辅助初始化方法，用于为一个类提供多个初始化方法。这种初始化方法使用 convenience init 关键字进行声明，并且必须调用同一个类中的其他初始化方法来确保所有的属性都被正确地初始化。<br><br>结合使用这两种初始化方法，我们可以实现一个万能的初始化方法，可以处理所有可能的初始化情况，具体的实现方法如下：<br>convenience init() {<br>        self.init(name: nil, age: nil)!<br>}<br>通过这种方式，我们就可以实现一个万能的初始化方法，能够处理所有可能的初始化情况，并提供默认的初始化值。</p>
+</blockquote>
+<h3 id="Swift如何使用字符串插值？"><a href="#Swift如何使用字符串插值？" class="headerlink" title="Swift如何使用字符串插值？"></a>Swift如何使用字符串插值？</h3><blockquote>
+<p>Swift中的字符串插值（String Interpolation）是一种将变量、常量、表达式和字面量插入到字符串中的方法。使用字符串插值，你可以在一个字符串文字中插入任何值，并且 Swift 会自动将这些值转换为字符串格式。<br><br>在 Swift 中，使用反斜杠和括号 (expression) 的形式来表示插入值。括号中的 expression 可以是任何可以被转换为字符串的表达式，比如变量、常量、函数调用等等。如果 expression 是一个表达式列表，可以在括号中使用逗号分隔多个表达式。</p>
+</blockquote>
+<h3 id="Swift中的nil-coalescing运算符是什么？"><a href="#Swift中的nil-coalescing运算符是什么？" class="headerlink" title="Swift中的nil-coalescing运算符是什么？"></a>Swift中的nil-coalescing运算符是什么？</h3><blockquote>
+<p>在Swift编程语言中，nil-coalescing运算符（也称为??运算符）是一种用于处理可选值的运算符。它提供了一种简洁的方式来检查一个可选值是否为nil，如果是，就使用一个默认值替代。<br><br>具体来说，??运算符将两个值作为其操作数<br>??运算符是一种非常方便和简单的处理可选值的方式，因为它使得我们可以在一行代码中完成判断和处理。</p>
+</blockquote>
+<h3 id="Swift如何使用运算符？"><a href="#Swift如何使用运算符？" class="headerlink" title="Swift如何使用运算符？"></a>Swift如何使用运算符？</h3><blockquote>
+<p>Swift中的运算符与其他编程语言类似，可以用于对数值、字符串、布尔值等类型进行各种算术和逻辑操作。Swift提供了一系列内置的运算符，同时也支持自定义运算符。下面是一些常用的Swift运算符以及它们的用法。</p>
+</blockquote>
+<h3 id="Swift中的Tuple是什么？"><a href="#Swift中的Tuple是什么？" class="headerlink" title="Swift中的Tuple是什么？"></a>Swift中的Tuple是什么？</h3><blockquote>
+<p>在Swift编程语言中，元组（Tuple）是一种轻量级的数据结构，它允许将多个值组合为一个复合值。元组的定义方式使用小括号()，其中包含一组有序的值，每个值之间用逗号,分隔。<br>我们可以通过索引来访问元组中的单个元素。<br><br>元组在Swift中是非常有用的数据结构，它提供了一种轻便的方式来组合多个相关值，同时也方便地支持函数的多返回值。</p>
+</blockquote>
+<h3 id="Swift中的Type-Alias是什么？"><a href="#Swift中的Type-Alias是什么？" class="headerlink" title="Swift中的Type Alias是什么？"></a>Swift中的Type Alias是什么？</h3><blockquote>
+<p>在Swift中，类型别名（Type Alias）是一种为现有数据类型定义备用名称的机制。类型别名可以简化代码、提高可读性，也可以在某些情况下使代码更具可维护性。<br><br>类型别名的定义方式使用关键字typealias，后面跟着一个新的名称以及要别名的现有类型</p>
+</blockquote>
+<h3 id="Swift如何实现静态方法？"><a href="#Swift如何实现静态方法？" class="headerlink" title="Swift如何实现静态方法？"></a>Swift如何实现静态方法？</h3><blockquote>
+<p>在Swift中，可以使用static关键字来定义一个静态方法。静态方法是属于类本身而不是类的实例的方法。这意味着你可以在不创建类的实例的情况下直接调用这些方法。<br><br>需要注意的是，在Swift中，我们也可以使用class关键字来定义类方法，这些方法可以被子类重写。而static关键字定义的静态方法则不能被子类重写。因此，如果你想允许子类重写某个方法，你应该使用class关键字而不是static关键字。</p>
+</blockquote>
+<h3 id="Swift如何使用隐式解包可选类型？"><a href="#Swift如何使用隐式解包可选类型？" class="headerlink" title="Swift如何使用隐式解包可选类型？"></a>Swift如何使用隐式解包可选类型？</h3><blockquote>
+<p>在 Swift 中，隐式解包可选类型是一种特殊的可选类型，可以在不使用可选绑定或强制展开的情况下直接访问其值。这种类型通常用于在声明变量时可以为空，但在后续使用时可以确保已经有值的情况。<br><br>要声明一个隐式解包可选类型，可以在变量或常量的类型后面加上一个感叹号“!”。</p>
+</blockquote>
+<h3 id="Swift如何使用协议扩展？"><a href="#Swift如何使用协议扩展？" class="headerlink" title="Swift如何使用协议扩展？"></a>Swift如何使用协议扩展？</h3><blockquote>
+<p>Swift 中的协议扩展可以为协议提供默认的实现，这样可以避免在每个实现协议的类型中重复编写相同的代码。协议扩展还可以为遵循该协议的类型提供额外的方法或属性，以增强其功能。</p>
+</blockquote>
+<h3 id="Swift如何使用泛型约束？"><a href="#Swift如何使用泛型约束？" class="headerlink" title="Swift如何使用泛型约束？"></a>Swift如何使用泛型约束？</h3><blockquote>
+<p>Swift 中的泛型约束可以让我们限制泛型类型参数的类型范围，确保它们符合特定的条件。这可以提高程序的安全性，并使代码更具可读性和可维护性。<br><br>要使用泛型约束，可以在泛型参数名称后面使用 where 关键字，并在花括号中指定类型约束。<br><br>需要注意的是，泛型约束只适用于泛型类型参数，而不适用于普通类型参数。此外，一个类型参数可以同时符合多个约束条件，我们可以通过用逗号分隔多个 where 子句来实现这一点。</p>
+</blockquote>
+<h3 id="Swift中的Lazy-Stored-Properties是什么？"><a href="#Swift中的Lazy-Stored-Properties是什么？" class="headerlink" title="Swift中的Lazy Stored Properties是什么？"></a>Swift中的Lazy Stored Properties是什么？</h3><blockquote>
+<p>在 Swift 中，Lazy Stored Properties（延迟存储属性）是一种特殊类型的属性，它们只有在第一次被访问时才会被计算和存储。这种属性通常用于需要一些复杂计算或者初始化的场景，可以避免在初始化时浪费不必要的资源。<br><br>要创建一个 Lazy Stored Property，可以使用 lazy 关键字并提供一个闭包来计算和返回属性的值。<br><br>需要注意的是，Lazy Stored Property 只能是变量，因为它们的值只能在第一次访问时计算并存储，后续的访问不会再重新计算。另外，如果该属性被多个线程访问，那么可能会出现竞态条件，需要使用线程安全的方式来避免这种情况。<br><br>总的来说，Lazy Stored Properties 是一种非常有用的特性，可以提高程序的性能和可维护性，避免不必要的初始化和计算。</p>
+</blockquote>
+<h3 id="Swift如何使用可选链式调用？"><a href="#Swift如何使用可选链式调用？" class="headerlink" title="Swift如何使用可选链式调用？"></a>Swift如何使用可选链式调用？</h3><blockquote>
+<p>在 Swift 中，可选链式调用（Optional Chaining）是一种方便而安全的方式，用于访问可能为 nil 的可选值的属性、方法或下标。通过使用可选链式调用，我们可以避免在尝试访问可选值时出现运行时错误，而不需要使用强制展开（!）或条件语句进行判断。<br><br>要使用可选链式调用，我们可以在可选值后面使用问号 ?，然后使用点 . 运算符访问它的属性、方法或下标。</p>
+</blockquote>
+<h3 id="Swift如何使用Optional-Binding？"><a href="#Swift如何使用Optional-Binding？" class="headerlink" title="Swift如何使用Optional Binding？"></a>Swift如何使用Optional Binding？</h3><blockquote>
+<p>Swift中的Optional Binding是一种安全地解包可选类型值的方法，可以通过将可选类型值绑定到一个非可选类型的常量或变量来实现。<br><code>if let str=optionalString</code><br>在上面的示例中，如果optionalString包含一个非nil值，则if语句中的代码将执行，并将可选类型值解包并赋值给常量string。否则，else语句中的代码将执行。</p>
+</blockquote>
+<h3 id="Swift如何使用do-catch语句进行错误处理？"><a href="#Swift如何使用do-catch语句进行错误处理？" class="headerlink" title="Swift如何使用do-catch语句进行错误处理？"></a>Swift如何使用do-catch语句进行错误处理？</h3><blockquote>
+<p>do：在do块中，我们编写可能抛出错误的代码。 <br><br>catch：在catch块中，我们定义如何处理错误。catch块会捕获由do块中的代码抛出的错误，并根据错误类型和具体错误信息采取适当的处理措施。</p>
+</blockquote>
+<h3 id="Swift如何使用defer语句？"><a href="#Swift如何使用defer语句？" class="headerlink" title="Swift如何使用defer语句？"></a>Swift如何使用defer语句？</h3><blockquote>
+<p>在Swift中，我们可以使用defer语句来定义一段代码，该代码将在当前作用域结束时执行，无论是正常结束还是由于抛出错误而结束。使用defer语句可以使代码更加清晰和易于维护，因为我们可以将一些清理代码（如释放资源）放在同一个块中。<br>有点像Android的finally。</p>
+</blockquote>
+<h3 id="Swift中的可空属性是什么？"><a href="#Swift中的可空属性是什么？" class="headerlink" title="Swift中的可空属性是什么？"></a>Swift中的可空属性是什么？</h3><blockquote>
+<p>Swift中的可空属性是指可以包含nil值的属性。在Swift中，一般情况下，属性是必须有值的。但是，如果我们需要一个属性可以为空，我们可以将其定义为可空属性。<br><br>可空属性使用可选类型来实现，即在属性类型后面添加一个问号（?）来表示该属性可以是nil值。</p>
+</blockquote>
+<h3 id="Swift如何使用可空属性？"><a href="#Swift如何使用可空属性？" class="headerlink" title="Swift如何使用可空属性？"></a>Swift如何使用可空属性？</h3><blockquote>
+<p>在Swift中，我们可以使用可空属性来表示一个属性可以包含nil值。可空属性使用可选类型来实现，即在属性类型后面添加一个问号（?）来表示该属性可以是nil值。</p>
+</blockquote>
+<h3 id="Swift中的非空断言是什么？"><a href="#Swift中的非空断言是什么？" class="headerlink" title="Swift中的非空断言是什么？"></a>Swift中的非空断言是什么？</h3><blockquote>
+<p>Swift中的非空断言是一种强制解包可空属性或可空值的方式，使用感叹号（!）来表示。在使用非空断言之前，我们必须确保该属性或值不为nil，否则会发生运行时错误。</p>
+</blockquote>
+<h3 id="Swift中的静态存储属性是什么？"><a href="#Swift中的静态存储属性是什么？" class="headerlink" title="Swift中的静态存储属性是什么？"></a>Swift中的静态存储属性是什么？</h3><blockquote>
+<p>在Swift中，静态存储属性是指属于类型本身而非实例的属性。这意味着无论创建了多少个该类型的实例，静态存储属性始终保持相同的值。静态存储属性可以用来存储全局的状态信息，或者为类型提供一个共享的数据源。<br><br>Swift中的静态存储属性是使用static关键字来定义的，也可以使用class关键字（在class中定义），这两种关键字可以互换使用。</p>
+</blockquote>
+<h3 id="Swift如何使用静态存储属性？"><a href="#Swift如何使用静态存储属性？" class="headerlink" title="Swift如何使用静态存储属性？"></a>Swift如何使用静态存储属性？</h3><blockquote>
+<p>在Swift中，使用静态存储属性可以为一个类型定义一个与实例无关的、全局的、常量或变量属性。可以使用static关键字或class关键字（在class中定义）来定义静态存储属性。<br><br>需要注意的是，静态存储属性可以是常量或变量，但是一旦被定义，它的值将无法更改。如果我们想要在程序运行时修改静态存储属性的值，可以使用静态存储属性的set方法或者使用计算属性来实现。</p>
+</blockquote>
+<h3 id="Swift如何使用枚举实现状态机？"><a href="#Swift如何使用枚举实现状态机？" class="headerlink" title="Swift如何使用枚举实现状态机？"></a>Swift如何使用枚举实现状态机？</h3><blockquote>
+<p>在Swift中，可以使用枚举来实现状态机，将状态作为枚举值，并使用枚举关联值来传递状态之间的相关数据。<br><br>需要注意的是，在实际的状态机实现中，状态之间的转换可能会受到更多的约束和条件的限制。在这种情况下，可以通过在枚举值中添加关联值来表示状态之间的相关数据，并在状态转换时进行检查和处理。</p>
+</blockquote>
+<h3 id="Swift如何实现面向对象的三大特性：封装，继承，多态？"><a href="#Swift如何实现面向对象的三大特性：封装，继承，多态？" class="headerlink" title="Swift如何实现面向对象的三大特性：封装，继承，多态？"></a>Swift如何实现面向对象的三大特性：封装，继承，多态？</h3><blockquote>
+<p>Swift是一门面向对象编程语言，提供了封装、继承和多态等面向对象编程的基本特性。<br><br>封装：<br>在Swift中，可以使用访问控制（Access Control）来实现封装。访问控制可以限制某些类、结构体或者枚举中的属性、方法或者其他成员只能被访问或者修改于特定的代码区块中。Swift提供了以下几种访问控制级别：<br><br>open：最高访问级别，可以在定义实体的模块、其他模块中的子类和其他模块中使用。<br>public：可以在定义实体的模块、其他模块中使用，但不能在其他模块中继承。<br>internal：可以在定义实体的模块中使用。<br>fileprivate：只能在实体定义的源文件中使用。<br>private：只能在实体定义的作用域中使用。<br><br>继承：<br>Swift中的继承使用class关键字来定义一个类，可以继承一个父类的属性和方法，并可以添加自己的属性和方法。在Swift中，所有的类都是默认继承自一个名为NSObject的类，这个类提供了一些基本的方法和属性。<br><br>多态：<br>在Swift中，多态是通过继承和重写来实现的。子类可以重写父类的方法，以实现不同的行为。当调用方法时，会根据对象的实际类型来确定调用哪个方法，这就是多态的实现。<br><br>总之，Swift是一门面向对象编程语言，提供了封装、继承和多态等面向对象编程的基本特性。开发者可以使用Swift的语言特性，来实现封装、继承和多态，从而构建出高效、易于维护的面向对象程序。</p>
+</blockquote>
+<h3 id="Swift如何使用函数类型？"><a href="#Swift如何使用函数类型？" class="headerlink" title="Swift如何使用函数类型？"></a>Swift如何使用函数类型？</h3><blockquote>
+<p>在Swift中，函数也是一种类型，因此可以像其他数据类型一样使用。函数类型可以用作变量、常量、参数、返回值等，从而实现更加灵活的编程方式。<br><br>函数类型的定义格式如下：<br>(参数类型) -&gt; 返回值类型<br>其中，参数类型表示函数的参数类型，可以是一个或多个，也可以是空；返回值类型表示函数的返回值类型，可以是任何有效的Swift类型，也可以是空。<br><br>在Swift中，函数类型可以作为函数的参数，这样就可以将函数作为一个参数传递给另一个函数，从而实现更加灵活的编程方式。<br><br>总之，Swift中的函数类型非常灵活，可以作为变量、常量、参数、返回值等使用，从而实现更加灵活的编程方式。开发者可以利用函数类型，实现高效、易于维护的Swift程序。</p>
+</blockquote>
+
+            </div>
+            <hr />
+
+            
+            <style>
+    #reward {
+        margin: 40px 0;
+        text-align: center;
+    }
+
+    #reward .reward-link {
+        font-size: 1.88rem;
+    }
+
+    #reward .btn-floating:hover {
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2), 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    #rewardModal {
+        width: 320px;
+        height: 350px;
+    }
+
+    #rewardModal .reward-title {
+        margin: 15px auto;
+        padding-bottom: 5px;
+    }
+
+    #rewardModal .modal-content {
+        padding: 10px;
+    }
+
+    #rewardModal .close {
+        position: absolute;
+        right: 15px;
+        top: 15px;
+        color: rgba(0, 0, 0, 0.5);
+        font-size: 1.3rem;
+        line-height: 20px;
+        cursor: pointer;
+    }
+
+    #rewardModal .close:hover {
+        color: #ef5350;
+        transform: scale(1.3);
+        -moz-transform:scale(1.3);
+        -webkit-transform:scale(1.3);
+        -o-transform:scale(1.3);
+    }
+
+    #rewardModal .reward-tabs {
+        margin: 0 auto;
+        width: 210px;
+    }
+
+    .reward-tabs .tabs {
+        height: 38px;
+        margin: 10px auto;
+        padding-left: 0;
+    }
+
+    .reward-content ul {
+        padding-left: 0 !important;
+    }
+
+    .reward-tabs .tabs .tab {
+        height: 38px;
+        line-height: 38px;
+    }
+
+    .reward-tabs .tab a {
+        color: #fff;
+        background-color: #ccc;
+    }
+
+    .reward-tabs .tab a:hover {
+        background-color: #ccc;
+        color: #fff;
+    }
+
+    .reward-tabs .wechat-tab .active {
+        color: #fff !important;
+        background-color: #22AB38 !important;
+    }
+
+    .reward-tabs .alipay-tab .active {
+        color: #fff !important;
+        background-color: #019FE8 !important;
+    }
+
+    .reward-tabs .reward-img {
+        width: 210px;
+        height: 210px;
+    }
+</style>
+
+<div id="reward">
+    <a href="#rewardModal" class="reward-link modal-trigger btn-floating btn-large waves-effect waves-light red">赏</a>
+
+    <!-- Modal Structure -->
+    <div id="rewardModal" class="modal">
+        <div class="modal-content">
+            <a class="close modal-close"><i class="fa fa-close"></i></a>
+            <h4 class="reward-title">写作不易，客官能否打赏一杯奶茶？</h4>
+            <div class="reward-content">
+                <div class="reward-tabs">
+                    <ul class="tabs row">
+                        <li class="tab col s6 alipay-tab waves-effect waves-light"><a href="#alipay">支付宝</a></li>
+                        <li class="tab col s6 wechat-tab waves-effect waves-light"><a href="#wechat">微 信</a></li>
+                    </ul>
+                    <div id="alipay">
+                        <img src="/medias/reward/alipay.jpg" class="reward-img" alt="支付宝打赏二维码">
+                    </div>
+                    <div id="wechat">
+                        <img src="/medias/reward/wechat.png" class="reward-img" alt="微信打赏二维码">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $('.tabs').tabs();
+    });
+</script>
+            
+
+            <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+
+<div id="article-share">
+    
+    <div class="social-share" data-disabled="qzone" data-wechat-qrcode-helper="<p>微信里点“发现”->“扫一扫”二维码便可查看分享。</p>"></div>
+    
+</div>
+
+<script src="/libs/share/js/social-share.min.js"></script>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        <p class="reprint-tip">
+            <i class="fa fa-exclamation-triangle"></i>&nbsp;&nbsp;
+            <span>转载规则</span>
+        </p>
+        
+            <div class="center-align">
+                <a rel="license noopener" target="_blank" href="https://creativecommons.org/licenses/by/4.0/deed.zh">
+                    <img alt=""
+                         style="border-width:0"
+                         src="https://i.creativecommons.org/l/by/4.0/88x31.png"/>
+                </a>
+            </div>
+            <br/>
+            <span xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/Text"
+                  property="dct:title" rel="dct:type">
+                    《iOS Swift 经典面试题之一》
+                </span> 由
+            <a xmlns:cc="http://creativecommons.org/ns#" href="/2023/01/11/iOS-swift-%E7%BB%8F%E5%85%B8%E9%9D%A2%E8%AF%95%E9%A2%98%E4%B9%8B%E4%B8%80/" property="cc:attributionName"
+               rel="cc:attributionURL">
+                Jason
+            </a> 采用
+            <a rel="license noopener" target="_blank" href="https://creativecommons.org/licenses/by/4.0/deed.zh">
+                知识共享署名 4.0 国际许可协议
+            </a>进行许可。
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+        </div>
+    </div>
+
+    
+    <link rel="stylesheet" href="/libs/gitalk/gitalk.css">
+<link rel="stylesheet" href="/css/my-gitalk.css">
+
+<div class="card gitalk-card" data-aos="fade-up">
+    <div id="gitalk-container" class="card-content"></div>
+</div>
+
+<script src="/libs/gitalk/gitalk.min.js"></script>
+<script>
+    let gitalk = new Gitalk({
+        clientID: 'fe0ccf043e8b41eb62ea',
+        clientSecret: '9ca1dd3be79bdf6123d4aa8ca81753570fe870e1',
+        repo: 'jasontojan.github.io',
+        owner: 'jasontojan',
+        admin: "jasontojan",
+        id: '2023/01/11/iOS-swift-经典面试题之一/',
+        distractionFreeMode: false  // Facebook-like distraction free mode
+    });
+
+    gitalk.render('gitalk-container');
+</script>
+    
+
+    
+
+    
+
+    
+
+    
+    <style>
+    .valine-card {
+        margin: 1.5rem auto;
+    }
+
+    .valine-card .card-content {
+        padding: 20px 20px 5px 20px;
+    }
+
+    #vcomments input[type=text],
+    #vcomments input[type=email],
+    #vcomments input[type=url],
+    #vcomments textarea {
+        box-sizing: border-box;
+    }
+
+    #vcomments p {
+        margin: 2px 2px 10px;
+        font-size: 1.05rem;
+        line-height: 1.78rem;
+    }
+
+    #vcomments blockquote p {
+        text-indent: 0.2rem;
+    }
+
+    #vcomments a {
+        padding: 0 2px;
+        color: #42b983;
+        font-weight: 500;
+        text-decoration: underline;
+    }
+
+    #vcomments img {
+        max-width: 100%;
+        height: auto;
+        cursor: pointer;
+    }
+
+    #vcomments ol li {
+        list-style-type: decimal;
+    }
+
+    #vcomments ol,
+    ul {
+        display: block;
+        padding-left: 2em;
+        word-spacing: 0.05rem;
+    }
+
+    #vcomments ul li,
+    ol li {
+        display: list-item;
+        line-height: 1.8rem;
+        font-size: 1rem;
+    }
+
+    #vcomments ul li {
+        list-style-type: disc;
+    }
+
+    #vcomments ul ul li {
+        list-style-type: circle;
+    }
+
+    #vcomments table, th, td {
+        padding: 12px 13px;
+        border: 1px solid #dfe2e5;
+    }
+
+    #vcomments table, th, td {
+        border: 0;
+    }
+
+    table tr:nth-child(2n), thead {
+        background-color: #fafafa;
+    }
+
+    #vcomments table th {
+        background-color: #f2f2f2;
+        min-width: 80px;
+    }
+
+    #vcomments table td {
+        min-width: 80px;
+    }
+
+    #vcomments h1 {
+        font-size: 1.85rem;
+        font-weight: bold;
+        line-height: 2.2rem;
+    }
+
+    #vcomments h2 {
+        font-size: 1.65rem;
+        font-weight: bold;
+        line-height: 1.9rem;
+    }
+
+    #vcomments h3 {
+        font-size: 1.45rem;
+        font-weight: bold;
+        line-height: 1.7rem;
+    }
+
+    #vcomments h4 {
+        font-size: 1.25rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    #vcomments h5 {
+        font-size: 1.1rem;
+        font-weight: bold;
+        line-height: 1.4rem;
+    }
+
+    #vcomments h6 {
+        font-size: 1rem;
+        line-height: 1.3rem;
+    }
+
+    #vcomments p {
+        font-size: 1rem;
+        line-height: 1.5rem;
+    }
+
+    #vcomments hr {
+        margin: 12px 0;
+        border: 0;
+        border-top: 1px solid #ccc;
+    }
+
+    #vcomments blockquote {
+        margin: 15px 0;
+        border-left: 5px solid #42b983;
+        padding: 1rem 0.8rem 0.3rem 0.8rem;
+        color: #666;
+        background-color: rgba(66, 185, 131, .1);
+    }
+
+    #vcomments pre {
+        font-family: monospace, monospace;
+        padding: 1.2em;
+        margin: .5em 0;
+        background: #272822;
+        overflow: auto;
+        border-radius: 0.3em;
+        tab-size: 4;
+    }
+
+    #vcomments code {
+        font-family: monospace, monospace;
+        padding: 1px 3px;
+        font-size: 0.92rem;
+        color: #e96900;
+        background-color: #f8f8f8;
+        border-radius: 2px;
+    }
+
+    #vcomments pre code {
+        font-family: monospace, monospace;
+        padding: 0;
+        color: #e8eaf6;
+        background-color: #272822;
+    }
+
+    #vcomments pre[class*="language-"] {
+        padding: 1.2em;
+        margin: .5em 0;
+    }
+
+    #vcomments code[class*="language-"],
+    pre[class*="language-"] {
+        color: #e8eaf6;
+    }
+
+    #vcomments [type="checkbox"]:not(:checked), [type="checkbox"]:checked {
+        position: inherit;
+        margin-left: -1.3rem;
+        margin-right: 0.4rem;
+        margin-top: -1px;
+        vertical-align: middle;
+        left: unset;
+        visibility: visible;
+    }
+
+    #vcomments b,
+    strong {
+        font-weight: bold;
+    }
+
+    #vcomments dfn {
+        font-style: italic;
+    }
+
+    #vcomments small {
+        font-size: 85%;
+    }
+
+    #vcomments cite {
+        font-style: normal;
+    }
+
+    #vcomments mark {
+        background-color: #fcf8e3;
+        padding: .2em;
+    }
+
+    #vcomments table, th, td {
+        padding: 12px 13px;
+        border: 1px solid #dfe2e5;
+    }
+
+    table tr:nth-child(2n), thead {
+        background-color: #fafafa;
+    }
+
+    #vcomments table th {
+        background-color: #f2f2f2;
+        min-width: 80px;
+    }
+
+    #vcomments table td {
+        min-width: 80px;
+    }
+
+    #vcomments [type="checkbox"]:not(:checked), [type="checkbox"]:checked {
+        position: inherit;
+        margin-left: -1.3rem;
+        margin-right: 0.4rem;
+        margin-top: -1px;
+        vertical-align: middle;
+        left: unset;
+        visibility: visible;
+    }
+</style>
+
+<div class="card valine-card" data-aos="fade-up">
+    <div id="vcomments" class="card-content"></div>
+</div>
+
+<script src="/libs/valine/av-min.js"></script>
+<script src="/libs/valine/Valine.min.js"></script>
+<!-- <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script> -->
+
+<script>
+    new Valine({
+        el: '#vcomments',
+        appId: '查教程获取',
+        appKey: '查教程获取',
+        notify: 'false' === 'true',
+        verify: 'false' === 'true',
+        visitor: 'false' === 'true',
+        avatar: 'wavatar',
+        pageSize: '10',
+        lang: 'zh-cn',
+        placeholder: '如果你没有GitHub账号，还可以在这里评论啦！'
+    });
+</script>
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fa fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/2023/01/13/Android-gradle%E7%9B%B8%E5%85%B3-KTS%E8%84%9A%E6%9C%AC-%E9%A1%B9%E7%9B%AE%E9%85%8D%E7%BD%AE%E6%94%B9%E9%80%A0/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/12.jpg" class="responsive-img" alt="Android gradle相关 KTS脚本 项目配置改造">
+                        
+                        <span class="card-title">Android gradle相关 KTS脚本 项目配置改造</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+googe samples之 nowinandroid项目地址：https://github.com/android/nowinandroid
+
+1.gradle.properties这里面配置了 android.useAndroidX等
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="fa fa-clock-o fa-fw icon-date"></i>2023-01-13
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fa fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/Android/" class="post-category" target="_blank">
+                                    Android
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/Android/" target="_blank">
+                        <span class="chip bg-color">Android</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fa fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2023/01/10/%E9%9D%A2%E8%AF%95-iOS-%E9%80%9A%E5%85%B3%E7%A7%98%E7%B1%8D/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/18.jpg" class="responsive-img" alt="面试 iOS 通关秘籍">
+                        
+                        <span class="card-title">面试 iOS 通关秘籍</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            1 黑铁1.1 单选题，常识问题？1.iOS后台运行时在哪个版本才开始支持的:[B]A、iOS3.0B、iOS4.0C、iOS5.0D、iOS6.0
+2.下列UIView的方法中,哪一个在iOS5.0前后的系统调用机制不同:[B]A、add
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2023-01-10
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fa fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E9%9D%A2%E8%AF%95/" class="post-category" target="_blank">
+                                    面试
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E9%9D%A2%E8%AF%95%E9%A2%98-iOS-Swift/" target="_blank">
+                        <span class="chip bg-color">面试题 iOS Swift</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+</div>
+
+
+<script>
+    $('#articleContent').on('copy', function (e) {
+        // IE8 or earlier browser is 'undefined'
+        if (typeof window.getSelection === 'undefined') return;
+
+        var selection = window.getSelection();
+        // if the selection is short let's not annoy our users.
+        if (('' + selection).length < Number.parseInt('120')) {
+            return;
+        }
+
+        // create a div outside of the visible area and fill it with the selected text.
+        var bodyElement = document.getElementsByTagName('body')[0];
+        var newdiv = document.createElement('div');
+        newdiv.style.position = 'absolute';
+        newdiv.style.left = '-99999px';
+        bodyElement.appendChild(newdiv);
+        newdiv.appendChild(selection.getRangeAt(0).cloneContents());
+
+        // we need a <pre> tag workaround.
+        // otherwise the text inside "pre" loses all the line breaks!
+        if (selection.getRangeAt(0).commonAncestorContainer.nodeName === 'PRE') {
+            newdiv.innerHTML = "<pre>" + newdiv.innerHTML + "</pre>";
+        }
+
+        var url = document.location.href;
+        newdiv.innerHTML += '<br />'
+            + '来源: JasonToJan's Blog<br />'
+            + '作者: Jason<br />'
+            + '链接: <a href="' + url + '">' + url + '</a><br />'
+            + '本文章著作权归作者所有，任何形式的转载都请注明出处。';
+
+        selection.selectAllChildren(newdiv);
+        window.setTimeout(function () { bodyElement.removeChild(newdiv); }, 200);
+    });
+</script>
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget">
+            <div class="toc-title"><i class="fa fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fa fa-list"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            // headingsOffset: -205,
+            headingSelector: 'h1, h2, h3, h4'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h1, h2, h3, h4').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).slideUp(500);
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).slideDown(500);
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+    
+
+</main>
+
+
+<script src="https://cdn.bootcss.com/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script>
+    MathJax.Hub.Config({
+        tex2jax: {inlineMath: [['$', '$'], ['\(', '\)']]}
+    });
+</script>
+
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+<!-- 代码语言 -->
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+<!-- 代码块复制 -->
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+<script type="text/javascript" src="/libs/codeBlock/clipboard.min.js"></script>
+<!-- 代码块收缩 -->
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script> 
+<!-- 代码块折行 -->
+<style type="text/css">code[class*="language-"], pre[class*="language-"] { white-space: pre !important; }</style>
+
+
+    <footer class="page-footer bg-color">
+    <div class="container row center-align">
+        <div class="col s12 m8 l8 copy-right">
+            &copy; 2023-2023 JasonJan. 版权所有
+
+            
+            &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
+            <span class="white-color">274.7k</span>
+            
+
+            <br>
+            <span id="sitetime"></span>
+
+            
+            
+            <br>
+            
+            <span id="busuanzi_container_site_pv" style='display:none'>
+                <i class="fa fa-heart-o"></i>
+                本站总访问量 <span id="busuanzi_value_site_pv" class="white-color"></span>
+            </span>
+            
+            
+            <span id="busuanzi_container_site_uv" style='display:none'>
+                人次,&nbsp;访客数 <span id="busuanzi_value_site_uv" class="white-color"></span> 人.
+            </span>
+            
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/JasonToJan" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fa fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:jason1211241203@gmail.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fa fa-envelope-open"></i>
+    </a>
+
+
+
+    <a href="https://zhihu.com/people/JasonJan" class="tooltipped" target="_blank" data-tooltip="访问我的知乎" data-position="top" data-delay="50">
+        <i class="fa fa-inverse">知</i>
+    </a>
+
+
+
+    <a href="http://wpa.qq.com/msgrd?v=3&uin=1211241203&site=qq&menu=yes" class="tooltipped" target="_blank" data-tooltip="访问我的知乎" data-position="top" data-delay="50">
+        <i class="fa fa-qq"></i>
+    </a>
+
+
+
+    <a href="https://weibo.com/JasonJan" class="tooltipped" target="_blank" data-tooltip="关注我的微博" data-position="top" data-delay="50">
+        <i class="fa fa-weibo"></i>
+    </a>
+
+
+
+    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
+        <i class="fa fa-rss"></i>
+    </a>
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+<!-- 不蒜子计数初始值纠正 -->
+<script>
+    $(document).ready(function () {
+
+        var int = setInterval(fixCount, 50);
+        var pvcountOffset = 80000;
+        var uvcountOffset = 20000;
+
+        function fixCount() {
+            if (document.getElementById("busuanzi_container_site_pv").style.display != "none") {
+                $("#busuanzi_value_site_pv").html(parseInt($("#busuanzi_value_site_pv").html()) + pvcountOffset);
+                clearInterval(int);
+            }
+            if ($("#busuanzi_container_site_pv").css("display") != "none") {
+                $("#busuanzi_value_site_uv").html(parseInt($("#busuanzi_value_site_uv").html()) + uvcountOffset); // 加上初始数据 
+                clearInterval(int);
+            }
+        }
+    });
+</script>
+
+<script language=javascript>
+    function siteTime() {
+        window.setTimeout("siteTime()", 1000);
+        var seconds = 1000;
+        var minutes = seconds * 60;
+        var hours = minutes * 60;
+        var days = hours * 24;
+        var years = days * 365;
+        var today = new Date();
+        var todayYear = today.getFullYear();
+        var todayMonth = today.getMonth() + 1;
+        var todayDate = today.getDate();
+        var todayHour = today.getHours();
+        var todayMinute = today.getMinutes();
+        var todaySecond = today.getSeconds();
+        /* Date.UTC() -- 返回date对象距世界标准时间(UTC)1970年1月1日午夜之间的毫秒数(时间戳)
+        year - 作为date对象的年份，为4位年份值
+        month - 0-11之间的整数，做为date对象的月份
+        day - 1-31之间的整数，做为date对象的天数
+        hours - 0(午夜24点)-23之间的整数，做为date对象的小时数
+        minutes - 0-59之间的整数，做为date对象的分钟数
+        seconds - 0-59之间的整数，做为date对象的秒数
+        microseconds - 0-999之间的整数，做为date对象的毫秒数 */
+        var t1 = Date.UTC(2017, 09, 11, 00, 00, 00); //北京时间2018-2-13 00:00:00
+        var t2 = Date.UTC(todayYear, todayMonth, todayDate, todayHour, todayMinute, todaySecond);
+        var diff = t2 - t1;
+        var diffYears = Math.floor(diff / years);
+        var diffDays = Math.floor((diff / days) - diffYears * 365);
+        var diffHours = Math.floor((diff - (diffYears * 365 + diffDays) * days) / hours);
+        var diffMinutes = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours) / minutes);
+        var diffSeconds = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours - diffMinutes * minutes) / seconds);
+        document.getElementById("sitetime").innerHTML = "本站已运行 " + diffYears + " 年 " + diffDays + " 天 " + diffHours + " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+    }/*因为建站时间还没有一年，就将之注释掉了。需要的可以取消*/
+    siteTime();
+</script>
+
+<link rel="stylesheet" href="/css/prism.css">
+<script src="/js/prism.js" async></script>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fa fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script src="/js/search.js"></script>
+<script type="text/javascript">
+$(function () {
+    searchFunc("/" + "search.xml", 'searchInput', 'searchResult');
+});
+</script>
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fa fa-angle-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    <script type="text/javascript"> var OriginTitile = document.title, st; document.addEventListener("visibilitychange", function () { document.hidden ? (document.title = "Σ(っ °Д °;)っ喔哟，崩溃啦！", clearTimeout(st)) : (document.title = "φ(゜▽゜*)♪咦，又好了！", st = setTimeout(function () { document.title = OriginTitile }, 3e3)) })
+    </script>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=查教程获取"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+        dataLayer.push(arguments);
+    }
+
+    gtag('js', new Date());
+    gtag('config', '查教程获取');
+</script>
+
+
+
+    
+    <script src="/libs/others/clicklove.js"></script>
+    
+
+    
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    <!-- 雪花特效 -->
+    
+
+</body>
+
+</html>

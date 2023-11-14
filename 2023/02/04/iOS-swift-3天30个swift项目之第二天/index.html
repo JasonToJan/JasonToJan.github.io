@@ -1,0 +1,2863 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="iOS swift 3天30个swift项目之第二天, Android iOS Flutter">
+    <meta name="baidu-site-verification" content="fmlEuI34ir" />
+    <meta name="google-site-verification" content="yCy2azpds5XSuGZvis6OuA-XIGF5GuGpYRAaGfD6o48" />
+    <meta name="360-site-verification" content="b7c11a830ef90fd1464ad6206bb7b6e7" />
+    <meta name="description" content="1 渐变TableView1.1 效果
+
+1.2 代码实现直接是继承了UITableViewController这个控制器，这个应该是自带了一个列表。内部有一个tableView。
+class ClearTableViewControlle">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>iOS swift 3天30个swift项目之第二天 | JasonToJan&#39;s Blog</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+    <style type="text/css">
+        
+    </style>
+
+    <script src="/libs/jquery/jquery-2.2.0.min.js"></script>
+    <script src="https://sdk.jinrishici.com/v2/browser/jinrishici.js" charset="utf-8"></script>
+    <script>
+        var _hmt = _hmt || [];
+        (function () {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?ce84511d3df71640a9378a69f6293044";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+    
+        <script>
+            (function(){
+                var bp = document.createElement('script');
+                var curProtocol = window.location.protocol.split(':')[0];
+                if (curProtocol === 'https') {
+                    bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+                }
+                else {
+                    bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+                }
+                var s = document.getElementsByTagName("script")[0];
+                s.parentNode.insertBefore(bp, s);
+            })();
+        </script>
+    
+
+    <script>
+        (function(){
+        var src = "https://jspassport.ssl.qhimg.com/11.0.1.js?d182b3f28525f2db83acfaaf6e696dba";
+        document.write('<script src="' + src + '" id="sozz"><\/script>');
+        })();
+    </script>
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">JasonToJan's Blog</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fa fa-navicon"></i></a>
+<ul class="right">
+    
+    <li class="hide-on-med-and-down">
+        <a href="/" class="waves-effect waves-light">
+            
+            <i class="fa fa-home"></i>
+            
+            <span>首页</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/tags" class="waves-effect waves-light">
+            
+            <i class="fa fa-tags"></i>
+            
+            <span>标签</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/categories" class="waves-effect waves-light">
+            
+            <i class="fa fa-bookmark"></i>
+            
+            <span>分类</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/archives" class="waves-effect waves-light">
+            
+            <i class="fa fa-archive"></i>
+            
+            <span>归档</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/about" class="waves-effect waves-light">
+            
+            <i class="fa fa-user-circle-o"></i>
+            
+            <span>关于</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/friends" class="waves-effect waves-light">
+            
+            <i class="fa fa-address-book"></i>
+            
+            <span>友情链接</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/contact" class="waves-effect waves-light">
+            
+            <i class="fa fa-comments"></i>
+            
+            <span>留言板</span>
+        </a>
+    </li>
+    
+    <li>
+        <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+            <i id="searchIcon" class="fa fa-search" title="搜索"></i>
+        </a>
+    </li>
+</ul>
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">JasonToJan's Blog</div>
+        <div class="logo-desc">
+            
+            专注移动端，热爱生活，热衷开发。
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li>
+            <a href="/" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-home"></i>
+                
+                首页
+            </a>
+        </li>
+        
+        <li>
+            <a href="/tags" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-tags"></i>
+                
+                标签
+            </a>
+        </li>
+        
+        <li>
+            <a href="/categories" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-bookmark"></i>
+                
+                分类
+            </a>
+        </li>
+        
+        <li>
+            <a href="/archives" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-archive"></i>
+                
+                归档
+            </a>
+        </li>
+        
+        <li>
+            <a href="/about" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-user-circle-o"></i>
+                
+                关于
+            </a>
+        </li>
+        
+        <li>
+            <a href="/friends" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-address-book"></i>
+                
+                友情链接
+            </a>
+        </li>
+        
+        <li>
+            <a href="/contact" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-comments"></i>
+                
+                留言板
+            </a>
+        </li>
+        
+        
+        <li><div class="divider"></div></li>
+        <li>
+            <a href="https://github.com/JasonToJan/hexo-matery-modified" class="waves-effect waves-light" target="_blank">
+                <i class="fa fa-github-square fa-fw"></i>Fork Me
+            </a>
+        </li>
+        
+    </ul>
+</div>
+
+        </div>
+
+        
+            <style>
+    .nav-transparent .github-corner {
+        display: none !important;
+    }
+
+    .github-corner {
+        position: absolute;
+        z-index: 10;
+        top: 0;
+        right: 0;
+        border: 0;
+        transform: scale(1.1);
+    }
+
+    .github-corner svg {
+        color: #0f9d58;
+        fill: #fff;
+        height: 64px;
+        width: 64px;
+    }
+
+    .github-corner:hover .octo-arm {
+        animation: a 0.56s ease-in-out;
+    }
+
+    .github-corner .octo-arm {
+        animation: none;
+    }
+
+    @keyframes a {
+        0%,
+        to {
+            transform: rotate(0);
+        }
+        20%,
+        60% {
+            transform: rotate(-25deg);
+        }
+        40%,
+        80% {
+            transform: rotate(10deg);
+        }
+    }
+</style>
+
+<a href="https://github.com/JasonToJan/hexo-matery-modified" class="github-corner tooltipped hide-on-med-and-down" target="_blank"
+   data-tooltip="Fork Me" data-position="left" data-delay="50">
+    <svg viewBox="0 0 250 250" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
+              fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
+              fill="currentColor" class="octo-body"></path>
+    </svg>
+</a>
+        
+    </nav>
+
+</header>
+
+    
+<script src="/libs/cryptojs/crypto-js.min.js"></script>
+<script>
+    (function() {
+        let pwd = '';
+        if (pwd && pwd.length > 0) {
+            if (pwd !== CryptoJS.SHA256(prompt('请输入访问本文章的密码')).toString(CryptoJS.enc.Hex)) {
+                alert('密码错误，将返回主页！');
+                location.href = '/';
+            }
+        }
+    })();
+</script>
+
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/3.jpg')">
+    <div class="container">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <div class="description center-align post-title">
+                        iOS swift 3天30个swift项目之第二天
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        margin: 35px 0 15px 0;
+        padding-left: 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #toc-content .is-active-link::before {
+        background-color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 20px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                        <a href="/tags/30%E4%B8%AASwift%E9%A1%B9%E7%9B%AE/" target="_blank">
+                            <span class="chip bg-color">30个Swift项目</span>
+                        </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fa fa-bookmark fa-fw icon-category"></i>
+                        
+                        <a href="/categories/iOS/" class="post-category" target="_blank">
+                            iOS
+                        </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                <div class="post-date info-break-policy">
+                    <i class="fa fa-calendar-minus-o fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2023-02-04
+                </div>
+
+                <div class="post-author info-break-policy">
+                    <i class="fa fa-user-o fa-fw"></i>作者:&nbsp;&nbsp;
+                    
+                    Jason
+                    
+                </div>
+
+                
+                
+                <div class="info-break-policy">
+                    <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
+                    7.4k
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
+                    38 分
+                </div>
+                
+                
+
+                
+                <div id="busuanzi_container_page_pv" class="info-break-policy">
+                    <i class="fa fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
+                    <span id="busuanzi_value_page_pv"></span>
+                </div>
+                
+            </div>
+        </div>
+        <hr class="clearfix">
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h2 id="1-渐变TableView"><a href="#1-渐变TableView" class="headerlink" title="1 渐变TableView"></a>1 渐变TableView</h2><h3 id="1-1-效果"><a href="#1-1-效果" class="headerlink" title="1.1 效果"></a>1.1 效果</h3><img src=cleartableviewcell.gif>
+
+<h3 id="1-2-代码实现"><a href="#1-2-代码实现" class="headerlink" title="1.2 代码实现"></a>1.2 代码实现</h3><p>直接是继承了UITableViewController这个控制器，这个应该是自带了一个列表。内部有一个tableView。</p>
+<pre><code>class ClearTableViewController: UITableViewController &#123;
+</code></pre>
+<p>初始化：</p>
+<pre><code class="line-numbers language-Swift">override func viewDidLoad() &#123;
+        super.viewDidLoad()
+
+        self.view.backgroundColor = UIColor.black
+        self.tableView.separatorStyle = UITableViewCellSeparatorStyle.none
+        self.tableView.tableFooterView = UIView(frame: CGRect.zero)
+        self.tableView.register(TableViewCell.self, forCellReuseIdentifier: &quot;tableCell&quot;)        
+&#125;
+</code></pre>
+<p>这里绑定了TableViewCell。</p>
+<pre><code class="line-numbers language-Swift">class TableViewCell: UITableViewCell &#123;
+
+    let gradientLayer = CAGradientLayer()
+    
+    override func awakeFromNib() &#123;
+        super.awakeFromNib()
+    &#125;
+    
+    override func setSelected(_ selected: Bool, animated: Bool) &#123;
+        super.setSelected(selected, animated: animated)
+    &#125;
+    
+    override init(style: UITableViewCellStyle, reuseIdentifier: String?) &#123;
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        
+        gradientLayer.frame = self.bounds
+        let color1 = UIColor(white: 1.0, alpha: 0.2).cgColor
+        let color2 = UIColor(white: 1.0, alpha: 0.1).cgColor
+        let color3 = UIColor.clear.cgColor
+        let color4 = UIColor(white: 0.0, alpha: 0.05).cgColor
+        
+        gradientLayer.colors = [color1, color2, color3, color4]
+        gradientLayer.locations = [0.0, 0.04, 0.95, 1.0]
+    &#125;
+    
+    override func layoutSubviews() &#123;
+        super.layoutSubviews()
+        gradientLayer.frame = self.bounds
+    &#125;
+
+    required init?(coder aDecoder: NSCoder) &#123;
+        fatalError(&quot;init(coder:) has not been implemented&quot;)
+    &#125;
+&#125;
+</code></pre>
+<p>这里把UITableViewCell的bounds给到了一个渐变层CAGradientLayer。</p>
+<p>数据绑定：</p>
+<pre><code class="line-numbers language-Swift"> var tableData = [&quot;Read 3 article on Medium&quot;, &quot;Cleanup bedroom&quot;, &quot;Go for a run&quot;, &quot;Hit the gym&quot;, &quot;Build another swift project&quot;, &quot;Movement training&quot;, &quot;Fix the layout problem of a client project&quot;, &quot;Write the experience of #30daysSwift&quot;, &quot;Inbox Zero&quot;, &quot;Booking the ticket to Chengdu&quot;, &quot;Test the Adobe Project Comet&quot;, &quot;Hop on a call to mom&quot;]
+</code></pre>
+<p>然后因为这个是UITableViewController，就无需重复设置代理了：</p>
+<pre><code class="line-numbers language-Swift">override func numberOfSections(in tableView: UITableView) -&gt; Int &#123;
+        return 1
+    &#125;
+    
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -&gt; Int &#123;
+        return tableData.count
+    &#125;
+    
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -&gt; CGFloat &#123;
+        return 60
+    &#125;
+    
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -&gt; UITableViewCell &#123;
+        
+        let cell = tableView.dequeueReusableCell(withIdentifier: &quot;tableCell&quot;, for: indexPath) as! TableViewCell
+        
+        cell.textLabel?.text = tableData[indexPath.row]
+        cell.textLabel?.textColor = UIColor.white
+        cell.textLabel?.backgroundColor = UIColor.clear
+        cell.textLabel?.font = UIFont(name: &quot;Avenir Next&quot;, size: 18)
+        cell.selectionStyle = UITableViewCellSelectionStyle.none
+        return cell
+    &#125;
+    
+    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) &#123;
+        cell.backgroundColor = colorforIndex(index: indexPath.row)
+    &#125;
+    
+    func colorforIndex(index: Int) -&gt; UIColor &#123;
+        
+        let itemCount = tableData.count - 1
+        let color = (CGFloat(index) / CGFloat(itemCount)) * 0.6
+        return UIColor(red: 1.0, green: color, blue: 0.0, alpha: 1.0)
+    &#125;
+</code></pre>
+<p>重点实现下这几个代理方法即可。颜色设置主要是通过willDisplay这个方法设置进去了。</p>
+<h2 id="2-登录动画"><a href="#2-登录动画" class="headerlink" title="2 登录动画"></a>2 登录动画</h2><h3 id="2-1-效果"><a href="#2-1-效果" class="headerlink" title="2.1 效果"></a>2.1 效果</h3><img src=simple%20login%20animation.gif>
+
+<h3 id="2-2-故事版关系"><a href="#2-2-故事版关系" class="headerlink" title="2.2 故事版关系"></a>2.2 故事版关系</h3><img src=21_1.png>
+这里是有两个场景Scene，每个Scene绑定了一个类，也就是左侧的两个Controller。
+这里学会了不用代码，直接用storyboard直接实现控制器的跳转。
+
+<p>可以参考下这篇文章：<a target="_blank" rel="noopener" href="https://blog.csdn.net/Sherlooock/article/details/106825134">Xcode新建View Controller Scene并实现界面间跳转的方法</a>。</p>
+<h3 id="2-3-启动页"><a href="#2-3-启动页" class="headerlink" title="2.3 启动页"></a>2.3 启动页</h3><pre><code class="line-numbers language-Swift">class SplasViewController: UIViewController &#123;
+    
+    @IBOutlet weak var signupButton: UIButton!
+    @IBOutlet weak var loginButton: UIButton!
+    
+    override func viewDidLoad() &#123;
+        super.viewDidLoad()
+        
+        signupButton.layer.cornerRadius = 5
+        loginButton.layer.cornerRadius = 5 
+    &#125;
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle &#123;
+        return UIStatusBarStyle.lightContent
+    &#125;
+&#125;
+这里设置了按钮圆角。
+</code></pre>
+<h3 id="2-4-登录页"><a href="#2-4-登录页" class="headerlink" title="2.4 登录页"></a>2.4 登录页</h3><p>UI定义：</p>
+<pre><code class="line-numbers language-Swift">@IBOutlet weak var uesernameTextField: UITextField!
+@IBOutlet weak var passwordTextField: UITextField!
+
+@IBOutlet weak var centerAlignUsername: NSLayoutConstraint!
+@IBOutlet weak var centerAlignPassword: NSLayoutConstraint!
+
+@IBOutlet weak var loginButton: UIButton!
+</code></pre>
+<p>初始化：</p>
+<pre><code class="line-numbers language-Swift">override func viewDidLoad() &#123;
+    super.viewDidLoad()
+    
+    uesernameTextField.layer.cornerRadius = 5
+    passwordTextField.layer.cornerRadius = 5
+    uesernameTextField.delegate = self
+    passwordTextField.delegate = self
+    loginButton.layer.cornerRadius = 5
+&#125;
+</code></pre>
+<p>这里设置编辑框代理，设置按钮圆角。</p>
+<p>将要显示：</p>
+<pre><code class="line-numbers language-Swift">override func viewWillAppear(_ animated: Bool) &#123;
+    super.viewWillAppear(animated)
+    
+    centerAlignUsername.constant -= view.bounds.width
+    centerAlignPassword.constant -= view.bounds.width
+    loginButton.alpha = 0
+&#125;
+</code></pre>
+<p>这里设置刚进页面x轴减去控件宽度，实现效果就是从左边滑出来。</p>
+<p>已经显示了：</p>
+<pre><code class="line-numbers language-Swift">override func viewDidAppear(_ animated: Bool) &#123;
+    super.viewDidAppear(animated)
+    
+    UIView.animate(withDuration: 0.5, delay: 0.00, options: .curveEaseOut, animations: &#123;
+        
+        self.centerAlignUsername.constant += self.view.bounds.width
+        self.view.layoutIfNeeded()
+    
+        &#125;, completion: nil)
+    
+    UIView.animate(withDuration: 0.5, delay: 0.10, options: .curveEaseOut, animations: &#123;
+        
+        self.centerAlignPassword.constant += self.view.bounds.width
+        self.view.layoutIfNeeded()
+        
+        &#125;, completion: nil)
+    
+    UIView.animate(withDuration: 0.5, delay: 0.20, options: .curveEaseOut, animations: &#123;
+        
+        self.loginButton.alpha = 1
+        
+        &#125;, completion: nil)
+
+&#125;
+</code></pre>
+<p>这是设置3个动画，将三个视图从左边滑出。</p>
+<h2 id="3-列表动画"><a href="#3-列表动画" class="headerlink" title="3 列表动画"></a>3 列表动画</h2><h3 id="3-1-效果"><a href="#3-1-效果" class="headerlink" title="3.1 效果"></a>3.1 效果</h3><img src=AnimateTabel.gif>
+
+<h3 id="3-2-第一个列表"><a href="#3-2-第一个列表" class="headerlink" title="3.2 第一个列表"></a>3.2 第一个列表</h3><p>初始化：</p>
+<pre><code class="line-numbers language-Swift">override func viewDidLoad() &#123;
+    super.viewDidLoad()    
+    self.view.backgroundColor = UIColor.black
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyle.none
+    self.tableView.tableFooterView = UIView(frame: CGRect.zero)
+    self.tableView.register(FirstTableCell.self, forCellReuseIdentifier: &quot;tableCell&quot;)
+&#125;
+</code></pre>
+<p>这里绑定了第一个Table的Cell：</p>
+<pre><code class="line-numbers language-Swift">class FirstTableCell: UITableViewCell &#123;
+
+    let gradientLayer = CAGradientLayer()
+    
+    override func awakeFromNib() &#123;
+        super.awakeFromNib()
+    &#125;
+    
+    override func setSelected(_ selected: Bool, animated: Bool) &#123;
+        super.setSelected(selected, animated: animated)
+    &#125;
+    
+    
+    override init(style: UITableViewCellStyle, reuseIdentifier: String?) &#123;
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        
+        gradientLayer.frame = self.bounds
+        let color1 = UIColor(white: 1.0, alpha: 0.2).cgColor as CGColor
+        let color2 = UIColor(white: 1.0, alpha: 0.1).cgColor as CGColor
+        let color3 = UIColor.clear.cgColor as CGColor
+        let color4 = UIColor(white: 0.0, alpha: 0.05).cgColor as CGColor
+        
+        gradientLayer.colors = [color1, color2, color3, color4]
+        gradientLayer.locations = [0.0, 0.04, 0.95, 1.0]
+        layer.insertSublayer(gradientLayer, at: 0)
+    &#125;
+    
+    override func layoutSubviews() &#123;
+        super.layoutSubviews()
+        gradientLayer.frame = self.bounds
+    &#125;
+    
+    required init?(coder aDecoder: NSCoder) &#123;
+        fatalError(&quot;init(coder:) has not been implemented&quot;)
+    &#125;
+&#125;
+</code></pre>
+<p>这里跟前面类似，设置了渐变背景。通过layer层insertSublayer设置了渐变层实现。</p>
+<p>如何实现动画呢？<br>继续看第一个控制器。</p>
+<p>将要的生命周期：</p>
+<pre><code class="line-numbers language-Swift">override func viewWillAppear(_ animated: Bool) &#123;
+    animateTable()
+&#125;
+
+func animateTable() &#123;
+        self.tableView.reloadData()
+        let cells = tableView.visibleCells
+        let tableHeight: CGFloat = tableView.bounds.size.height
+        
+        for i in cells &#123;
+            let cell: UITableViewCell = i as UITableViewCell
+            cell.transform = CGAffineTransform(translationX: 0, y: tableHeight)
+        &#125;
+        
+        var index = 0
+        for a in cells &#123;
+            
+            let cell: UITableViewCell = a as UITableViewCell
+            
+            UIView.animate(withDuration: 1.5, delay: 0.05 * Double(index), usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: [], animations: &#123;
+                
+                cell.transform = CGAffineTransform(translationX: 0, y: 0);
+                
+            &#125;, completion: nil)
+            
+            index += 1
+        &#125;
+    &#125;
+</code></pre>
+<p>这里一个设置了Cell的transform，第一个是从底部初始位置，第二个循环是恢复到目标位置。</p>
+<p>第一个table绑定的代理和数据源：</p>
+<pre><code class="line-numbers language-Swift">override func numberOfSections(in tableView: UITableView) -&gt; Int &#123;
+        return 1
+    &#125;
+    
+override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -&gt; Int &#123;
+    return tableData.count
+&#125;
+
+override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -&gt; CGFloat &#123;
+    return 60
+&#125;
+
+override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -&gt; UITableViewCell &#123;
+    
+    let cell = tableView.dequeueReusableCell(withIdentifier: &quot;tableCell&quot;, for: indexPath)
+    
+    cell.textLabel?.text = tableData[indexPath.row]
+    cell.textLabel?.textColor = UIColor.white
+    cell.textLabel?.backgroundColor = UIColor.clear
+    cell.textLabel?.font = UIFont(name: &quot;Avenir Next&quot;, size: 18)
+    cell.selectionStyle = UITableViewCellSelectionStyle.none
+    return cell
+&#125;
+
+override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) &#123;
+    cell.backgroundColor =  colorforIndex(indexPath.row)
+&#125;
+
+override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) &#123;
+    performSegue(withIdentifier: &quot;ShowAnimateTableViewController&quot;, sender: nil)
+&#125;
+
+func colorforIndex(_ index: Int) -&gt; UIColor &#123;
+    let itemCount = tableData.count - 1
+    let color = (CGFloat(index) / CGFloat(itemCount)) * 0.6
+    return UIColor(red: color, green: 0.0, blue: 1.0, alpha: 1.0)
+&#125;
+</code></pre>
+<p>这里设置了渐变色，和前面一样。</p>
+<h3 id="3-3-第2个列表"><a href="#3-3-第2个列表" class="headerlink" title="3.3 第2个列表"></a>3.3 第2个列表</h3><p>继承UITableViewController:</p>
+<pre><code class="line-numbers language-Swift">class AnimateTableViewController: UITableViewController &#123;
+</code></pre>
+<p>初始化：</p>
+<pre><code class="line-numbers language-Swift"> override func viewDidLoad() &#123;
+    super.viewDidLoad()
+    
+    self.view.backgroundColor = UIColor.black
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyle.none
+    self.tableView.tableFooterView = UIView(frame: CGRect.zero)
+    self.tableView.register(SecondTableCell.self, forCellReuseIdentifier: &quot;SecondTableCell&quot;)
+&#125;
+</code></pre>
+<p>将要显示：</p>
+<pre><code class="line-numbers language-Swift">override func viewWillAppear(_ animated: Bool) &#123;
+    animateTable()
+&#125;
+    
+func animateTable() &#123;
+    
+    self.tableView.reloadData()
+    
+    let cells = tableView.visibleCells
+    let tableHeight: CGFloat = tableView.bounds.size.height
+    
+    for (index, cell) in cells.enumerated() &#123;
+        cell.transform = CGAffineTransform(translationX: 0, y: tableHeight)
+        UIView.animate(withDuration: 1.0, delay: 0.05 * Double(index), usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: [], animations: &#123;
+                cell.transform = CGAffineTransform(translationX: 0, y: 0);
+            &#125;, completion: nil)
+    &#125;
+&#125;
+</code></pre>
+<p>这里设置了显示动画，从底部弹出效果。</p>
+<pre><code class="line-numbers language-Swift">override func numberOfSections(in tableView: UITableView) -&gt; Int &#123;
+        return 1
+    &#125;
+    
+override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -&gt; Int &#123;
+    return tableData.count
+&#125;
+
+override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -&gt; CGFloat &#123;
+    return 60
+&#125;
+
+override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -&gt; UITableViewCell &#123;
+    
+    let cell = tableView.dequeueReusableCell(withIdentifier: &quot;SecondTableCell&quot;, for: indexPath)
+    
+    cell.textLabel?.text = tableData[indexPath.row]
+    cell.textLabel?.textColor = UIColor.white
+    cell.textLabel?.backgroundColor = UIColor.clear
+    cell.textLabel?.font = UIFont(name: &quot;Avenir Next&quot;, size: 18)
+    cell.selectionStyle = UITableViewCellSelectionStyle.none
+    return cell
+    
+&#125;
+
+override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) &#123;
+    cell.backgroundColor =  colorforIndex(indexPath.row)
+&#125;
+
+func colorforIndex(_ index: Int) -&gt; UIColor &#123;
+    let itemCount = tableData.count - 1
+    let color = (CGFloat(index) / CGFloat(itemCount)) * 0.6
+    return UIColor(red: 1.0, green: color, blue: 0.0, alpha: 1.0)
+&#125;
+</code></pre>
+<p>这里数据源绑定。还需要一个Cell支持下。<br>SecondTableCell:</p>
+<pre><code class="line-numbers language-Swift">class SecondTableCell: UITableViewCell &#123;
+    
+    let gradientLayer = CAGradientLayer()
+    
+    override func awakeFromNib() &#123;
+        super.awakeFromNib()
+    &#125;
+    
+    override func setSelected(_ selected: Bool, animated: Bool) &#123;
+        super.setSelected(selected, animated: animated)
+    &#125;
+
+    override init(style: UITableViewCellStyle, reuseIdentifier: String?) &#123;
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        
+        gradientLayer.frame = self.bounds
+        let color1 = UIColor(white: 1.0, alpha: 0.2).cgColor as CGColor
+        let color2 = UIColor(white: 1.0, alpha: 0.1).cgColor as CGColor
+        let color3 = UIColor.clear.cgColor as CGColor
+        let color4 = UIColor(white: 0.0, alpha: 0.05).cgColor as CGColor
+        
+        gradientLayer.colors = [color1, color2, color3, color4]
+        gradientLayer.locations = [0.0, 0.04, 0.95, 1.0]
+        layer.insertSublayer(gradientLayer, at: 0)
+    &#125;
+    
+    override func layoutSubviews() &#123;
+        super.layoutSubviews()
+        gradientLayer.frame = self.bounds
+    &#125;
+    
+    required init?(coder aDecoder: NSCoder) &#123;
+        fatalError(&quot;init(coder:) has not been implemented&quot;)
+    &#125;
+&#125;
+</code></pre>
+<p>这里和第一个Cell类似。</p>
+<h2 id="4-游戏抽奖滚动图案"><a href="#4-游戏抽奖滚动图案" class="headerlink" title="4 游戏抽奖滚动图案"></a>4 游戏抽奖滚动图案</h2><h3 id="4-1-效果"><a href="#4-1-效果" class="headerlink" title="4.1 效果"></a>4.1 效果</h3><img src=emoji%20spin.gif>
+
+<h3 id="4-2-UI"><a href="#4-2-UI" class="headerlink" title="4.2 UI"></a>4.2 UI</h3><p>这里一个背景图片<br>go按钮<br>中间是UIPickerView，有点像时间滚动条<br>底部模式，结果文案。</p>
+<p>直接在故事版里面拖好了。</p>
+<p>然后拖动3个View到控制器：</p>
+<pre><code class="line-numbers language-Swift">class ViewController: UIViewController &#123;
+
+    @IBOutlet weak var emojiPickerView: UIPickerView!
+    @IBOutlet weak var goButton: UIButton!
+    @IBOutlet weak var resultLabel: UILabel!
+</code></pre>
+<h3 id="4-3-Data"><a href="#4-3-Data" class="headerlink" title="4.3 Data"></a>4.3 Data</h3><pre><code class="line-numbers language-Swift"> var imageArray = [String]()
+    var dataArray1 = [Int]()
+    var dataArray2 = [Int]()
+    var dataArray3 = [Int]()
+    var amazingFlag = false
+    var bounds: CGRect = CGRect.zero
+</code></pre>
+<p>变量声明，等下作为UIPickerView的数据。</p>
+<h3 id="4-3-生命周期之viewDidLoad"><a href="#4-3-生命周期之viewDidLoad" class="headerlink" title="4.3 生命周期之viewDidLoad"></a>4.3 生命周期之viewDidLoad</h3><pre><code class="line-numbers language-Swift">override func viewDidLoad() &#123;
+    super.viewDidLoad()
+    
+    bounds = goButton.bounds
+    imageArray = [&quot;👻&quot;,&quot;👸&quot;,&quot;💩&quot;,&quot;😘&quot;,&quot;🍔&quot;,&quot;🤖&quot;,&quot;🍟&quot;,&quot;🐼&quot;,&quot;🚖&quot;,&quot;🐷&quot;]
+    
+    for _ in 0...100 &#123;
+        self.dataArray1.append((Int)(arc4random() % 10 ))
+        self.dataArray2.append((Int)(arc4random() % 10 ))
+        self.dataArray3.append((Int)(arc4random() % 10 ))
+    &#125;
+    
+    resultLabel.text = &quot;&quot;
+    
+    emojiPickerView.delegate = self
+    emojiPickerView.dataSource = self
+    
+    goButton.layer.cornerRadius = 6
+    goButton.layer.masksToBounds = true
+&#125;
+</code></pre>
+<p>这里生成长度为100的3个数组。本质上存放的0到9个数字。</p>
+<h3 id="4-4-将要可见"><a href="#4-4-将要可见" class="headerlink" title="4.4 将要可见"></a>4.4 将要可见</h3><pre><code class="line-numbers language-Swift">override func viewWillAppear(_ animated: Bool) &#123;
+    super.viewWillAppear(animated)
+    
+    goButton.alpha = 0   
+&#125;
+</code></pre>
+<h3 id="4-5-已经可见"><a href="#4-5-已经可见" class="headerlink" title="4.5 已经可见"></a>4.5 已经可见</h3><pre><code class="line-numbers language-Swift">override func viewDidAppear(_ animated: Bool) &#123;
+    super.viewDidAppear(animated)
+    
+    UIView.animate(withDuration: 0.5, delay: 0.3, options: .curveEaseOut, animations: &#123;
+        
+        self.goButton.alpha = 1
+        
+        &#125;, completion: nil)
+&#125;
+</code></pre>
+<p>底部按钮逐渐显示。</p>
+<h3 id="4-6-点击事件"><a href="#4-6-点击事件" class="headerlink" title="4.6 点击事件"></a>4.6 点击事件</h3><pre><code class="line-numbers language-Swift">@IBAction func amazingButtonDidTouch(_ sender: UIButton) &#123;
+    amazingFlag = !amazingFlag;
+    sender.setTitle(amazingFlag ? &quot;开挂模式&quot;:&quot;常规模式&quot;, for: .normal)
+&#125;
+
+@IBAction func goButtoDidTouch(_ sender: AnyObject) &#123;
+    let index1: Int
+    let index2: Int
+    let index3: Int
+    if amazingFlag &#123;
+        index1 = Int(arc4random()) % 90 + 3
+        index2 = dataArray2.firstIndex(of: dataArray1[index1])!
+        index3 = dataArray3.lastIndex(of: dataArray1[index1])!
+    &#125; else &#123;
+        index1 = Int(arc4random()) % 90 + 3
+        index2 = Int(arc4random()) % 90 + 3
+        index3 = Int(arc4random()) % 90 + 3
+    &#125;
+    
+    /// 下次多少行，开启动画效果
+    emojiPickerView.selectRow(index1, inComponent: 0, animated: true)
+    emojiPickerView.selectRow(index2, inComponent: 1, animated: true)
+    emojiPickerView.selectRow(index3, inComponent: 2, animated: true)
+    
+    /// 结果显示
+    if(dataArray1[emojiPickerView.selectedRow(inComponent: 0)] == dataArray2[emojiPickerView.selectedRow(inComponent: 1)] &amp;&amp; dataArray2[emojiPickerView.selectedRow(inComponent: 1)] == dataArray3[emojiPickerView.selectedRow(inComponent: 2)]) &#123;
+        
+        resultLabel.text = &quot;Bingo!&quot;
+        
+    &#125; else &#123;
+        resultLabel.text = &quot;💔&quot;
+    &#125;
+    
+    /// 底部Go抖动效果
+    UIView.animate(withDuration: 0.5, delay: 0.0, usingSpringWithDamping: 0.1, initialSpringVelocity: 5, options: .curveLinear, animations: &#123;
+        
+        self.goButton.bounds = CGRect(x: self.bounds.origin.x, y: self.bounds.origin.y, width: self.bounds.size.width - 20, height: self.bounds.size.height)
+        
+    &#125;, completion: &#123; (compelete: Bool) in
+        
+        UIView.animate(withDuration: 0.1, delay: 0.0, options: UIViewAnimationOptions(), animations: &#123;
+            
+            self.goButton.bounds = CGRect(x: self.bounds.origin.x, y: self.bounds.origin.y, width: self.bounds.size.width, height: self.bounds.size.height)
+            
+        &#125;, completion: nil)
+        
+    &#125;)
+&#125;
+</code></pre>
+<h2 id="5-启动动画"><a href="#5-启动动画" class="headerlink" title="5 启动动画"></a>5 启动动画</h2><h3 id="5-1-效果"><a href="#5-1-效果" class="headerlink" title="5.1 效果"></a>5.1 效果</h3><img src=splash.gif>
+
+<h3 id="5-2-启动页"><a href="#5-2-启动页" class="headerlink" title="5.2 启动页"></a>5.2 启动页</h3><p>启动页需要再info.plist中配置<br>如下：<br><img src=25_1.png></p>
+<p>这里我们在LaunchScreen.storyboard中设置了一个背景图片。<br>这里面设置了一张白色的🕊没有效果哦。但是之前有，不知道为啥。</p>
+<h3 id="5-3-首页"><a href="#5-3-首页" class="headerlink" title="5.3 首页"></a>5.3 首页</h3><p>首页其实加了一个同启动页的蓝色背景，中间减掉一个白鸽，然后白鸽再扩展的动画。<br>这个背景是在故事版的View右侧属性里面的Background中设置的。</p>
+<p>设置蒙层：</p>
+<pre><code class="line-numbers language-Swift">override func viewDidLoad() &#123;
+    super.viewDidLoad()
+    // Do any additional setup after loading the view, typically from a nib.
+    
+    self.mask = CALayer()
+    self.mask!.contents = UIImage(named: &quot;twitter&quot;)?.cgImage
+    self.mask!.contentsGravity = kCAGravityResizeAspect
+    self.mask!.bounds = CGRect(x: 0, y: 0, width: 100, height: 81)
+    self.mask!.anchorPoint = CGPoint(x: 0.5, y: 0.5)
+    self.imageView.setNeedsLayout()
+    self.imageView.layoutIfNeeded()
+    self.mask!.position = CGPoint(x: self.imageView.frame.size.width / 2, y: self.imageView.frame.size.height / 2)
+    self.imageView.layer.mask = mask
+    
+    animateMask()
+&#125;
+</code></pre>
+<p>这里给到imageView的layer的mask，这样就相当于在蓝色背景中镂空可以看到里面的东西了。</p>
+<pre><code class="line-numbers language-Swift">func animateMask() &#123;
+    let keyFrameAnimation = CAKeyframeAnimation(keyPath: &quot;bounds&quot;)
+    keyFrameAnimation.delegate = self
+    keyFrameAnimation.duration = 0.6
+    keyFrameAnimation.beginTime = CACurrentMediaTime() + 0.5
+    keyFrameAnimation.timingFunctions = [CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut), CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)]
+    do &#123;
+        // 动画需要加上这段代码，否则会造成页面闪一下
+        keyFrameAnimation.fillMode = kCAFillModeForwards
+        keyFrameAnimation.isRemovedOnCompletion = false
+    &#125;
+    let initalBounds = NSValue(cgRect: mask!.bounds)
+    let secondBounds = NSValue(cgRect: CGRect(x: 0, y: 0, width: 90*0.9, height: 73*0.9))
+    let finalBounds = NSValue(cgRect: CGRect(x: 0, y: 0, width: 1600, height: 1300))
+    keyFrameAnimation.values = [initalBounds, secondBounds, finalBounds]
+    keyFrameAnimation.keyTimes = [0, 0.3, 1]
+    self.mask!.add(keyFrameAnimation, forKey: &quot;bounds&quot;)
+&#125;
+</code></pre>
+<p>这个动画的作用是将镂空效果爆炸，显示出主页面。</p>
+<p>动画停止后需要去除蒙层哦：</p>
+<pre><code class="line-numbers language-Swift">extension ViewController : CAAnimationDelegate &#123;
+    func animationDidStop(_ anim: CAAnimation, finished flag: Bool) &#123;
+        self.imageView.layer.mask = nil
+    &#125;
+&#125;
+</code></pre>
+<p>动画结束，需要将蒙层去掉，不然屏幕上方会多出一块多余的遮挡视图。</p>
+<h2 id="6-滑动菜单"><a href="#6-滑动菜单" class="headerlink" title="6 滑动菜单"></a>6 滑动菜单</h2><h3 id="6-1-效果"><a href="#6-1-效果" class="headerlink" title="6.1 效果"></a>6.1 效果</h3><img src=SlideMenu.gif>
+
+<h3 id="6-2-首页"><a href="#6-2-首页" class="headerlink" title="6.2 首页"></a>6.2 首页</h3><pre><code class="line-numbers language-Swift">class NewsTableViewController: BaseTableViewController &#123;
+    let menuTransitionManager = MenuTransitionManager()
+    
+    override func viewDidLoad() &#123;
+        super.viewDidLoad()
+
+        self.title = &quot;Everyday Moments&quot;
+        self.view.backgroundColor = UIColor(red:0.062, green:0.062, blue:0.07, alpha:1)
+    &#125;
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) &#123;
+        let menuTableViewController = segue.destination as! MenuTableViewController
+        menuTableViewController.currentItem = self.title!
+        menuTableViewController.transitioningDelegate = menuTransitionManager
+        menuTransitionManager.delegate = self
+    &#125;
+&#125;
+</code></pre>
+<p>这里有一个prepare方法，实际上是跳转到其它页面前会执行。<br>我们在故事版里面定义了跳转关系，这里就可以通过prepare方法拿到跳转的目标控制器了。</p>
+<p>这是一个新闻的列表页。<br>这里首先继承了BaseTableViewController:</p>
+<pre><code class="line-numbers language-Swift">class BaseTableViewController: UITableViewController &#123;
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle &#123;
+        return UIStatusBarStyle.lightContent
+    &#125;
+    
+    override func viewDidLoad() &#123;
+        super.viewDidLoad()
+        self.tableView.separatorStyle = UITableViewCellSeparatorStyle.none
+    &#125;
+&#125;
+</code></pre>
+<p>然后这里有一个MenuTransitionManager,是我们自定义的一个类：<br>个人猜测这个Transition相关的应该是为了实现一个转场动画，实现菜单能够丝滑地顶下来吧。<br>里面放了一个自己定义的协议MenuTransitionManagerDelegate:</p>
+<pre><code class="line-numbers language-Swift">@objc protocol MenuTransitionManagerDelegate &#123;
+    func dismiss()
+&#125;
+
+class MenuTransitionManager: NSObject &#123;
+    var duration = 0.5
+    var isPresenting = false
+    var delegate:MenuTransitionManagerDelegate?
+    var snapshot:UIView? &#123;
+        didSet &#123;
+            if let _delegate = delegate &#123;
+                let tapGestureRecognizer = UITapGestureRecognizer(target: _delegate, action: #selector(MenuTransitionManagerDelegate.dismiss))
+                snapshot?.addGestureRecognizer(tapGestureRecognizer)
+            &#125;
+        &#125;
+    &#125;
+&#125;
+</code></pre>
+<p>然后扩展了一个UIViewControllerAnimatedTransitioning，<br>这个应该是系统的协议：</p>
+<pre><code class="line-numbers language-Swift">extension MenuTransitionManager : UIViewControllerAnimatedTransitioning &#123;
+    func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -&gt; TimeInterval &#123;
+        return duration
+    &#125;
+    
+    func animateTransition(using transitionContext: UIViewControllerContextTransitioning) &#123;
+        let fromView = transitionContext.view(forKey: .from)!
+        let toView = transitionContext.view(forKey: .to)!
+        let container = transitionContext.containerView
+        let moveLeft = CGAffineTransform(translationX: 250, y: 0)
+        let moveRight = CGAffineTransform(translationX: 0, y: 0)
+        
+        if isPresenting &#123;
+            snapshot = fromView.snapshotView(afterScreenUpdates: true)
+            container.addSubview(toView)
+            container.addSubview(snapshot!)
+        &#125;
+        
+        UIView.animate(withDuration: duration, delay: 0.0, usingSpringWithDamping: 0.9, initialSpringVelocity: 0.3, options: .curveEaseInOut, animations: &#123;
+            if self.isPresenting &#123;
+                self.snapshot?.transform = moveLeft
+                toView.transform = .identity
+            &#125; else &#123;
+                self.snapshot?.transform = .identity
+                fromView.transform = moveRight
+            &#125;
+            
+        &#125;, completion: &#123; finished in
+            transitionContext.completeTransition(true)
+            if !self.isPresenting &#123;
+                self.snapshot?.removeFromSuperview()
+            &#125;
+        &#125;)
+    &#125;
+&#125;
+</code></pre>
+<p>同时也扩展了UIViewControllerTransitioningDelegate,也是系统的：</p>
+<pre><code class="line-numbers language-Swift">extension MenuTransitionManager : UIViewControllerTransitioningDelegate &#123;
+    func animationController(forDismissed dismissed: UIViewController) -&gt; UIViewControllerAnimatedTransitioning? &#123;
+        isPresenting = false
+        return self
+    &#125;
+    
+    func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -&gt; UIViewControllerAnimatedTransitioning? &#123;
+        isPresenting = true
+        return self
+    &#125;
+&#125;
+</code></pre>
+<p>再看下首页新闻展示的代理和数据源：</p>
+<pre><code class="line-numbers language-Swift">extension NewsTableViewController &#123;
+    // MARK: UITableViewDataSource
+    override func numberOfSections(in tableView: UITableView) -&gt; Int &#123;
+        return 3
+    &#125;
+    
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -&gt; Int &#123;
+        return 4
+    &#125;
+    
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -&gt; UITableViewCell &#123;
+        let cell = tableView.dequeueReusableCell(withIdentifier: &quot;Cell&quot;, for: indexPath) as! NewsTableViewCell
+        cell.backgroundColor = UIColor.clear
+        
+        if indexPath.row == 0 &#123;
+            cell.postImageView.image = UIImage(named: &quot;1&quot;)
+            cell.postTitle.text = &quot;Love mountain.&quot;
+            cell.postAuthor.text = &quot;Allen Wang&quot;
+            cell.authorImageView.image = UIImage(named: &quot;a&quot;)
+            
+        &#125; else if indexPath.row == 1 &#123;
+            cell.postImageView.image = UIImage(named: &quot;2&quot;)
+            cell.postTitle.text = &quot;New graphic design - LIVE FREE&quot;
+            cell.postAuthor.text = &quot;Cole&quot;
+            cell.authorImageView.image = UIImage(named: &quot;b&quot;)
+            
+        &#125; else if indexPath.row == 2 &#123;
+            cell.postImageView.image = UIImage(named: &quot;3&quot;)
+            cell.postTitle.text = &quot;Summer sand&quot;
+            cell.postAuthor.text = &quot;Daniel Hooper&quot;
+            cell.authorImageView.image = UIImage(named: &quot;c&quot;)
+            
+        &#125; else &#123;
+            cell.postImageView.image = UIImage(named: &quot;4&quot;)
+            cell.postTitle.text = &quot;Seeking for signal&quot;
+            cell.postAuthor.text = &quot;Noby-Wan Kenobi&quot;
+            cell.authorImageView.image = UIImage(named: &quot;d&quot;)
+            
+        &#125;
+        
+        return cell
+    &#125;
+&#125;
+</code></pre>
+<p>这里每行能够正常展示了。Cell用了自定义的NewsTableViewCell:</p>
+<pre><code class="line-numbers language-Swift">class NewsTableViewCell: UITableViewCell &#123;
+    @IBOutlet weak var postImageView:UIImageView!
+    @IBOutlet weak var postTitle:UILabel!
+    @IBOutlet weak var postAuthor:UILabel!
+    @IBOutlet weak var authorImageView:UIImageView!
+
+    override func awakeFromNib() &#123;
+        super.awakeFromNib()
+        authorImageView.layer.cornerRadius = authorImageView.frame.width / 2
+        authorImageView.layer.masksToBounds = true
+    &#125;
+
+    override func setSelected(_ selected: Bool, animated: Bool) &#123;
+        super.setSelected(selected, animated: animated)
+
+        // Configure the view for the selected state
+    &#125;
+&#125;
+</code></pre>
+<p>具体布局还是故事版里面处理的布局。</p>
+<p>然后让首页也实现我们自定义的MenuTransitionManagerDelegate 转场代理吧：</p>
+<pre><code class="line-numbers language-Swift">extension NewsTableViewController : MenuTransitionManagerDelegate &#123;
+    func dismiss() &#123;
+        dismiss(animated: true, completion: nil)
+    &#125;
+&#125;
+</code></pre>
+<p>这里猜测是点击空白区域，菜单dismiss吧。</p>
+<h3 id="6-3-菜单控制器"><a href="#6-3-菜单控制器" class="headerlink" title="6.3 菜单控制器"></a>6.3 菜单控制器</h3><pre><code class="line-numbers language-Swift">class MenuTableViewController: BaseTableViewController &#123;
+    var menuItems = [&quot;Everyday Moments&quot;, &quot;Popular&quot;, &quot;Editors&quot;, &quot;Upcoming&quot;, &quot;Fresh&quot;, &quot;Stock-photos&quot;, &quot;Trending&quot;]
+    var currentItem = &quot;Everyday Moments&quot;
+    
+    override func viewDidLoad() &#123;
+        super.viewDidLoad()
+        self.view.backgroundColor = UIColor(red:0.109, green:0.114, blue:0.128, alpha:1)
+    &#125;
+    
+    // 这里prepare去掉效果一样
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) &#123;
+        let menuTableViewController = segue.source as! MenuTableViewController
+        
+        if let selectedRow = menuTableViewController.tableView.indexPathForSelectedRow?.row &#123;
+            currentItem = menuItems[selectedRow]
+        &#125;
+    &#125;
+&#125;
+
+extension MenuTableViewController &#123;
+    // MARK: UITableViewDataSource
+    override func numberOfSections(in tableView: UITableView) -&gt; Int &#123;
+        return 1
+    &#125;
+    
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -&gt; Int &#123;
+        return menuItems.count
+    &#125;
+    
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -&gt; UITableViewCell &#123;
+        let cell = tableView.dequeueReusableCell(withIdentifier: &quot;Cell&quot;, for: indexPath) as! MenuTableViewCell
+        
+        cell.titleLabel.text = menuItems[indexPath.row]
+        cell.titleLabel.textColor = (menuItems[indexPath.row] == currentItem) ? UIColor.white : UIColor.gray
+        cell.backgroundColor = UIColor.clear
+        return cell
+    &#125;
+&#125;
+</code></pre>
+<p>这里实现了菜单列表显示。</p>
+<p>菜单Cell如下：</p>
+<pre><code class="line-numbers language-Swift">class MenuTableViewCell: UITableViewCell &#123;
+
+    @IBOutlet weak var titleLabel:UILabel!
+    
+    override func awakeFromNib() &#123;
+        super.awakeFromNib()
+        // Initialization code
+    &#125;
+
+    override func setSelected(_ selected: Bool, animated: Bool) &#123;
+        super.setSelected(selected, animated: animated)
+
+        // Configure the view for the selected state
+    &#125;
+
+&#125;
+</code></pre>
+<h2 id="7-酷炫左右缩放菜单"><a href="#7-酷炫左右缩放菜单" class="headerlink" title="7 酷炫左右缩放菜单"></a>7 酷炫左右缩放菜单</h2><h3 id="7-1-效果"><a href="#7-1-效果" class="headerlink" title="7.1 效果"></a>7.1 效果</h3><img src=TumblrMenu.gif>
+
+<h3 id="7-2-首页"><a href="#7-2-首页" class="headerlink" title="7.2 首页"></a>7.2 首页</h3><pre><code class="line-numbers language-Swift">class MainViewController: BaseViewController &#123;
+
+    override func viewDidLoad() &#123;
+        super.viewDidLoad()
+        self.navigationController?.isNavigationBarHidden = true
+    &#125;
+
+    override func didReceiveMemoryWarning() &#123;
+        super.didReceiveMemoryWarning()
+    &#125;
+    
+    @IBAction func unwindToMainViewController (_ sender: UIStoryboardSegue)&#123;
+        self.dismiss(animated: true, completion: nil)
+    &#125;
+&#125;
+</code></pre>
+<p>这里的unwindToMainViewController 是我们自行在故事版拖进来的，这样子在这个控制器里面的点击事件也可以处理的。<br>这里就是dismiss弹框。<br>其它ui是我们自己拖到故事版里面的。</p>
+<h3 id="7-3-菜单页"><a href="#7-3-菜单页" class="headerlink" title="7.3 菜单页"></a>7.3 菜单页</h3><p>菜单页是由一个UIVisualEffectView的父布局包裹的。<br>这个故事版的Scene绑定的class为MenuViewController。</p>
+<pre><code class="line-numbers language-Swift">class MenuViewController: BaseViewController &#123;
+    
+    let transitionManager = MenuTransitionManager()
+    
+    @IBOutlet weak var textButton: UIButton!
+    @IBOutlet weak var textLabel: UILabel!
+    
+    @IBOutlet weak var photoButton: UIButton!
+    @IBOutlet weak var photoLabel: UILabel!
+    
+    @IBOutlet weak var quoteButton: UIButton!
+    @IBOutlet weak var quoteLabel: UILabel!
+    
+    @IBOutlet weak var linkButton: UIButton!
+    @IBOutlet weak var linkLabel: UILabel!
+    
+    @IBOutlet weak var chatButton: UIButton!
+    @IBOutlet weak var chatLabel: UILabel!
+    
+    @IBOutlet weak var audioButton: UIButton!
+    @IBOutlet weak var audioLabel: UILabel!
+    
+    override func viewDidLoad() &#123;
+        super.viewDidLoad()
+        self.transitioningDelegate = self.transitionManager
+    &#125;
+
+    override func didReceiveMemoryWarning() &#123;
+        super.didReceiveMemoryWarning()
+    &#125;
+&#125;
+</code></pre>
+<p>这里声明了，布局效果在故事版里面拖动的。</p>
+<p>注意了这里self的transitiningDelegate设置了转场动画。</p>
+<p>也是我们自己定义的一个类：</p>
+<pre><code class="line-numbers language-Swift">
+class MenuTransitionManager: NSObject &#123;
+
+    private var presenting = false
+
+    func offstage(_ amount: CGFloat) -&gt; CGAffineTransform &#123;
+        return CGAffineTransform(translationX: amount, y: 0)
+    &#125;
+    
+    func offStageMenuController(_ menuViewController: MenuViewController) &#123;
+        if !presenting&#123;
+            menuViewController.view.alpha = 0
+        &#125;
+        let topRowOffset  : CGFloat = 300
+        let middleRowOffset : CGFloat = 150
+        let bottomRowOffset  : CGFloat = 50
+        
+        menuViewController.textButton.transform = self.offstage(-topRowOffset)
+        menuViewController.textLabel.transform = self.offstage(-topRowOffset)
+        
+        menuViewController.quoteButton.transform = self.offstage(-middleRowOffset)
+        menuViewController.quoteLabel.transform = self.offstage(-middleRowOffset)
+        
+        menuViewController.chatButton.transform = self.offstage(-bottomRowOffset)
+        menuViewController.chatLabel.transform = self.offstage(-bottomRowOffset)
+        
+        menuViewController.photoButton.transform = self.offstage(topRowOffset)
+        menuViewController.photoLabel.transform = self.offstage(topRowOffset)
+        
+        menuViewController.linkButton.transform = self.offstage(middleRowOffset)
+        menuViewController.linkLabel.transform = self.offstage(middleRowOffset)
+        
+        menuViewController.audioButton.transform = self.offstage(bottomRowOffset)
+        menuViewController.audioLabel.transform = self.offstage(bottomRowOffset)
+        
+    &#125;
+    
+    func onStageMenuController(_ menuViewController: MenuViewController) &#123;
+        menuViewController.view.alpha = 1
+        
+        menuViewController.textButton.transform = .identity
+        menuViewController.textLabel.transform = .identity
+        menuViewController.quoteButton.transform = .identity
+        menuViewController.quoteLabel.transform = .identity
+        menuViewController.chatButton.transform = .identity
+        menuViewController.chatLabel.transform = .identity
+        menuViewController.photoButton.transform = .identity
+        menuViewController.photoLabel.transform = .identity
+        menuViewController.linkButton.transform = .identity
+        menuViewController.linkLabel.transform = .identity
+        menuViewController.audioButton.transform = .identity
+        menuViewController.audioLabel.transform = .identity
+        
+    &#125;
+&#125;
+</code></pre>
+<p>可以看到这里主要是针对里面控制器的ui的transform做了一些配置。</p>
+<p>然后这个管理员实现了UIViewControllerTransitioningDelegate代理：</p>
+<pre><code class="line-numbers language-Swift">extension MenuTransitionManager : UIViewControllerTransitioningDelegate &#123;
+    func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -&gt; UIViewControllerAnimatedTransitioning? &#123;
+        self.presenting = true
+        return self
+    &#125;
+    
+    func animationController(forDismissed dismissed: UIViewController) -&gt; UIViewControllerAnimatedTransitioning? &#123;
+        self.presenting = false
+        return self
+    &#125;
+&#125;
+</code></pre>
+<p>同样也实现了UIViewControllerAnimatedTransitioning这个协议：</p>
+<pre><code class="line-numbers language-Swift">extension MenuTransitionManager : UIViewControllerAnimatedTransitioning &#123;
+    
+    func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -&gt; TimeInterval &#123;
+        return 0.5
+    &#125;
+    
+    func animateTransition(using transitionContext: UIViewControllerContextTransitioning) &#123;
+        let container = transitionContext.containerView
+        let screens: (from:UIViewController, to:UIViewController) = (transitionContext.viewController(forKey: .from)!, transitionContext.viewController(forKey: .to)!)
+        
+        let menuViewController = !self.presenting ? screens.from as! MenuViewController : screens.to as! MenuViewController
+        let bottomViewController = !self.presenting ? screens.to as UIViewController : screens.from as UIViewController
+        
+        let menuView: UIView! = menuViewController.view
+        let bottomView: UIView! = bottomViewController.view
+        
+        if (self.presenting) &#123;
+             self.offStageMenuController(menuViewController)
+        &#125;
+        container.addSubview(bottomView)
+        container.addSubview(menuView)
+        
+        let duration = self.transitionDuration(using: transitionContext)
+        
+        UIView.animate(withDuration: duration, delay: 0.0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.8, options: [], animations: &#123;
+            if (self.presenting) &#123;
+                 self.onStageMenuController(menuViewController)
+            &#125; else &#123;
+                self.offStageMenuController(menuViewController)
+            &#125;
+        &#125;, completion: &#123; finished in
+            transitionContext.completeTransition(true)
+            UIApplication.shared.keyWindow!.addSubview(screens.to.view)
+        &#125;)
+    &#125;
+&#125;
+</code></pre>
+<p>主要是动画执行的时候，走了self.onStageMenuController方法或者self.offStageMenuController这个方法实现动画效果。</p>
+<h2 id="8-限制字符串"><a href="#8-限制字符串" class="headerlink" title="8 限制字符串"></a>8 限制字符串</h2><h3 id="8-1-效果"><a href="#8-1-效果" class="headerlink" title="8.1 效果"></a>8.1 效果</h3><img src=Limit.gif>
+
+<h3 id="8-2-UI"><a href="#8-2-UI" class="headerlink" title="8.2 UI"></a>8.2 UI</h3><p>这里也是先构造一个故事版。<br>左上角：Close按钮。<br>右上角：Tweet按钮。<br>头像：Avatar Image VIew。<br>底部View: 4个Button<br>编辑框：UITextView</p>
+<img src=18_1.png>
+
+<p>控制器要用的：</p>
+<pre><code class="line-numbers language-Swift">class ViewController: UIViewController &#123;
+
+    @IBOutlet weak var tweetTextView: UITextView!
+    @IBOutlet weak var bottomUIView: UIView!
+    @IBOutlet weak var avatarImageView: UIImageView!
+    @IBOutlet weak var characterCountLabel: UILabel!
+</code></pre>
+<p>初始化生命周期：</p>
+<pre><code class="line-numbers language-Swift">    override func viewDidLoad() &#123;
+        super.viewDidLoad()
+        tweetTextView.delegate = self
+        avatarImageView.layer.cornerRadius = avatarImageView.frame.width / 2
+        tweetTextView.backgroundColor = UIColor.clear
+        
+        NotificationCenter.default.addObserver(self, selector:#selector(ViewController.keyBoardWillShow(_:)), name:UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector:#selector(ViewController.keyBoardWillHide(_:)), name:UIResponder.keyboardWillHideNotification, object: nil)
+    &#125;
+</code></pre>
+<p>这里配置了UITextView的代理为自己，后面一定会实现相关方法的。</p>
+<p>然后这里监听了键盘显示和隐藏哦。<br>主要是将底部的控制栏跟随键盘上下顶起来。</p>
+<pre><code class="line-numbers language-Swift">@objc func keyBoardWillShow(_ note:NSNotification) &#123;
+    let userInfo  = note.userInfo
+    let keyBoardBounds = (userInfo![UIResponder.keyboardFrameEndUserInfoKey] as! NSValue).cgRectValue
+    let duration = (userInfo![UIResponder.keyboardAnimationDurationUserInfoKey] as! NSNumber).doubleValue
+    let deltaY = keyBoardBounds.size.height
+    let animations = &#123;
+        self.bottomUIView.transform = CGAffineTransform(translationX: 0, y: -deltaY)
+    &#125;
+    
+    if duration &gt; 0 &#123;
+        // 莫名其妙的一段代码, 左移16位能看出来是个啥值吗
+        // let options = UIView.AnimationOptions(rawValue: UInt((userInfo![UIResponder.keyboardAnimationCurveUserInfoKey] as! NSNumber).intValue &lt;&lt; 16))
+        UIView.animate(withDuration: duration, delay: 0, options:[.beginFromCurrentState, .curveLinear], animations: animations, completion: nil)
+    &#125;else &#123;
+        animations()
+    &#125;
+&#125;
+</code></pre>
+<p>上面的代码是为了在键盘弹出的时候，底部bottomUIView跟随键盘顶起来。</p>
+<pre><code class="line-numbers language-Swift">@objc func keyBoardWillHide(_ note:NSNotification) &#123;
+    let userInfo  = note.userInfo
+    let duration = (userInfo![UIResponder.keyboardAnimationDurationUserInfoKey] as! NSNumber).doubleValue
+    
+    let animations = &#123;
+        self.bottomUIView.transform = .identity
+    &#125;
+    
+    if duration &gt; 0 &#123;
+        // let options = UIView.AnimationOptions(rawValue: UInt((userInfo![UIResponder.keyboardAnimationCurveUserInfoKey] as! NSNumber).intValue &lt;&lt; 16))
+        UIView.animate(withDuration: duration, delay: 0, options:[.beginFromCurrentState, .curveLinear], animations: animations, completion: nil)
+    &#125;else&#123;
+        animations()
+    &#125;
+    
+&#125;
+</code></pre>
+<p>上面的代码是为了在键盘隐藏的时候，底部bottomUIView也随之落下去。</p>
+<p>然后编辑框的代理如下：</p>
+<pre><code class="line-numbers language-Swift">extension ViewController : UITextViewDelegate &#123;
+    // MARK:UITextViewDelegate
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -&gt; Bool &#123;
+        let inputTextLength = text.count - range.length + tweetTextView.text.count
+        if inputTextLength &gt; 140 &#123;
+            return false
+        &#125;
+        characterCountLabel.text = &quot;\(140 - inputTextLength)&quot;
+        return true
+    &#125;
+&#125;
+</code></pre>
+<p>这里是为了统计当前剩余字符，如果不足，则无法继续输入。</p>
+<h2 id="9-自定义下拉刷新"><a href="#9-自定义下拉刷新" class="headerlink" title="9 自定义下拉刷新"></a>9 自定义下拉刷新</h2><h3 id="9-1-效果"><a href="#9-1-效果" class="headerlink" title="9.1 效果"></a>9.1 效果</h3><img src=CustomPullToRefresh.gif>
+
+<h3 id="9-2-变量定义"><a href="#9-2-变量定义" class="headerlink" title="9.2 变量定义"></a>9.2 变量定义</h3><pre><code class="line-numbers language-Swift">    var refreshController: UIRefreshControl!
+    var customView: UIView!
+    var labelsArray: Array&lt;UILabel&gt; = []
+    var isAnimating = false
+    var currentColorIndex = 0
+    var currentLabelIndex = 0
+    var timer: Timer!
+    var dataArray: Array&lt;String&gt; = [&quot;😂&quot;, &quot;🤗&quot;, &quot;😳&quot;, &quot;😌&quot;, &quot;😊&quot;]
+</code></pre>
+<p>这里第一个就是刷新控制器了，应该主要就是往这里面加逻辑。</p>
+<h3 id="9-3-初始化"><a href="#9-3-初始化" class="headerlink" title="9.3 初始化"></a>9.3 初始化</h3><pre><code class="line-numbers language-Swift">override func viewDidLoad() &#123;
+    super.viewDidLoad()
+    
+    tblDemo.delegate = self
+    tblDemo.dataSource = self
+    refreshController = UIRefreshControl()
+    refreshController.backgroundColor = UIColor.clear
+    refreshController.tintColor = UIColor.clear
+    tblDemo.addSubview(refreshController)
+    
+    loadCustomRefreshContents()
+&#125;
+</code></pre>
+<p>这里设置了代理和数据源，new了一个刷新控制器，清空背景，给tableView添加了一个子View。</p>
+<p>下面加载自定义xib文件：</p>
+<pre><code class="line-numbers language-Swift"> func loadCustomRefreshContents() &#123;
+        
+    let refreshContents = Bundle.main.loadNibNamed(&quot;RefreshContents&quot;, owner: self, options: nil)
+    
+    customView = refreshContents![0] as? UIView
+    customView.frame = refreshController.bounds
+    
+    for i in 0..&lt;customView.subviews.count &#123;
+        labelsArray.append(customView.viewWithTag(i + 1) as! UILabel)
+    &#125;
+    
+    refreshController.addSubview(customView)
+&#125;
+</code></pre>
+<p>这个布局里面主要是存放了我们自定义头部的View。</p>
+<h3 id="9-4-数据源和代理"><a href="#9-4-数据源和代理" class="headerlink" title="9.4 数据源和代理"></a>9.4 数据源和代理</h3><pre><code class="line-numbers language-Swift">extension ViewController : UITableViewDelegate &#123;
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) &#123;
+        
+    &#125;
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -&gt; CGFloat &#123;
+        return 80
+    &#125;
+&#125;
+
+extension ViewController : UITableViewDataSource &#123;
+    
+    func numberOfSectionsInTableView(tableView: UITableView) -&gt; Int &#123;
+        return 1
+    &#125;
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -&gt; Int &#123;
+        return dataArray.count
+    &#125;
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -&gt; UITableViewCell &#123;
+        let cell = tableView.dequeueReusableCell(withIdentifier: &quot;idCell&quot;, for: indexPath)
+        
+        cell.textLabel!.text = dataArray[indexPath.row]
+        cell.textLabel!.font = UIFont(name: &quot;Apple Color Emoji&quot;, size: 40)
+        cell.textLabel!.textAlignment = .center
+        
+        return cell
+    &#125;
+&#125;
+</code></pre>
+<p>这里cell用默认的。</p>
+<h3 id="9-5-下拉动画实现"><a href="#9-5-下拉动画实现" class="headerlink" title="9.5 下拉动画实现"></a>9.5 下拉动画实现</h3><p>首先实现UIScrollViewDelegate代理：</p>
+<pre><code class="line-numbers language-Swift">extension ViewController : UIScrollViewDelegate &#123;
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) &#123;
+        if refreshController.isRefreshing &#123;
+            if !isAnimating &#123;
+                doSomething()
+                animateRefreshStep1()
+            &#125;
+        &#125;
+    &#125;
+&#125;
+</code></pre>
+<p>如果没有在刷新中，没有在动画中，就做点失去，然后走动画第一步。</p>
+<pre><code class="line-numbers language-Swift">func doSomething() &#123;
+    timer = Timer.scheduledTimer(timeInterval: 5, target: self, selector: #selector(ViewController.endedOfWork), userInfo: nil, repeats: true)
+&#125;
+</code></pre>
+<p>这里开启定时器，5s后才走endedofWork。</p>
+<pre><code class="line-numbers language-Swift">@objc func endedOfWork() &#123;
+    refreshController.endRefreshing()
+    timer.invalidate()
+    timer = nil
+&#125;
+</code></pre>
+<p>这里停止刷新，定时器结束。<br>说明上面的doSomething只是开启一个定时器，模拟进行网络请求，然后加载动画而已。</p>
+<p>动画第一步：</p>
+<pre><code class="line-numbers language-Swift">func animateRefreshStep1() &#123;
+    isAnimating = true
+    
+    UIView.animate(withDuration: 0.1, delay: 0.0, options: .curveLinear, animations: &#123;
+        self.labelsArray[self.currentLabelIndex].transform = CGAffineTransform(rotationAngle: CGFloat(Double.pi/4))
+        self.labelsArray[self.currentLabelIndex].textColor = self.getNextColor()
+        &#125;, completion: &#123; _ in
+            UIView.animate(withDuration: 0.05, delay: 0.0, options: .curveLinear, animations: &#123;
+                self.labelsArray[self.currentLabelIndex].transform = .identity
+                self.labelsArray[self.currentLabelIndex].textColor = UIColor.black
+                &#125;, completion: &#123; _ in
+                    self.currentLabelIndex += 1
+                    if self.currentLabelIndex &lt; self.labelsArray.count &#123;
+                        self.animateRefreshStep1()
+                    &#125;else &#123;
+                        self.animateRefreshStep2()
+                    &#125;
+            &#125;)
+    &#125;)
+&#125;
+
+func getNextColor() -&gt; UIColor &#123;
+    var colorsArray: Array&lt;UIColor&gt; = [.magenta, .brown, .yellow,
+                                        .red, .green, .blue, .orange]
+    if currentColorIndex == colorsArray.count &#123;
+        currentColorIndex = 0
+    &#125;
+    let returnColor = colorsArray[currentColorIndex]
+    currentColorIndex += 1
+    return returnColor
+&#125;
+</code></pre>
+<p>这里开启动画了，给子View配置transform和textColor。<br>递归走每一个子View动画，走完后走动画第二步：</p>
+<pre><code class="line-numbers language-Swift">func animateRefreshStep2() &#123;
+    UIView.animate(withDuration: 0.40, delay: 0.0, options: .curveLinear, animations: &#123;
+        let scale = CGAffineTransform(scaleX: 1.5, y: 1.5)
+        self.labelsArray[1].transform = scale
+        self.labelsArray[2].transform = scale
+        self.labelsArray[3].transform = scale
+        self.labelsArray[4].transform = scale
+        self.labelsArray[5].transform = scale
+        self.labelsArray[6].transform = scale
+        self.labelsArray[7].transform = scale
+        self.labelsArray[8].transform = scale
+        self.labelsArray[9].transform = scale
+        self.labelsArray[10].transform = scale
+        self.labelsArray[11].transform = scale
+        
+        &#125;, completion: &#123; _ in
+            UIView.animate(withDuration: 0.25, delay: 0.0, options: .curveLinear, animations: &#123;
+                self.labelsArray[0].transform = .identity
+                self.labelsArray[1].transform = .identity
+                self.labelsArray[2].transform = .identity
+                self.labelsArray[3].transform = .identity
+                self.labelsArray[4].transform = .identity
+                self.labelsArray[5].transform = .identity
+                self.labelsArray[6].transform = .identity
+                self.labelsArray[7].transform = .identity
+                self.labelsArray[8].transform = .identity
+                self.labelsArray[9].transform = .identity
+                self.labelsArray[10].transform = .identity
+                self.labelsArray[11].transform = .identity
+                
+                &#125;, completion: &#123; _ in
+                    if self.refreshController.isRefreshing &#123;
+                        self.currentLabelIndex = 0
+                        self.animateRefreshStep1()
+                    &#125; else &#123;
+                        self.isAnimating = false
+                        self.currentLabelIndex = 0
+                        for i in 0 ..&lt; self.labelsArray.count &#123;
+                            self.labelsArray[i].textColor = UIColor.black
+                            self.labelsArray[i].transform = .identity
+                        &#125;
+                    &#125;
+            &#125;)
+    &#125;)
+&#125;
+</code></pre>
+<h2 id="10-CollectionView动画"><a href="#10-CollectionView动画" class="headerlink" title="10 CollectionView动画"></a>10 CollectionView动画</h2><h3 id="10-1-效果"><a href="#10-1-效果" class="headerlink" title="10.1 效果"></a>10.1 效果</h3><img src=CollectionViewAnimation.gif>
+
+<h3 id="10-2-首页"><a href="#10-2-首页" class="headerlink" title="10.2 首页"></a>10.2 首页</h3><p>Main.storyboard里面放置了一个UICollectionView。</p>
+<p>里面放置了2个结构体：</p>
+<pre><code class="line-numbers language-Swift">private struct Storyboard &#123;
+    static let CellIdentifier = &quot;AnimationCollectionViewCell&quot;
+    static let NibName = &quot;AnimationCollectionViewCell&quot;
+&#125;
+    
+private struct Constants &#123;
+    static let AnimationDuration: Double = 0.5
+    static let AnimationDelay: Double = 0.0
+    static let AnimationSpringDamping: CGFloat = 1.0
+    static let AnimationInitialSpringVelocity: CGFloat = 1.0
+&#125;
+</code></pre>
+<p>成员定义：</p>
+<pre><code class="line-numbers language-Swift">@IBOutlet var testCollectionView: UICollectionView!
+
+var imageCollection: AnimationImageCollection!
+</code></pre>
+<p>第一个是拖过来的，第二个是自定义的：</p>
+<pre><code class="line-numbers language-Swift">struct AnimationImageCollection &#123;
+    private let imagePaths = [&quot;1&quot;, &quot;2&quot;, &quot;3&quot;, &quot;4&quot;, &quot;5&quot;]
+    var images: [AnimationCellModel]
+    
+    init() &#123;
+        images = imagePaths.map &#123; AnimationCellModel(imagePath: $0) &#125;
+    &#125;
+&#125;
+</code></pre>
+<p>这个是一个结构体，里面的实体是这个：</p>
+<pre><code class="line-numbers language-Swift">struct AnimationCellModel &#123;
+    let imagePath: String
+    
+    init(imagePath: String?) &#123;
+        self.imagePath = imagePath ?? &quot;&quot;
+    &#125;
+&#125;
+</code></pre>
+<p>很简单，放置了一个图片路径而已。</p>
+<p>回到第一个控制器：</p>
+<pre><code class="line-numbers language-Swift">override func viewDidLoad() &#123;
+    super.viewDidLoad()
+    
+    imageCollection = AnimationImageCollection()
+    testCollectionView.register(UINib(nibName: Storyboard.NibName, bundle: nil), forCellWithReuseIdentifier: Storyboard.CellIdentifier)
+&#125;
+</code></pre>
+<p>这里集合View注册了一个Cell，这个Cell是我们建立的xib文件，名称叫做AnimationCollectionViewCell.</p>
+<h3 id="10-3-子item"><a href="#10-3-子item" class="headerlink" title="10.3 子item"></a>10.3 子item</h3><p>应该就是这个itemCell了，还是看下吧：</p>
+<pre><code class="line-numbers language-Swift">class AnimationCollectionViewCell: UICollectionViewCell &#123;
+    
+    @IBOutlet weak var backButton: UIButton!
+    @IBOutlet weak var animationImageView: UIImageView!
+    @IBOutlet weak var animationTextView: UITextView!
+    
+    var backButtonTapped: (() -&gt; Void)?
+    
+    func prepareCell(_ viewModel: AnimationCellModel) &#123;
+        animationImageView.image = UIImage(named: viewModel.imagePath)
+        animationTextView.isScrollEnabled = false
+        backButton.isHidden = true
+        addTapEventHandler()
+    &#125;
+    
+    func handleCellSelected() &#123;
+        animationTextView.isScrollEnabled = false
+        backButton.isHidden = false
+        self.superview?.bringSubview(toFront: self)
+    &#125;
+    
+    private func addTapEventHandler() &#123;
+        backButton.addTarget(self, action: #selector(backButtonDidTouch(_:)), for: .touchUpInside)
+    &#125;
+    
+    @objc func backButtonDidTouch(_ sender: UIGestureRecognizer) &#123;
+        backButtonTapped?()
+    &#125;
+&#125;
+</code></pre>
+<p>item布局就是返回按钮，图片，和文案。<br>这个返回按钮默认应该是隐藏的，选中才给它显示。选中的时候走handleCellSelected方法，<br>这里走了一个</p>
+<pre><code>  self.superview?.bringSubview(toFront: self)
+</code></pre>
+<p>这个作用应该就是把item移动到最前面了。</p>
+<pre><code class="line-numbers language-Swift"> private func addTapEventHandler() &#123;
+    backButton.addTarget(self, action: #selector(backButtonDidTouch(_:)), for: .touchUpInside)
+&#125;
+
+@objc func backButtonDidTouch(_ sender: UIGestureRecognizer) &#123;
+    backButtonTapped?()
+&#125;
+</code></pre>
+<p>这里将返回的点击事件暴露出去了。</p>
+<p>回调给首页里面了：</p>
+<pre><code class="line-numbers language-Swift">// MARK: 按钮事件
+func backButtonDidTouch() &#123;
+    guard let indexPaths = self.collectionView!.indexPathsForSelectedItems else &#123;
+        return
+    &#125;
+
+    collectionView!.isScrollEnabled = true
+    collectionView!.reloadItems(at: indexPaths)
+&#125;
+</code></pre>
+<h3 id="10-4-代理设置和数据绑定"><a href="#10-4-代理设置和数据绑定" class="headerlink" title="10.4 代理设置和数据绑定"></a>10.4 代理设置和数据绑定</h3><pre><code class="line-numbers language-Swift"> // MARK: UICollectionViewDataSource
+override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -&gt; UICollectionViewCell &#123;
+    
+    guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Storyboard.CellIdentifier, for: indexPath) as? AnimationCollectionViewCell,
+        let viewModel = imageCollection.images.safeIndex(indexPath.item) else &#123;
+        return UICollectionViewCell()
+    &#125;
+    // 这里是自己定义的方法哦
+    cell.prepareCell(viewModel)
+    return cell
+&#125;
+
+override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -&gt; Int &#123;
+    return imageCollection.images.count
+&#125;
+
+// MARK: UICollectionViewDelegate
+override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) &#123;
+    guard let cell = collectionView.cellForItem(at: indexPath) as? AnimationCollectionViewCell else &#123;
+        return
+    &#125;
+    
+    self.handleAnimationCellSelected(collectionView, cell: cell)
+&#125;
+</code></pre>
+<p>这里选中的时候走了handleAnimationCellSelected这个方法，才实现动画效果的：</p>
+<pre><code class="line-numbers language-Swift">private func handleAnimationCellSelected(_ collectionView: UICollectionView, cell: AnimationCollectionViewCell) &#123;
+        
+    cell.handleCellSelected()
+    cell.backButtonTapped = self.backButtonDidTouch
+    
+    let animations = &#123;
+        cell.frame = self.view.bounds
+    &#125;
+
+    let completion: (_ finished: Bool) -&gt; () = &#123; _ in
+        collectionView.isScrollEnabled = false
+    &#125;
+
+    UIView.animate(withDuration: Constants.AnimationDuration, delay: Constants.AnimationDelay, usingSpringWithDamping: Constants.AnimationSpringDamping, initialSpringVelocity: Constants.AnimationInitialSpringVelocity, options: [], animations: animations, completion: completion)
+&#125;
+</code></pre>
+<p>动画主要是设置了cell的frame吧。</p>
+<h2 id="11-总结"><a href="#11-总结" class="headerlink" title="11 总结"></a>11 总结</h2><ul>
+<li><ol>
+<li>渐变TableView主要实现的是每个cell颜色不同，实现渐变效果，主要是在Cell里面定义了一个CAGradientlayer，在tableView的代理方法为willDisplay中给cell设置了背景色。背景色+渐变层实现了这种效果。</li>
+</ol>
+</li>
+<li><ol start="2">
+<li>登录动画的实现方案，就是在视图将要可见，将左侧约束减掉视图宽度，然后已经可见再走UIView的动画函数，再恢复约束，实现动画效果。</li>
+</ol>
+</li>
+<li><ol start="3">
+<li>列表动画，主要也是在将要可见的生命周期，遍历cell，修改cell的transform为CGAffineTransform，改变y值初始值为整个tableView的高度，然后动画设置恢复，从而实现进入动画效果。</li>
+</ol>
+</li>
+<li><ol start="4">
+<li>游戏抽奖滚动动画，主要用了UIPickerView来实现。点击后设置pickerView的selectRow，开启动画效果，即可实现改效果。</li>
+</ol>
+</li>
+<li><ol start="5">
+<li>启动动画，这里主要是加了一个蒙层，通过控制器的mask，设置未CALayer，然后将png镂空图标设置给mask的conents，然后可以通过CAKeyframeAnimation给mask设置动画，这样可以实现启动展开效果。</li>
+</ol>
+</li>
+<li><ol start="6">
+<li>滑动菜单，主要是在prepare方法中，定义了场景的transitioningDelegate为自定义效果，通过扩展UIViewControllerAnimatedTransitioning的系统协议，在animateTransition方法里面加入我们自己定义好的动画，可以实现滑动菜单效果。</li>
+</ol>
+</li>
+<li><ol start="7">
+<li>酷炫左右缩放菜单效果，跳转的逻辑可以在故事版里面写，这里只是菜单里面配置了一个自定义的transitioningDelegate得以实现，具体动画在UIViewControllerAnimatedTransitioning这个协议里面的animateTransition方法中处理，这里面可以拿到跳转的控制器，控制器可以再拿里面的ui。</li>
+</ol>
+</li>
+<li><ol start="8">
+<li>限制字符串，这个比较简单，就是UITextView的用法，一个是监听键盘收起和弹出，给底部栏加动画，另一个是实现UITextViewDelegate，可以拿到当前长度。</li>
+</ol>
+</li>
+<li><ol start="9">
+<li>自定义下拉刷新，主要是对UIRefreshControl做处理，这个控制器可以添加子View，子View可以通过Bundle.main.loadNibNamed加载xib文件。这样可以实现自定义下拉刷新效果。</li>
+</ol>
+</li>
+<li><ol start="10">
+<li>列表转场动画，这个主要就是走didSelectItemAt的协议方法中，实现动画，关键逻辑就是cell.frame赋予self.view.bounds，相当于放大了cell，达成目标效果。</li>
+</ol>
+</li>
+</ul>
+
+            </div>
+            <hr />
+
+            
+            <style>
+    #reward {
+        margin: 40px 0;
+        text-align: center;
+    }
+
+    #reward .reward-link {
+        font-size: 1.88rem;
+    }
+
+    #reward .btn-floating:hover {
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2), 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    #rewardModal {
+        width: 320px;
+        height: 350px;
+    }
+
+    #rewardModal .reward-title {
+        margin: 15px auto;
+        padding-bottom: 5px;
+    }
+
+    #rewardModal .modal-content {
+        padding: 10px;
+    }
+
+    #rewardModal .close {
+        position: absolute;
+        right: 15px;
+        top: 15px;
+        color: rgba(0, 0, 0, 0.5);
+        font-size: 1.3rem;
+        line-height: 20px;
+        cursor: pointer;
+    }
+
+    #rewardModal .close:hover {
+        color: #ef5350;
+        transform: scale(1.3);
+        -moz-transform:scale(1.3);
+        -webkit-transform:scale(1.3);
+        -o-transform:scale(1.3);
+    }
+
+    #rewardModal .reward-tabs {
+        margin: 0 auto;
+        width: 210px;
+    }
+
+    .reward-tabs .tabs {
+        height: 38px;
+        margin: 10px auto;
+        padding-left: 0;
+    }
+
+    .reward-content ul {
+        padding-left: 0 !important;
+    }
+
+    .reward-tabs .tabs .tab {
+        height: 38px;
+        line-height: 38px;
+    }
+
+    .reward-tabs .tab a {
+        color: #fff;
+        background-color: #ccc;
+    }
+
+    .reward-tabs .tab a:hover {
+        background-color: #ccc;
+        color: #fff;
+    }
+
+    .reward-tabs .wechat-tab .active {
+        color: #fff !important;
+        background-color: #22AB38 !important;
+    }
+
+    .reward-tabs .alipay-tab .active {
+        color: #fff !important;
+        background-color: #019FE8 !important;
+    }
+
+    .reward-tabs .reward-img {
+        width: 210px;
+        height: 210px;
+    }
+</style>
+
+<div id="reward">
+    <a href="#rewardModal" class="reward-link modal-trigger btn-floating btn-large waves-effect waves-light red">赏</a>
+
+    <!-- Modal Structure -->
+    <div id="rewardModal" class="modal">
+        <div class="modal-content">
+            <a class="close modal-close"><i class="fa fa-close"></i></a>
+            <h4 class="reward-title">写作不易，客官能否打赏一杯奶茶？</h4>
+            <div class="reward-content">
+                <div class="reward-tabs">
+                    <ul class="tabs row">
+                        <li class="tab col s6 alipay-tab waves-effect waves-light"><a href="#alipay">支付宝</a></li>
+                        <li class="tab col s6 wechat-tab waves-effect waves-light"><a href="#wechat">微 信</a></li>
+                    </ul>
+                    <div id="alipay">
+                        <img src="/medias/reward/alipay.jpg" class="reward-img" alt="支付宝打赏二维码">
+                    </div>
+                    <div id="wechat">
+                        <img src="/medias/reward/wechat.png" class="reward-img" alt="微信打赏二维码">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $('.tabs').tabs();
+    });
+</script>
+            
+
+            <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+
+<div id="article-share">
+    
+    <div class="social-share" data-disabled="qzone" data-wechat-qrcode-helper="<p>微信里点“发现”->“扫一扫”二维码便可查看分享。</p>"></div>
+    
+</div>
+
+<script src="/libs/share/js/social-share.min.js"></script>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        <p class="reprint-tip">
+            <i class="fa fa-exclamation-triangle"></i>&nbsp;&nbsp;
+            <span>转载规则</span>
+        </p>
+        
+            <div class="center-align">
+                <a rel="license noopener" target="_blank" href="https://creativecommons.org/licenses/by/4.0/deed.zh">
+                    <img alt=""
+                         style="border-width:0"
+                         src="https://i.creativecommons.org/l/by/4.0/88x31.png"/>
+                </a>
+            </div>
+            <br/>
+            <span xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/Text"
+                  property="dct:title" rel="dct:type">
+                    《iOS swift 3天30个swift项目之第二天》
+                </span> 由
+            <a xmlns:cc="http://creativecommons.org/ns#" href="/2023/02/04/iOS-swift-3%E5%A4%A930%E4%B8%AAswift%E9%A1%B9%E7%9B%AE%E4%B9%8B%E7%AC%AC%E4%BA%8C%E5%A4%A9/" property="cc:attributionName"
+               rel="cc:attributionURL">
+                Jason
+            </a> 采用
+            <a rel="license noopener" target="_blank" href="https://creativecommons.org/licenses/by/4.0/deed.zh">
+                知识共享署名 4.0 国际许可协议
+            </a>进行许可。
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+        </div>
+    </div>
+
+    
+    <link rel="stylesheet" href="/libs/gitalk/gitalk.css">
+<link rel="stylesheet" href="/css/my-gitalk.css">
+
+<div class="card gitalk-card" data-aos="fade-up">
+    <div id="gitalk-container" class="card-content"></div>
+</div>
+
+<script src="/libs/gitalk/gitalk.min.js"></script>
+<script>
+    let gitalk = new Gitalk({
+        clientID: 'fe0ccf043e8b41eb62ea',
+        clientSecret: '9ca1dd3be79bdf6123d4aa8ca81753570fe870e1',
+        repo: 'jasontojan.github.io',
+        owner: 'jasontojan',
+        admin: "jasontojan",
+        id: '2023/02/04/iOS-swift-3天30个swift项目之第二天/',
+        distractionFreeMode: false  // Facebook-like distraction free mode
+    });
+
+    gitalk.render('gitalk-container');
+</script>
+    
+
+    
+
+    
+
+    
+
+    
+    <style>
+    .valine-card {
+        margin: 1.5rem auto;
+    }
+
+    .valine-card .card-content {
+        padding: 20px 20px 5px 20px;
+    }
+
+    #vcomments input[type=text],
+    #vcomments input[type=email],
+    #vcomments input[type=url],
+    #vcomments textarea {
+        box-sizing: border-box;
+    }
+
+    #vcomments p {
+        margin: 2px 2px 10px;
+        font-size: 1.05rem;
+        line-height: 1.78rem;
+    }
+
+    #vcomments blockquote p {
+        text-indent: 0.2rem;
+    }
+
+    #vcomments a {
+        padding: 0 2px;
+        color: #42b983;
+        font-weight: 500;
+        text-decoration: underline;
+    }
+
+    #vcomments img {
+        max-width: 100%;
+        height: auto;
+        cursor: pointer;
+    }
+
+    #vcomments ol li {
+        list-style-type: decimal;
+    }
+
+    #vcomments ol,
+    ul {
+        display: block;
+        padding-left: 2em;
+        word-spacing: 0.05rem;
+    }
+
+    #vcomments ul li,
+    ol li {
+        display: list-item;
+        line-height: 1.8rem;
+        font-size: 1rem;
+    }
+
+    #vcomments ul li {
+        list-style-type: disc;
+    }
+
+    #vcomments ul ul li {
+        list-style-type: circle;
+    }
+
+    #vcomments table, th, td {
+        padding: 12px 13px;
+        border: 1px solid #dfe2e5;
+    }
+
+    #vcomments table, th, td {
+        border: 0;
+    }
+
+    table tr:nth-child(2n), thead {
+        background-color: #fafafa;
+    }
+
+    #vcomments table th {
+        background-color: #f2f2f2;
+        min-width: 80px;
+    }
+
+    #vcomments table td {
+        min-width: 80px;
+    }
+
+    #vcomments h1 {
+        font-size: 1.85rem;
+        font-weight: bold;
+        line-height: 2.2rem;
+    }
+
+    #vcomments h2 {
+        font-size: 1.65rem;
+        font-weight: bold;
+        line-height: 1.9rem;
+    }
+
+    #vcomments h3 {
+        font-size: 1.45rem;
+        font-weight: bold;
+        line-height: 1.7rem;
+    }
+
+    #vcomments h4 {
+        font-size: 1.25rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    #vcomments h5 {
+        font-size: 1.1rem;
+        font-weight: bold;
+        line-height: 1.4rem;
+    }
+
+    #vcomments h6 {
+        font-size: 1rem;
+        line-height: 1.3rem;
+    }
+
+    #vcomments p {
+        font-size: 1rem;
+        line-height: 1.5rem;
+    }
+
+    #vcomments hr {
+        margin: 12px 0;
+        border: 0;
+        border-top: 1px solid #ccc;
+    }
+
+    #vcomments blockquote {
+        margin: 15px 0;
+        border-left: 5px solid #42b983;
+        padding: 1rem 0.8rem 0.3rem 0.8rem;
+        color: #666;
+        background-color: rgba(66, 185, 131, .1);
+    }
+
+    #vcomments pre {
+        font-family: monospace, monospace;
+        padding: 1.2em;
+        margin: .5em 0;
+        background: #272822;
+        overflow: auto;
+        border-radius: 0.3em;
+        tab-size: 4;
+    }
+
+    #vcomments code {
+        font-family: monospace, monospace;
+        padding: 1px 3px;
+        font-size: 0.92rem;
+        color: #e96900;
+        background-color: #f8f8f8;
+        border-radius: 2px;
+    }
+
+    #vcomments pre code {
+        font-family: monospace, monospace;
+        padding: 0;
+        color: #e8eaf6;
+        background-color: #272822;
+    }
+
+    #vcomments pre[class*="language-"] {
+        padding: 1.2em;
+        margin: .5em 0;
+    }
+
+    #vcomments code[class*="language-"],
+    pre[class*="language-"] {
+        color: #e8eaf6;
+    }
+
+    #vcomments [type="checkbox"]:not(:checked), [type="checkbox"]:checked {
+        position: inherit;
+        margin-left: -1.3rem;
+        margin-right: 0.4rem;
+        margin-top: -1px;
+        vertical-align: middle;
+        left: unset;
+        visibility: visible;
+    }
+
+    #vcomments b,
+    strong {
+        font-weight: bold;
+    }
+
+    #vcomments dfn {
+        font-style: italic;
+    }
+
+    #vcomments small {
+        font-size: 85%;
+    }
+
+    #vcomments cite {
+        font-style: normal;
+    }
+
+    #vcomments mark {
+        background-color: #fcf8e3;
+        padding: .2em;
+    }
+
+    #vcomments table, th, td {
+        padding: 12px 13px;
+        border: 1px solid #dfe2e5;
+    }
+
+    table tr:nth-child(2n), thead {
+        background-color: #fafafa;
+    }
+
+    #vcomments table th {
+        background-color: #f2f2f2;
+        min-width: 80px;
+    }
+
+    #vcomments table td {
+        min-width: 80px;
+    }
+
+    #vcomments [type="checkbox"]:not(:checked), [type="checkbox"]:checked {
+        position: inherit;
+        margin-left: -1.3rem;
+        margin-right: 0.4rem;
+        margin-top: -1px;
+        vertical-align: middle;
+        left: unset;
+        visibility: visible;
+    }
+</style>
+
+<div class="card valine-card" data-aos="fade-up">
+    <div id="vcomments" class="card-content"></div>
+</div>
+
+<script src="/libs/valine/av-min.js"></script>
+<script src="/libs/valine/Valine.min.js"></script>
+<!-- <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script> -->
+
+<script>
+    new Valine({
+        el: '#vcomments',
+        appId: '查教程获取',
+        appKey: '查教程获取',
+        notify: 'false' === 'true',
+        verify: 'false' === 'true',
+        visitor: 'false' === 'true',
+        avatar: 'wavatar',
+        pageSize: '10',
+        lang: 'zh-cn',
+        placeholder: '如果你没有GitHub账号，还可以在这里评论啦！'
+    });
+</script>
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fa fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/2023/02/05/iOS-swift-3%E5%A4%A930%E4%B8%AAswift%E9%A1%B9%E7%9B%AE%E4%B9%8B%E7%AC%AC%E4%B8%89%E5%A4%A9/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/2.jpg" class="responsive-img" alt="iOS swift 3天30个swift项目之第三天">
+                        
+                        <span class="card-title">iOS swift 3天30个swift项目之第三天</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            1 滑动删除1.1 效果
+
+1.2 列表实现class ViewController: UITableViewController &#123;
+
+数据定义：
+var data = [
+    pattern(image: &quot;1&
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="fa fa-clock-o fa-fw icon-date"></i>2023-02-05
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fa fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/iOS/" class="post-category" target="_blank">
+                                    iOS
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/30%E4%B8%AASwift%E9%A1%B9%E7%9B%AE/" target="_blank">
+                        <span class="chip bg-color">30个Swift项目</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fa fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2023/02/03/iOS-swift-3%E5%A4%A930%E4%B8%AASwift%E9%A1%B9%E7%9B%AE%E4%B9%8B%E7%AC%AC%E4%B8%80%E5%A4%A9/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/11.jpg" class="responsive-img" alt="iOS swift 3天30个Swift项目之第一天">
+                        
+                        <span class="card-title">iOS swift 3天30个Swift项目之第一天</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+参考项目：https://github.com/soapyigu/Swift-30-Projects 
+
+1 计时器首先看下效果吧。
+1.1 主要功能点击播放按钮，数字开始增加；点击暂停按钮，数字停止增加；点击“Reset”，数值置为0；
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2023-02-03
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fa fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/iOS/" class="post-category" target="_blank">
+                                    iOS
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/30%E4%B8%AASwift%E9%A1%B9%E7%9B%AE/" target="_blank">
+                        <span class="chip bg-color">30个Swift项目</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+</div>
+
+
+<script>
+    $('#articleContent').on('copy', function (e) {
+        // IE8 or earlier browser is 'undefined'
+        if (typeof window.getSelection === 'undefined') return;
+
+        var selection = window.getSelection();
+        // if the selection is short let's not annoy our users.
+        if (('' + selection).length < Number.parseInt('120')) {
+            return;
+        }
+
+        // create a div outside of the visible area and fill it with the selected text.
+        var bodyElement = document.getElementsByTagName('body')[0];
+        var newdiv = document.createElement('div');
+        newdiv.style.position = 'absolute';
+        newdiv.style.left = '-99999px';
+        bodyElement.appendChild(newdiv);
+        newdiv.appendChild(selection.getRangeAt(0).cloneContents());
+
+        // we need a <pre> tag workaround.
+        // otherwise the text inside "pre" loses all the line breaks!
+        if (selection.getRangeAt(0).commonAncestorContainer.nodeName === 'PRE') {
+            newdiv.innerHTML = "<pre>" + newdiv.innerHTML + "</pre>";
+        }
+
+        var url = document.location.href;
+        newdiv.innerHTML += '<br />'
+            + '来源: JasonToJan's Blog<br />'
+            + '作者: Jason<br />'
+            + '链接: <a href="' + url + '">' + url + '</a><br />'
+            + '本文章著作权归作者所有，任何形式的转载都请注明出处。';
+
+        selection.selectAllChildren(newdiv);
+        window.setTimeout(function () { bodyElement.removeChild(newdiv); }, 200);
+    });
+</script>
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget">
+            <div class="toc-title"><i class="fa fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fa fa-list"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            // headingsOffset: -205,
+            headingSelector: 'h1, h2, h3, h4'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h1, h2, h3, h4').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).slideUp(500);
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).slideDown(500);
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+    
+
+</main>
+
+
+<script src="https://cdn.bootcss.com/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script>
+    MathJax.Hub.Config({
+        tex2jax: {inlineMath: [['$', '$'], ['\(', '\)']]}
+    });
+</script>
+
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+<!-- 代码语言 -->
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+<!-- 代码块复制 -->
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+<script type="text/javascript" src="/libs/codeBlock/clipboard.min.js"></script>
+<!-- 代码块收缩 -->
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script> 
+<!-- 代码块折行 -->
+<style type="text/css">code[class*="language-"], pre[class*="language-"] { white-space: pre !important; }</style>
+
+
+    <footer class="page-footer bg-color">
+    <div class="container row center-align">
+        <div class="col s12 m8 l8 copy-right">
+            &copy; 2023-2023 JasonJan. 版权所有
+
+            
+            &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
+            <span class="white-color">274.7k</span>
+            
+
+            <br>
+            <span id="sitetime"></span>
+
+            
+            
+            <br>
+            
+            <span id="busuanzi_container_site_pv" style='display:none'>
+                <i class="fa fa-heart-o"></i>
+                本站总访问量 <span id="busuanzi_value_site_pv" class="white-color"></span>
+            </span>
+            
+            
+            <span id="busuanzi_container_site_uv" style='display:none'>
+                人次,&nbsp;访客数 <span id="busuanzi_value_site_uv" class="white-color"></span> 人.
+            </span>
+            
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/JasonToJan" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fa fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:jason1211241203@gmail.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fa fa-envelope-open"></i>
+    </a>
+
+
+
+    <a href="https://zhihu.com/people/JasonJan" class="tooltipped" target="_blank" data-tooltip="访问我的知乎" data-position="top" data-delay="50">
+        <i class="fa fa-inverse">知</i>
+    </a>
+
+
+
+    <a href="http://wpa.qq.com/msgrd?v=3&uin=1211241203&site=qq&menu=yes" class="tooltipped" target="_blank" data-tooltip="访问我的知乎" data-position="top" data-delay="50">
+        <i class="fa fa-qq"></i>
+    </a>
+
+
+
+    <a href="https://weibo.com/JasonJan" class="tooltipped" target="_blank" data-tooltip="关注我的微博" data-position="top" data-delay="50">
+        <i class="fa fa-weibo"></i>
+    </a>
+
+
+
+    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
+        <i class="fa fa-rss"></i>
+    </a>
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+<!-- 不蒜子计数初始值纠正 -->
+<script>
+    $(document).ready(function () {
+
+        var int = setInterval(fixCount, 50);
+        var pvcountOffset = 80000;
+        var uvcountOffset = 20000;
+
+        function fixCount() {
+            if (document.getElementById("busuanzi_container_site_pv").style.display != "none") {
+                $("#busuanzi_value_site_pv").html(parseInt($("#busuanzi_value_site_pv").html()) + pvcountOffset);
+                clearInterval(int);
+            }
+            if ($("#busuanzi_container_site_pv").css("display") != "none") {
+                $("#busuanzi_value_site_uv").html(parseInt($("#busuanzi_value_site_uv").html()) + uvcountOffset); // 加上初始数据 
+                clearInterval(int);
+            }
+        }
+    });
+</script>
+
+<script language=javascript>
+    function siteTime() {
+        window.setTimeout("siteTime()", 1000);
+        var seconds = 1000;
+        var minutes = seconds * 60;
+        var hours = minutes * 60;
+        var days = hours * 24;
+        var years = days * 365;
+        var today = new Date();
+        var todayYear = today.getFullYear();
+        var todayMonth = today.getMonth() + 1;
+        var todayDate = today.getDate();
+        var todayHour = today.getHours();
+        var todayMinute = today.getMinutes();
+        var todaySecond = today.getSeconds();
+        /* Date.UTC() -- 返回date对象距世界标准时间(UTC)1970年1月1日午夜之间的毫秒数(时间戳)
+        year - 作为date对象的年份，为4位年份值
+        month - 0-11之间的整数，做为date对象的月份
+        day - 1-31之间的整数，做为date对象的天数
+        hours - 0(午夜24点)-23之间的整数，做为date对象的小时数
+        minutes - 0-59之间的整数，做为date对象的分钟数
+        seconds - 0-59之间的整数，做为date对象的秒数
+        microseconds - 0-999之间的整数，做为date对象的毫秒数 */
+        var t1 = Date.UTC(2017, 09, 11, 00, 00, 00); //北京时间2018-2-13 00:00:00
+        var t2 = Date.UTC(todayYear, todayMonth, todayDate, todayHour, todayMinute, todaySecond);
+        var diff = t2 - t1;
+        var diffYears = Math.floor(diff / years);
+        var diffDays = Math.floor((diff / days) - diffYears * 365);
+        var diffHours = Math.floor((diff - (diffYears * 365 + diffDays) * days) / hours);
+        var diffMinutes = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours) / minutes);
+        var diffSeconds = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours - diffMinutes * minutes) / seconds);
+        document.getElementById("sitetime").innerHTML = "本站已运行 " + diffYears + " 年 " + diffDays + " 天 " + diffHours + " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+    }/*因为建站时间还没有一年，就将之注释掉了。需要的可以取消*/
+    siteTime();
+</script>
+
+<link rel="stylesheet" href="/css/prism.css">
+<script src="/js/prism.js" async></script>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fa fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script src="/js/search.js"></script>
+<script type="text/javascript">
+$(function () {
+    searchFunc("/" + "search.xml", 'searchInput', 'searchResult');
+});
+</script>
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fa fa-angle-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    <script type="text/javascript"> var OriginTitile = document.title, st; document.addEventListener("visibilitychange", function () { document.hidden ? (document.title = "Σ(っ °Д °;)っ喔哟，崩溃啦！", clearTimeout(st)) : (document.title = "φ(゜▽゜*)♪咦，又好了！", st = setTimeout(function () { document.title = OriginTitile }, 3e3)) })
+    </script>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=查教程获取"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+        dataLayer.push(arguments);
+    }
+
+    gtag('js', new Date());
+    gtag('config', '查教程获取');
+</script>
+
+
+
+    
+    <script src="/libs/others/clicklove.js"></script>
+    
+
+    
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    <!-- 雪花特效 -->
+    
+
+</body>
+
+</html>

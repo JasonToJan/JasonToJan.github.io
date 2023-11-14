@@ -1,0 +1,1717 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="面试 Android 通关秘籍, Android iOS Flutter">
+    <meta name="baidu-site-verification" content="fmlEuI34ir" />
+    <meta name="google-site-verification" content="yCy2azpds5XSuGZvis6OuA-XIGF5GuGpYRAaGfD6o48" />
+    <meta name="360-site-verification" content="b7c11a830ef90fd1464ad6206bb7b6e7" />
+    <meta name="description" content="1 黑铁
+知道四大组件用法和生命周期。
+
+1.1 Activity生命周期？
+onCreate-&amp;gt;onStart-&amp;gt;onResume-&amp;gt;onPause-&amp;gt;onStop-&amp;gt;onDestory
+
+1.2 Fragm">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>面试 Android 通关秘籍 | JasonToJan&#39;s Blog</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+    <style type="text/css">
+        
+    </style>
+
+    <script src="/libs/jquery/jquery-2.2.0.min.js"></script>
+    <script src="https://sdk.jinrishici.com/v2/browser/jinrishici.js" charset="utf-8"></script>
+    <script>
+        var _hmt = _hmt || [];
+        (function () {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?ce84511d3df71640a9378a69f6293044";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+    
+        <script>
+            (function(){
+                var bp = document.createElement('script');
+                var curProtocol = window.location.protocol.split(':')[0];
+                if (curProtocol === 'https') {
+                    bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+                }
+                else {
+                    bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+                }
+                var s = document.getElementsByTagName("script")[0];
+                s.parentNode.insertBefore(bp, s);
+            })();
+        </script>
+    
+
+    <script>
+        (function(){
+        var src = "https://jspassport.ssl.qhimg.com/11.0.1.js?d182b3f28525f2db83acfaaf6e696dba";
+        document.write('<script src="' + src + '" id="sozz"><\/script>');
+        })();
+    </script>
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">JasonToJan's Blog</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fa fa-navicon"></i></a>
+<ul class="right">
+    
+    <li class="hide-on-med-and-down">
+        <a href="/" class="waves-effect waves-light">
+            
+            <i class="fa fa-home"></i>
+            
+            <span>首页</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/tags" class="waves-effect waves-light">
+            
+            <i class="fa fa-tags"></i>
+            
+            <span>标签</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/categories" class="waves-effect waves-light">
+            
+            <i class="fa fa-bookmark"></i>
+            
+            <span>分类</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/archives" class="waves-effect waves-light">
+            
+            <i class="fa fa-archive"></i>
+            
+            <span>归档</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/about" class="waves-effect waves-light">
+            
+            <i class="fa fa-user-circle-o"></i>
+            
+            <span>关于</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/friends" class="waves-effect waves-light">
+            
+            <i class="fa fa-address-book"></i>
+            
+            <span>友情链接</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/contact" class="waves-effect waves-light">
+            
+            <i class="fa fa-comments"></i>
+            
+            <span>留言板</span>
+        </a>
+    </li>
+    
+    <li>
+        <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+            <i id="searchIcon" class="fa fa-search" title="搜索"></i>
+        </a>
+    </li>
+</ul>
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">JasonToJan's Blog</div>
+        <div class="logo-desc">
+            
+            专注移动端，热爱生活，热衷开发。
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li>
+            <a href="/" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-home"></i>
+                
+                首页
+            </a>
+        </li>
+        
+        <li>
+            <a href="/tags" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-tags"></i>
+                
+                标签
+            </a>
+        </li>
+        
+        <li>
+            <a href="/categories" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-bookmark"></i>
+                
+                分类
+            </a>
+        </li>
+        
+        <li>
+            <a href="/archives" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-archive"></i>
+                
+                归档
+            </a>
+        </li>
+        
+        <li>
+            <a href="/about" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-user-circle-o"></i>
+                
+                关于
+            </a>
+        </li>
+        
+        <li>
+            <a href="/friends" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-address-book"></i>
+                
+                友情链接
+            </a>
+        </li>
+        
+        <li>
+            <a href="/contact" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-comments"></i>
+                
+                留言板
+            </a>
+        </li>
+        
+        
+        <li><div class="divider"></div></li>
+        <li>
+            <a href="https://github.com/JasonToJan/hexo-matery-modified" class="waves-effect waves-light" target="_blank">
+                <i class="fa fa-github-square fa-fw"></i>Fork Me
+            </a>
+        </li>
+        
+    </ul>
+</div>
+
+        </div>
+
+        
+            <style>
+    .nav-transparent .github-corner {
+        display: none !important;
+    }
+
+    .github-corner {
+        position: absolute;
+        z-index: 10;
+        top: 0;
+        right: 0;
+        border: 0;
+        transform: scale(1.1);
+    }
+
+    .github-corner svg {
+        color: #0f9d58;
+        fill: #fff;
+        height: 64px;
+        width: 64px;
+    }
+
+    .github-corner:hover .octo-arm {
+        animation: a 0.56s ease-in-out;
+    }
+
+    .github-corner .octo-arm {
+        animation: none;
+    }
+
+    @keyframes a {
+        0%,
+        to {
+            transform: rotate(0);
+        }
+        20%,
+        60% {
+            transform: rotate(-25deg);
+        }
+        40%,
+        80% {
+            transform: rotate(10deg);
+        }
+    }
+</style>
+
+<a href="https://github.com/JasonToJan/hexo-matery-modified" class="github-corner tooltipped hide-on-med-and-down" target="_blank"
+   data-tooltip="Fork Me" data-position="left" data-delay="50">
+    <svg viewBox="0 0 250 250" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
+              fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
+              fill="currentColor" class="octo-body"></path>
+    </svg>
+</a>
+        
+    </nav>
+
+</header>
+
+    
+<script src="/libs/cryptojs/crypto-js.min.js"></script>
+<script>
+    (function() {
+        let pwd = '';
+        if (pwd && pwd.length > 0) {
+            if (pwd !== CryptoJS.SHA256(prompt('请输入访问本文章的密码')).toString(CryptoJS.enc.Hex)) {
+                alert('密码错误，将返回主页！');
+                location.href = '/';
+            }
+        }
+    })();
+</script>
+
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/17.jpg')">
+    <div class="container">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <div class="description center-align post-title">
+                        面试 Android 通关秘籍
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        margin: 35px 0 15px 0;
+        padding-left: 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #toc-content .is-active-link::before {
+        background-color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 20px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                        <a href="/tags/%E9%9D%A2%E8%AF%95%E9%A2%98-Android/" target="_blank">
+                            <span class="chip bg-color">面试题 Android</span>
+                        </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fa fa-bookmark fa-fw icon-category"></i>
+                        
+                        <a href="/categories/%E9%9D%A2%E8%AF%95/" class="post-category" target="_blank">
+                            面试
+                        </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                <div class="post-date info-break-policy">
+                    <i class="fa fa-calendar-minus-o fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2023-01-05
+                </div>
+
+                <div class="post-author info-break-policy">
+                    <i class="fa fa-user-o fa-fw"></i>作者:&nbsp;&nbsp;
+                    
+                    Jason
+                    
+                </div>
+
+                
+                
+                <div class="info-break-policy">
+                    <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
+                    13.8k
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
+                    50 分
+                </div>
+                
+                
+
+                
+                <div id="busuanzi_container_page_pv" class="info-break-policy">
+                    <i class="fa fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
+                    <span id="busuanzi_value_page_pv"></span>
+                </div>
+                
+            </div>
+        </div>
+        <hr class="clearfix">
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h2 id="1-黑铁"><a href="#1-黑铁" class="headerlink" title="1 黑铁"></a>1 黑铁</h2><blockquote>
+<p>知道四大组件用法和生命周期。</p>
+</blockquote>
+<h3 id="1-1-Activity生命周期？"><a href="#1-1-Activity生命周期？" class="headerlink" title="1.1 Activity生命周期？"></a>1.1 Activity生命周期？</h3><blockquote>
+<p>onCreate-&gt;onStart-&gt;onResume-&gt;onPause-&gt;onStop-&gt;onDestory</p>
+</blockquote>
+<h3 id="1-2-Fragment生命周期？"><a href="#1-2-Fragment生命周期？" class="headerlink" title="1.2 Fragment生命周期？"></a>1.2 Fragment生命周期？</h3><blockquote>
+<p>onAttach-&gt;onCreate-&gt;onCreateView-&gt;onActivityCreate (对应Activity的onCreate阶段)<br>—&gt; onStart-&gt;onResume-&gt;onStop<br>—&gt; onDestoryView-&gt;onDestory-&gt;onDetach (对应Activity的onDestroy阶段)</p>
+</blockquote>
+<h3 id="1-3-横竖屏切换对Activity生命周期的影响？"><a href="#1-3-横竖屏切换对Activity生命周期的影响？" class="headerlink" title="1.3 横竖屏切换对Activity生命周期的影响？"></a>1.3 横竖屏切换对Activity生命周期的影响？</h3><blockquote>
+<p>1.不设置Activity的android:configChanges时，切屏会重新调用各个生命周期,测试不管怎么切换，都只走一次生命周期。具体生命周期如下：（使用Android12亲测，根网上说切横屏走2次不同，猜测可能跟系统版本有关）<br> onPause()-&gt;onSaveInstanceState()-&gt; onStop()-&gt;onDestroy()-&gt;<br> onCreate()-&gt;onStart()-&gt;onRestoreInstanceState-&gt;onResume()<br><br> 2.给Activity设置了android:configChanges&#x3D;”orientation|keyboardHidden|screenSize”这三个属性，切屏不会走生命周期，只会走onConfigurationChanged方法。<br><br> 3.如果设置了固定屏幕方向，如android:screenOrientation&#x3D;”portrait”，将不会有任何生命周期回调。</p>
+</blockquote>
+<h3 id="1-4-按home键盘、切到桌面后再切回来？"><a href="#1-4-按home键盘、切到桌面后再切回来？" class="headerlink" title="1.4 按home键盘、切到桌面后再切回来？"></a>1.4 按home键盘、切到桌面后再切回来？</h3><blockquote>
+<p>onPause()-&gt;onStop()-&gt;onRestart()-&gt;onStart()-&gt;onResume()<br>这里需要提到Activity是否被回收，回收的话需要重新走onCreate（这样就不走onRestart了）</p>
+</blockquote>
+<h3 id="1-5-Android的启动模式？"><a href="#1-5-Android的启动模式？" class="headerlink" title="1.5 Android的启动模式？"></a>1.5 Android的启动模式？</h3><blockquote>
+<p>必须提到4种启动模式。<br>1.标准模式standard：需要提到每次都重新创建一个Activity实例即可。（最好是能提到在服务中启动需要开启一个新的任务栈）<br><br>2.栈顶复用模式(singleTop): 需要提到一定是栈顶复用，栈顶没有则新建Activity实例，跟栈内无关（最好是能提到一般可用于解决连续两次快速点击会跳转相同Activity）。<br><br>3.栈内复用模式(singleTask): 需要提到当前栈内只要有这个Activity实例，都会复用，而且一定要提到清除上方所有的其他Activity实例。需要提到如果复用的话，会走onNewIntent回调方法。（最好是能提到taskAffinity,这个是表示当前Activity期望进入的栈，最好是能提到场景一般用于App首页）<br><br>4.单例模式(singleInstance): 需要提到开启这个单例模式的Activity，会创建一个新的任务栈，将此Activity压入栈中。（最好是能提到手机的呼叫来电，就是使用的单例模式）</p>
+</blockquote>
+<h3 id="1-6-前台栈和后台栈交互逻辑？"><a href="#1-6-前台栈和后台栈交互逻辑？" class="headerlink" title="1.6 前台栈和后台栈交互逻辑？"></a>1.6 前台栈和后台栈交互逻辑？</h3><blockquote>
+<p>如果前台栈是 AB，后台栈是CD（CD均为singleTask模式）。<br>第一种情况，需要跳转D，此时任务栈会把C也带过来，任务栈变成：ABCD。<br>第二种情况，需要跳转C，此时会clear掉上方的D，任务栈变成：ABC。</p>
+</blockquote>
+<h3 id="1-7-服务可以直接执行耗时任务吗？"><a href="#1-7-服务可以直接执行耗时任务吗？" class="headerlink" title="1.7 服务可以直接执行耗时任务吗？"></a>1.7 服务可以直接执行耗时任务吗？</h3><blockquote>
+<p>不可以哦。<br>服务虽然是后台运行的组件，但是它同样也是运行在UI线程中。当然它也可以开启子线程处理耗时任务，而且它很适合处理不需要跟用户交换而且要长期运行的任务，比如下载文件（最好是能提到IntentService，内部实现了任务排序，开启线程的工作，且任务执行完会停止服务）。</p>
+</blockquote>
+<h3 id="1-8-服务的分类？"><a href="#1-8-服务的分类？" class="headerlink" title="1.8 服务的分类？"></a>1.8 服务的分类？</h3><blockquote>
+<p>1.按照运行地点分类：<br>1.1 本地服务，同进程的服务。<br>1.2 远程服务，不同进程的服务。<br><br>2.按照运行类型分类：<br>2.1 前台服务，有通知栏提示。<br>2.2 后台服务，没有通知，用户无感知。</p>
+</blockquote>
+<h3 id="1-9-服务的生命周期？"><a href="#1-9-服务的生命周期？" class="headerlink" title="1.9 服务的生命周期？"></a>1.9 服务的生命周期？</h3><blockquote>
+<p>1.startService启动的服务的生命周期<br>onCreate-&gt;onStartCommand-&gt;onDestroy   通过context的startService，传intent启动；通过context.stopService，传intent关闭服务。（最好是能提到重复启动不会走多次onCreate,会走onStartCommand）<br><br>2.bindService启动的服务的生命周期<br>比如我们通过在Activity里面bindService开启服务：<br>2.1 onCreate-&gt;onBind -&gt;然后走 我们在启动时注入的ServiceConection接口的 onServiceConnected回调函数<br>此时我们调用stopService是管不了服务的。<br>2.2 如果调用unBindService，此时会走：<br>onUnbind-&gt;onDestroy<br>(最好能提到服务通过bind开启，后续重复开启，将没有任何回调！)<br><br>3.混合型<br>同时startService+bindService的生命周期：<br>onCreate-&gt;onStartCommand-&gt;onBind-&gt;走onServiceConnected回调<br>此时如果仅仅通过unBindService，服务会走onUnBind，但不会走onDestroy。<br>仅仅通过stopService，也无法关闭服务。<br>需要stopService+unbindService，才能停止服务。</p>
+</blockquote>
+<h3 id="1-10-如何创建前台服务？"><a href="#1-10-如何创建前台服务？" class="headerlink" title="1.10 如何创建前台服务？"></a>1.10 如何创建前台服务？</h3><blockquote>
+<p>调用服务的startForeground方法，里面有个参数可以传Notification。<br>如何关闭前台服务呢，先通过stopForeground，降级为后台服务，在通过stopService关闭服务。</p>
+</blockquote>
+<h3 id="1-11-服务的生命周期会受到Activity的生命周期影响吗？"><a href="#1-11-服务的生命周期会受到Activity的生命周期影响吗？" class="headerlink" title="1.11 服务的生命周期会受到Activity的生命周期影响吗？"></a>1.11 服务的生命周期会受到Activity的生命周期影响吗？</h3><blockquote>
+<p>如果Service是通过startService()方法启动的，那么它将继续运行，直到通过stopService()方法停止。此时，Service的生命周期不受Activity的生命周期影响。<br><br>如果Service是通过bindService()方法绑定到Activity上的，那么它将会受到Activity的生命周期的影响。当Activity销毁时，它会解除与Service的绑定，从而导致Service的onUnbind()方法被调用，接着如果没有其他组件绑定到该Service，则Service的生命周期将终止，最终调用onDestroy()方法。</p>
+</blockquote>
+<h3 id="1-12-广播是干什么用的？"><a href="#1-12-广播是干什么用的？" class="headerlink" title="1.12 广播是干什么用的？"></a>1.12 广播是干什么用的？</h3><blockquote>
+<p>能简单提一下原理：采用了观察者模式，基于消息的发布&#x2F;订阅事件模型。<br>主要用于不同组件之间（能提到应用内或者跨进程）相互通信，也能接收到系统的发出广播。<br>如果能提到原理是最佳的：<br>1.广播接收者 通过 Binder 机制在 AMS 注册<br>2.广播发送者 通过 Binder 机制向 AMS 发送广播<br>3.AMS 根据 广播发送者 要求，在已注册列表中，寻找合适的广播接收者<br>  寻找依据：IntentFilter &#x2F; Permission<br>4.AMS将广播发送到合适的广播接收者相应的消息循环队列中；<br>5.广播接收者通过 消息循环 拿到此广播，并回调 onReceive()</p>
+</blockquote>
+<h3 id="1-13-广播的onReceive方法可以处理耗时任务吗？"><a href="#1-13-广播的onReceive方法可以处理耗时任务吗？" class="headerlink" title="1.13 广播的onReceive方法可以处理耗时任务吗？"></a>1.13 广播的onReceive方法可以处理耗时任务吗？</h3><blockquote>
+<p>不建议在这里处理耗时任务，很容易导致ANR。如果真的需要，建议在onReceive方法里面开启一个IntentService来处理。</p>
+</blockquote>
+<h3 id="1-14-广播有哪几种注册方式呢？"><a href="#1-14-广播有哪几种注册方式呢？" class="headerlink" title="1.14 广播有哪几种注册方式呢？"></a>1.14 广播有哪几种注册方式呢？</h3><blockquote>
+<p>能提到静态广播和动态广播即可。<br>最好是能提到Android8.0对静态广播的限制：1.取消了大部分静态注册广播 2.无法接收隐式启动的广播。</p>
+</blockquote>
+<h3 id="1-15-使用广播注意点？"><a href="#1-15-使用广播注意点？" class="headerlink" title="1.15 使用广播注意点？"></a>1.15 使用广播注意点？</h3><blockquote>
+<p>一定要注意在onPause或者onStop中unRegisterReceiver。</p>
+</blockquote>
+<h3 id="1-16-广播有哪些类型？"><a href="#1-16-广播有哪些类型？" class="headerlink" title="1.16 广播有哪些类型？"></a>1.16 广播有哪些类型？</h3><blockquote>
+<p>1.自定义广播： 开发者自己定义<br>2.系统广播：系统定义的，比如分钟变更啥的<br>3.有序广播：发送时采用sendOrderedBroadcast<br>4.应用内本地广播：不需要跨进程的话，建议使用这个LocalBroadcastManager类处理。</p>
+</blockquote>
+<h3 id="1-17-ContentProvider怎么使用？"><a href="#1-17-ContentProvider怎么使用？" class="headerlink" title="1.17 ContentProvider怎么使用？"></a>1.17 ContentProvider怎么使用？</h3><blockquote>
+<p>能提到底层Binder最佳。<br>1.自定义一个ContentProvider，内部先通过UriMatcher注册一个唯一标识。<br>2.ContentProvider提供了增删改查的接口方法，我们需要在这里面实现自己的增删改查（可以委托给SQLiteOpenHelper来处理）。<br>3.在清单文件注册<br>4.使用时，通过getContentResolver来访问。</p>
+</blockquote>
+<h3 id="1-18-Activity怎么和Fragment通信？"><a href="#1-18-Activity怎么和Fragment通信？" class="headerlink" title="1.18 Activity怎么和Fragment通信？"></a>1.18 Activity怎么和Fragment通信？</h3><blockquote>
+<p>先提一下如果这个Fragment是依附这个Activity，那么可以直接通过引用直接访问public方法（没有引用也可以通过Tag获取到实例）。<br>但为了降低耦合性和增加复用性，建议可以统一以下方法优化：<br>1.自定义接口<br>2.Bundle: 通过getArguments接收。<br>3.广播或者EventBus。<br>4.通过ViewModel（建议）：可以实现共享。</p>
+</blockquote>
+<h3 id="1-19-kotlin-let-also-apply-with-run怎么用？"><a href="#1-19-kotlin-let-also-apply-with-run怎么用？" class="headerlink" title="1.19 kotlin let also apply with run怎么用？"></a>1.19 kotlin let also apply with run怎么用？</h3><blockquote>
+<p>let: let it go,就是让它来，扩展函数，括号里面就是让它来做什么事情，可以执行它自己的函数，返回值为最后一行。<br>also: also let it go，也让它来，扩展函数，也让它来，说明它很牛逼，返回值就是它自己了。<br>with: with this object，和这个对象，非扩展函数，里面可以直接访问这个对象的成员变量，返回值为最后一行。<br>run: let it come, run with this object, 让她来，和这个对象一起跑， 扩展函数，里面可以直接访问成员变量，返回值为最后一行。<br>apply: apply run with this object，扩展函数，与run类似，但最终结果不同，返回的是他自己，对象跑了，留他孤身走暗巷。</p>
+</blockquote>
+<h3 id="1-20-LiveData怎么使用？"><a href="#1-20-LiveData怎么使用？" class="headerlink" title="1.20 LiveData怎么使用？"></a>1.20 LiveData怎么使用？</h3><blockquote>
+<p>首先一定要说，它可以感知生命周期，回调只会发生在活跃状态。<br>优点可以说下：<br>数据符合页面状态<br>不会发生内存泄露<br>不会因 activity 停止而导致崩溃<br>不再需要手动处理生命周期<br>数据始终保持最新状态<br>可以用来做资源共享<br><br>一般我们在viewModel中创建一个MutableLiveData对象，然后在View层通过ViewModel实例访问到这个LiveData，通过observe方法观察数据变更情况。<br>在需要的地方setValue，子线程的话postValue。<br><br>1.确保界面符合数据状态<br>LiveData遵循观察者模式。当生命周期状态发生变化时，LiveData 会根据宿主状态和注册类型通知 [Observer]对象并把最新数据派发给它。观察者可以在收到onChanged事件时更新界面，而不是在每次数据发生更改时立即更新界面。<br>2.不再需要手动处理生命周期<br>只需要观察相关数据，不用手动停止或恢复观察。LiveData 会自动管理Observer的反注册，因为它能感知宿主生命周期的变化，并在宿主生命周期的onDestory自动进行反注册。因此使用LiveData做消息分发不会发生内存泄漏<br>3.数据始终保持最新状态<br>如果宿主的生命周期变为非活跃状态，它会在再次变为活跃状态时接收最新的数据。例如，在后台的 Activity会在返回前台后立即接收最新的数据。<br>4.支持黏性事件的分发<br>即先发送一条数据，后注册一个观察者，默认是能够收到最后发送的那条数据<br>5.共享资源<br>可以使用单例模式拓展 LiveData，实现全局的消息分发总线。</p>
+</blockquote>
+<h2 id="2-青铜"><a href="#2-青铜" class="headerlink" title="2 青铜"></a>2 青铜</h2><blockquote>
+<p>多线程编程，会用三方库，懂得适配，了解常用UI组件。</p>
+</blockquote>
+<h3 id="2-1-Android消息机制原理？"><a href="#2-1-Android消息机制原理？" class="headerlink" title="2.1 Android消息机制原理？"></a>2.1 Android消息机制原理？</h3><blockquote>
+<p>首先一定要解释下是什么：Android多线程相互通信。<br>一定要从4个角色上进行分析：<br>Handler: 消息机制的调度器，可用于发送消息和处理消息。<br>Message: 消息对象，在多线程之间传递的消息对象。<br>MessageQueue: 消息队列，一个具有优先级的消息队列，以单链表形式存在。<br>Looper: 通过looper函数创建一个死循环，不断轮训消息，分发到消息处理器中。</p>
+</blockquote>
+<h3 id="2-2-为什么Looper一直循环，不会卡死？"><a href="#2-2-为什么Looper一直循环，不会卡死？" class="headerlink" title="2.2 为什么Looper一直循环，不会卡死？"></a>2.2 为什么Looper一直循环，不会卡死？</h3><blockquote>
+<p>当没有消息的时候，会阻塞在queue.next()里面的nativePollOnce方法<br>这个方法从native层将线程挂起，释放CPU资源进入休眠状态。<br>另外，Android本身就是事件驱动，Looper.loop不断接收和处理事件，Looper就是支持Android应用能跑起来的关键，一般而言，不会说是looper循环导致卡顿，而是在消息处理里面做耗时操作，才会导致卡顿。</p>
+</blockquote>
+<h3 id="2-3-HandlerThread原理？"><a href="#2-3-HandlerThread原理？" class="headerlink" title="2.3 HandlerThread原理？"></a>2.3 HandlerThread原理？</h3><blockquote>
+<p>先说下是什么：HandlerThread是Google帮我们封装好的异步处理工具，可以用来执行多个耗时操作，而不需要多次开启线程，里面是采用Handler和Looper实现的。<br>1.首先它继承了线程，那么一定就不是在主线程了，且这里面创建了一个自己的looper，开启了循环。<br>2.原理跟Android的主线程创建的Looper比较相似，可以说是简化版。</p>
+</blockquote>
+<h3 id="2-4-IntentService原理？"><a href="#2-4-IntentService原理？" class="headerlink" title="2.4 IntentService原理？"></a>2.4 IntentService原理？</h3><blockquote>
+<p>最好先回答下是什么：IntentService是一种特殊的Service，它继承了Service，因此它自然会比单纯的线程优先级要高，然后它自己依旧是一个抽象类，需要创建自己的子类。 IntentService可用于执行后台耗时任务，执行完毕后会自动停止。<br>1.提一下在这个服务的onCreate里面，new了一个HandlerThread，然后start。<br>2.自定义Handler叫做ServiceHandler, 然后将前面工作线程的Looper传到这个Handler中。<br>3.然后在Hander的handleMessage中，定义了抽象方法onHandeIntent交给子类处理。<br>4.任务通过onStartCommand中依次通过hander发送消息到子线程里面去处理。</p>
+</blockquote>
+<h3 id="2-5-Kotlin协程怎么用？"><a href="#2-5-Kotlin协程怎么用？" class="headerlink" title="2.5 Kotlin协程怎么用？"></a>2.5 Kotlin协程怎么用？</h3><blockquote>
+<p>首先一定要回答是什么：Kotlin 协程是一种轻量级的并发框架，可用于处理异步和非阻塞操作，而无需使用回调或显式线程管理。<br>然后提一下作用域，可以全局开，也可以在Activity里面自己创建一个作用域，或者使用ViewModel的作用域，通过launch函数即可开启协程。</p>
+</blockquote>
+<h3 id="2-6-为什么AsyncTask被遗弃了？"><a href="#2-6-为什么AsyncTask被遗弃了？" class="headerlink" title="2.6 为什么AsyncTask被遗弃了？"></a>2.6 为什么AsyncTask被遗弃了？</h3><blockquote>
+<p>1.容易导致内存泄漏<br>2.并发性能，默认是顺序执行的。<br>3.有更好的替代方案，比如RxJava，协程等。</p>
+</blockquote>
+<h3 id="2-7-如何适配？"><a href="#2-7-如何适配？" class="headerlink" title="2.7 如何适配？"></a>2.7 如何适配？</h3><blockquote>
+<p>为什么要适配？需要回答下Android碎片化问题。<br>1.布局控件选择，LinearLayout权重，ConstraintLayout约束布局。<br>2.dimens动态化。<br>3.资源限定符布局文件。<br>4.使用三方库，如头条的AndroidAutoSize，最好能说下原理：通过修改设备的屏幕密度来实现适配。<br>最好是能简单说下dp是独立于设备屏幕密度的像素单位；dpi是每英寸的像素数；density是单位长度内的像素数；标准屏幕的dpi是160，xxhdpi对应的density为3，也就是1个dp约等于3个px；</p>
+</blockquote>
+<h3 id="2-8-Android进程优先级？"><a href="#2-8-Android进程优先级？" class="headerlink" title="2.8 Android进程优先级？"></a>2.8 Android进程优先级？</h3><blockquote>
+<p>1.前台进程，正常和用户交互的进程。<br>2.可见进程，比如一个弹框弹出，后面的是可见的。<br>3.服务进程，已经启动的Service。<br>4.后台进程，切换到后台了。</p>
+</blockquote>
+<h3 id="2-9-Android进程间通信？"><a href="#2-9-Android进程间通信？" class="headerlink" title="2.9 Android进程间通信？"></a>2.9 Android进程间通信？</h3><blockquote>
+<p>1.直接使用intent可携带数据。<br>2.文件共享，如sp文件。<br>3.Messenger，底层AIDL。<br>4.AIDL文件。<br>5.ContentProvider，底层Binder+AIDL。<br>6.Socket。<br>最好是提到Linux操作系统直接的IPC方案：可以共享内存，管道（亲缘关系），消息队列，信号量。</p>
+</blockquote>
+<h3 id="2-10-RecyclerView复用机制？"><a href="#2-10-RecyclerView复用机制？" class="headerlink" title="2.10 RecyclerView复用机制？"></a>2.10 RecyclerView复用机制？</h3><blockquote>
+<p>1.一定要提到ViewHolder，理论上可以说ViewHolder就是itemView，一个itemView对应一个ViewHolder，一对一的关系，而我们后面多级缓存复用的就是这个ViewHolder。<br>2.最好是能提到四级缓存，<br>Srap（ Scrap缓存是RecyclerView的第一级缓存，它缓存的是滑出屏幕但还未被回收的View。当RecyclerView需要新的View时，它会先检查Scrap缓存中是否有可用的View，如果有，就会从Scrap缓存中取出并进行复用，否则才会去其他缓存中查找。）<br>Cache（Cache缓存是RecyclerView的第二级缓存，它缓存的是已经被回收的View。当RecyclerView需要新的View时，它会先检查Scrap缓存，如果没有可用的View，则会检查Cache缓存中是否有可用的View。Cache缓存的作用是避免重复创建View，因为创建View是一个昂贵的操作。）<br>ViewCacheExtension（开发者自行实现的缓存）<br>RecycledViewPool（ViewHolder缓存池，本质上是一个SparseArray，RecycledViewPool缓存是RecyclerView的第四级缓存，它是一个全局的缓存池。当一个RecyclerView被回收时，其中的所有View都会被放入RecycledViewPool缓存中。当RecyclerView需要新的View时，它会先检查Scrap、Cache和ViewCacheExtension缓存，如果都没有可用的View，则会从RecycledViewPool缓存中获取可复用的View。）<br>缓存对象都是ViewHolder。</p>
+</blockquote>
+<h2 id="3-白银"><a href="#3-白银" class="headerlink" title="3 白银"></a>3 白银</h2><blockquote>
+<p>能够处理基本的性能优化，测试相关。</p>
+</blockquote>
+<h3 id="3-1-Android-事件分发机制？"><a href="#3-1-Android-事件分发机制？" class="headerlink" title="3.1 Android 事件分发机制？"></a>3.1 Android 事件分发机制？</h3><blockquote>
+<p>先说下事件分发的本质：将点击事件向某个View进行传递并最终得到处理。<br>然后需要提到：在哪些对象传递，Activity-&gt;ViewGroup-&gt;View。<br>然后需要具体分析下三个重要方法：dispatchTouchEvent-&gt; onInterceptTouchEvent-&gt;onTouchEvent。<br>最好分析下三个返回值：<br>dispatchTouchEvent，返回true，不传了；返回false，不传了，返回给上层onTouchEvent处理；默认走super.dispatchTouchEvent；<br>onInterceptTouchEvent，需要提到只有ViewGroup才有，主要作用是拦截，返回true，交给自己onTouchEvent处理；返回false，不拦截，加个子View处理。<br>onTouchEvent: 处理事件，返回true，消费；false回传给上层onTouchEvent。<br>可以幽默地说有点V。</p>
+</blockquote>
+<h3 id="3-2-滑动冲突处理？"><a href="#3-2-滑动冲突处理？" class="headerlink" title="3.2 滑动冲突处理？"></a>3.2 滑动冲突处理？</h3><blockquote>
+<p>先说下：一般是有两种方案，外部拦截法，内部拦截法。<br>1.外部拦截法，直接在指定ViewGroup中重写onInterceptTouchEvent，如果要拦截，返回true。<br>2.内部拦截费，在目标View的dispatchTouchEvent，禁止外部拦截，调用parent.requestDisallowInterceptTouchEvent(true);</p>
+</blockquote>
+<h3 id="3-3-Android-绘制原理？"><a href="#3-3-Android-绘制原理？" class="headerlink" title="3.3 Android 绘制原理？"></a>3.3 Android 绘制原理？</h3><blockquote>
+<p>重点提一下三个过程即可。<br>测量Measure: 必须必须提一下测量模式，用了2位表示3种测量模式，Exactly,精确的，对应matchparent和写死的长度；AT_MOST,不确定的，一般对应wrap_content；还有一种用得比较少，UNSPECIFIED对应无限制的，如ScrollView。<br>performMeasure-&gt;measureChildren-&gt;measure <br><br>布局阶段layout: 重点提下是干啥的，确定四个坐标点，通过setFrame方法，自上而下确定自身位置。先确定自己，再确定子View。<br>performLayout-&gt;layout<br><br>绘制阶段onDraw: 重点提下过程即可。先绘制背景，再自己，在子View，最后装饰。<br>performDraw-&gt;darw<br>setWillNotDraw的作用: 如果一个View不需要绘制任何内容，那么设置这个标记位为true以后，系统会进行相应的优化。</p>
+</blockquote>
+<h3 id="3-5-LruCache原理？"><a href="#3-5-LruCache原理？" class="headerlink" title="3.5 LruCache原理？"></a>3.5 LruCache原理？</h3><blockquote>
+<p>说下核心思想即可：<br>当缓存满的时候，会优先淘汰那些最近最少使用的缓存对象。<br>最好说下数据结构：LinkedHashMap是由数组+双向链表的数据结构来实现的.<br>然后就是维护一个缓存对象列表，其中对象的排列方式是按照访问顺序实现的。即一直没访问的对象，将放在队尾。</p>
+</blockquote>
+<h3 id="3-6-卡顿的根本原因？"><a href="#3-6-卡顿的根本原因？" class="headerlink" title="3.6 卡顿的根本原因？"></a>3.6 卡顿的根本原因？</h3><blockquote>
+<p>主线程有耗时操作，导致doFrame方法没有在垂直同步信号发出后的16ms内完成.</p>
+</blockquote>
+<h3 id="3-7-UI优化？"><a href="#3-7-UI优化？" class="headerlink" title="3.7 UI优化？"></a>3.7 UI优化？</h3><blockquote>
+<p>1.布局优化，merge标签减少不必要的层级，ViewStub按需加载；include复用。<br>2.层级优化，可以用ConstraintLayout减少层级。<br>3.使用最新稳定的视图控件，比如ViewPage2，RecyclerView这种google比较推荐的控件。<br>4.如果是一些间隙，可以用Space代替View，因为这个draw为空了。</p>
+</blockquote>
+<h3 id="3-8-内存优化？"><a href="#3-8-内存优化？" class="headerlink" title="3.8 内存优化？"></a>3.8 内存优化？</h3><blockquote>
+<p>1.优化图片资源，这个最重要，一定要提到，图片占用空间比较大，可以采用压缩图片。<br>2.减少内存泄漏，可以通过leakCanary检测分析，弱引用等。<br>3.使用google推荐的数据库：如用SparseArray替代HashMap等，用Pair等。<br>4.少用枚举类，占用内存较大。<br>5.利用工具分析Android Profiler可以检测内存占用率。<br>6.减少内存抖动，会加剧系统GC，创建大量临时对象会导致内存抖动。<br>7.onDraw里面避免创建对象，会频繁调用。<br>8.大图局部加载方案，BitmapRegionDecoder。</p>
+</blockquote>
+<h3 id="3-9-内存泄漏原因？"><a href="#3-9-内存泄漏原因？" class="headerlink" title="3.9 内存泄漏原因？"></a>3.9 内存泄漏原因？</h3><blockquote>
+<p>本质原因：长生命周期中持有短生命周期引用，短生命周期销毁，长生命周期仍然持有短生命周期引用，如<br>场景说一下：<br>1.资源对象未关闭：Cursor，File对象。<br>2.注册的对象未销毁：广播，EventBus，回调监听。<br>3.类的静态变量持有大量数据。<br>4.非静态内部类，持有外部类引用。<br>5.Handler<br>6.容器的对象没有清理<br>7.WebView使用单进程。</p>
+</blockquote>
+<h3 id="3-10-你做过哪些性能优化？"><a href="#3-10-你做过哪些性能优化？" class="headerlink" title="3.10 你做过哪些性能优化？"></a>3.10 你做过哪些性能优化？</h3><blockquote>
+<p>从“快省稳小”四个角度出发。<br>快<br>1.1布局优化<br>1.2绘制优化<br>1.3内存优化<br>1.4启动速度优化<br>1.5线程优化<br>省<br>2.1省电<br>2.2省流量<br>稳<br>3.1ANR修复<br>3.2Crash修复<br>小<br>4.1安装包小</p>
+</blockquote>
+<h3 id="3-11-单元测试和自动化测试有了解过吗？"><a href="#3-11-单元测试和自动化测试有了解过吗？" class="headerlink" title="3.11 单元测试和自动化测试有了解过吗？"></a>3.11 单元测试和自动化测试有了解过吗？</h3><blockquote>
+<p>单元测试，<br>用过powermock对于静态方法的mock，<br>用过mocktio主要mock对象，模拟控制方法返回值，监控方法调用；<br>用过robolectric,模拟了Android系统和和核心库。<br>自动化测试：<br>用过uiAutomator<br>用过Espresso，google开源，体积小</p>
+</blockquote>
+<h3 id="3-12-Android单元测试-jsonchao"><a href="#3-12-Android单元测试-jsonchao" class="headerlink" title="3.12 Android单元测试-jsonchao"></a>3.12 Android单元测试-jsonchao</h3><blockquote>
+<p><a target="_blank" rel="noopener" href="https://juejin.cn/post/6844903635655065607">https://juejin.cn/post/6844903635655065607</a><br>单元测试（Junit4、Mockito、PowerMockito、Robolectric）<br>UI测试（Espresso、UI Automator）<br>压力测试（Monkey）<br><br>Junit4: 重要注解，断言，自定义Junit Rule，实现TestRule接口重写apply方法。<br><br>Mockito: mock网络数据，解除耦合。<br><br>powermock: 静态方法mock <br><br>robolectric: 模拟Activity <br><br>代码覆盖率： jacoco </p>
+</blockquote>
+<h3 id="3-13-内存抖动"><a href="#3-13-内存抖动" class="headerlink" title="3.13 内存抖动"></a>3.13 内存抖动</h3><blockquote>
+<p>定义：<br>    内存抖动是由于短时间内有大量对象进出新生区导致的，它伴随着频繁的GC，gc会大量占用ui线程和cpu资源，会导致app整体卡顿。<br><br>避免发生内存抖动的几点建议：<br>    尽量避免在循环体内创建对象，应该把对象创建移到循环体外。<br>    注意自定义View的onDraw()方法会被频繁调用，所以在这里面不应该频繁的创建对象。<br>    当需要大量使用Bitmap的时候，试着把它们缓存在数组或容器中实现复用。<br>    对于能够复用的对象，同理可以使用对象池将它们缓存起来。</p>
+</blockquote>
+<h3 id="3-14-进程和线程的关系？"><a href="#3-14-进程和线程的关系？" class="headerlink" title="3.14 进程和线程的关系？"></a>3.14 进程和线程的关系？</h3><blockquote>
+<p> Android中进程和线程的关系？区别？<br>    线程是CPU调度的最小单元，同时线程是一种有限的系统资源；而进程一般指一个执行单元，在PC和移动设备上指一个程序或者一个应用。<br>    一般来说，一个App程序至少有一个进程，一个进程至少有一个线程，通俗来讲就是，在App这个工厂里面有一个进程，线程就是里面的生产线，但主线程（即主生产线）只有一条，而子线程（即副生产线）可以有多个。<br>    进程有自己独立的地址空间，而进程中的线程共享此地址空间，都可以并发执行。</p>
+</blockquote>
+<h3 id="3-15-动画原理？"><a href="#3-15-动画原理？" class="headerlink" title="3.15 动画原理？"></a>3.15 动画原理？</h3><blockquote>
+<p>分类：<br>    frame 帧动画：AnimationDrawable控制animation-list.xml布局。<br>    tween 补间动画：通过指定View的初末状态和变化方式，对View的内容完成一系列的图形变换来实现动画效果， Alpha, Scale ,Translate, Rotate。<br>    PropertyAnimation 属性动画：3.0引入，属性动画核心思想是对值的变化。<br><br> 属性动画&amp;&amp;补间动画的性能差异：<br>    属性动画操作的是对象的实例属性，例如translationX,然后反射调用set,geView动画:t方法，多个属性动画同时执行，会频繁反射调用类方法，降低性能。<br>    补间动画只产生了一个动画效果，其真实的坐标并没有发生改变，是效果一直在发生变化，没有频繁反射调用方法的耗费性能操作。<br><br>原理及特点：<br>    帧动画：<br>        是在xml中定义好一系列图片之后，使用AnimatonDrawable来播放的动画。<br>    View动画：<br>        只是影像变化，view的实际位置还在原来地方。<br>    属性动画：<br>        插值器：作用是根据时间流逝的百分比来计算属性变化的百分比。<br>        估值器：在1的基础上由这个东西来计算出属性到底变化了多少数值的类。<br>        其实就是利用插值器和估值器，来计出各个时刻View的属性，然后通过改变View的属性来实现View的动画效果。  <br><br>区别：<br>    属性动画才是真正的实现了 view 的移动，补间动画对view 的移动更像是在不同地方绘制了一个影子，实际对象还是处于原来的地方。 当动画的 repeatCount 设置为无限循环时，如果在Activity退出时没有及时将动画停止，属性动画会导致Activity无法释放而导致内存泄漏，而补间动画却没问题。 xml 文件实现的补间动画，复用率极高。在 Activity切换，窗口弹出时等情景中有着很好的效果。 使用帧动画时需要注意，不要使用过多特别大的图，容导致内存不足。<br><br>为什么属性动画移动后仍可点击？<br>    播放补间动画的时候，我们所看到的变化，都只是临时的。而属性动画呢，它所改变的东西，却会更新到这个View所对应的矩阵中，所以当ViewGroup分派事件的时候，会正确的将当前触摸坐标，转换成矩阵变化后的坐标，这就是为什么播放补间动画不会改变触摸区域的原因了。    </p>
+</blockquote>
+<h3 id="3-16-启动速度优化"><a href="#3-16-启动速度优化" class="headerlink" title="3.16 启动速度优化"></a>3.16 启动速度优化</h3><blockquote>
+<p>启动速度分析工具 — TraceView （Android Profile里面与一个Trace按钮）<br>TraceView小结<br>    特点:<br>        1、图形的形式展示执行时间、调用栈等。<br>        2、信息全面，包含所有线程。<br>        3、运行时开销严重，整体都会变慢，得出的结果并不真实。<br>    作用<br>        主要做热点分析，得到两种数据<br>            单次执行最耗时的方法。<br>            执行次数最多的方法。<br><br>Systrace:<br>特性:<br>    结合Android内核的数据，生成Html报告。<br>    系统版本越高，Android Framework中添加的系统可用Label就越多，能够支持和分析的系统模块也就越多。<br>    必须手动缩小范围，会帮助你加速收敛问题的分析过程，进而快速地定位和解决问题。<br>作用：<br>    主要用于分析绘制性能方面的问题。<br>    分析系统关键方法和应用方法耗时。</p>
+</blockquote>
+<h3 id="3-17-布局优化"><a href="#3-17-布局优化" class="headerlink" title="3.17 布局优化"></a>3.17 布局优化</h3><blockquote>
+<p>工具Layout Inspector。（AndroidStudio自带）查看层级。<br>比如说，我要统计线上的FPS，我使用的就是Choreographer这个类，它具有以下特性：<br>1、能够获取整体的帧率。<br>2、能够带到线上使用。<br>3、它获取的帧率几乎是实时的，能够满足我们的需求。<br>同时，在线下，如果要去优化布局加载带来的时间消耗，那就需要检测每一个布局的耗时，对此我使用的是AOP的方式，它没有侵入性，同时也不需要别的开发同学进行接入，就可以方便地获取每一个布局加载的耗时。如果还要更细粒度地去检测每一个控件的加载耗时，那么就需要使用LayoutInflaterCompat.setFactory2这个方法去进行Hook。<br>此外，我还使用了LayoutInspector和Systrace这两个工具，Systrace可以很方便地看到每帧的具体耗时以及这一帧在布局当中它真正做了什么。而LayoutInspector可以很方便地看到每一个界面的布局层级，帮助我们对层级进行优化。</p>
+</blockquote>
+<h3 id="3-18-耗电优化"><a href="#3-18-耗电优化" class="headerlink" title="3.18 耗电优化"></a>3.18 耗电优化</h3><blockquote>
+<p>JobScheduler<br>定位相关<br>计算优化<br>灭屏时停止动画</p>
+</blockquote>
+<h2 id="4-黄金"><a href="#4-黄金" class="headerlink" title="4 黄金"></a>4 黄金</h2><blockquote>
+<p>了解系统API原理和解决项目难点和安全相关问题，音视频等。</p>
+</blockquote>
+<h3 id="4-1-Android-Binder原理？"><a href="#4-1-Android-Binder原理？" class="headerlink" title="4.1 Android Binder原理？"></a>4.1 Android Binder原理？</h3><blockquote>
+<p>一定要说是什么先：Android独有的多进程相互通信。基于C&#x2F;S架构。<br>前提最好说一下：Android 每个应用进程都有一个虚拟地址空间，虚拟地址空间又分为用户空间和内核空间，内核空间是共享的，为多进程通信提供了前提条件。<br>然后再提一下有几个重要角色：客户端，服务端，Binder驱动，Service Manger<br>然后分析下每个角色的作用：<br>1.客户端和服务端：这个相对的概念，客户端就是使用服务的进程，服务端就是提供服务的进程。<br>2.ServiceManager: 主要是将字符形式的Binder名字转换成客户端对该Binder的引用。<br>3.Binder驱动：负责进程之间Binder通信的建立，给数据交互提供底层支持。<br>最后分析一下Binder运行机制：<br>1.注册服务，就是服务进程需要注册服务到Service Manager。<br>2.客户端获取服务，客户端进程向Binder驱动发起获取服务请求，Binder驱动转发给ServiceManager，ServiceManager将Binder代理对象回传给Binder驱动，Binder驱动再回传给客户端。<br>3.使用服务，Binder驱动使用mmap函数实现内存映射，创建了接收缓冲区，数据传递：客户端进程拷贝数据到内核缓冲区，然后内核缓冲区和接收缓冲区存在映射关系，接收进程可以直接获取到缓冲区数据。</p>
+</blockquote>
+<h3 id="4-2-彻底理解ANR"><a href="#4-2-彻底理解ANR" class="headerlink" title="4.2 彻底理解ANR?"></a>4.2 彻底理解ANR?</h3><blockquote>
+<p>首先最好用比喻描述下：有点像埋一个定时炸弹，到时间了就爆炸，结果成功拆弹就不会爆炸了。<br>1.埋炸弹：在系统服务进程里面，启动一个倒计时，用户输入事件是5s，ContentProvider和广播是10s，服务是20s。<br>2.拆炸弹：在规定时间内处理完事件，并及时向系统服务进程报告，请求解除炸弹，就不会引爆了。<br>3.引爆炸弹：当没有在规定时间处理完事件，系统服务进程会搜集各个进程占用资源情况，已经相关日志，便于分析原因，然后就弹出ANR提示框。</p>
+</blockquote>
+<h3 id="4-3-Android-Crash处理流程？"><a href="#4-3-Android-Crash处理流程？" class="headerlink" title="4.3 Android Crash处理流程？"></a>4.3 Android Crash处理流程？</h3><blockquote>
+<p>目标应用在创建的时候会有一个默认的未捕获异常的Handler，当然可以自定义处理，如果没有则会走默认实现。<br>1.在应用进程里面，先走ActivityThread里面的handleApplicationCrash方法<br>2.然后通过binder ipc机制，传递到系统服务进程，调用ActivityManagerNative里面的一个handleApplicationCrash方法。<br>3.然后此时AMS会忽略当前应用的广播，冻结该进程的屏幕消息。<br>4.然后通过UIHandler发送一个错误消息，弹出crash对话框。<br>5.此时系统服务进程完成。走到Crash进程中，它主要用来杀掉当前进程的操作。<br>6.当进程被杀，通过binder死亡通知，告知系统服务进程做一些回收工作。</p>
+</blockquote>
+<h3 id="4-4-Native崩溃如何处理？"><a href="#4-4-Native崩溃如何处理？" class="headerlink" title="4.4 Native崩溃如何处理？"></a>4.4 Native崩溃如何处理？</h3><blockquote>
+<p>先提一下过程：native crash时，操作系统会向进程发送一个signal信号，崩溃data下某个文件下面。<br>如何定位：可以使用ndk工具addr2line工具或者ndk-stack来定位。<br>xCrash: 捕获native崩溃。<br>addr2line可以干嘛：根据地址进行一个符号反解的过程。</p>
+</blockquote>
+<h3 id="4-5-三方库报错？"><a href="#4-5-三方库报错？" class="headerlink" title="4.5 三方库报错？"></a>4.5 三方库报错？</h3><blockquote>
+<p>可以提一下用了一个弹框的三方库。<br>主要是分析源码，定位问题点，然后我们通过跳转弹出弹框时机解决了。（从Activity销毁导致宿主为空，然后延后调出时机）</p>
+</blockquote>
+<h3 id="4-6-网络超时30s，loading结束并提示？"><a href="#4-6-网络超时30s，loading结束并提示？" class="headerlink" title="4.6 网络超时30s，loading结束并提示？"></a>4.6 网络超时30s，loading结束并提示？</h3><blockquote>
+<p>因为我们loading用了一个三方库，每个请求都是单独弹出loading，而且设置okHttp超时时间不是很准。<br>我就自己封装了一个工具类，借鉴了Glide用一个空的Fragment绑定生命周期，内部包装了handler，每个请求计算时间，超过60s后，处理逻辑。</p>
+</blockquote>
+<h3 id="4-7-百度地图so库崩溃问题？"><a href="#4-7-百度地图so库崩溃问题？" class="headerlink" title="4.7 百度地图so库崩溃问题？"></a>4.7 百度地图so库崩溃问题？</h3><blockquote>
+<p>魅族的时候，快应用引擎内部接入了一个百度地图so库，某些手机一启动就崩溃。<br>每次修改底层源码，重新编译需要2个多小时，前前后后编译了10几次，不停尝试，发现是内部有一个ssl.so库跟系统的有冲突。（这个是有关安全校验方面的库）<br>网上有一个解决方案，就是将系统自身的ssl.so库公开，让所有的应用优先从这么加载，试了下，的确可以运行。但会有一个潜在的风险，就是其它第三方系统应用不排除也有用ssl.so，果然发现招商银行app启动就闪退，经过考量，我们决定将百度地图内部的ssl库去除，改为使用系统的，但是Android5的机型使用系统的也会加载不出地图来。后来我们决定放弃这部分低端机型，如果采用动态加载方案，到时候对用户体验不好。通过excludeArr技术将ssl.so去除了。</p>
+</blockquote>
+<h3 id="4-8-提高app安全性的方法？"><a href="#4-8-提高app安全性的方法？" class="headerlink" title="4.8 提高app安全性的方法？"></a>4.8 提高app安全性的方法？</h3><blockquote>
+<p>1.代码混淆，一些密钥数据集成到so中。<br>2.完整性校验，校验签名，防止重打包。<br>3.接口重要数据加密。</p>
+</blockquote>
+<h3 id="4-9-谈谈你对安卓签名的理解？"><a href="#4-9-谈谈你对安卓签名的理解？" class="headerlink" title="4.9 谈谈你对安卓签名的理解？"></a>4.9 谈谈你对安卓签名的理解？</h3><blockquote>
+<p>提到v1和v2即可。<br>Android 7.0 引入了V2签名。<br>v1的话是通过zip条目进行验证（这样不安全，还是可以修改）<br>v2:是整个apk进行分开摘要加密，更加安全。</p>
+</blockquote>
+<h3 id="4-10-播放器原理？"><a href="#4-10-播放器原理？" class="headerlink" title="4.10 播放器原理？"></a>4.10 播放器原理？</h3><blockquote>
+<p>视频播放原理：（mp4、flv）-&gt; 解封装 -&gt; （mp3&#x2F;aac、h264&#x2F;h265）-&gt; 解码 -&gt; （pcm、yuv）-&gt; 音视频同步 -&gt; 渲染播放<br>音视频同步：选择参考时钟源：音频时间戳、视频时间戳和外部时间三者选择一个作为参考时钟源（一般选择音频，因为人对音频更敏感，ijk 默认也是音频）<br>通过等待或丢帧将视频流与参考时钟源对齐，实现同步<br><br>bilibili的ijkPlayer原理：<br>集成了 MediaPlayer、ExoPlayer 和 IjkPlayer 三种实现，其中 IjkPlayer 基于 FFmpeg 的 ffplay<br>音频输出方式：AudioTrack、OpenSL ES；视频输出方式：NativeWindow、OpenGL ES</p>
+</blockquote>
+<h3 id="4-11-有做过直播吗？"><a href="#4-11-有做过直播吗？" class="headerlink" title="4.11 有做过直播吗？"></a>4.11 有做过直播吗？</h3><blockquote>
+<p>视频直播的流程可以分为如下几步： 采集 —&gt;处理—&gt;编码和封装—&gt;推流到服务器—&gt;服 务器流分发—&gt;播放器流播放<br>如何保证流程效果：<br>1.编码优化，确保CodeC开启最低延迟设置。<br>2.传输协议优化，尽量使用RTMP而非HTTP的HLS协议。<br>3.传输网络优化<br>4.推流（推送视频流）和播放优化</p>
+</blockquote>
+<h2 id="5-铂金"><a href="#5-铂金" class="headerlink" title="5 铂金"></a>5 铂金</h2><blockquote>
+<p>对热修复，插件化，组件化有过深入分析。</p>
+</blockquote>
+<h3 id="5-1-MVP模式？"><a href="#5-1-MVP模式？" class="headerlink" title="5.1 MVP模式？"></a>5.1 MVP模式？</h3><blockquote>
+<p>一定要说这是一种架构思想。<br>有3部分组成：View负责显示，Presenter负责逻辑处理，Model提供数据。<br>View:负责绘制UI元素、与用户进行交互(在Android中体现为Activity)。<br>Model:负责存储、检索、操纵数据(有时也实现一个Model interface用来降低耦合)。<br>Presenter:作为View与Model交互的中间纽带，处理与用户交互的逻辑。<br>View interface:需要View实现的接口，View通过View interface与Presenter进行交互，降低耦合，方便使用MOCK对Presenter进行单元测试。<br>缺点：接口写很多，不利于维护。</p>
+</blockquote>
+<h3 id="5-2-MVVM模式？"><a href="#5-2-MVVM模式？" class="headerlink" title="5.2 MVVM模式？"></a>5.2 MVVM模式？</h3><blockquote>
+<p>可以说是MVP模式升级版。<br>viewModel取代了Presenter。<br>并引入了DataBinding，可以将ViewModel中的数据同步到View层。对View层依赖更少。</p>
+</blockquote>
+<h3 id="5-3-热修复和插件化原理？"><a href="#5-3-热修复和插件化原理？" class="headerlink" title="5.3 热修复和插件化原理？"></a>5.3 热修复和插件化原理？</h3><blockquote>
+<p>热修复主要是替换dex文件。<br>插件化主要是扩展应用程序功能。<br>热修复的原理：理就是将补丁 dex 文件放到 dexElements 数组靠前位置，这样在加载 class 时，优先找到补丁包中的 dex 文件，加载到 class 之后就不再寻找，从而原来的 apk 文件中同名的类就不会再使用，从而达到修复的目的。<br>插件化原理：PathClassLoader只会加载已安装包中已经的dex文件，而DexClassLoader不仅仅可以加载 dex文件，还可以加载jar、apk、zip文件中的dex。<br>资源的插件化和热修复的资源修复都借助了AssetManager。<br>so的插件化方案和so热修复的第一种方案类似，就是将so插件插入到NativelibraryElement数组中，并且将存储so插件的文件添加到nativeLibraryDirectories集合中就可以了。</p>
+</blockquote>
+<h3 id="5-4-有哪些热修复框架？"><a href="#5-4-有哪些热修复框架？" class="headerlink" title="5.4 有哪些热修复框架？"></a>5.4 有哪些热修复框架？</h3><blockquote>
+<p>1.类加载方案<br>1.1 QQ空间的Nuwa是按照上面说的将补丁包放在Element数组的第一个元素得到优先加载。<br>1.2 微信的Tinker将新旧APK做了diff，得到path.dex，再将patch.dex与手机中APK的classes.dex做合并，生成新的classes.dex，然后在运行时通过反射将classes.dex放在Elements数组的第一个元素。<br>2.底层替换方案<br>2.1 AndFix采用的是替换ArtMethod结构体中的字段，这样会有兼容性问题，因为厂商可能会修改ArtMethod结构体<br>2.2 Sophix采用的是替换整个ArtMethod结构体，这样不会存在兼容问题。<br>3.Instant Run方案<br>3.1 美团的Robust: 在第一次构建APK时，利用ASM（java字节码操控框架），能够动态生成类或者增强现有类的功能。</p>
+</blockquote>
+<h3 id="5-5-有哪些插件化框架？"><a href="#5-5-有哪些插件化框架？" class="headerlink" title="5.5 有哪些插件化框架？"></a>5.5 有哪些插件化框架？</h3><blockquote>
+<p>主要是利用DexClassLoader可以加载dex文件的机制。（最好提一下双亲委派模式）<br>1.1 360的RePlugin和DroidPlugin: hook系统实现插件化<br>1.2 滴滴的VirtualApk: Hook IActivityManager和Hook Instrumentation。主要方案就是先用一个在AndroidManifest.xml中注册的Activity来进行占坑，用来通过AMS的校验，接着在合适的时机用插件Activity替换占坑的Activity<br>1.3 腾讯Shadow: 零反射，本质上使用代理分发生命周期实现四大组件动态化。使插件框架的代码成为了插件的一部分。<br>如果加载的插件不需要和宿主有任何耦合，也无须和宿主进行通信，比如加载第三方App，那么推荐使用RePlugin，其他情况推荐使用Shadow。</p>
+</blockquote>
+<h3 id="5-6-组件化方案？"><a href="#5-6-组件化方案？" class="headerlink" title="5.6 组件化方案？"></a>5.6 组件化方案？</h3><blockquote>
+<p>每个模块作为1个module，通过配置不同Manifest清单文件，可以单独跑起来，也可集成编译。<br>节省开发成本，分工明确，提升开发效率，方便管理，耦合性低。<br>跨组件通信可以采用Arouter:<br>ARouter维护了一个路由表Warehouse，其中保存着全部的模块跳转关系，ARouter路由跳转实际上还是调用了startActivity的跳转，使用了原生的Framework机制，只是通过apt注解的形式制造出跳转规则，并人为地拦截跳转和设置跳转条件。</p>
+</blockquote>
+<h3 id="5-7-了解过编译插桩技术吗？"><a href="#5-7-了解过编译插桩技术吗？" class="headerlink" title="5.7 了解过编译插桩技术吗？"></a>5.7 了解过编译插桩技术吗？</h3><blockquote>
+<p>是一种在编译期间向代码中插入特定代码的技术，以实现某些功能或分析和监视代码执行情况。该技术通常用于调试、性能分析、错误检测、代码覆盖率分析、安全检测等领域。<br>Android可以用来 按钮防止抖动，通过自定义Gradle插件来实现。</p>
+</blockquote>
+<h3 id="5-8-如何提升编译速度？"><a href="#5-8-如何提升编译速度？" class="headerlink" title="5.8 如何提升编译速度？"></a>5.8 如何提升编译速度？</h3><blockquote>
+<p>1.使用最新的gradle插件<br>2.减少打包的资源文件<br>3.禁用PNG图片，开发模式下禁用<br>4.开启org.gradle.caching &#x3D; true (利用缓存)</p>
+</blockquote>
+<h2 id="6-钻石"><a href="#6-钻石" class="headerlink" title="6 钻石"></a>6 钻石</h2><blockquote>
+<p>熟悉常用三方库原理。</p>
+</blockquote>
+<h3 id="6-1-OkHttp原理？"><a href="#6-1-OkHttp原理？" class="headerlink" title="6.1 OkHttp原理？"></a>6.1 OkHttp原理？</h3><blockquote>
+<p>一定要说是干啥的先：Android常用的网络请求库，封装多种请求方式，支持多种场景。<br>优点可以提一下：<br>1.提供了Http2和SPDY的支持。（SPDY是google设计的单个TCP连接实现多个http请求和响应的一个协议，HTTP2是基于SPDY衍生的）<br>2.OkHttp使用连接池复用连接以提升效率。<br>3.提供对GZIP（数据压缩算法）的默认支持来降低传输内容大小。<br>4.提供了Http相应的缓存机制，避免不必要的请求。<br>5.网络出现问题，会自动重试一个主机的多个IP地址。<br><br>请求流程（必须说）：<br>使用OkHttp会在请求的时候初始化一个Call的实例，然后执行它的execute(同步)方法或enqueue(异步)方法，<br>内部最后都会执行到getResponseWithInterceptorChain()方法，<br>这个方法里面通过拦截器组成的责任链，依次经过用户自定义普通拦截器、重试拦截器、桥接拦截器、缓存拦截器、连接拦截器和用户自定义网络拦截器以及访问服务器拦截器等拦截处理过程，来获取到一个响应并交给用户。<br><br>然后最后简明地说下这几个拦截器作用：<br>1.interceptors：用户自定义拦截器<br>2.retryAndFollowUpInterceptor：负责失败重试以及重定向<br>3.BridgeInterceptor：请求时，对必要的Header进行一些添加，接收响应时，移除必要的Header<br>4.CacheInterceptor：负责读取缓存直接返回（根据请求的信息和缓存的响应的信息来判断是否存在缓存可用）、更新缓存<br>5.ConnectInterceptor：负责和服务器建立连接<br>6.networkInterceptors：用户定义网络拦截器<br>7.CallServerInterceptor：负责向服务器发送请求数据、从服务器读取响应数据<br><br>连接池工作机制（可以说下）：<br>1.判断连接是否可用，不可用则从ConnectionPool获取连接，ConnectionPool无连接，创建新连接，握手，放入ConnectionPool。<br>2.使用连接复用省去了进行 TCP 和 TLS 握手的一个过程。</p>
+</blockquote>
+<h3 id="6-2-Retrofit原理？"><a href="#6-2-Retrofit原理？" class="headerlink" title="6.2 Retrofit原理？"></a>6.2 Retrofit原理？</h3><blockquote>
+<p>一定要说是干啥的先：基于RESTful的网络请求框架，底层请求交给okhttp，自己专注于上层接口封装。<br>优点可以提一下：<br>1.支持RxJava，支持多种数据格式解析<br>2.简单一用，通过注解配置参数<br>3.可扩展性好，可自定义Converters<br><br>核心（务必要说）： 采用了动态代理技术，将注解解析成参数，将接口转换成一个Request。<br>create方法中采用动态代理模式（通过访问代理对象的方式来间接访问目标对象）实现接口方法，这个过程构建了一个ServiceMethod对象，根据方法注解获取请求方式，参数类型和参数注解拼接请求的链接，当一切都准备好之后会把数据添加到Retrofit的RequestBuilder中。然后当我们主动发起网络请求的时候会调用okhttp发起网络请求，okhttp的配置包括请求方式，URL等在Retrofit的RequestBuilder的build()方法中实现，并发起真正的网络请求。<br></p>
+</blockquote>
+<h3 id="6-3-EventBus原理？"><a href="#6-3-EventBus原理？" class="headerlink" title="6.3 EventBus原理？"></a>6.3 EventBus原理？</h3><blockquote>
+<p>干啥的： EventBus是一个Android发布&#x2F;订阅事件总线，简化了组件间的通信。<br>优点可以提一下：解耦。<br>核心逻辑：一定要说：<br>EventBus最核心的逻辑就是利用了 subscriptionsByEventType 这个重要的列表，将订阅对象，即接收事件的方法存储在这个列表，发布事件的时候在列表中查询出相对应的方法并执行。<br><br>然后可以添油加醋：<br>（1）EventBus是通过注解+反射来进行方法的获取的<br>注解的使用：@Retention𝑅𝑒𝑡𝑒𝑛𝑡𝑖𝑜𝑛𝑃𝑜𝑙𝑖𝑐𝑦.𝑅𝑈𝑁𝑇𝐼𝑀𝐸<br>表示此注解在运行期可知，否则使用CLASS或者SOURCE在运行期间会被丢弃。<br>通过反射来获取类和方法：因为映射关系实际上是类映射到所有此类的对象的方法上的，所以应该通过反射来获取类以及被注解过的方法，并且将方法和对象保存为一个调用实体。<br>2）使用ConcurrentHashMap来保存映射关系</p>
+</blockquote>
+<h3 id="6-4-Glide原理？"><a href="#6-4-Glide原理？" class="headerlink" title="6.4 Glide原理？"></a>6.4 Glide原理？</h3><blockquote>
+<p>干啥的：图片加载框架。还有哪些（picasso(小)，fresco(大)）<br>优点可以提一下：<br>支持 GIF 图片播放。<br>支持缩略图的生成。<br>支持自定义的网络请求缓存策略。<br>能够有效地防止图片变形和拉伸。<br><br>然后才说原理：<br>1.Glide的with方法 生成RequestManager<br>1.1 初始化各式各样的配置信息（包括缓存，请求线程池，大小，图片格式等等）以及glide对象。<br>1.2 将Glide请求和某个Fragment生命周期绑定<br><br>2.Glide.load方法 生成RequestBuilder<br>主要是设置请求url。<br><br>3.Glide.into方法 创建单个请求对象<br>3.1 首先根据转码类transcodeClass类型返回不同的ImageViewTarget：BitmapImageViewTarget、DrawableImageViewTarget。<br>3.2 递归建立缩略图请求，没有缩略图请求，则直接进行正常请求。<br>3.3 如果没指定宽高，会根据ImageView的宽高计算出图片宽高，最终执行到onSizeReay()方法中的engine.load()方法。<br>3.4 engine是一个负责加载和管理缓存资源的类<br><br>三级缓存最好说一下：<br>1.LRU算法缓存内存，强引用，最近最少使用淘汰算法，拿的时候先从这里拿，拿不到就继续，拿到了会从LRU列表中删除，放到activeResource里面。（这里存放的是目前没有正在使用的资源）<br>2.弱引用，叫做activeResource（活动资源）的弱引用，判断这里有没有，有的话，会将这个引用计数器+1，如果还是拿不到，就继续走磁盘，当引用计数器为0的时候，会移动到LRU里面，（这个列表存放的是正在使用的资源）<br>3.磁盘缓存，disLRUCahce<br>4.都没有，就请求网络，然后先存弱引用，再存LRU，最后磁盘。</p>
+</blockquote>
+<h3 id="6-5-RxJava原理？"><a href="#6-5-RxJava原理？" class="headerlink" title="6.5 RxJava原理？"></a>6.5 RxJava原理？</h3><blockquote>
+<p>一定要说是干啥的先：RxJava2是一个基于观察者模式和迭代器模式的响应式编程库，它提供了一种基于事件流的编程方式，可以方便地处理异步、并发和事件驱动的编程场景。<br>实现与原理一定要说：被观察者 （Observable） 通过 订阅（Subscribe） 按顺序发送事件 给观察者 （Observer）， 观察者（Observer） 按顺序接收事件 &amp; 作出对应的响应动作。<br>说下这几个角色意义就差不多了：<br>1.Observable：俗称被订阅者，被订阅者是事件的来源，接收订阅者(Observer)的订阅，然后通过发射器(Emitter)发射数据给订阅者。<br>2.Observer：俗称订阅者，注册过程传给被订阅者，订阅者监听开始订阅，监听订阅过程中会把Disposable传给订阅者，然后在被订阅者中的发射器(Emitter)发射数据给订阅者(Observer)。<br>3.Emitter：俗称发射器，在发射器中会接收下游的订阅者(Observer)，然后在发射器相应的方法把数据传给订阅者(Observer)。<br>4.Consumer：俗称消费器，这是RxJava2.0才出来的，在RxJava1.0中用Action来表示，消费器其实是Observer的一种变体，Observer的每一个方法都会对应一个Consumer，比如Observer的onNext、onError、onComplete、onSubscribe都会对应一个Consumer。<br>5.Disposable：是释放器，通常有两种方式会返回Disposable，一个是在Observer的onSubscribe方法回调回来，第二个是在subscribe订阅方法传consumer的时候会返回。<br><br>一般会问：RxJava中map、flatMap的区别，你还用过其他哪些操作符?<br>map是通过原始数据类型返回另外一种数据类型，而flatMap是通过原始数据类型返回另外一种被观察者。<br>1.创建型操作符：create,just,fromArray,defer,range<br>2.变换操作符：map,flatMap,concatMap,buffer(定期从被观察者发送的事件中获取一定数量的事件并放到缓存区中，然后把这些数据集合打包发射)<br>3.合并操作符：concat,merge,zip,combine<br>4.功能性操作符：delay,do,retry,repeat<br>5.过滤操作符：filter,take,debounce,elementAt<br>6.条件操作符：exist,contains,skipWhile等</p>
+</blockquote>
+<h3 id="6-6-LeakCanary原理？"><a href="#6-6-LeakCanary原理？" class="headerlink" title="6.6 LeakCanary原理？"></a>6.6 LeakCanary原理？</h3><blockquote>
+<p>是什么必须说：内存泄漏检测工具。<br><br>流程一定要说清楚：<br>1、RefWatcher.watch()创建了一个KeyedWeakReference弱引用用于去观察对象。LeakCanary通过在应用程序中注入一个监听器，监测对象的引用关系。<br>2、然后，在后台线程中，它会检测引用是否被清除了，并且是否没有触发GC。<br>3、如果引用仍然没有被清除，那么它将会把堆栈信息保存在文件系统中的.hprof文件里。<br>4、HeapAnalyzerService被开启在一个独立的进程中，并且HeapAnalyzer使用了HAHA开源库解析了指定时刻的堆栈快照文件heap dump。<br>5、从heap dump中，HeapAnalyzer根据一个独特的引用key找到了KeyedWeakReference，并且定位了泄露的引用。<br>6、HeapAnalyzer为了确定是否有泄露，计算了到GC Roots的最短强引用路径，然后建立了导致泄露的链式引用。<br>7、这个结果被传回到app进程中的DisplayLeakService，然后一个泄露通知便展现出来了。<br><br>简单来说就是：<br>通过将Activity包装到WeakReference中，被WeakReference包装过的Activity对象如果能够被回收，则说明引用可达，垃圾回收器就会将该WeakReference引用存放到ReferenceQueue中。<br>假如我们要监视某个activity对象，LeakCanary就会去ReferenceQueue找这个对象的引用，如果找到了，说明该对象是引用可达的，能被GC回收，如果没有找到，说明该对象有可能发生了内存泄漏。</p>
+</blockquote>
+<h3 id="6-7-GreenDao实现原理？"><a href="#6-7-GreenDao实现原理？" class="headerlink" title="6.7 GreenDao实现原理？"></a>6.7 GreenDao实现原理？</h3><blockquote>
+<p>是什么必须说：是一个轻便快捷的ORM(对象映射)框架，可以将Java对象映射到数据库中。<br>优点可以提一下：<br>对Android进行了高度优化，最小的内存开销，依赖体积小，支持数据库加密。<br><br>一定要说这几个类的作用，使用的时候动态生成：<br>DaoMaster：所有Dao类的主人，负责整个库的运行，内部的静态抽象子类DevOpenHelper继承并重写了Android的SqliteOpenHelper。<br>DaoSession：作为一个会话层的角色，用于生成相应的Dao对象、Dao对象的注册，操作Dao的具体对象。<br>xxDao（HistoryDataDao）：生成的Dao对象，用于进行具体的数据库操作。<br><br>首先，它通过使用自身的插件配套相应的freemarker模板生成所需的静态代码，避免了反射等消耗性能的操作。<br>其次，它内部提供了实体数据的映射缓存机制，能够进一步加快查询速度。对于不同数据库对应的SQL语句，也使用了不同的DataBaseStatement实现类结合代理模式进行了封装，屏蔽了数据库操作等繁琐的细节。<br>最后，它使用了sqlcipher提供了加密数据库的功能，在一定程度确保了安全性，同时，结合RxJava，我们便能更简洁地实现异步的数据库操作。</p>
+</blockquote>
+<h3 id="6-8-ViewModel实现原理？"><a href="#6-8-ViewModel实现原理？" class="headerlink" title="6.8 ViewModel实现原理？"></a>6.8 ViewModel实现原理？</h3><blockquote>
+<p>最重要的，应该是反射获取ViewModel实例。<br>通过Lifecycle感知生命周期。<br>我们的Activity 的父类 ComponentActivity  实现了 ViewModelStoreOwner 接口，通过 ViewModelProvider 使用默认工厂 创建了 viewModel ，并通过唯一Key值 进行标识，存储到了 ViewModelStore 中。等下次需要的时候即可通过唯一Key值进行获取。<br><br>由于ComponentActivity  实现了ViewModelStoreOwner 接口，实现了  getViewModelStore 方法，当屏幕旋转的时候，会先调用<br>onRetainNonConfigurationInstance() 方法将 viewModelStore 保存起来，然后再调用 getLastNonConfigurationInstance 方法将数据恢复，如果为空的话，会重新创建 viewModelStore ，并存储在全局中，以便以下次发生变化的时候，能够通过onRetainNonConfigurationInstance 保存起来。<br><br>最后当页面销毁并且没有配置更改的时候，会将viewModelStore 中的数据 进行清除操作。</p>
+</blockquote>
+<h3 id="6-9-LiveData的实现原理？"><a href="#6-9-LiveData的实现原理？" class="headerlink" title="6.9 LiveData的实现原理？"></a>6.9 LiveData的实现原理？</h3><blockquote>
+<p>只有MutableLiveData 对象可以发送消息，LiveData 对象只能接收消息。<br>MediatorLiveData: 可以统一观察多个 LiveData 发射的数据进行统一的处理，同时也可以做为一个 LiveData，被其他 Observer 观察。<br>然后一般情况下说下observe方法实现原理即可：<br>首先这个方法只能在主线程注册观察。<br>官方文档说LiveData仅处于活跃生命周期才有效，所以一开始就开始判断是否为 Lifecycle.Stete.DESTROYED，是的话就没有然后了，直接return。<br>接下来就是 创建 LifecycleBoundObserver ，生命周期变化逻辑在这里面。<br>然后就是最后一行注册观察。</p>
+</blockquote>
+<h2 id="7-大师"><a href="#7-大师" class="headerlink" title="7 大师"></a>7 大师</h2><blockquote>
+<p>对AMS,PMS有一定深入分析。</p>
+</blockquote>
+<h3 id="7-1-Android-系统启动流程？"><a href="#7-1-Android-系统启动流程？" class="headerlink" title="7.1 Android 系统启动流程？"></a>7.1 Android 系统启动流程？</h3><blockquote>
+<p>1、启动电源以及系统启动：当电源按下时引导芯片从预定义的地方（固化在ROM）开始执行，加载引导程序BootLoader到RAM，然后执行。<br>2、引导程序BootLoader：BootLoader是在Android系统开始运行前的一个小程序，主要用于把系统OS拉起来并运行。<br>3、Linux内核启动：当内核启动时，设置缓存、被保护存储器、计划列表、加载驱动。当其完成系统设置时，会先在系统文件中寻找init.rc文件，并启动init进程。<br>4、init进程启动：初始化和启动属性服务，并且启动Zygote进程。<br>5、Zygote进程启动：创建JVM并为其注册JNI方法，创建服务器端Socket，启动SystemServer进程。<br>6、SystemServer进程启动：启动Binder线程池和SystemServiceManager，并且启动各种系统服务。<br>7、Launcher启动：被SystemServer进程启动的AMS会启动Launcher，Launcher启动后会将已安装应用的快捷图标显示到系统桌面上。</p>
+</blockquote>
+<h3 id="7-2-App启动流程？"><a href="#7-2-App启动流程？" class="headerlink" title="7.2 App启动流程？"></a>7.2 App启动流程？</h3><blockquote>
+<p>1、点击桌面应用图标，Launcher进程将启动Activity（MainActivity）的请求以Binder的方式发送给了AMS。<br>2、AMS接收到启动请求后，交付ActivityStarter处理Intent和Flag等信息，然后再交给ActivityStackSupervisior&#x2F;ActivityStack 处理Activity进栈相关流程。同时以Socket方式请求Zygote进程fork新进程。<br>3、Zygote接收到新进程创建请求后fork出新进程。<br>4、在新进程里创建ActivityThread对象，新创建的进程就是应用的主线程，在主线程里开启Looper消息循环，开始处理创建Activity。<br>5、ActivityThread利用ClassLoader去加载Activity、创建Activity实例，并回调Activity的onCreate()方法，这样便完成了Activity的启动。</p>
+</blockquote>
+<h3 id="7-3-apk安装过程？"><a href="#7-3-apk安装过程？" class="headerlink" title="7.3 apk安装过程？"></a>7.3 apk安装过程？</h3><blockquote>
+<p>1.复制APK到&#x2F;data&#x2F;app目录下，解压并扫描安装包<br>2.将APP的dex文件拷贝到&#x2F;data&#x2F;dalvik-cache目录，再在&#x2F;data&#x2F;data&#x2F;目录下创建应用程序的数据目录（以应用包名命令），用来存放应用的数据库、xml文件、cache、二进制的so动态库等<br>3.解析apk的AndroidManifest.xml文件，注册四大组件，将apk的权限、应用包名、apk的安装位置、版本、userID等重要信息保存在&#x2F;data&#x2F;system&#x2F;packages.xml文件中。这些操作都是在PackageManagerService中完成。<br>4.资源管理器解析APK里的资源文件。<br>5.dex2oat操作，对dex文件进行优化，并保存在dalvik-cache目录下。<br>6.更新权限信息。<br>7.安装完成后，发送Intent.ACTION_PACKAGE_ADDED广播。<br>8.显示icon图标，应用程序经过PMS中的逻辑处理后，相当于已经注册好了，如果想要在Android桌面上看到icon图标，则需要Launcher将系统中已经安装的程序展现在桌面上。</p>
+</blockquote>
+<h3 id="7-4-apk打包流程？"><a href="#7-4-apk打包流程？" class="headerlink" title="7.4 apk打包流程？"></a>7.4 apk打包流程？</h3><blockquote>
+<p>1.打包资源文件，生成R.java文件（aapt工具，生成resource.arsc）<br>2.处理aidl文件，生成相应Java文件<br>3.编译java文件，生成class文件（java编译器）<br>4.将class文件生成dex文件（dx工具）<br>5.将资源文件和dex文件合并打包，生成apk文件（apkBuilder工具）<br>6.对apk文件进行签名<br>7.对前面后的文件进行对齐（zipalign,作用是减少运行时内存）</p>
+</blockquote>
+<h2 id="8-宗师"><a href="#8-宗师" class="headerlink" title="8 宗师"></a>8 宗师</h2><blockquote>
+<p>熟悉Framework。</p>
+</blockquote>
+<h2 id="9-王者"><a href="#9-王者" class="headerlink" title="9 王者"></a>9 王者</h2><blockquote>
+<p>对ndk，openGL，framework有自己独特理解。</p>
+</blockquote>
+
+            </div>
+            <hr />
+
+            
+            <style>
+    #reward {
+        margin: 40px 0;
+        text-align: center;
+    }
+
+    #reward .reward-link {
+        font-size: 1.88rem;
+    }
+
+    #reward .btn-floating:hover {
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2), 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    #rewardModal {
+        width: 320px;
+        height: 350px;
+    }
+
+    #rewardModal .reward-title {
+        margin: 15px auto;
+        padding-bottom: 5px;
+    }
+
+    #rewardModal .modal-content {
+        padding: 10px;
+    }
+
+    #rewardModal .close {
+        position: absolute;
+        right: 15px;
+        top: 15px;
+        color: rgba(0, 0, 0, 0.5);
+        font-size: 1.3rem;
+        line-height: 20px;
+        cursor: pointer;
+    }
+
+    #rewardModal .close:hover {
+        color: #ef5350;
+        transform: scale(1.3);
+        -moz-transform:scale(1.3);
+        -webkit-transform:scale(1.3);
+        -o-transform:scale(1.3);
+    }
+
+    #rewardModal .reward-tabs {
+        margin: 0 auto;
+        width: 210px;
+    }
+
+    .reward-tabs .tabs {
+        height: 38px;
+        margin: 10px auto;
+        padding-left: 0;
+    }
+
+    .reward-content ul {
+        padding-left: 0 !important;
+    }
+
+    .reward-tabs .tabs .tab {
+        height: 38px;
+        line-height: 38px;
+    }
+
+    .reward-tabs .tab a {
+        color: #fff;
+        background-color: #ccc;
+    }
+
+    .reward-tabs .tab a:hover {
+        background-color: #ccc;
+        color: #fff;
+    }
+
+    .reward-tabs .wechat-tab .active {
+        color: #fff !important;
+        background-color: #22AB38 !important;
+    }
+
+    .reward-tabs .alipay-tab .active {
+        color: #fff !important;
+        background-color: #019FE8 !important;
+    }
+
+    .reward-tabs .reward-img {
+        width: 210px;
+        height: 210px;
+    }
+</style>
+
+<div id="reward">
+    <a href="#rewardModal" class="reward-link modal-trigger btn-floating btn-large waves-effect waves-light red">赏</a>
+
+    <!-- Modal Structure -->
+    <div id="rewardModal" class="modal">
+        <div class="modal-content">
+            <a class="close modal-close"><i class="fa fa-close"></i></a>
+            <h4 class="reward-title">写作不易，客官能否打赏一杯奶茶？</h4>
+            <div class="reward-content">
+                <div class="reward-tabs">
+                    <ul class="tabs row">
+                        <li class="tab col s6 alipay-tab waves-effect waves-light"><a href="#alipay">支付宝</a></li>
+                        <li class="tab col s6 wechat-tab waves-effect waves-light"><a href="#wechat">微 信</a></li>
+                    </ul>
+                    <div id="alipay">
+                        <img src="/medias/reward/alipay.jpg" class="reward-img" alt="支付宝打赏二维码">
+                    </div>
+                    <div id="wechat">
+                        <img src="/medias/reward/wechat.png" class="reward-img" alt="微信打赏二维码">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $('.tabs').tabs();
+    });
+</script>
+            
+
+            <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+
+<div id="article-share">
+    
+    <div class="social-share" data-disabled="qzone" data-wechat-qrcode-helper="<p>微信里点“发现”->“扫一扫”二维码便可查看分享。</p>"></div>
+    
+</div>
+
+<script src="/libs/share/js/social-share.min.js"></script>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        <p class="reprint-tip">
+            <i class="fa fa-exclamation-triangle"></i>&nbsp;&nbsp;
+            <span>转载规则</span>
+        </p>
+        
+            <div class="center-align">
+                <a rel="license noopener" target="_blank" href="https://creativecommons.org/licenses/by/4.0/deed.zh">
+                    <img alt=""
+                         style="border-width:0"
+                         src="https://i.creativecommons.org/l/by/4.0/88x31.png"/>
+                </a>
+            </div>
+            <br/>
+            <span xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/Text"
+                  property="dct:title" rel="dct:type">
+                    《面试 Android 通关秘籍》
+                </span> 由
+            <a xmlns:cc="http://creativecommons.org/ns#" href="/2023/01/05/%E9%9D%A2%E8%AF%95-Android-%E9%80%9A%E5%85%B3%E7%A7%98%E7%B1%8D/" property="cc:attributionName"
+               rel="cc:attributionURL">
+                Jason
+            </a> 采用
+            <a rel="license noopener" target="_blank" href="https://creativecommons.org/licenses/by/4.0/deed.zh">
+                知识共享署名 4.0 国际许可协议
+            </a>进行许可。
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+        </div>
+    </div>
+
+    
+    <link rel="stylesheet" href="/libs/gitalk/gitalk.css">
+<link rel="stylesheet" href="/css/my-gitalk.css">
+
+<div class="card gitalk-card" data-aos="fade-up">
+    <div id="gitalk-container" class="card-content"></div>
+</div>
+
+<script src="/libs/gitalk/gitalk.min.js"></script>
+<script>
+    let gitalk = new Gitalk({
+        clientID: 'fe0ccf043e8b41eb62ea',
+        clientSecret: '9ca1dd3be79bdf6123d4aa8ca81753570fe870e1',
+        repo: 'jasontojan.github.io',
+        owner: 'jasontojan',
+        admin: "jasontojan",
+        id: '2023/01/05/面试-Android-通关秘籍/',
+        distractionFreeMode: false  // Facebook-like distraction free mode
+    });
+
+    gitalk.render('gitalk-container');
+</script>
+    
+
+    
+
+    
+
+    
+
+    
+    <style>
+    .valine-card {
+        margin: 1.5rem auto;
+    }
+
+    .valine-card .card-content {
+        padding: 20px 20px 5px 20px;
+    }
+
+    #vcomments input[type=text],
+    #vcomments input[type=email],
+    #vcomments input[type=url],
+    #vcomments textarea {
+        box-sizing: border-box;
+    }
+
+    #vcomments p {
+        margin: 2px 2px 10px;
+        font-size: 1.05rem;
+        line-height: 1.78rem;
+    }
+
+    #vcomments blockquote p {
+        text-indent: 0.2rem;
+    }
+
+    #vcomments a {
+        padding: 0 2px;
+        color: #42b983;
+        font-weight: 500;
+        text-decoration: underline;
+    }
+
+    #vcomments img {
+        max-width: 100%;
+        height: auto;
+        cursor: pointer;
+    }
+
+    #vcomments ol li {
+        list-style-type: decimal;
+    }
+
+    #vcomments ol,
+    ul {
+        display: block;
+        padding-left: 2em;
+        word-spacing: 0.05rem;
+    }
+
+    #vcomments ul li,
+    ol li {
+        display: list-item;
+        line-height: 1.8rem;
+        font-size: 1rem;
+    }
+
+    #vcomments ul li {
+        list-style-type: disc;
+    }
+
+    #vcomments ul ul li {
+        list-style-type: circle;
+    }
+
+    #vcomments table, th, td {
+        padding: 12px 13px;
+        border: 1px solid #dfe2e5;
+    }
+
+    #vcomments table, th, td {
+        border: 0;
+    }
+
+    table tr:nth-child(2n), thead {
+        background-color: #fafafa;
+    }
+
+    #vcomments table th {
+        background-color: #f2f2f2;
+        min-width: 80px;
+    }
+
+    #vcomments table td {
+        min-width: 80px;
+    }
+
+    #vcomments h1 {
+        font-size: 1.85rem;
+        font-weight: bold;
+        line-height: 2.2rem;
+    }
+
+    #vcomments h2 {
+        font-size: 1.65rem;
+        font-weight: bold;
+        line-height: 1.9rem;
+    }
+
+    #vcomments h3 {
+        font-size: 1.45rem;
+        font-weight: bold;
+        line-height: 1.7rem;
+    }
+
+    #vcomments h4 {
+        font-size: 1.25rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    #vcomments h5 {
+        font-size: 1.1rem;
+        font-weight: bold;
+        line-height: 1.4rem;
+    }
+
+    #vcomments h6 {
+        font-size: 1rem;
+        line-height: 1.3rem;
+    }
+
+    #vcomments p {
+        font-size: 1rem;
+        line-height: 1.5rem;
+    }
+
+    #vcomments hr {
+        margin: 12px 0;
+        border: 0;
+        border-top: 1px solid #ccc;
+    }
+
+    #vcomments blockquote {
+        margin: 15px 0;
+        border-left: 5px solid #42b983;
+        padding: 1rem 0.8rem 0.3rem 0.8rem;
+        color: #666;
+        background-color: rgba(66, 185, 131, .1);
+    }
+
+    #vcomments pre {
+        font-family: monospace, monospace;
+        padding: 1.2em;
+        margin: .5em 0;
+        background: #272822;
+        overflow: auto;
+        border-radius: 0.3em;
+        tab-size: 4;
+    }
+
+    #vcomments code {
+        font-family: monospace, monospace;
+        padding: 1px 3px;
+        font-size: 0.92rem;
+        color: #e96900;
+        background-color: #f8f8f8;
+        border-radius: 2px;
+    }
+
+    #vcomments pre code {
+        font-family: monospace, monospace;
+        padding: 0;
+        color: #e8eaf6;
+        background-color: #272822;
+    }
+
+    #vcomments pre[class*="language-"] {
+        padding: 1.2em;
+        margin: .5em 0;
+    }
+
+    #vcomments code[class*="language-"],
+    pre[class*="language-"] {
+        color: #e8eaf6;
+    }
+
+    #vcomments [type="checkbox"]:not(:checked), [type="checkbox"]:checked {
+        position: inherit;
+        margin-left: -1.3rem;
+        margin-right: 0.4rem;
+        margin-top: -1px;
+        vertical-align: middle;
+        left: unset;
+        visibility: visible;
+    }
+
+    #vcomments b,
+    strong {
+        font-weight: bold;
+    }
+
+    #vcomments dfn {
+        font-style: italic;
+    }
+
+    #vcomments small {
+        font-size: 85%;
+    }
+
+    #vcomments cite {
+        font-style: normal;
+    }
+
+    #vcomments mark {
+        background-color: #fcf8e3;
+        padding: .2em;
+    }
+
+    #vcomments table, th, td {
+        padding: 12px 13px;
+        border: 1px solid #dfe2e5;
+    }
+
+    table tr:nth-child(2n), thead {
+        background-color: #fafafa;
+    }
+
+    #vcomments table th {
+        background-color: #f2f2f2;
+        min-width: 80px;
+    }
+
+    #vcomments table td {
+        min-width: 80px;
+    }
+
+    #vcomments [type="checkbox"]:not(:checked), [type="checkbox"]:checked {
+        position: inherit;
+        margin-left: -1.3rem;
+        margin-right: 0.4rem;
+        margin-top: -1px;
+        vertical-align: middle;
+        left: unset;
+        visibility: visible;
+    }
+</style>
+
+<div class="card valine-card" data-aos="fade-up">
+    <div id="vcomments" class="card-content"></div>
+</div>
+
+<script src="/libs/valine/av-min.js"></script>
+<script src="/libs/valine/Valine.min.js"></script>
+<!-- <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script> -->
+
+<script>
+    new Valine({
+        el: '#vcomments',
+        appId: '查教程获取',
+        appKey: '查教程获取',
+        notify: 'false' === 'true',
+        verify: 'false' === 'true',
+        visitor: 'false' === 'true',
+        avatar: 'wavatar',
+        pageSize: '10',
+        lang: 'zh-cn',
+        placeholder: '如果你没有GitHub账号，还可以在这里评论啦！'
+    });
+</script>
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fa fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/2023/01/06/%E9%9D%A2%E8%AF%95-Java-%E9%80%9A%E5%85%B3%E7%A7%98%E7%B1%8D/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/28.jpg" class="responsive-img" alt="面试 Java 通关秘籍">
+                        
+                        <span class="card-title">面试 Java 通关秘籍</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            1 黑铁
+对象，集合，泛型，反射的理解。
+
+1.1 什么是多态？
+面向对象的三大特性：封装、继承、多态。从一定角度来看，封装和继承几乎都是为多态而准备的。多态的定义：指允许不同类的对象对同一消息做出响应。即同一消息可以根据发送对象的不同而采
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="fa fa-clock-o fa-fw icon-date"></i>2023-01-06
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fa fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E9%9D%A2%E8%AF%95/" class="post-category" target="_blank">
+                                    面试
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E9%9D%A2%E8%AF%95%E9%A2%98-Java/" target="_blank">
+                        <span class="chip bg-color">面试题 Java</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fa fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2023/01/04/Android-2022%E5%A4%B4%E6%9D%A1%E9%9D%A2%E7%BB%8F/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/9.jpg" class="responsive-img" alt="Android 2022头条面经">
+                        
+                        <span class="card-title">Android 2022头条面经</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            1 Android基础1.1 请简述Android事件传递机制， ACTION_CANCEL事件何时触发？
+本质： 将点击事件MotionEvent传递到某个具体的View，并消费事件。传递对象：Activity-&gt;ViewGroup
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2023-01-04
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fa fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/Android/" class="post-category" target="_blank">
+                                    Android
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/Android-%E9%9D%A2%E8%AF%95%E9%A2%98/" target="_blank">
+                        <span class="chip bg-color">Android 面试题</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+</div>
+
+
+<script>
+    $('#articleContent').on('copy', function (e) {
+        // IE8 or earlier browser is 'undefined'
+        if (typeof window.getSelection === 'undefined') return;
+
+        var selection = window.getSelection();
+        // if the selection is short let's not annoy our users.
+        if (('' + selection).length < Number.parseInt('120')) {
+            return;
+        }
+
+        // create a div outside of the visible area and fill it with the selected text.
+        var bodyElement = document.getElementsByTagName('body')[0];
+        var newdiv = document.createElement('div');
+        newdiv.style.position = 'absolute';
+        newdiv.style.left = '-99999px';
+        bodyElement.appendChild(newdiv);
+        newdiv.appendChild(selection.getRangeAt(0).cloneContents());
+
+        // we need a <pre> tag workaround.
+        // otherwise the text inside "pre" loses all the line breaks!
+        if (selection.getRangeAt(0).commonAncestorContainer.nodeName === 'PRE') {
+            newdiv.innerHTML = "<pre>" + newdiv.innerHTML + "</pre>";
+        }
+
+        var url = document.location.href;
+        newdiv.innerHTML += '<br />'
+            + '来源: JasonToJan's Blog<br />'
+            + '作者: Jason<br />'
+            + '链接: <a href="' + url + '">' + url + '</a><br />'
+            + '本文章著作权归作者所有，任何形式的转载都请注明出处。';
+
+        selection.selectAllChildren(newdiv);
+        window.setTimeout(function () { bodyElement.removeChild(newdiv); }, 200);
+    });
+</script>
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget">
+            <div class="toc-title"><i class="fa fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fa fa-list"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            // headingsOffset: -205,
+            headingSelector: 'h1, h2, h3, h4'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h1, h2, h3, h4').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).slideUp(500);
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).slideDown(500);
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+    
+
+</main>
+
+
+<script src="https://cdn.bootcss.com/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script>
+    MathJax.Hub.Config({
+        tex2jax: {inlineMath: [['$', '$'], ['\(', '\)']]}
+    });
+</script>
+
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+<!-- 代码语言 -->
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+<!-- 代码块复制 -->
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+<script type="text/javascript" src="/libs/codeBlock/clipboard.min.js"></script>
+<!-- 代码块收缩 -->
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script> 
+<!-- 代码块折行 -->
+<style type="text/css">code[class*="language-"], pre[class*="language-"] { white-space: pre !important; }</style>
+
+
+    <footer class="page-footer bg-color">
+    <div class="container row center-align">
+        <div class="col s12 m8 l8 copy-right">
+            &copy; 2023-2023 JasonJan. 版权所有
+
+            
+            &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
+            <span class="white-color">274.7k</span>
+            
+
+            <br>
+            <span id="sitetime"></span>
+
+            
+            
+            <br>
+            
+            <span id="busuanzi_container_site_pv" style='display:none'>
+                <i class="fa fa-heart-o"></i>
+                本站总访问量 <span id="busuanzi_value_site_pv" class="white-color"></span>
+            </span>
+            
+            
+            <span id="busuanzi_container_site_uv" style='display:none'>
+                人次,&nbsp;访客数 <span id="busuanzi_value_site_uv" class="white-color"></span> 人.
+            </span>
+            
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/JasonToJan" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fa fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:jason1211241203@gmail.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fa fa-envelope-open"></i>
+    </a>
+
+
+
+    <a href="https://zhihu.com/people/JasonJan" class="tooltipped" target="_blank" data-tooltip="访问我的知乎" data-position="top" data-delay="50">
+        <i class="fa fa-inverse">知</i>
+    </a>
+
+
+
+    <a href="http://wpa.qq.com/msgrd?v=3&uin=1211241203&site=qq&menu=yes" class="tooltipped" target="_blank" data-tooltip="访问我的知乎" data-position="top" data-delay="50">
+        <i class="fa fa-qq"></i>
+    </a>
+
+
+
+    <a href="https://weibo.com/JasonJan" class="tooltipped" target="_blank" data-tooltip="关注我的微博" data-position="top" data-delay="50">
+        <i class="fa fa-weibo"></i>
+    </a>
+
+
+
+    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
+        <i class="fa fa-rss"></i>
+    </a>
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+<!-- 不蒜子计数初始值纠正 -->
+<script>
+    $(document).ready(function () {
+
+        var int = setInterval(fixCount, 50);
+        var pvcountOffset = 80000;
+        var uvcountOffset = 20000;
+
+        function fixCount() {
+            if (document.getElementById("busuanzi_container_site_pv").style.display != "none") {
+                $("#busuanzi_value_site_pv").html(parseInt($("#busuanzi_value_site_pv").html()) + pvcountOffset);
+                clearInterval(int);
+            }
+            if ($("#busuanzi_container_site_pv").css("display") != "none") {
+                $("#busuanzi_value_site_uv").html(parseInt($("#busuanzi_value_site_uv").html()) + uvcountOffset); // 加上初始数据 
+                clearInterval(int);
+            }
+        }
+    });
+</script>
+
+<script language=javascript>
+    function siteTime() {
+        window.setTimeout("siteTime()", 1000);
+        var seconds = 1000;
+        var minutes = seconds * 60;
+        var hours = minutes * 60;
+        var days = hours * 24;
+        var years = days * 365;
+        var today = new Date();
+        var todayYear = today.getFullYear();
+        var todayMonth = today.getMonth() + 1;
+        var todayDate = today.getDate();
+        var todayHour = today.getHours();
+        var todayMinute = today.getMinutes();
+        var todaySecond = today.getSeconds();
+        /* Date.UTC() -- 返回date对象距世界标准时间(UTC)1970年1月1日午夜之间的毫秒数(时间戳)
+        year - 作为date对象的年份，为4位年份值
+        month - 0-11之间的整数，做为date对象的月份
+        day - 1-31之间的整数，做为date对象的天数
+        hours - 0(午夜24点)-23之间的整数，做为date对象的小时数
+        minutes - 0-59之间的整数，做为date对象的分钟数
+        seconds - 0-59之间的整数，做为date对象的秒数
+        microseconds - 0-999之间的整数，做为date对象的毫秒数 */
+        var t1 = Date.UTC(2017, 09, 11, 00, 00, 00); //北京时间2018-2-13 00:00:00
+        var t2 = Date.UTC(todayYear, todayMonth, todayDate, todayHour, todayMinute, todaySecond);
+        var diff = t2 - t1;
+        var diffYears = Math.floor(diff / years);
+        var diffDays = Math.floor((diff / days) - diffYears * 365);
+        var diffHours = Math.floor((diff - (diffYears * 365 + diffDays) * days) / hours);
+        var diffMinutes = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours) / minutes);
+        var diffSeconds = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours - diffMinutes * minutes) / seconds);
+        document.getElementById("sitetime").innerHTML = "本站已运行 " + diffYears + " 年 " + diffDays + " 天 " + diffHours + " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+    }/*因为建站时间还没有一年，就将之注释掉了。需要的可以取消*/
+    siteTime();
+</script>
+
+<link rel="stylesheet" href="/css/prism.css">
+<script src="/js/prism.js" async></script>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fa fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script src="/js/search.js"></script>
+<script type="text/javascript">
+$(function () {
+    searchFunc("/" + "search.xml", 'searchInput', 'searchResult');
+});
+</script>
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fa fa-angle-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    <script type="text/javascript"> var OriginTitile = document.title, st; document.addEventListener("visibilitychange", function () { document.hidden ? (document.title = "Σ(っ °Д °;)っ喔哟，崩溃啦！", clearTimeout(st)) : (document.title = "φ(゜▽゜*)♪咦，又好了！", st = setTimeout(function () { document.title = OriginTitile }, 3e3)) })
+    </script>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=查教程获取"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+        dataLayer.push(arguments);
+    }
+
+    gtag('js', new Date());
+    gtag('config', '查教程获取');
+</script>
+
+
+
+    
+    <script src="/libs/others/clicklove.js"></script>
+    
+
+    
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    <!-- 雪花特效 -->
+    
+
+</body>
+
+</html>

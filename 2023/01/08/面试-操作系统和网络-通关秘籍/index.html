@@ -1,0 +1,1529 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="面试 操作系统和网络 通关秘籍, Android iOS Flutter">
+    <meta name="baidu-site-verification" content="fmlEuI34ir" />
+    <meta name="google-site-verification" content="yCy2azpds5XSuGZvis6OuA-XIGF5GuGpYRAaGfD6o48" />
+    <meta name="360-site-verification" content="b7c11a830ef90fd1464ad6206bb7b6e7" />
+    <meta name="description" content="1 黑铁
+网络相关常识。
+
+1.1 简单介绍下Https的原理？
+HTTPS是HTTP协议的加密版本，它使用SSL&amp;#x2F;TLS协议来保护Web通信的安全性。HTTPS基于公开密钥加密和数字证书认证技术，它通过在通信过程中使用SSL&amp;#">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>面试 操作系统和网络 通关秘籍 | JasonToJan&#39;s Blog</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+    <style type="text/css">
+        
+    </style>
+
+    <script src="/libs/jquery/jquery-2.2.0.min.js"></script>
+    <script src="https://sdk.jinrishici.com/v2/browser/jinrishici.js" charset="utf-8"></script>
+    <script>
+        var _hmt = _hmt || [];
+        (function () {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?ce84511d3df71640a9378a69f6293044";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+    
+        <script>
+            (function(){
+                var bp = document.createElement('script');
+                var curProtocol = window.location.protocol.split(':')[0];
+                if (curProtocol === 'https') {
+                    bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+                }
+                else {
+                    bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+                }
+                var s = document.getElementsByTagName("script")[0];
+                s.parentNode.insertBefore(bp, s);
+            })();
+        </script>
+    
+
+    <script>
+        (function(){
+        var src = "https://jspassport.ssl.qhimg.com/11.0.1.js?d182b3f28525f2db83acfaaf6e696dba";
+        document.write('<script src="' + src + '" id="sozz"><\/script>');
+        })();
+    </script>
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">JasonToJan's Blog</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fa fa-navicon"></i></a>
+<ul class="right">
+    
+    <li class="hide-on-med-and-down">
+        <a href="/" class="waves-effect waves-light">
+            
+            <i class="fa fa-home"></i>
+            
+            <span>首页</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/tags" class="waves-effect waves-light">
+            
+            <i class="fa fa-tags"></i>
+            
+            <span>标签</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/categories" class="waves-effect waves-light">
+            
+            <i class="fa fa-bookmark"></i>
+            
+            <span>分类</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/archives" class="waves-effect waves-light">
+            
+            <i class="fa fa-archive"></i>
+            
+            <span>归档</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/about" class="waves-effect waves-light">
+            
+            <i class="fa fa-user-circle-o"></i>
+            
+            <span>关于</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/friends" class="waves-effect waves-light">
+            
+            <i class="fa fa-address-book"></i>
+            
+            <span>友情链接</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/contact" class="waves-effect waves-light">
+            
+            <i class="fa fa-comments"></i>
+            
+            <span>留言板</span>
+        </a>
+    </li>
+    
+    <li>
+        <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+            <i id="searchIcon" class="fa fa-search" title="搜索"></i>
+        </a>
+    </li>
+</ul>
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">JasonToJan's Blog</div>
+        <div class="logo-desc">
+            
+            专注移动端，热爱生活，热衷开发。
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li>
+            <a href="/" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-home"></i>
+                
+                首页
+            </a>
+        </li>
+        
+        <li>
+            <a href="/tags" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-tags"></i>
+                
+                标签
+            </a>
+        </li>
+        
+        <li>
+            <a href="/categories" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-bookmark"></i>
+                
+                分类
+            </a>
+        </li>
+        
+        <li>
+            <a href="/archives" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-archive"></i>
+                
+                归档
+            </a>
+        </li>
+        
+        <li>
+            <a href="/about" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-user-circle-o"></i>
+                
+                关于
+            </a>
+        </li>
+        
+        <li>
+            <a href="/friends" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-address-book"></i>
+                
+                友情链接
+            </a>
+        </li>
+        
+        <li>
+            <a href="/contact" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-comments"></i>
+                
+                留言板
+            </a>
+        </li>
+        
+        
+        <li><div class="divider"></div></li>
+        <li>
+            <a href="https://github.com/JasonToJan/hexo-matery-modified" class="waves-effect waves-light" target="_blank">
+                <i class="fa fa-github-square fa-fw"></i>Fork Me
+            </a>
+        </li>
+        
+    </ul>
+</div>
+
+        </div>
+
+        
+            <style>
+    .nav-transparent .github-corner {
+        display: none !important;
+    }
+
+    .github-corner {
+        position: absolute;
+        z-index: 10;
+        top: 0;
+        right: 0;
+        border: 0;
+        transform: scale(1.1);
+    }
+
+    .github-corner svg {
+        color: #0f9d58;
+        fill: #fff;
+        height: 64px;
+        width: 64px;
+    }
+
+    .github-corner:hover .octo-arm {
+        animation: a 0.56s ease-in-out;
+    }
+
+    .github-corner .octo-arm {
+        animation: none;
+    }
+
+    @keyframes a {
+        0%,
+        to {
+            transform: rotate(0);
+        }
+        20%,
+        60% {
+            transform: rotate(-25deg);
+        }
+        40%,
+        80% {
+            transform: rotate(10deg);
+        }
+    }
+</style>
+
+<a href="https://github.com/JasonToJan/hexo-matery-modified" class="github-corner tooltipped hide-on-med-and-down" target="_blank"
+   data-tooltip="Fork Me" data-position="left" data-delay="50">
+    <svg viewBox="0 0 250 250" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
+              fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
+              fill="currentColor" class="octo-body"></path>
+    </svg>
+</a>
+        
+    </nav>
+
+</header>
+
+    
+<script src="/libs/cryptojs/crypto-js.min.js"></script>
+<script>
+    (function() {
+        let pwd = '';
+        if (pwd && pwd.length > 0) {
+            if (pwd !== CryptoJS.SHA256(prompt('请输入访问本文章的密码')).toString(CryptoJS.enc.Hex)) {
+                alert('密码错误，将返回主页！');
+                location.href = '/';
+            }
+        }
+    })();
+</script>
+
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/26.jpg')">
+    <div class="container">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <div class="description center-align post-title">
+                        面试 操作系统和网络 通关秘籍
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        margin: 35px 0 15px 0;
+        padding-left: 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #toc-content .is-active-link::before {
+        background-color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 20px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                        <a href="/tags/%E9%9D%A2%E8%AF%95%E9%A2%98-%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F-%E7%BD%91%E7%BB%9C/" target="_blank">
+                            <span class="chip bg-color">面试题 操作系统 网络</span>
+                        </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fa fa-bookmark fa-fw icon-category"></i>
+                        
+                        <a href="/categories/%E9%9D%A2%E8%AF%95/" class="post-category" target="_blank">
+                            面试
+                        </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                <div class="post-date info-break-policy">
+                    <i class="fa fa-calendar-minus-o fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2023-01-08
+                </div>
+
+                <div class="post-author info-break-policy">
+                    <i class="fa fa-user-o fa-fw"></i>作者:&nbsp;&nbsp;
+                    
+                    Jason
+                    
+                </div>
+
+                
+                
+                <div class="info-break-policy">
+                    <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
+                    5.8k
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
+                    20 分
+                </div>
+                
+                
+
+                
+                <div id="busuanzi_container_page_pv" class="info-break-policy">
+                    <i class="fa fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
+                    <span id="busuanzi_value_page_pv"></span>
+                </div>
+                
+            </div>
+        </div>
+        <hr class="clearfix">
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h2 id="1-黑铁"><a href="#1-黑铁" class="headerlink" title="1 黑铁"></a>1 黑铁</h2><blockquote>
+<p>网络相关常识。</p>
+</blockquote>
+<h3 id="1-1-简单介绍下Https的原理？"><a href="#1-1-简单介绍下Https的原理？" class="headerlink" title="1.1 简单介绍下Https的原理？"></a>1.1 简单介绍下Https的原理？</h3><blockquote>
+<p>HTTPS是HTTP协议的加密版本，它使用SSL&#x2F;TLS协议来保护Web通信的安全性。HTTPS基于公开密钥加密和数字证书认证技术，它通过在通信过程中使用SSL&#x2F;TLS协议来加密HTTP通信内容，从而保证通信数据的隐私性和完整性。<br><br>HTTPS的工作原理可以简单描述如下：<br><br>1.客户端向服务器发起HTTPS请求。<br><br>2.服务器将自己的公钥发送给客户端。<br><br>3.客户端使用服务器的公钥对随机生成的对称密钥进行加密。<br><br>4.客户端将加密后的对称密钥发送给服务器。<br><br>5.服务器使用私钥对接收到的密文进行解密，获得对称密钥。<br><br>6.客户端和服务器使用对称密钥进行加密通信。<br><br>7.通信过程中，客户端和服务器会互相验证数字证书的合法性，以保证通信的安全性。<br><br>HTTPS的核心安全性建立在公开密钥加密和数字证书认证技术之上。其中，公开密钥加密使用两个密钥：公钥和私钥，公钥用来加密数据，私钥用来解密数据。数字证书认证则是指在数据传输过程中使用数字证书来认证通信双方的身份，确保通信的安全性和可靠性。同时，HTTPS还使用SSL&#x2F;TLS协议来建立安全通信信道，通过加密、压缩、认证等多种技术，保护Web通信过程的安全性和隐私性。</p>
+</blockquote>
+<h3 id="1-2-谈谈对Socket的理解"><a href="#1-2-谈谈对Socket的理解" class="headerlink" title="1.2 谈谈对Socket的理解?"></a>1.2 谈谈对Socket的理解?</h3><blockquote>
+<p>Socket（套接字）是一种在计算机之间进行通信的API（应用程序编程接口）。Socket可以理解为一组程序接口，它们使得应用程序可以通过网络连接发送和接收数据。它是实现网络通信的基础。<br><br>Socket通常被用于创建客户端和服务器之间的网络连接，它使用IP地址和端口号来唯一标识连接的两端。在客户端和服务器之间建立Socket连接后，它们可以通过Socket传输数据，包括文件、图像、视频和音频等。<br><br>在Socket编程中，通常使用TCP（传输控制协议）和UDP（用户数据报协议）两种协议。TCP协议是一种可靠的、面向连接的协议，确保数据的传输和接收的完整性。UDP协议则是一种无连接的协议，它允许数据包在网络上传输时不进行确认，因此传输速度比TCP更快，但也不太可靠。<br><br>Socket编程的基本流程是：创建Socket、绑定IP地址和端口号、监听连接请求、接受连接请求、建立连接、发送数据、接收数据、关闭连接。在实际编程中，Socket编程还需要考虑一些网络安全和性能优化的问题。<br><br>总的来说，Socket是一种非常重要的网络编程技术，它使得计算机之间的通信变得更加简单、高效和可靠。在现代互联网应用中，Socket已经成为了必不可少的一部分，被广泛应用于各种网络通信场景。</p>
+</blockquote>
+<h3 id="1-3-TCP-x2F-UDP比较"><a href="#1-3-TCP-x2F-UDP比较" class="headerlink" title="1.3 TCP&#x2F;UDP比较?"></a>1.3 TCP&#x2F;UDP比较?</h3><blockquote>
+<p>TCP（传输控制协议）和UDP（用户数据报协议）是两种不同的网络传输协议。它们有不同的特点和适用场景，下面是它们的比较：<br><br>1.连接方式：TCP是面向连接的协议，需要在传输前进行三次握手建立连接，建立后才能进行数据传输。UDP则是无连接的协议，数据包在发送前不需要建立连接，直接发送即可。<br><br>2.数据可靠性：TCP是一种可靠的协议，它保证数据的传输和接收的完整性，确保数据的准确性和可靠性。UDP则是一种不可靠的协议，数据包在网络上传输时不进行确认，因此传输速度比TCP更快，但也不太可靠。<br><br>3.数据量和速度：TCP适用于传输大量数据和对数据传输有严格要求的应用场景，如文件传输、电子邮件、网页浏览等。UDP则适用于传输数据量小、对实时性和传输速度有要求的应用场景，如音频、视频、游戏等。<br><br>4.带宽控制：TCP采用流量控制和拥塞控制机制，可以根据网络拥塞情况自适应调整发送速度，以避免网络拥塞。UDP则没有拥塞控制机制，发送方会一直以最大速度发送数据，可能会导致网络拥塞。<br><br>5.应用场景：TCP适用于对数据传输质量要求比较高的应用场景，如文件传输、远程登录等。UDP则适用于对传输速度和实时性要求比较高的应用场景，如音视频传输、实时游戏等。<br><br>总的来说，TCP和UDP各有优缺点，应根据具体的应用场景来选择使用哪种协议。如果需要保证数据传输的可靠性和完整性，应选择TCP协议；如果需要传输速度快、实时性高的数据，应选择UDP协议。</p>
+</blockquote>
+<h3 id="1-4-OSI模型和TCP-x2F-IP模型？"><a href="#1-4-OSI模型和TCP-x2F-IP模型？" class="headerlink" title="1.4 OSI模型和TCP&#x2F;IP模型？"></a>1.4 OSI模型和TCP&#x2F;IP模型？</h3><blockquote>
+<p>1.OSI模型：<br>1.1 应用层<br>1.2 表示层<br>1.3 回话层<br>1.4 传输层<br>1.5 网络层<br>1.6 数据链路层：物理层负责0、1比特流与物理设备电压高低、光的闪灭之间的互换。<br>1.7 物理层<br><br>2.TCP&#x2F;IP模型<br>2.1 应用层<br>2.2 传输层 （TCP和UDP位于这个层数）<br>2.3 网络层 （IP协议位于这个层次）<br>2.4 网络接口层</p>
+</blockquote>
+<h3 id="1-5-TCP协议有哪些？"><a href="#1-5-TCP协议有哪些？" class="headerlink" title="1.5 TCP协议有哪些？"></a>1.5 TCP协议有哪些？</h3><blockquote>
+<p>SMTP: 电子邮件<br>telnet: 远程终端接入<br>http: 万维网<br>ftp: 文件传输 </p>
+</blockquote>
+<h3 id="1-6-UDP协议有哪些？"><a href="#1-6-UDP协议有哪些？" class="headerlink" title="1.6 UDP协议有哪些？"></a>1.6 UDP协议有哪些？</h3><blockquote>
+<p>dns: 域名转换<br>tftp: 文件传输<br>snmp: 网络管理<br>nfs: 远程文件服务器</p>
+</blockquote>
+<h3 id="1-7-常见的状态码？"><a href="#1-7-常见的状态码？" class="headerlink" title="1.7 常见的状态码？"></a>1.7 常见的状态码？</h3><blockquote>
+<p>1xx：指示信息——表示请求已接收，继续处理。<br>2xx：成功——表示请求已被成功接收、理解、接受。<br>3xx：重定向——要完成请求必须进行更进一步的操作。<br>4xx：客户端错误——请求有语法错误或请求无法实现。<br>5xx：服务器端错误——服务器未能实现合法的请求。</p>
+</blockquote>
+<h2 id="2-青铜"><a href="#2-青铜" class="headerlink" title="2 青铜"></a>2 青铜</h2><blockquote>
+<p>网络相关原理。</p>
+</blockquote>
+<h3 id="2-1-TCP连接的建立？"><a href="#2-1-TCP连接的建立？" class="headerlink" title="2.1 TCP连接的建立？"></a>2.1 TCP连接的建立？</h3><blockquote>
+<p>建立请务必回答是：三次握手。<br>1.第一次握手：客户端发送连接请求报文段SYN 给服务端。<br>2.第二次握手：服务端收到SYN报文段，发送给客户端ACK确认报文段和SYN报文段，相当于服务端确认了<br>3.第三次握手： 客户端收到服务端的SYN+ACK报文段，最后向服务端再次发生一个ACK确认报文段。</p>
+</blockquote>
+<h3 id="2-2-TCP连接的终止？"><a href="#2-2-TCP连接的终止？" class="headerlink" title="2.2 TCP连接的终止？"></a>2.2 TCP连接的终止？</h3><blockquote>
+<p>终止请务必回答是：四次挥手。<br>1.第一次：主动方（这里可以是客户端或服务端，谁主动都行）发送一个FIN和ACK报文段给被动方。<br>2.第二次：被动方发送一个ACK报文段。<br>3.第三次：被动方等了一下，再次发送一个FIN和ACK报文段。<br>4.第四次：主动方发送ACK报文段。<br><br>为什么要等一下？<br>被动方数据没发完，等发完了，再关闭。</p>
+</blockquote>
+<h3 id="2-3-加密算法有哪几种？"><a href="#2-3-加密算法有哪几种？" class="headerlink" title="2.3 加密算法有哪几种？"></a>2.3 加密算法有哪几种？</h3><blockquote>
+<p>加密算法的类型基本上分为了两种：<br>    对称加密，加密用的密钥和解密用的密钥是同一个，比较有代表性的就是 AES 加密算法；<br>    非对称加密，加密用的密钥称为公钥，解密用的密钥称为私钥，经常使用到的 RSA 加密算法就是非对称加密的；<br> 此外，还有Hash单向加密算法：<br>    HASH算法：MD5, SHA1, SHA256   </p>
+</blockquote>
+<h3 id="2-4-Https用的是对称加密还是非对称加密？"><a href="#2-4-Https用的是对称加密还是非对称加密？" class="headerlink" title="2.4 Https用的是对称加密还是非对称加密？"></a>2.4 Https用的是对称加密还是非对称加密？</h3><blockquote>
+<p>Https是用对称加密数据，非对称加密的只是密钥,就是说两个都用到了。</p>
+</blockquote>
+<h3 id="2-5-CA证书是什么？"><a href="#2-5-CA证书是什么？" class="headerlink" title="2.5 CA证书是什么？"></a>2.5 CA证书是什么？</h3><blockquote>
+<p>CA是一种受信任的第三方机构，它负责颁发数字证书，用于证明网站或应用程序的身份。当网站或应用程序需要获得数字证书时，它们会向CA机构提交证书请求，同时提供相关的身份信息和证明材料。CA机构会验证这些信息，并根据验证结果颁发数字证书。数字证书中包含了证书持有者的身份信息、公钥等信息，以及CA机构的数字签名。<br><br>当用户访问一个网站时，浏览器会向该网站请求数字证书。如果该数字证书由受信任的CA机构颁发，且未被篡改过，浏览器会信任该数字证书，并使用证书中包含的公钥来加密通信。如果数字证书无法通过验证，浏览器就会发出警告，提醒用户存在风险，并建议用户终止通信。<br><br>总之，CA证书是由认证机构颁发的数字证书，用于证明网站或应用程序的身份，并提供安全通信的保护。通过使用CA证书，可以确保通信的安全性和可靠性。</p>
+</blockquote>
+<h3 id="2-6-客户端如何校验CA证书呢？"><a href="#2-6-客户端如何校验CA证书呢？" class="headerlink" title="2.6 客户端如何校验CA证书呢？"></a>2.6 客户端如何校验CA证书呢？</h3><blockquote>
+<p>获取证书：客户端在建立连接时，会从服务器端获取证书。服务器会将证书发送给客户端，客户端保存证书。<br>1.CA证书中的 Hash 值，其实是用证书的私钥进行加密后的值（证书的私钥不在 CA 证书中）。<br>2.然后客户端得到证书后，利用证书中的公钥去解密该 Hash 值，得到 Hash-a ；<br>3.然后再利用证书内的签名 Hash 算法去生成一个 Hash-b 。<br>4.最后比较 Hash-a 和 Hash-b 这两个的值。如果相等，那么证明了该证书是对的，服务端是可以被信任的；如果不相等，那么就说明该证书是错误的，可能被篡改了<br>5.除此之外，还会校验 CA 证书的有效时间和域名匹配等。</p>
+</blockquote>
+<h3 id="2-7-SSL握手过程？"><a href="#2-7-SSL握手过程？" class="headerlink" title="2.7 SSL握手过程？"></a>2.7 SSL握手过程？</h3><blockquote>
+<p>1、首先，客户端 A 访问服务器 B ，比如我们用浏览器打开一个网页 <a target="_blank" rel="noopener" href="http://www.baidu.com/">www.baidu.com</a> ，这时，浏览器就是客户端 A ，百度的服务器就是服务器 B 了。这时候客户端 A 会生成一个随机数1，把随机数1 、自己支持的 SSL 版本号以及加密算法等这些信息告诉服务器 B 。<br><br>2、服务器 B 知道这些信息后，然后确认一下双方的加密算法，然后服务端也生成一个随机数 2 ，并将随机数 2 和 CA 颁发给自己的证书一同返回给客户端 A 。<br><br>3、客户端 A 得到 CA 证书后，会去校验该 CA 证书的有效性，校验方法在上面已经说过了。校验通过后，客户端生成一个随机数3 ，然后用证书中的公钥加密随机数3 并传输给服务端 B 。<br><br>4.服务端 B 得到加密后的随机数3，然后利用私钥进行解密，得到真正的随机数3。<br><br>5、最后，客户端 A 和服务端 B 都有随机数1、随机数2、随机数3，然后双方利用这三个随机数生成一个对话密钥。之后传输内容就是利用对话密钥来进行加解密了。这时就是利用了对称加密，一般用的都是 AES 算法。<br><br>6、客户端 A 通知服务端 B ，指明后面的通讯用对话密钥来完成，同时通知服务器 B 客户端 A 的握手过程结束。<br><br>7、服务端 B 通知客户端 A，指明后面的通讯用对话密钥来完成，同时通知客户端 A 服务器 B 的握手过程结束。<br><br>8、SSL 的握手部分结束，SSL 安全通道的数据通讯开始，客户端 A 和服务器 B 开始使用相同的对话密钥进行数据通讯。</p>
+</blockquote>
+<h2 id="3-白银"><a href="#3-白银" class="headerlink" title="3 白银"></a>3 白银</h2><blockquote>
+<p>操作系统相关常识。</p>
+</blockquote>
+<h3 id="3-1-什么时候会发生死锁"><a href="#3-1-什么时候会发生死锁" class="headerlink" title="3.1 什么时候会发生死锁?"></a>3.1 什么时候会发生死锁?</h3><blockquote>
+<p>死锁指的是多个进程或线程因为互相等待资源而陷入一种无法继续执行的状态，导致系统无法前进。以下是死锁发生的四个必要条件：<br><br>1.互斥条件：资源只能被一个进程或线程占用，其他的进程或线程必须等待该资源释放。<br><br>2.请求与保持条件：进程或线程持有一个资源并请求其他资源，但在等待其他资源的同时仍继续占有已有资源。<br><br>3.不剥夺条件：资源不能被其他进程或线程强行抢占，只能由持有该资源的进程或线程主动释放。<br><br>4.循环等待条件：存在一种进程或线程的等待链，每个进程或线程都在等待下一个进程或线程所持有的资源。<br><br>当这四个条件同时满足时，就可能会发生死锁。</p>
+</blockquote>
+<h3 id="3-2-不同架构的机器有何不同（如x86等）"><a href="#3-2-不同架构的机器有何不同（如x86等）" class="headerlink" title="3.2 不同架构的机器有何不同（如x86等）"></a>3.2 不同架构的机器有何不同（如x86等）</h3><blockquote>
+<p>不同架构的机器指的是在计算机硬件和指令集设计上的不同。常见的计算机架构有x86、ARM、MIPS、PowerPC等。这些不同的架构在计算机硬件和指令集方面的设计不同，因此在使用和编程时会有一些差异。<br><br>下面是一些不同架构的机器的主要特点和差异：<br><br>x86架构：x86是目前PC和服务器领域最广泛使用的架构之一，其指令集包括x86-16、x86-32和x86-64。x86架构的主要特点是指令集复杂，支持大量的寄存器和广泛的指令集，具有高性能和灵活性，但也相对较复杂。<br><br>ARM架构：ARM架构主要应用于嵌入式系统和移动设备领域，其指令集比x86简单，更加节能，具有低功耗、高效率的特点。ARM架构的处理器在功耗、成本和可靠性方面表现良好，因此广泛用于手机、平板电脑、智能家居和汽车等领域。<br><br>MIPS架构：MIPS架构主要应用于嵌入式系统和网络设备领域，具有高性能、低功耗的特点。MIPS架构的处理器在网络处理、路由器、交换机等设备中应用广泛。<br><br>PowerPC架构：PowerPC架构是IBM、苹果和摩托罗拉等公司共同开发的，主要应用于服务器和嵌入式系统领域，具有高性能、可靠性和可扩展性的特点。PowerPC架构的处理器在高性能计算、工业控制和航空航天等领域应用广泛。<br><br>不同架构的机器在使用和编程时需要考虑其特点和差异，尤其是在跨平台开发和移植软件时更为重要。例如，跨平台开发需要考虑不同的编译器和库的兼容性，移植软件需要考虑不同架构的处理器和操作系统的支持情况。因此，在进行跨平台开发和移植软件时，需要对不同架构的机器有一定的了解。</p>
+</blockquote>
+<h3 id="4-3-操作系统的四个特性？"><a href="#4-3-操作系统的四个特性？" class="headerlink" title="4.3 操作系统的四个特性？"></a>4.3 操作系统的四个特性？</h3><blockquote>
+<p>并发： 同一段时间内多个程序执行(注意区别并行和并发，前者是同一时刻的多个事件，后者是同一时间段内的多个事件)<br><br>共享： 系统中的资源可以被内存中多个并发执行的进线程共同使用<br><br>虚拟： 通过时分复用（如分时系统）以及空分复用（如虚拟内存）技术实现把一个物理实体虚拟为多个<br><br>异步： 系统中的进程是以走走停停的方式执行的，且以一种不可预知的速度推进</p>
+</blockquote>
+<h2 id="4-黄金"><a href="#4-黄金" class="headerlink" title="4 黄金"></a>4 黄金</h2><blockquote>
+<p>操作系统相关原理。</p>
+</blockquote>
+<h3 id="4-1-操作系统层面上，线程可以加哪些锁"><a href="#4-1-操作系统层面上，线程可以加哪些锁" class="headerlink" title="4.1 操作系统层面上，线程可以加哪些锁?"></a>4.1 操作系统层面上，线程可以加哪些锁?</h3><blockquote>
+<p>线程在操作系统层面上可以加如下几种锁：<br><br>1.互斥锁（Mutex）：一种最常见的锁类型，用于确保在任何时候只有一个线程可以访问共享资源。当一个线程获得互斥锁时，其他线程就必须等待直到该线程释放锁。<br><br>2.读写锁（Read-Write Lock）：允许多个线程同时访问同一个资源，但是对于写入操作，必须要保证只有一个线程在访问。读写锁可以提高并发性能，因为读操作通常比写操作更频繁，读写锁可以允许多个线程同时进行读操作。<br><br>3.条件变量（Condition Variable）：用于在线程之间同步共享资源。当一个线程需要等待某个条件发生时，可以通过条件变量进行等待，而不是通过轮询来等待条件发生。<br><br>4.信号量（Semaphore）：一种计数器，用于控制对共享资源的访问。当一个线程需要访问共享资源时，它必须先获得信号量。如果信号量的值为0，线程就必须等待直到其他线程释放资源并增加信号量的值。<br><br>以上这些锁都可以用于线程之间同步和保证对共享资源的访问。不同类型的锁适用于不同的情况，选择合适的锁类型可以提高程序的性能和并发性能。</p>
+</blockquote>
+<h3 id="4-2-栈在系统中的方向是怎样的？为什么？"><a href="#4-2-栈在系统中的方向是怎样的？为什么？" class="headerlink" title="4.2 栈在系统中的方向是怎样的？为什么？"></a>4.2 栈在系统中的方向是怎样的？为什么？</h3><blockquote>
+<p>栈（stack）是一种后进先出（LIFO）的数据结构，它通常被用于存储和管理函数的调用和返回，以及存储局部变量和临时变量等。在计算机系统中，栈的方向通常是从高地址向低地址增长的，也就是说，栈顶的地址比栈底的地址低。<br><br>这种栈向低地址增长的方向是由计算机体系结构的实现决定的。当一个函数被调用时，它的返回地址和一些参数需要被压入栈中，以便在函数执行完成后能够正确地返回到调用者。由于栈是从高地址向低地址增长的，所以每次压入栈中的数据都会被放置在已有数据的顶部，这样可以保证最新的数据总是在栈顶，而最老的数据总是在栈底。当函数返回时，栈顶的数据会被弹出，返回地址被取出并跳转到该地址，这样函数调用的堆栈就能够正确地管理。<br><br>此外，由于栈的方向是固定的，所以在访问栈中的数据时，程序可以直接使用偏移地址和栈指针来访问，而不需要进行任何复杂的计算。这样可以提高访问速度和效率，并且使得栈在计算机体系结构中的实现变得更加简单和可靠。<br><br>总之，栈在计算机系统中的方向通常是从高地址向低地址增长的，这是由计算机体系结构的实现决定的。这种方向使得栈能够有效地管理函数调用和返回，并且能够快速地访问栈中的数据。</p>
+</blockquote>
+<h3 id="4-3-操作系统进程间通信有哪些方法？"><a href="#4-3-操作系统进程间通信有哪些方法？" class="headerlink" title="4.3 操作系统进程间通信有哪些方法？"></a>4.3 操作系统进程间通信有哪些方法？</h3><blockquote>
+<p>操作系统进程间通信的方法主要包括以下几种：<br><br>1.管道（Pipe）：管道是一种半双工的通信方式，只能在具有公共祖先-子孙进程之间使用，只能用于相互通信的两个进程。通常将管道定义为文件描述符，一个进程写入数据到管道，另一个进程从管道中读取数据。<br><br>2.消息队列（Message Queue）：消息队列是消息的链表，存在于内核中，通常由进程名和标识符来标识。不同进程可以通过向队列发送消息进行通信，可以实现任意进程之间的通信。<br><br>3.共享内存（Shared Memory）：共享内存是最快的一种IPC方式，多个进程可以访问同一个物理内存，从而实现高速数据传输。但需要注意共享内存的访问必须同步，否则会产生竞争条件。<br><br>4.信号量（Semaphore）：信号量是用来保证同步的一种方式。在访问共享资源时，必须先获得信号量，操作完成后再释放信号量。可以通过信号量来实现多个进程的互斥、同步和通信等。<br><br>5.套接字（Socket）：套接字是一种网络通信协议，也可以用于进程间通信。通过套接字可以实现不同主机或同一主机上不同进程之间的通信。<br><br>上述进程间通信方法各有优缺点，开发者可以根据自己的需求来选择合适的通信方式。</p>
+</blockquote>
+<h3 id="4-4-进程调度算法？"><a href="#4-4-进程调度算法？" class="headerlink" title="4.4 进程调度算法？"></a>4.4 进程调度算法？</h3><blockquote>
+<p>1.先来先服务调度算法FCFS： 既可以作为作业调度算法也可以作为进程调度算法；按作业或者进程到达的先后顺序依次调度；因此对于长作业比较有利；<br>2.短作业优先调度算法SJF： 作业调度算法，算法从就绪队列中选择估计时间最短的作业进行处理，直到得出结果或者无法继续执行；缺点：不利于长作业；未考虑作业的重要性；运行时间是预估的，并不靠谱 ；<br>3.高响应比算法HRN： 响应比&#x3D;(等待时间+要求服务时间)&#x2F;要求服务时间；<br>4.时间片轮转调度RR： 按到达的先后对进程放入队列中，然后给队首进程分配CPU时间片，时间片用完之后计时器发出中断，暂停当前进程并将其放到队列尾部，循环 ;<br>5.多级反馈队列调度算法： 目前公认较好的调度算法；设置多个就绪队列并为每个队列设置不同的优先级，第一个队列优先级最高，其余依次递减。优先级越高的队列分配的时间片越短，进程到达之后按FCFS放入第一个队列，如果调度执行后没有完成，那么放到第二个队列尾部等待调度，如果第二次调度仍然没有完成，放入第三队列尾部……只有当前一个队列为空的时候才会去调度下一个队列的进程。</p>
+</blockquote>
+<h2 id="5-铂金"><a href="#5-铂金" class="headerlink" title="5 铂金"></a>5 铂金</h2><h2 id="6-钻石"><a href="#6-钻石" class="headerlink" title="6 钻石"></a>6 钻石</h2><h2 id="7-大师"><a href="#7-大师" class="headerlink" title="7 大师"></a>7 大师</h2><h2 id="8-宗师"><a href="#8-宗师" class="headerlink" title="8 宗师"></a>8 宗师</h2><h2 id="9-王者"><a href="#9-王者" class="headerlink" title="9 王者"></a>9 王者</h2>
+            </div>
+            <hr />
+
+            
+            <style>
+    #reward {
+        margin: 40px 0;
+        text-align: center;
+    }
+
+    #reward .reward-link {
+        font-size: 1.88rem;
+    }
+
+    #reward .btn-floating:hover {
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2), 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    #rewardModal {
+        width: 320px;
+        height: 350px;
+    }
+
+    #rewardModal .reward-title {
+        margin: 15px auto;
+        padding-bottom: 5px;
+    }
+
+    #rewardModal .modal-content {
+        padding: 10px;
+    }
+
+    #rewardModal .close {
+        position: absolute;
+        right: 15px;
+        top: 15px;
+        color: rgba(0, 0, 0, 0.5);
+        font-size: 1.3rem;
+        line-height: 20px;
+        cursor: pointer;
+    }
+
+    #rewardModal .close:hover {
+        color: #ef5350;
+        transform: scale(1.3);
+        -moz-transform:scale(1.3);
+        -webkit-transform:scale(1.3);
+        -o-transform:scale(1.3);
+    }
+
+    #rewardModal .reward-tabs {
+        margin: 0 auto;
+        width: 210px;
+    }
+
+    .reward-tabs .tabs {
+        height: 38px;
+        margin: 10px auto;
+        padding-left: 0;
+    }
+
+    .reward-content ul {
+        padding-left: 0 !important;
+    }
+
+    .reward-tabs .tabs .tab {
+        height: 38px;
+        line-height: 38px;
+    }
+
+    .reward-tabs .tab a {
+        color: #fff;
+        background-color: #ccc;
+    }
+
+    .reward-tabs .tab a:hover {
+        background-color: #ccc;
+        color: #fff;
+    }
+
+    .reward-tabs .wechat-tab .active {
+        color: #fff !important;
+        background-color: #22AB38 !important;
+    }
+
+    .reward-tabs .alipay-tab .active {
+        color: #fff !important;
+        background-color: #019FE8 !important;
+    }
+
+    .reward-tabs .reward-img {
+        width: 210px;
+        height: 210px;
+    }
+</style>
+
+<div id="reward">
+    <a href="#rewardModal" class="reward-link modal-trigger btn-floating btn-large waves-effect waves-light red">赏</a>
+
+    <!-- Modal Structure -->
+    <div id="rewardModal" class="modal">
+        <div class="modal-content">
+            <a class="close modal-close"><i class="fa fa-close"></i></a>
+            <h4 class="reward-title">写作不易，客官能否打赏一杯奶茶？</h4>
+            <div class="reward-content">
+                <div class="reward-tabs">
+                    <ul class="tabs row">
+                        <li class="tab col s6 alipay-tab waves-effect waves-light"><a href="#alipay">支付宝</a></li>
+                        <li class="tab col s6 wechat-tab waves-effect waves-light"><a href="#wechat">微 信</a></li>
+                    </ul>
+                    <div id="alipay">
+                        <img src="/medias/reward/alipay.jpg" class="reward-img" alt="支付宝打赏二维码">
+                    </div>
+                    <div id="wechat">
+                        <img src="/medias/reward/wechat.png" class="reward-img" alt="微信打赏二维码">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $('.tabs').tabs();
+    });
+</script>
+            
+
+            <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+
+<div id="article-share">
+    
+    <div class="social-share" data-disabled="qzone" data-wechat-qrcode-helper="<p>微信里点“发现”->“扫一扫”二维码便可查看分享。</p>"></div>
+    
+</div>
+
+<script src="/libs/share/js/social-share.min.js"></script>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        <p class="reprint-tip">
+            <i class="fa fa-exclamation-triangle"></i>&nbsp;&nbsp;
+            <span>转载规则</span>
+        </p>
+        
+            <div class="center-align">
+                <a rel="license noopener" target="_blank" href="https://creativecommons.org/licenses/by/4.0/deed.zh">
+                    <img alt=""
+                         style="border-width:0"
+                         src="https://i.creativecommons.org/l/by/4.0/88x31.png"/>
+                </a>
+            </div>
+            <br/>
+            <span xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/Text"
+                  property="dct:title" rel="dct:type">
+                    《面试 操作系统和网络 通关秘籍》
+                </span> 由
+            <a xmlns:cc="http://creativecommons.org/ns#" href="/2023/01/08/%E9%9D%A2%E8%AF%95-%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%92%8C%E7%BD%91%E7%BB%9C-%E9%80%9A%E5%85%B3%E7%A7%98%E7%B1%8D/" property="cc:attributionName"
+               rel="cc:attributionURL">
+                Jason
+            </a> 采用
+            <a rel="license noopener" target="_blank" href="https://creativecommons.org/licenses/by/4.0/deed.zh">
+                知识共享署名 4.0 国际许可协议
+            </a>进行许可。
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+        </div>
+    </div>
+
+    
+    <link rel="stylesheet" href="/libs/gitalk/gitalk.css">
+<link rel="stylesheet" href="/css/my-gitalk.css">
+
+<div class="card gitalk-card" data-aos="fade-up">
+    <div id="gitalk-container" class="card-content"></div>
+</div>
+
+<script src="/libs/gitalk/gitalk.min.js"></script>
+<script>
+    let gitalk = new Gitalk({
+        clientID: 'fe0ccf043e8b41eb62ea',
+        clientSecret: '9ca1dd3be79bdf6123d4aa8ca81753570fe870e1',
+        repo: 'jasontojan.github.io',
+        owner: 'jasontojan',
+        admin: "jasontojan",
+        id: '2023/01/08/面试-操作系统和网络-通关秘籍/',
+        distractionFreeMode: false  // Facebook-like distraction free mode
+    });
+
+    gitalk.render('gitalk-container');
+</script>
+    
+
+    
+
+    
+
+    
+
+    
+    <style>
+    .valine-card {
+        margin: 1.5rem auto;
+    }
+
+    .valine-card .card-content {
+        padding: 20px 20px 5px 20px;
+    }
+
+    #vcomments input[type=text],
+    #vcomments input[type=email],
+    #vcomments input[type=url],
+    #vcomments textarea {
+        box-sizing: border-box;
+    }
+
+    #vcomments p {
+        margin: 2px 2px 10px;
+        font-size: 1.05rem;
+        line-height: 1.78rem;
+    }
+
+    #vcomments blockquote p {
+        text-indent: 0.2rem;
+    }
+
+    #vcomments a {
+        padding: 0 2px;
+        color: #42b983;
+        font-weight: 500;
+        text-decoration: underline;
+    }
+
+    #vcomments img {
+        max-width: 100%;
+        height: auto;
+        cursor: pointer;
+    }
+
+    #vcomments ol li {
+        list-style-type: decimal;
+    }
+
+    #vcomments ol,
+    ul {
+        display: block;
+        padding-left: 2em;
+        word-spacing: 0.05rem;
+    }
+
+    #vcomments ul li,
+    ol li {
+        display: list-item;
+        line-height: 1.8rem;
+        font-size: 1rem;
+    }
+
+    #vcomments ul li {
+        list-style-type: disc;
+    }
+
+    #vcomments ul ul li {
+        list-style-type: circle;
+    }
+
+    #vcomments table, th, td {
+        padding: 12px 13px;
+        border: 1px solid #dfe2e5;
+    }
+
+    #vcomments table, th, td {
+        border: 0;
+    }
+
+    table tr:nth-child(2n), thead {
+        background-color: #fafafa;
+    }
+
+    #vcomments table th {
+        background-color: #f2f2f2;
+        min-width: 80px;
+    }
+
+    #vcomments table td {
+        min-width: 80px;
+    }
+
+    #vcomments h1 {
+        font-size: 1.85rem;
+        font-weight: bold;
+        line-height: 2.2rem;
+    }
+
+    #vcomments h2 {
+        font-size: 1.65rem;
+        font-weight: bold;
+        line-height: 1.9rem;
+    }
+
+    #vcomments h3 {
+        font-size: 1.45rem;
+        font-weight: bold;
+        line-height: 1.7rem;
+    }
+
+    #vcomments h4 {
+        font-size: 1.25rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    #vcomments h5 {
+        font-size: 1.1rem;
+        font-weight: bold;
+        line-height: 1.4rem;
+    }
+
+    #vcomments h6 {
+        font-size: 1rem;
+        line-height: 1.3rem;
+    }
+
+    #vcomments p {
+        font-size: 1rem;
+        line-height: 1.5rem;
+    }
+
+    #vcomments hr {
+        margin: 12px 0;
+        border: 0;
+        border-top: 1px solid #ccc;
+    }
+
+    #vcomments blockquote {
+        margin: 15px 0;
+        border-left: 5px solid #42b983;
+        padding: 1rem 0.8rem 0.3rem 0.8rem;
+        color: #666;
+        background-color: rgba(66, 185, 131, .1);
+    }
+
+    #vcomments pre {
+        font-family: monospace, monospace;
+        padding: 1.2em;
+        margin: .5em 0;
+        background: #272822;
+        overflow: auto;
+        border-radius: 0.3em;
+        tab-size: 4;
+    }
+
+    #vcomments code {
+        font-family: monospace, monospace;
+        padding: 1px 3px;
+        font-size: 0.92rem;
+        color: #e96900;
+        background-color: #f8f8f8;
+        border-radius: 2px;
+    }
+
+    #vcomments pre code {
+        font-family: monospace, monospace;
+        padding: 0;
+        color: #e8eaf6;
+        background-color: #272822;
+    }
+
+    #vcomments pre[class*="language-"] {
+        padding: 1.2em;
+        margin: .5em 0;
+    }
+
+    #vcomments code[class*="language-"],
+    pre[class*="language-"] {
+        color: #e8eaf6;
+    }
+
+    #vcomments [type="checkbox"]:not(:checked), [type="checkbox"]:checked {
+        position: inherit;
+        margin-left: -1.3rem;
+        margin-right: 0.4rem;
+        margin-top: -1px;
+        vertical-align: middle;
+        left: unset;
+        visibility: visible;
+    }
+
+    #vcomments b,
+    strong {
+        font-weight: bold;
+    }
+
+    #vcomments dfn {
+        font-style: italic;
+    }
+
+    #vcomments small {
+        font-size: 85%;
+    }
+
+    #vcomments cite {
+        font-style: normal;
+    }
+
+    #vcomments mark {
+        background-color: #fcf8e3;
+        padding: .2em;
+    }
+
+    #vcomments table, th, td {
+        padding: 12px 13px;
+        border: 1px solid #dfe2e5;
+    }
+
+    table tr:nth-child(2n), thead {
+        background-color: #fafafa;
+    }
+
+    #vcomments table th {
+        background-color: #f2f2f2;
+        min-width: 80px;
+    }
+
+    #vcomments table td {
+        min-width: 80px;
+    }
+
+    #vcomments [type="checkbox"]:not(:checked), [type="checkbox"]:checked {
+        position: inherit;
+        margin-left: -1.3rem;
+        margin-right: 0.4rem;
+        margin-top: -1px;
+        vertical-align: middle;
+        left: unset;
+        visibility: visible;
+    }
+</style>
+
+<div class="card valine-card" data-aos="fade-up">
+    <div id="vcomments" class="card-content"></div>
+</div>
+
+<script src="/libs/valine/av-min.js"></script>
+<script src="/libs/valine/Valine.min.js"></script>
+<!-- <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script> -->
+
+<script>
+    new Valine({
+        el: '#vcomments',
+        appId: '查教程获取',
+        appKey: '查教程获取',
+        notify: 'false' === 'true',
+        verify: 'false' === 'true',
+        visitor: 'false' === 'true',
+        avatar: 'wavatar',
+        pageSize: '10',
+        lang: 'zh-cn',
+        placeholder: '如果你没有GitHub账号，还可以在这里评论啦！'
+    });
+</script>
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fa fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/2023/01/09/%E9%9D%A2%E8%AF%95-Flutter-%E9%80%9A%E5%85%B3%E7%A7%98%E7%B1%8D/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/15.jpg" class="responsive-img" alt="面试 Flutter 通关秘籍">
+                        
+                        <span class="card-title">面试 Flutter 通关秘籍</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            1 黑铁
+dart基础，flutter基础。
+
+1.1 Dart语言有啥特性?
+1.在Dart中，一切都是对象，所有的对象都是继承自Object2.Dart是强类型语言，但可以用var或 dynamic来声明一个变量，Dart会自动推断其数
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="fa fa-clock-o fa-fw icon-date"></i>2023-01-09
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fa fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E9%9D%A2%E8%AF%95/" class="post-category" target="_blank">
+                                    面试
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E9%9D%A2%E8%AF%95%E9%A2%98-Flutter/" target="_blank">
+                        <span class="chip bg-color">面试题 Flutter</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fa fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2023/01/07/%E9%9D%A2%E8%AF%95-%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E5%92%8C%E7%AE%97%E6%B3%95-%E9%80%9A%E5%85%B3%E7%A7%98%E7%B1%8D/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/13.jpg" class="responsive-img" alt="面试 设计模式和算法 通关秘籍">
+                        
+                        <span class="card-title">面试 设计模式和算法 通关秘籍</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            1 黑铁1.1 如何使用单例模式的饿汉式和饱汉式？
+```Java
+// 饿汉式
+class SingleTon &#123;
+    private static final SingleTon instance = SingleTon(
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2023-01-07
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fa fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E9%9D%A2%E8%AF%95/" class="post-category" target="_blank">
+                                    面试
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E9%9D%A2%E8%AF%95%E9%A2%98-%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E7%AE%97%E6%B3%95/" target="_blank">
+                        <span class="chip bg-color">面试题 设计模式 算法</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+</div>
+
+
+<script>
+    $('#articleContent').on('copy', function (e) {
+        // IE8 or earlier browser is 'undefined'
+        if (typeof window.getSelection === 'undefined') return;
+
+        var selection = window.getSelection();
+        // if the selection is short let's not annoy our users.
+        if (('' + selection).length < Number.parseInt('120')) {
+            return;
+        }
+
+        // create a div outside of the visible area and fill it with the selected text.
+        var bodyElement = document.getElementsByTagName('body')[0];
+        var newdiv = document.createElement('div');
+        newdiv.style.position = 'absolute';
+        newdiv.style.left = '-99999px';
+        bodyElement.appendChild(newdiv);
+        newdiv.appendChild(selection.getRangeAt(0).cloneContents());
+
+        // we need a <pre> tag workaround.
+        // otherwise the text inside "pre" loses all the line breaks!
+        if (selection.getRangeAt(0).commonAncestorContainer.nodeName === 'PRE') {
+            newdiv.innerHTML = "<pre>" + newdiv.innerHTML + "</pre>";
+        }
+
+        var url = document.location.href;
+        newdiv.innerHTML += '<br />'
+            + '来源: JasonToJan's Blog<br />'
+            + '作者: Jason<br />'
+            + '链接: <a href="' + url + '">' + url + '</a><br />'
+            + '本文章著作权归作者所有，任何形式的转载都请注明出处。';
+
+        selection.selectAllChildren(newdiv);
+        window.setTimeout(function () { bodyElement.removeChild(newdiv); }, 200);
+    });
+</script>
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget">
+            <div class="toc-title"><i class="fa fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fa fa-list"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            // headingsOffset: -205,
+            headingSelector: 'h1, h2, h3, h4'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h1, h2, h3, h4').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).slideUp(500);
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).slideDown(500);
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+    
+
+</main>
+
+
+<script src="https://cdn.bootcss.com/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script>
+    MathJax.Hub.Config({
+        tex2jax: {inlineMath: [['$', '$'], ['\(', '\)']]}
+    });
+</script>
+
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+<!-- 代码语言 -->
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+<!-- 代码块复制 -->
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+<script type="text/javascript" src="/libs/codeBlock/clipboard.min.js"></script>
+<!-- 代码块收缩 -->
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script> 
+<!-- 代码块折行 -->
+<style type="text/css">code[class*="language-"], pre[class*="language-"] { white-space: pre !important; }</style>
+
+
+    <footer class="page-footer bg-color">
+    <div class="container row center-align">
+        <div class="col s12 m8 l8 copy-right">
+            &copy; 2023-2023 JasonJan. 版权所有
+
+            
+            &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
+            <span class="white-color">274.7k</span>
+            
+
+            <br>
+            <span id="sitetime"></span>
+
+            
+            
+            <br>
+            
+            <span id="busuanzi_container_site_pv" style='display:none'>
+                <i class="fa fa-heart-o"></i>
+                本站总访问量 <span id="busuanzi_value_site_pv" class="white-color"></span>
+            </span>
+            
+            
+            <span id="busuanzi_container_site_uv" style='display:none'>
+                人次,&nbsp;访客数 <span id="busuanzi_value_site_uv" class="white-color"></span> 人.
+            </span>
+            
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/JasonToJan" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fa fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:jason1211241203@gmail.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fa fa-envelope-open"></i>
+    </a>
+
+
+
+    <a href="https://zhihu.com/people/JasonJan" class="tooltipped" target="_blank" data-tooltip="访问我的知乎" data-position="top" data-delay="50">
+        <i class="fa fa-inverse">知</i>
+    </a>
+
+
+
+    <a href="http://wpa.qq.com/msgrd?v=3&uin=1211241203&site=qq&menu=yes" class="tooltipped" target="_blank" data-tooltip="访问我的知乎" data-position="top" data-delay="50">
+        <i class="fa fa-qq"></i>
+    </a>
+
+
+
+    <a href="https://weibo.com/JasonJan" class="tooltipped" target="_blank" data-tooltip="关注我的微博" data-position="top" data-delay="50">
+        <i class="fa fa-weibo"></i>
+    </a>
+
+
+
+    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
+        <i class="fa fa-rss"></i>
+    </a>
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+<!-- 不蒜子计数初始值纠正 -->
+<script>
+    $(document).ready(function () {
+
+        var int = setInterval(fixCount, 50);
+        var pvcountOffset = 80000;
+        var uvcountOffset = 20000;
+
+        function fixCount() {
+            if (document.getElementById("busuanzi_container_site_pv").style.display != "none") {
+                $("#busuanzi_value_site_pv").html(parseInt($("#busuanzi_value_site_pv").html()) + pvcountOffset);
+                clearInterval(int);
+            }
+            if ($("#busuanzi_container_site_pv").css("display") != "none") {
+                $("#busuanzi_value_site_uv").html(parseInt($("#busuanzi_value_site_uv").html()) + uvcountOffset); // 加上初始数据 
+                clearInterval(int);
+            }
+        }
+    });
+</script>
+
+<script language=javascript>
+    function siteTime() {
+        window.setTimeout("siteTime()", 1000);
+        var seconds = 1000;
+        var minutes = seconds * 60;
+        var hours = minutes * 60;
+        var days = hours * 24;
+        var years = days * 365;
+        var today = new Date();
+        var todayYear = today.getFullYear();
+        var todayMonth = today.getMonth() + 1;
+        var todayDate = today.getDate();
+        var todayHour = today.getHours();
+        var todayMinute = today.getMinutes();
+        var todaySecond = today.getSeconds();
+        /* Date.UTC() -- 返回date对象距世界标准时间(UTC)1970年1月1日午夜之间的毫秒数(时间戳)
+        year - 作为date对象的年份，为4位年份值
+        month - 0-11之间的整数，做为date对象的月份
+        day - 1-31之间的整数，做为date对象的天数
+        hours - 0(午夜24点)-23之间的整数，做为date对象的小时数
+        minutes - 0-59之间的整数，做为date对象的分钟数
+        seconds - 0-59之间的整数，做为date对象的秒数
+        microseconds - 0-999之间的整数，做为date对象的毫秒数 */
+        var t1 = Date.UTC(2017, 09, 11, 00, 00, 00); //北京时间2018-2-13 00:00:00
+        var t2 = Date.UTC(todayYear, todayMonth, todayDate, todayHour, todayMinute, todaySecond);
+        var diff = t2 - t1;
+        var diffYears = Math.floor(diff / years);
+        var diffDays = Math.floor((diff / days) - diffYears * 365);
+        var diffHours = Math.floor((diff - (diffYears * 365 + diffDays) * days) / hours);
+        var diffMinutes = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours) / minutes);
+        var diffSeconds = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours - diffMinutes * minutes) / seconds);
+        document.getElementById("sitetime").innerHTML = "本站已运行 " + diffYears + " 年 " + diffDays + " 天 " + diffHours + " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+    }/*因为建站时间还没有一年，就将之注释掉了。需要的可以取消*/
+    siteTime();
+</script>
+
+<link rel="stylesheet" href="/css/prism.css">
+<script src="/js/prism.js" async></script>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fa fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script src="/js/search.js"></script>
+<script type="text/javascript">
+$(function () {
+    searchFunc("/" + "search.xml", 'searchInput', 'searchResult');
+});
+</script>
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fa fa-angle-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    <script type="text/javascript"> var OriginTitile = document.title, st; document.addEventListener("visibilitychange", function () { document.hidden ? (document.title = "Σ(っ °Д °;)っ喔哟，崩溃啦！", clearTimeout(st)) : (document.title = "φ(゜▽゜*)♪咦，又好了！", st = setTimeout(function () { document.title = OriginTitile }, 3e3)) })
+    </script>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=查教程获取"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+        dataLayer.push(arguments);
+    }
+
+    gtag('js', new Date());
+    gtag('config', '查教程获取');
+</script>
+
+
+
+    
+    <script src="/libs/others/clicklove.js"></script>
+    
+
+    
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    <!-- 雪花特效 -->
+    
+
+</body>
+
+</html>

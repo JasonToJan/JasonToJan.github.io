@@ -1,0 +1,1775 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="Android 阿里+腾讯+小米 2019面经, Android iOS Flutter">
+    <meta name="baidu-site-verification" content="fmlEuI34ir" />
+    <meta name="google-site-verification" content="yCy2azpds5XSuGZvis6OuA-XIGF5GuGpYRAaGfD6o48" />
+    <meta name="360-site-verification" content="b7c11a830ef90fd1464ad6206bb7b6e7" />
+    <meta name="description" content="1 Android 基础1.1 Android正常和异常情况下的生命周期
+Android应用程序的生命周期是指从应用程序启动到退出的整个过程，包括各种状态和事件。在正常情况下，Android应用程序经历以下生命周期：1.onCreate()">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>Android 阿里+腾讯+小米 2019面经 | JasonToJan&#39;s Blog</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+    <style type="text/css">
+        
+    </style>
+
+    <script src="/libs/jquery/jquery-2.2.0.min.js"></script>
+    <script src="https://sdk.jinrishici.com/v2/browser/jinrishici.js" charset="utf-8"></script>
+    <script>
+        var _hmt = _hmt || [];
+        (function () {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?ce84511d3df71640a9378a69f6293044";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+    
+        <script>
+            (function(){
+                var bp = document.createElement('script');
+                var curProtocol = window.location.protocol.split(':')[0];
+                if (curProtocol === 'https') {
+                    bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+                }
+                else {
+                    bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+                }
+                var s = document.getElementsByTagName("script")[0];
+                s.parentNode.insertBefore(bp, s);
+            })();
+        </script>
+    
+
+    <script>
+        (function(){
+        var src = "https://jspassport.ssl.qhimg.com/11.0.1.js?d182b3f28525f2db83acfaaf6e696dba";
+        document.write('<script src="' + src + '" id="sozz"><\/script>');
+        })();
+    </script>
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">JasonToJan's Blog</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fa fa-navicon"></i></a>
+<ul class="right">
+    
+    <li class="hide-on-med-and-down">
+        <a href="/" class="waves-effect waves-light">
+            
+            <i class="fa fa-home"></i>
+            
+            <span>首页</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/tags" class="waves-effect waves-light">
+            
+            <i class="fa fa-tags"></i>
+            
+            <span>标签</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/categories" class="waves-effect waves-light">
+            
+            <i class="fa fa-bookmark"></i>
+            
+            <span>分类</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/archives" class="waves-effect waves-light">
+            
+            <i class="fa fa-archive"></i>
+            
+            <span>归档</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/about" class="waves-effect waves-light">
+            
+            <i class="fa fa-user-circle-o"></i>
+            
+            <span>关于</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/friends" class="waves-effect waves-light">
+            
+            <i class="fa fa-address-book"></i>
+            
+            <span>友情链接</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/contact" class="waves-effect waves-light">
+            
+            <i class="fa fa-comments"></i>
+            
+            <span>留言板</span>
+        </a>
+    </li>
+    
+    <li>
+        <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+            <i id="searchIcon" class="fa fa-search" title="搜索"></i>
+        </a>
+    </li>
+</ul>
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">JasonToJan's Blog</div>
+        <div class="logo-desc">
+            
+            专注移动端，热爱生活，热衷开发。
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li>
+            <a href="/" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-home"></i>
+                
+                首页
+            </a>
+        </li>
+        
+        <li>
+            <a href="/tags" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-tags"></i>
+                
+                标签
+            </a>
+        </li>
+        
+        <li>
+            <a href="/categories" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-bookmark"></i>
+                
+                分类
+            </a>
+        </li>
+        
+        <li>
+            <a href="/archives" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-archive"></i>
+                
+                归档
+            </a>
+        </li>
+        
+        <li>
+            <a href="/about" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-user-circle-o"></i>
+                
+                关于
+            </a>
+        </li>
+        
+        <li>
+            <a href="/friends" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-address-book"></i>
+                
+                友情链接
+            </a>
+        </li>
+        
+        <li>
+            <a href="/contact" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-comments"></i>
+                
+                留言板
+            </a>
+        </li>
+        
+        
+        <li><div class="divider"></div></li>
+        <li>
+            <a href="https://github.com/JasonToJan/hexo-matery-modified" class="waves-effect waves-light" target="_blank">
+                <i class="fa fa-github-square fa-fw"></i>Fork Me
+            </a>
+        </li>
+        
+    </ul>
+</div>
+
+        </div>
+
+        
+            <style>
+    .nav-transparent .github-corner {
+        display: none !important;
+    }
+
+    .github-corner {
+        position: absolute;
+        z-index: 10;
+        top: 0;
+        right: 0;
+        border: 0;
+        transform: scale(1.1);
+    }
+
+    .github-corner svg {
+        color: #0f9d58;
+        fill: #fff;
+        height: 64px;
+        width: 64px;
+    }
+
+    .github-corner:hover .octo-arm {
+        animation: a 0.56s ease-in-out;
+    }
+
+    .github-corner .octo-arm {
+        animation: none;
+    }
+
+    @keyframes a {
+        0%,
+        to {
+            transform: rotate(0);
+        }
+        20%,
+        60% {
+            transform: rotate(-25deg);
+        }
+        40%,
+        80% {
+            transform: rotate(10deg);
+        }
+    }
+</style>
+
+<a href="https://github.com/JasonToJan/hexo-matery-modified" class="github-corner tooltipped hide-on-med-and-down" target="_blank"
+   data-tooltip="Fork Me" data-position="left" data-delay="50">
+    <svg viewBox="0 0 250 250" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
+              fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
+              fill="currentColor" class="octo-body"></path>
+    </svg>
+</a>
+        
+    </nav>
+
+</header>
+
+    
+<script src="/libs/cryptojs/crypto-js.min.js"></script>
+<script>
+    (function() {
+        let pwd = '';
+        if (pwd && pwd.length > 0) {
+            if (pwd !== CryptoJS.SHA256(prompt('请输入访问本文章的密码')).toString(CryptoJS.enc.Hex)) {
+                alert('密码错误，将返回主页！');
+                location.href = '/';
+            }
+        }
+    })();
+</script>
+
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/0.jpg')">
+    <div class="container">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <div class="description center-align post-title">
+                        Android 阿里+腾讯+小米 2019面经
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        margin: 35px 0 15px 0;
+        padding-left: 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #toc-content .is-active-link::before {
+        background-color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 20px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                        <a href="/tags/Android-%E9%9D%A2%E8%AF%95%E9%A2%98/" target="_blank">
+                            <span class="chip bg-color">Android 面试题</span>
+                        </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fa fa-bookmark fa-fw icon-category"></i>
+                        
+                        <a href="/categories/Android/" class="post-category" target="_blank">
+                            Android
+                        </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                <div class="post-date info-break-policy">
+                    <i class="fa fa-calendar-minus-o fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2023-01-03
+                </div>
+
+                <div class="post-author info-break-policy">
+                    <i class="fa fa-user-o fa-fw"></i>作者:&nbsp;&nbsp;
+                    
+                    Jason
+                    
+                </div>
+
+                
+                
+                <div class="info-break-policy">
+                    <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
+                    21.1k
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
+                    75 分
+                </div>
+                
+                
+
+                
+                <div id="busuanzi_container_page_pv" class="info-break-policy">
+                    <i class="fa fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
+                    <span id="busuanzi_value_page_pv"></span>
+                </div>
+                
+            </div>
+        </div>
+        <hr class="clearfix">
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h2 id="1-Android-基础"><a href="#1-Android-基础" class="headerlink" title="1 Android 基础"></a>1 Android 基础</h2><h3 id="1-1-Android正常和异常情况下的生命周期"><a href="#1-1-Android正常和异常情况下的生命周期" class="headerlink" title="1.1 Android正常和异常情况下的生命周期"></a>1.1 Android正常和异常情况下的生命周期</h3><blockquote>
+<p>Android应用程序的生命周期是指从应用程序启动到退出的整个过程，包括各种状态和事件。在正常情况下，Android应用程序经历以下生命周期：<br><br>1.onCreate()：当应用程序第一次创建时调用，通常用于初始化应用程序和设置UI元素。<br>2.onStart()：在应用程序启动时调用，通常用于启动后台服务等。<br>3.onResume()：当应用程序从后台返回前台时调用，通常用于恢复应用程序状态和重新启动动画等。<br>4.onPause()：当应用程序从前台切换到后台时调用，通常用于保存应用程序状态和停止动画等。<br>5.onStop()：当应用程序完全停止时调用，通常用于释放资源和停止后台服务等。<br>6.onDestroy()：当应用程序销毁时调用，通常用于释放资源和保存状态等。<br><br>在异常情况下，Android应用程序可能会遇到以下生命周期事件：<br><br>1.onRestart()：当应用程序从后台返回前台时，如果应用程序已经停止，则onRestart()将首先被调用，然后再依次调用onStart()、onResume()等方法。<br>2.onSaveInstanceState()：当应用程序被暂停或销毁时，如果需要保存应用程序状态，则可以在此方法中保存应用程序状态。<br>3.onRestoreInstanceState()：当应用程序重新启动时，如果应用程序之前已经保存了状态，则可以在此方法中恢复应用程序状态。<br>4.onConfigurationChanged()：当设备的配置发生变化（例如旋转屏幕、更改语言等）时，此方法将被调用。在此方法中，应用程序可以根据新的配置更改UI元素。<br><br>需要注意的是，生命周期事件的调用顺序可能会因为应用程序的状态不同而有所不同，因此开发者需要根据实际情况灵活处理。</p>
+</blockquote>
+<h3 id="1-2-Activity的四种启动模式"><a href="#1-2-Activity的四种启动模式" class="headerlink" title="1.2 Activity的四种启动模式"></a>1.2 Activity的四种启动模式</h3><blockquote>
+<p>在Android应用程序中，Activity是一个重要的组件，它用于展示用户界面和与用户交互。Activity有四种启动模式，它们分别是：<br><br>1.standard（标准模式）：每次启动Activity都会创建一个新的实例。如果应用程序中已经有了一个相同的Activity实例，它也会被重新创建。<br><br>2.singleTop（栈顶复用模式）：如果要启动的Activity已经在栈顶，则不会创建新的实例，而是直接使用栈顶的实例。如果要启动的Activity不在栈顶，则会创建新的实例。<br><br>3.singleTask（栈内复用模式）：如果要启动的Activity已经存在于任务栈中，则会将它上面的所有Activity都出栈，使得它成为栈顶并调用它的onNewIntent()方法，否则会创建新的实例。<br><br>4.singleInstance（单实例模式）：该模式下，系统会创建一个新的任务栈来管理该Activity实例。如果要启动的Activity已经存在于该任务栈中，则不会创建新的实例，而是直接使用该实例。如果要启动的Activity不在该任务栈中，则会在新的任务栈中创建新的实例。<br><br>需要注意的是，启动模式可以在AndroidManifest.xml文件中通过设置Activity的android:launchMode属性来指定，也可以在代码中通过Intent的setFlags()方法来设置。不同的启动模式适用于不同的场景，开发者需要根据实际需求选择合适的启动模式。</p>
+</blockquote>
+<h3 id="1-3-IntentService比Service好在哪"><a href="#1-3-IntentService比Service好在哪" class="headerlink" title="1.3 IntentService比Service好在哪?"></a>1.3 IntentService比Service好在哪?</h3><blockquote>
+<p>ntentService相对于普通的Service主要有以下优劣点：<br><br>优点：<br>自动执行任务：IntentService会自动执行所有传递给它的Intent，而不需要开发者手动管理线程和任务的执行。<br><br>自动停止服务：IntentService在执行完所有任务后会自动停止服务，而不需要开发者手动调用stopSelf()方法来停止服务。<br><br>避免ANR：IntentService在执行任务时会自动创建工作线程，这可以避免在主线程中执行耗时操作而导致的ANR问题。<br><br>保证任务执行顺序：IntentService会将传递给它的Intent放入任务队列中，并按照顺序执行所有任务，从而保证了任务的执行顺序。<br><br>劣点：<br>不适用于长时间运行的任务：由于IntentService会在所有任务执行完毕后自动停止服务，因此不适合长时间运行的任务，如播放音乐等需要持续运行的任务。<br><br>不适用于需要频繁启动服务的场景：由于IntentService会在每个任务执行完毕后自动停止服务，因此如果需要频繁启动服务执行任务，可能会导致服务频繁创建和销毁，从而增加系统开销和耗费资源。<br><br>综上所述，IntentService适用于需要执行一些短时间、无需长时间运行的任务，且需要保证任务执行顺序和避免ANR问题的场景。如果需要执行长时间运行的任务，或需要频繁启动服务执行任务，建议使用普通的Service并手动管理任务执行和服务生命周期。</p>
+</blockquote>
+<h3 id="1-4-Thread和HandlerThread区别"><a href="#1-4-Thread和HandlerThread区别" class="headerlink" title="1.4 Thread和HandlerThread区别?"></a>1.4 Thread和HandlerThread区别?</h3><blockquote>
+<p>在Android中，Thread和HandlerThread都是用于多线程编程的类，它们的主要区别在于以下几点：<br><br>1.用途不同：Thread是Java中的一个类，它用于创建一个新线程。而HandlerThread是Android中的一个类，它继承自Thread类，专门用于创建一个带有Looper的线程。<br><br>2.是否带有Looper：Thread创建的线程不带有Looper，因此不能使用Handler进行消息的处理。而HandlerThread创建的线程带有Looper，可以使用Handler进行消息的处理。<br><br>3.使用方式不同：使用Thread时，需要手动调用start()方法启动线程，并重写run()方法实现线程的逻辑。使用HandlerThread时，需要先调用start()方法启动线程，然后通过getLooper()方法获取Looper对象，再通过该Looper对象创建Handler对象进行消息的处理。<br><br>4.生命周期不同：Thread的生命周期由系统管理，一旦线程的run()方法执行结束，线程就会被销毁。而HandlerThread的生命周期由应用程序管理，可以通过quit()方法停止线程，并在必要时重新启动线程。<br><br>综上所述，Thread和HandlerThread都是用于多线程编程的类，但它们的用途、是否带有Looper、使用方式和生命周期等方面有所不同。在实际应用中，可以根据具体需求选择适合的类来创建线程。如果需要进行消息的处理，可以使用带有Looper的HandlerThread。否则，可以使用普通的Thread来创建线程。</p>
+</blockquote>
+<h3 id="1-5-关于-lt-include-gt-lt-merge-gt-lt-stub-gt-三者的使用场景"><a href="#1-5-关于-lt-include-gt-lt-merge-gt-lt-stub-gt-三者的使用场景" class="headerlink" title="1.5 关于&lt; include &gt;&lt; merge &gt;&lt; stub &gt;三者的使用场景?"></a>1.5 关于&lt; include &gt;&lt; merge &gt;&lt; stub &gt;三者的使用场景?</h3><blockquote>
+<p>在Android布局文件中，<include>、<merge>和<stub>标签都是用于布局的标签，它们的主要用途如下：<br><br>include：这个标签用于将其他布局文件包含进来，从而实现布局的复用。使用include标签可以在一个布局文件中引用另一个布局文件中的视图，并将它们合并到同一个布局中。这个标签可以提高布局的可读性和维护性，使得布局文件更加简洁。<br><br>merge：这个标签用于减少布局的层级。在布局文件中，每一个布局容器（例如LinearLayout、RelativeLayout等）都会增加一个层级。如果布局文件嵌套过深，会导致渲染效率低下，从而影响应用程序的性能。使用merge标签可以减少布局的层级，从而提高渲染效率。<br><br>stub：这个标签用于延迟加载视图。有些视图可能不需要在应用程序启动时就加载出来，而是在需要时再进行加载。使用stub标签可以将这些视图定义在布局文件中，但不会在应用程序启动时进行加载。当需要使用这些视图时，可以通过代码动态加载。这个标签可以提高应用程序的启动速度，并减少内存的消耗。<br><br>综上所述，include、merge和stub这三个标签在Android布局文件中都有着不同的用途，可以根据具体的需求进行选择和使用。</p>
+</blockquote>
+<h3 id="1-6-消息机制的理解？"><a href="#1-6-消息机制的理解？" class="headerlink" title="1.6 消息机制的理解？"></a>1.6 消息机制的理解？</h3><blockquote>
+<p>Android消息机制是Android中一种重要的线程间通信方式，它通过Handler、Looper和MessageQueue等组件实现。在Android应用中，消息机制广泛应用于各种场景，例如在UI线程中更新UI、在子线程中执行耗时操作并通过Handler将执行结果传递回UI线程、在Service中执行后台操作并通过Handler将执行结果传递回UI线程等。<br><br>在Android消息机制中，Looper负责循环读取MessageQueue中的消息，如果有新的消息则将其分发给对应的Handler进行处理；MessageQueue则负责存储所有的消息，并按照优先级进行排序；Handler则负责处理消息并更新UI等操作。</p>
+</blockquote>
+<h3 id="1-7-界面卡顿的原因有哪些？"><a href="#1-7-界面卡顿的原因有哪些？" class="headerlink" title="1.7 界面卡顿的原因有哪些？"></a>1.7 界面卡顿的原因有哪些？</h3><blockquote>
+<p>Android 界面卡顿通常是由以下原因引起的：<br><br>1.布局层次过深：布局层次过深会增加绘制的时间，导致界面卡顿。尽量减少布局的层次，使用扁平化的布局。<br><br>2.过度绘制：过度绘制会浪费大量的时间，导致界面卡顿。通过 Android Studio 中的布局检查工具可以检测出哪些区域过度绘制，并进行优化。<br><br>3.内存泄漏：内存泄漏会占用过多的内存，导致界面卡顿。需要及时释放不再使用的对象，避免内存泄漏。<br><br>4.图片过大：过大的图片会占用过多的内存，导致界面卡顿。可以使用 Glide 或者 Fresco 等图片加载库加载图片，并进行压缩处理。<br><br>5.耗时的操作：在主线程中进行耗时的操作会导致界面卡顿。可以将这些操作放到子线程中进行。<br><br>6.垃圾回收：频繁的垃圾回收会导致界面卡顿。可以通过使用对象池等方式减少垃圾回收的次数。<br><br>7.动画过渡效果：复杂的动画过渡效果会占用过多的资源，导致界面卡顿。尽量使用简单的动画效果，并设置合适的时间。<br><br>综上所述，Android 界面卡顿的原因是多种多样的，需要开发人员在开发过程中及时发现问题，并进行优化处理。</p>
+</blockquote>
+<h3 id="1-8-造成OOM-x2F-ANR的原因有哪些？"><a href="#1-8-造成OOM-x2F-ANR的原因有哪些？" class="headerlink" title="1.8 造成OOM&#x2F;ANR的原因有哪些？"></a>1.8 造成OOM&#x2F;ANR的原因有哪些？</h3><blockquote>
+<p>Android中OOM（Out of Memory）和ANR（Application Not Responding）是常见的问题，可能会导致应用程序崩溃或无响应。下面是造成OOM和ANR的一些常见原因：<br><br>1.内存泄漏：内存泄漏是指应用程序使用的内存不会被释放，导致内存占用不断增加。当内存占用超过设备可用内存时，就会发生OOM。<br><br>2.内存不足：当应用程序需要使用大量内存时，设备的内存可能不足，导致OOM。<br><br>3.过度绘制：过度绘制是指在屏幕上绘制过多的像素，导致性能下降。过度绘制会消耗大量的内存和CPU资源，从而导致OOM和ANR。<br><br>4.UI线程阻塞：如果在UI线程中执行耗时的操作，例如网络请求或数据库操作，会导致UI线程阻塞，从而导致ANR。<br><br>5.锁竞争：当多个线程尝试同时访问共享资源时，可能会发生锁竞争，从而导致ANR。<br><br>6.线程泄漏：如果线程没有正确地终止或释放资源，可能会导致线程泄漏。线程泄漏会导致内存占用不断增加，从而导致OOM。<br><br>这些问题的解决方法包括：及时释放内存，优化代码，使用异步操作和线程池等技术，避免过度绘制，避免在UI线程中执行耗时操作，以及使用锁机制等技术来避免锁竞争。</p>
+</blockquote>
+<h3 id="1-9-Activity与Fragment生命周期有何联系"><a href="#1-9-Activity与Fragment生命周期有何联系" class="headerlink" title="1.9 Activity与Fragment生命周期有何联系?"></a>1.9 Activity与Fragment生命周期有何联系?</h3><blockquote>
+<p>Fragment的生命周期包括以下方法：<br><br>1.onAttach(): Fragment被添加到Activity<br><br>2.onCreate(): Fragment正在被创建<br><br>3.onCreateView(): Fragment创建了它的用户界面<br><br>4.onStart(): Fragment正在被启动，但未进入前台<br><br>5.onResume(): Fragment已进入前台并开始运行<br><br>6.onPause(): Fragment正在失去前台焦点，但未停止完全<br><br>7.onStop(): Fragment已停止<br><br>8.onDestroyView(): Fragment的视图已被销毁<br><br>9.onDestroy(): Fragment正在被销毁<br><br>10.onDetach(): Fragment被从Activity中移除</p>
+</blockquote>
+<h3 id="1-10-Activity与Fragment如何通信？"><a href="#1-10-Activity与Fragment如何通信？" class="headerlink" title="1.10 Activity与Fragment如何通信？"></a>1.10 Activity与Fragment如何通信？</h3><blockquote>
+<p>Activity与Fragment之间可以通过多种方式进行通信，包括以下几种：<br><br>1.通过接口回调：Activity可以定义一个接口，Fragment实现这个接口，然后将Activity的引用传递给Fragment。这样，Fragment就可以调用Activity中实现的方法，从而实现Activity与Fragment之间的通信。<br><br>2.通过广播：Activity可以发送广播，Fragment可以注册相应的广播接收器来接收广播。这样，Activity就可以通过发送广播的方式向Fragment发送消息。<br><br>3.通过Intent传递数据：Activity可以使用Intent传递数据给Fragment。在Fragment中，可以通过getArguments()方法获取Intent中传递的数据。<br><br>4.直接访问Activity中的公共方法或变量：Activity中的公共方法或变量可以被Fragment直接访问。这种方式虽然简单，但容易导致耦合度过高，不建议使用。<br><br>需要注意的是，当Activity与Fragment之间进行通信时，需要考虑它们的生命周期，以避免在不合适的时候进行通信，导致应用程序崩溃或出现其他问题。例如，在Fragment的onAttach()方法中获取Activity的引用，在Fragment的onDetach()方法中释放引用，以确保在Fragment没有附加到Activity时，不会出现空指针异常等问题。</p>
+</blockquote>
+<h3 id="1-11-Android什么情况下会发生内存泄漏？"><a href="#1-11-Android什么情况下会发生内存泄漏？" class="headerlink" title="1.11 Android什么情况下会发生内存泄漏？"></a>1.11 Android什么情况下会发生内存泄漏？</h3><blockquote>
+<p>在Android中，内存泄漏通常是指当一个对象在不再需要时仍然被保留在内存中，导致应用程序占用的内存越来越多，最终可能会导致应用程序崩溃或变得非常缓慢。<br><br>以下是一些常见的导致内存泄漏的情况：<br><br>静态引用：如果一个对象被一个静态引用持有，即使应用程序不再需要该对象，该对象也不会被垃圾回收器回收，直到应用程序退出或静态引用被清除为止。<br><br>长时间运行的线程：如果一个线程不会停止，它会持续保持对某些对象的引用，这些对象可能是不再需要的。如果该线程是一个后台线程，它可能会一直运行，直到应用程序退出。<br><br>匿名内部类：如果一个匿名内部类引用了外部类的对象，当该内部类实例化时，它会隐式地持有对外部类对象的引用。如果该内部类的实例被保留，并且包含该内部类的对象已经不再需要，则外部类对象不会被垃圾回收器回收，导致内存泄漏。<br><br>没有正确释放资源：如果使用了一些需要手动释放资源的类（如Cursor），并且没有在不再需要时及时关闭它们，这些资源可能会被保留在内存中，导致内存泄漏。<br><br>单例模式：如果单例模式实现不当，可能会导致对象一直被保留在内存中，即使应用程序不再需要它。<br><br>内部类和Activity的生命周期：如果一个Activity持有对其他对象的引用（如内部类、AsyncTask等），并且这些对象的生命周期超过了Activity的生命周期，这些对象可能会导致内存泄漏。<br><br>总之，内存泄漏是由于应用程序中的某些对象被错误地保留在内存中而导致的。要避免内存泄漏，开发人员应该仔细设计他们的代码，并及时释放不再需要的对象。此外，使用工具（如LeakCanary）可以帮助开发人员及时检测和解决内存泄漏问题。</p>
+</blockquote>
+<h2 id="2-Android-高级"><a href="#2-Android-高级" class="headerlink" title="2 Android 高级"></a>2 Android 高级</h2><h3 id="2-1-Android最新保活机制"><a href="#2-1-Android最新保活机制" class="headerlink" title="2.1 Android最新保活机制"></a>2.1 Android最新保活机制</h3><blockquote>
+<p>Android系统不断对应用的保活机制进行优化和限制，一些过于耗费资源和不符合系统规范的保活方式可能会被系统限制或禁止。因此，应用开发者需要谨慎使用保活机制，根据实际需求和系统限制进行合理的调整和优化。<br>目前，Android系统中常用的保活机制包括：<br><br>1.前台Service：在Android 5.0及以上版本中，使用前台Service是保活机制的一种可靠方式。前台Service可以通过Notification进行通知栏提示，让用户知道该应用正在运行，从而避免被系统杀掉。<br><br>2.JobScheduler调度器：JobScheduler是一种可靠的后台任务调度器，可以让应用在后台周期性地执行一些需要保活的任务，如更新数据、同步数据等。JobScheduler可以在系统优化电量的情况下自动调整任务执行的时间和频率，从而保证系统不会因为应用而耗费过多的电量。<br><br>3.前台Activity：在Android 11及以上版本中，使用前台Activity进行UI展示是保活机制的一种可靠方式。前台Activity可以通过设置TYPE_APPLICATION_OVERLAY窗口类型来实现常驻屏幕的效果，从而提高应用的优先级，避免被系统休眠或被杀掉。<br><br>4.双进程守护：通过将关键进程和业务进程分离，实现了关键进程的常驻和守护。当系统将业务进程杀掉后，关键进程可以通过复活业务进程来重新运行应用。<br><br>需要注意的是，过度使用保活机制可能会导致应用程序的行为变得复杂和不可预测，应该根据实际情况进行使用和调整。同时，应用开发者也应该遵守Android系统规范和开发指南，不断优化应用程序，提高应用程序的稳定性和性能。</p>
+</blockquote>
+<h3 id="2-2-如何有效加载大图？多图？"><a href="#2-2-如何有效加载大图？多图？" class="headerlink" title="2.2 如何有效加载大图？多图？"></a>2.2 如何有效加载大图？多图？</h3><blockquote>
+<p>Android应用在加载大图和多图时可能会遇到OOM（Out of Memory）错误，这是因为图片的分辨率较高，内存占用较大。以下是一些解决方案，以帮助您高效地加载大图和多图，并避免OOM错误：<br><br>1.图片压缩：在加载图片之前，将其压缩至适当的分辨率，以减少内存占用。可以使用Android提供的BitmapFactory.Options类来实现图片的压缩。<br><br>2.缓存机制：将加载的图片缓存在内存或磁盘中，以便再次访问时能够快速加载。可以使用Android提供的LruCache类或开源库Picasso、Glide、Fresco等来实现缓存机制。<br><br>3.图片裁剪：在显示图片时，将其裁剪至适当的大小，以减少内存占用。可以使用ImageView的scaleType属性来实现图片的裁剪。<br><br>4.图片格式转换：选择合适的图片格式，例如WebP、JPEG等。WebP是Google推出的一种支持透明度、动画和无损压缩的图片格式，它比PNG和JPEG格式更小，可减少内存占用。<br><br>5.分段加载：将图片分成多个部分加载，只加载当前显示区域内的部分图片，以减少内存占用。可以使用Android提供的RecyclerView、ListView等控件来实现分段加载。<br><br>6.异步加载：使用异步加载方式加载图片，避免在主线程中执行耗时操作，以提高应用的响应速度。可以使用AsyncTask、Thread等来实现异步加载。<br><br>总的来说，加载大图和多图时需要注意内存占用问题，结合上述解决方案可以实现高效加载，避免OOM错误。</p>
+</blockquote>
+<h3 id="2-3-Android-RecyclerView实现原理，它相对于ListView做了哪些优化呢？"><a href="#2-3-Android-RecyclerView实现原理，它相对于ListView做了哪些优化呢？" class="headerlink" title="2.3 Android RecyclerView实现原理，它相对于ListView做了哪些优化呢？"></a>2.3 Android RecyclerView实现原理，它相对于ListView做了哪些优化呢？</h3><blockquote>
+<p>RecyclerView是Android 5.0引入的一个全新的列表控件，它的实现原理与ListView有所不同。RecyclerView将列表的布局和渲染交给了LayoutManager，通过将控件复用机制与动画特效结合起来，从而实现了更加灵活高效的列表控件。<br><br>相对于ListView，RecyclerView具有以下几个优势：<br><br>1.更加灵活的布局：RecyclerView的布局完全由LayoutManager控制，开发者可以自由定制列表的布局方式，例如实现瀑布流布局、卡片式布局等等。<br><br>2.更加高效的复用机制：RecyclerView的控件复用机制比ListView更加灵活高效。在ListView中，如果需要实现不同类型的Item，需要通过getItemViewType()方法进行区分，并创建不同的ViewHolder。而在RecyclerView中，每个Item只需要对应一个ViewHolder，LayoutManager会根据需要动态调整ViewHolder的复用情况，从而避免了不必要的内存开销。<br><br>支持动画特效：RecyclerView支持对Item的添加、删除、移动等操作进行动画特效的处理。这一特性使得RecyclerView更加生动有趣，提高了用户的交互体验。<br><br>更好的扩展性：RecyclerView的ItemDecoration和ItemAnimator等API为开发者提供了更加丰富的扩展性。通过自定义这些类可以实现更加复杂的列表特效，例如实现悬浮头部、拖拽排序等功能。<br><br>总之，相对于ListView，RecyclerView具有更加灵活高效的布局、复用、动画特效等方面的优势。因此，在Android开发中，推荐使用RecyclerView来实现列表控件。</p>
+</blockquote>
+<h3 id="2-4-RecyclerView的复用原理？"><a href="#2-4-RecyclerView的复用原理？" class="headerlink" title="2.4 RecyclerView的复用原理？"></a>2.4 RecyclerView的复用原理？</h3><blockquote>
+<p>RecyclerView的复用机制是其能够高效滚动和支持大量数据的关键之一。与ListView不同，RecyclerView的控件复用机制由LayoutManager来控制，它的复用机制与ListView的实现有所不同。<br><br>RecyclerView通过ViewHolder机制实现控件的复用。ViewHolder是一种对象池，用于存储每一个Item的View及其对应的数据。RecyclerView在滚动时，根据当前显示的视图区域以及可见的Item的个数，决定哪些ViewHolder需要被回收，哪些需要被重新绑定数据。<br><br>在RecyclerView的复用机制中，需要注意以下几个方面：<br>1.getItemViewType()方法：在RecyclerView中，不同类型的Item可以使用不同的布局，通过重写getItemViewType()方法，可以为不同类型的Item指定不同的布局类型，从而实现多类型Item的支持。<br><br>2.onCreateViewHolder()方法：RecyclerView在创建ViewHolder时，会调用LayoutManager的onCreateViewHolder()方法，该方法返回的ViewHolder必须与当前Item的布局类型相对应。<br><br>3.onBindViewHolder()方法：RecyclerView在显示Item时，会调用LayoutManager的onBindViewHolder()方法，该方法将ViewHolder与对应的数据绑定，使得数据正确显示在对应的Item上。<br><br>4.onViewRecycled()方法：RecyclerView在回收ViewHolder时，会调用LayoutManager的onViewRecycled()方法，该方法可以清理ViewHolder中的状态，使得ViewHolder可以重新使用。<br><br>总之，RecyclerView通过ViewHolder机制实现了高效的控件复用机制，使得它能够高效滚动和支持大量数据的显示。但是在使用RecyclerView时，也需要注意ViewHolder的正确使用，避免出现不必要的内存泄漏和其他问题。</p>
+</blockquote>
+<h3 id="2-5-哪些情况会导致OOM"><a href="#2-5-哪些情况会导致OOM" class="headerlink" title="2.5 哪些情况会导致OOM?"></a>2.5 哪些情况会导致OOM?</h3><blockquote>
+<p>OOM（Out Of Memory）是指应用程序在运行过程中无法获取到足够的内存空间而崩溃。在Android开发中，常见的导致OOM的情况包括：<br><br>1.内存泄漏：内存泄漏是指应用程序中的对象在不需要时未能正确释放占用的内存。如果内存泄漏严重，会导致应用程序的内存占用不断增加，最终导致OOM。<br><br>2.Bitmap内存占用过大：在Android中，加载Bitmap图片时需要消耗大量的内存，如果同时加载多张大图，容易导致OOM。为了避免这种情况，可以使用缩小图片、分段加载等技术来减少Bitmap的内存占用。<br><br>3.大量对象的创建：如果应用程序中频繁创建大量的对象，会导致内存占用不断增加，最终导致OOM。可以使用对象池等技术来重复利用对象，减少对象的创建。<br><br>4.WebView的使用：WebView是Android中常用的组件之一，但它的内存占用较大。如果应用程序中同时存在多个WebView，容易导致OOM。可以使用单例模式、缓存策略等技术来优化WebView的内存占用。<br><br>5.内存溢出：内存溢出是指应用程序在申请内存时无法获取到连续的内存空间。在Android中，如果应用程序需要申请大块的内存空间时，容易出现内存溢出。可以使用内存映射文件等技术来减少内存占用。<br><br>总之，在Android开发中，要避免OOM问题，需要合理使用内存、注意内存泄漏问题、优化内存占用等。同时，可以使用Android Studio中提供的内存分析工具来检测应用程序中的内存问题。</p>
+</blockquote>
+<h3 id="2-6-如何监测内存泄露？有哪些工具？"><a href="#2-6-如何监测内存泄露？有哪些工具？" class="headerlink" title="2.6 如何监测内存泄露？有哪些工具？"></a>2.6 如何监测内存泄露？有哪些工具？</h3><blockquote>
+<p>内存泄漏是指应用程序中的对象在不需要时未能正确释放占用的内存，导致内存占用不断增加，最终导致OOM。为了检测内存泄漏，可以使用以下工具：<br><br>1.Android Profiler：Android Studio自带的内存分析工具，可以实时监测应用程序的内存占用情况、对象的引用关系等，并且可以生成内存快照、跟踪对象的生命周期等。<br><br>2.LeakCanary：LeakCanary是一款优秀的内存泄漏检测工具，可以自动监测应用程序中的内存泄漏问题，并在检测到内存泄漏时发送通知。<br><br>3.MAT（Memory Analyzer Tool）：MAT是一款强大的Java内存分析工具，可以分析Java堆中的对象、跟踪对象的引用关系、生成报告等，对于检测内存泄漏非常有帮助。<br><br>4.DDMS（Dalvik Debug Monitor Service）：DDMS是Android开发工具包中的一款工具，可以监测应用程序的内存占用情况、堆中对象的引用关系等，并且可以生成内存快照，对于检测内存泄漏非常有帮助。<br><br>总之，内存泄漏是Android开发中常见的问题，为了避免内存泄漏，可以合理使用内存、注意对象的生命周期、使用弱引用等技术，同时可以使用以上工具来监测应用程序中的内存泄漏问题。</p>
+</blockquote>
+<h3 id="2-7-Android对HashMap做了优化后推出的新的容器类是什么？"><a href="#2-7-Android对HashMap做了优化后推出的新的容器类是什么？" class="headerlink" title="2.7 Android对HashMap做了优化后推出的新的容器类是什么？"></a>2.7 Android对HashMap做了优化后推出的新的容器类是什么？</h3><blockquote>
+<p>Android对HashMap做了优化后推出的新的容器类是SparseArray。<br><br>SparseArray是Android中的一个容器类，用于替代Java中的HashMap。SparseArray的实现方式类似于哈希表，但它在内存占用和性能方面都优于HashMap。SparseArray的原理是使用两个数组来存储键和值，其中键是整型，值可以是任意类型。由于键是整型，SparseArray能够使用更少的内存来存储键值对，同时也能够更快速地查找和访问值。<br><br>SparseArray适用于存储整型键和对象值的场景，例如存储Android中的View或者Drawable对象。在这些场景下，SparseArray可以更快速地查找和访问对象，同时也可以更节省内存。使用SparseArray时，需要注意的是，由于SparseArray是使用两个数组来存储键和值，因此它不适用于存储大量数据的场景。如果需要存储大量数据，仍然应该使用HashMap。</p>
+</blockquote>
+<h3 id="2-8-RecyclerView与ListView缓存机制的不同"><a href="#2-8-RecyclerView与ListView缓存机制的不同" class="headerlink" title="2.8 RecyclerView与ListView缓存机制的不同?"></a>2.8 RecyclerView与ListView缓存机制的不同?</h3><blockquote>
+<p>RecyclerView和ListView都是用于显示列表的控件，它们都具有缓存机制。但它们的缓存机制有一些不同之处：<br><br>1.缓存对象的类型不同：ListView使用的是单一的View对象缓存，而RecyclerView使用的是ViewHolder对象缓存。ViewHolder是一个包含了多个View的容器对象，用于保存每个子项的视图组件，以便在滚动列表时快速地复用这些视图组件。<br><br>2.缓存视图的位置不同：ListView缓存的视图是整个Item View，而RecyclerView只缓存ViewHolder中的View视图。<br><br>3.缓存策略不同：ListView缓存的Item View会在滑动列表时被全部创建出来，并在滑动结束后缓存下来。而RecyclerView使用了更加智能的缓存策略，即只创建足够多的ViewHolder对象来填充当前可见区域，然后随着滚动的进行，不断复用已经存在的ViewHolder对象，避免了ListView频繁地创建和销毁Item View的问题。<br><br>4.翻页处理不同：ListView是通过触发onScrollStateChanged方法中的SCROLL_STATE_IDLE状态实现翻页的，而RecyclerView则是通过设置LayoutManager的smoothScrollToPosition方法实现翻页的，可以更加精确地控制翻页的位置。<br><br>总体来说，RecyclerView的缓存机制相比ListView更加高效，可以提供更好的性能和用户体验，特别是当列表数据较多时。但是，RecyclerView的缓存机制也需要开发者更加谨慎地管理ViewHolder的状态和生命周期，以避免因为缓存不当而导致的内存泄露或其他问题。</p>
+</blockquote>
+<h2 id="3-Android-三方库"><a href="#3-Android-三方库" class="headerlink" title="3 Android 三方库"></a>3 Android 三方库</h2><h3 id="3-1-Retrofit原理？"><a href="#3-1-Retrofit原理？" class="headerlink" title="3.1 Retrofit原理？"></a>3.1 Retrofit原理？</h3><blockquote>
+<p>Retrofit2是一个用于Android和Java的RESTful API客户端库，它通过注解方式将HTTP API转换为Java接口。<br><br>下面是Retrofit2的基本原理：<br><br>1.创建接口：Retrofit2中的每个API都表示为一个Java接口，其中每个方法代表一个HTTP请求。接口中的方法通过注解来描述请求参数、请求方式、请求路径等信息。<br><br>2.创建Retrofit实例：要使用Retrofit2，需要创建一个Retrofit实例。这个实例用于设置baseUrl、ConverterFactory、CallAdapter.Factory等配置信息。<br><br>3.创建Call对象：当调用接口方法时，Retrofit2会创建一个Call对象，该对象用于处理HTTP请求。Call对象中包含了请求的所有信息，例如请求方式、请求头、请求体等。<br><br>4.发送请求：通过Call对象的execute()方法或enqueue()方法发送请求。execute()方法是同步方法，会在当前线程中执行请求，而enqueue()方法是异步方法，会在新线程中执行请求。在请求完成后，可以通过Response对象获取响应结果。<br><br>5.解析响应：Retrofit2支持多种响应格式，例如JSON、XML等。响应数据会被转换成Java对象，并通过回调函数传递给应用程序。响应数据的转换是通过Converter进行的，可以根据响应格式选择不同的Converter。<br><br>6.处理请求异常：在请求过程中，可能会出现一些异常，例如网络错误、服务器错误等。Retrofit2会将这些异常封装成RetrofitError，并通过回调函数传递给应用程序。<br><br>总的来说，Retrofit2的核心原理是通过注解方式将HTTP API转换为Java接口，再通过动态代理技术实现接口的实现。在请求过程中，Retrofit2会将请求参数、请求方式等信息封装成Call对象，并通过OkHttp发送请求。在接收到响应后，Retrofit2会将响应数据转换成Java对象，并通过回调函数传递给应用程序。</p>
+</blockquote>
+<h3 id="3-2-OkHttp原理？"><a href="#3-2-OkHttp原理？" class="headerlink" title="3.2 OkHttp原理？"></a>3.2 OkHttp原理？</h3><blockquote>
+<p>OkHttp是一个用于Android和Java的HTTP客户端库，它提供了简单、高效、可扩展的HTTP通信接口。<br><br>下面是OkHttp的基本原理：<br><br>1.创建OkHttpClient对象：要使用OkHttp，需要创建一个OkHttpClient对象。这个对象用于设置连接超时时间、读取超时时间、缓存等配置信息。<br><br>2.创建Request对象：当要发送HTTP请求时，需要创建一个Request对象。Request对象包含了HTTP请求的所有信息，例如URL、请求方法、请求头、请求体等。<br><br>3.发送请求：通过OkHttpClient对象的newCall()方法创建一个Call对象，该对象用于处理HTTP请求。Call对象中包含了请求的所有信息，例如请求方式、请求头、请求体等。使用Call对象的execute()方法或enqueue()方法发送请求。execute()方法是同步方法，会在当前线程中执行请求，而enqueue()方法是异步方法，会在新线程中执行请求。在请求完成后，可以通过Response对象获取响应结果。<br><br>4.解析响应：OkHttp支持多种响应格式，例如JSON、XML等。响应数据会被转换成Java对象，并通过回调函数传递给应用程序。响应数据的转换是通过Converter进行的，可以根据响应格式选择不同的Converter。<br>处理请求异常：在请求过程中，可能会出现一些异常，例如网络错误、服务器错误等。OkHttp会将这些异常封装成IOException，并抛出给应用程序。<br><br>总的来说，OkHttp的核心原理是通过Java的Socket和线程池技术实现HTTP请求和响应的处理。OkHttp使用Socket建立HTTP连接，并通过线程池来管理并发请求。在请求过程中，OkHttp会将请求参数、请求方式等信息封装成Request对象，并通过Socket发送请求。在接收到响应后，OkHttp会将响应数据转换成Java对象，并通过回调函数传递给应用程序。如果出现异常，OkHttp会将异常封装成IOException并抛出给应用程序。<br><br>在发送请求到解析响应中，有几个关键的拦截器：<br>在OkHttp中，主要有以下几个拦截器：<br>1.RetryInterceptor：这个拦截器用于处理网络请求失败时的重试操作。当发生网络异常或服务器错误时，RetryInterceptor会根据预设的重试次数和时间间隔，重新发送网络请求，以保证请求的成功率。<br><br>2.ConnectInterceptor：这个拦截器用于建立HTTP连接。当发起一个HTTP请求时，ConnectInterceptor会负责与服务器建立连接，并发送请求。<br><br>3.CallServerInterceptor：这个拦截器用于处理服务器响应。当服务器响应请求时，CallServerInterceptor会读取响应数据，并将数据解析成Java对象，以便应用程序进行处理。<br><br>4.BridgeInterceptor：这个拦截器用于将应用程序的请求转换成HTTP请求，并添加一些必要的HTTP头信息，例如User-Agent、Content-Type等。<br><br>5.CacheInterceptor：这个拦截器用于处理网络请求缓存。当应用程序发起一个HTTP请求时，CacheInterceptor会检查本地是否存在缓存数据，如果存在，则直接返回缓存数据，否则将请求转发给服务器。<br><br>6.LoggingInterceptor：这个拦截器用于输出HTTP请求和响应的日志信息。当应用程序发起HTTP请求或接收到HTTP响应时，LoggingInterceptor会输出相关信息，以便于调试和分析。<br><br>这些拦截器可以通过OkHttpClient.Builder中的addInterceptor()方法添加到OkHttpClient中，按照添加的顺序依次执行。拦截器的作用是在请求和响应的过程中对请求和响应进行拦截、修改、监控等操作，从而实现自定义功能。比如可以通过RetryInterceptor实现请求重试、通过LoggingInterceptor实现HTTP请求日志记录。</p>
+</blockquote>
+<h3 id="3-3-LeakCanary实现原理？"><a href="#3-3-LeakCanary实现原理？" class="headerlink" title="3.3 LeakCanary实现原理？"></a>3.3 LeakCanary实现原理？</h3><blockquote>
+<p>LeakCanary是一个用于检测Android应用程序中内存泄漏的开源库。它通过监测Java对象的引用关系，识别应用程序中的内存泄漏问题，并提供报告以便开发人员进行排查。<br><br>LeakCanary的实现原理如下：<br><br>1.监测对象的引用关系：LeakCanary通过在应用程序中注入一个监听器，监测对象的引用关系。当一个对象没有被正确释放并且仍然被其他对象引用时，该对象将被标记为“可疑对象”。<br><br>2.判断对象是否是泄漏对象：对于被标记为“可疑对象”的对象，LeakCanary将根据其引用链进行分析，判断是否是内存泄漏对象。如果是，则会将相关信息记录下来。<br><br>3.发送通知：LeakCanary将记录的泄漏信息包装成一个通知，发送给应用程序的前台进程。通知中包含了泄漏对象的引用链、对象类型、泄漏时间等信息，开发人员可以根据这些信息进行排查。<br><br>值得一提的是，LeakCanary在监测对象引用关系时使用了Java虚拟机提供的弱引用（WeakReference），这样即使LeakCanary的监听器持有了对象的引用，也不会影响对象的垃圾回收，从而保证了监测的准确性。同时，LeakCanary还提供了可定制的配置项，可以根据应用程序的需求进行调整。</p>
+</blockquote>
+<h3 id="3-4-EventBus实现原理？"><a href="#3-4-EventBus实现原理？" class="headerlink" title="3.4 EventBus实现原理？"></a>3.4 EventBus实现原理？</h3><blockquote>
+<p>EventBus是一种基于发布&#x2F;订阅模式的事件总线框架，它允许组件之间通过事件进行松耦合的通信。在EventBus中，组件可以发布和订阅事件，并且可以指定处理事件的线程模式。<br><br>EventBus的实现原理可以分为三个部分：事件的发布、订阅和事件处理。<br><br>事件的发布<br>在事件的发布过程中，发布者会将事件发送到事件总线中。事件总线会根据事件的类型将事件发送到所有订阅了该事件的组件中。事件总线在发送事件时可以指定事件的线程模式，例如可以在发布事件的线程中处理事件，也可以在主线程中处理事件。<br><br>订阅事件<br>在订阅事件的过程中，订阅者需要将自己注册到事件总线中，以便能够接收到事件。当一个订阅者注册到事件总线中时，事件总线会将订阅者的信息保存到一个订阅者列表中。当有事件发布时，事件总线会遍历订阅者列表，并将事件发送给所有订阅了该事件的订阅者。<br><br>事件处理<br>在事件处理过程中，订阅者会定义一个事件处理方法，并使用注解@Subscribe来标识该方法是一个事件处理方法。当事件总线发送事件时，事件总线会调用订阅者的事件处理方法，并将事件传递给该方法。订阅者可以在事件处理方法中处理事件，并返回处理结果。<br><br>需要注意的是，EventBus中的事件处理方法是在订阅者的线程中执行的，如果需要在主线程中执行相应的处理逻辑，可以使用@Subscribe(threadMode &#x3D; ThreadMode.MAIN)注解来指定处理事件的线程为主线程。<br><br>EventBus的实现原理比较简单，主要是通过事件总线的机制来实现组件之间的通信。由于EventBus采用了松耦合的设计，可以让组件之间更加独立，减少耦合性，提高应用程序的可维护性和可扩展性。<br><br>本质上：<br>EventBus的消息传递机制是基于Java的反射机制实现的，即在发送消息时，EventBus会利用Java反射调用订阅者中指定的事件处理方法。这样可以实现完全解耦和灵活的组件之间的通信，同时也能够实现动态注册和反注册等功能。<br><br>当订阅者注册时，EventBus会通过Java反射来查找该订阅者中所有被@Subscribe注解标记的事件处理方法，并建立事件类型和事件处理方法之间的关系映射。在事件发布时，EventBus会根据事件类型查找对应的订阅者，并调用其事件处理方法。</p>
+</blockquote>
+<h3 id="3-5-RxJava2的实现原理？"><a href="#3-5-RxJava2的实现原理？" class="headerlink" title="3.5 RxJava2的实现原理？"></a>3.5 RxJava2的实现原理？</h3><blockquote>
+<p>RxJava2是一个基于观察者模式和迭代器模式的响应式编程库，它提供了一种基于事件流的编程方式，可以方便地处理异步、并发和事件驱动的编程场景。RxJava2的实现原理主要包括以下几个方面：<br><br>Observable和Observer接口：Observable是RxJava2中的核心接口，它表示一个可观察的事件流，可以产生多个事件并通知给订阅者；Observer接口则表示一个事件流的订阅者，可以接收并处理Observable产生的事件流。<br><br>RxJava2中的操作符：RxJava2提供了大量的操作符，用于对事件流进行各种转换、过滤、合并、聚合等操作，从而实现复杂的业务逻辑处理。例如，map操作符可以对事件流中的每个事件进行转换操作；filter操作符可以过滤掉不符合条件的事件；merge操作符可以将多个事件流合并为一个。<br><br>RxJava2中的调度器：RxJava2提供了多种调度器，用于控制事件流的执行线程和执行顺序。例如，Schedulers.io()可以将事件流的执行线程切换到IO线程池中；Schedulers.computation()可以将事件流的执行线程切换到计算线程池中；Schedulers.newThread()可以创建一个新的线程来执行事件流。<br><br>RxJava2中的背压策略：由于事件流可能产生大量的事件，因此RxJava2引入了背压策略来控制事件流的流速和缓存。RxJava2提供了多种背压策略，例如Buffer、Drop、Latest等，可以根据实际情况进行选择。<br><br>综上所述，RxJava2的实现原理包括Observable和Observer接口、操作符、调度器和背压策略等方面。RxJava2提供了丰富的功能和灵活的使用方式，可以方便地处理各种异步、并发和事件驱动的编程场景，是一个非常实用和强大的编程库。</p>
+</blockquote>
+<h3 id="3-6-RxJava2中map和flatmap操作符的区别及底层实现？"><a href="#3-6-RxJava2中map和flatmap操作符的区别及底层实现？" class="headerlink" title="3.6 RxJava2中map和flatmap操作符的区别及底层实现？"></a>3.6 RxJava2中map和flatmap操作符的区别及底层实现？</h3><blockquote>
+<p>Map返回的是结果集，flatmap返回的是包含结果集的Observable。Map只能一对一，flatmap可以一对多、多对多。<br><br>map对Observable发射的每一项数据应用一个函数，执行变换操作。对原始的Observable发射的每一项数据应用一个你选择的函数，然后返回一个发射这些结果的Observable。<br><br>flatMap将一个发射数据的Observable变换为多个Observables，然后将它们发射的数据合并后放进一个单独的Observable。操作符使用一个指定的函数对原始Observable发射的每一项数据执行变换操作，这个函数返回一个本身也发射数据的Observable，然后FlatMap合并这些Observables发射的数据，最后将合并后的结果当做它自己的数据序列发射。<br><br>底层实现方面，map和flatMap操作符都是使用Operator类型进行实现的。具体来说，map操作符使用MapOperator类型实现，它将转换逻辑封装成一个MapFunction对象，并通过onNext方法将新的数据项发送给下游的Subscriber。而flatMap操作符使用FlatMapOperator类型实现，它将转换逻辑封装成一个Function对象，并通过createInnerObserver方法创建一个新的内部Observer对象来处理每个数据项的转换结果，并将多个内部Observer对象产生的数据项合并到一个新的Observable中。这个内部Observer对象是在一个新的Observable中创建的，因此可以实现异步的转换逻辑。</p>
+</blockquote>
+<h2 id="4-Java-基础"><a href="#4-Java-基础" class="headerlink" title="4 Java 基础"></a>4 Java 基础</h2><h3 id="4-1-Java是值传递还是引用传递？"><a href="#4-1-Java是值传递还是引用传递？" class="headerlink" title="4.1 Java是值传递还是引用传递？"></a>4.1 Java是值传递还是引用传递？</h3><blockquote>
+<p>Java 既有值传递（pass by value）也有引用传递（pass by reference）的概念，但是在实践中，Java 中的参数传递是按值传递的（pass by value）。<br><br>在 Java 中，当将一个原始数据类型（如 int、float 等）传递给一个方法时，实际上传递的是该值的副本，也就是该值的一个拷贝，所以无论在方法内部如何修改该值，都不会影响到原始值。<br><br>当将一个对象作为参数传递给一个方法时，实际上传递的是该对象的引用（reference），也就是指向该对象在内存中地址的一个值。在方法内部可以通过该引用来访问对象的属性和方法，也可以修改对象的属性值，但是如果将该引用指向一个新的对象，那么原始对象并不会被修改。<br><br>需要注意的是，Java 中的传递方式不同于 C++ 中的传递方式，C++ 中可以通过指针传递实现引用传递。</p>
+</blockquote>
+<h3 id="4-2-final和static关键字的区别"><a href="#4-2-final和static关键字的区别" class="headerlink" title="4.2 final和static关键字的区别?"></a>4.2 final和static关键字的区别?</h3><blockquote>
+<p>Java 中的 final 和 static 关键字都是用于修饰变量和方法的，但是它们的作用和用法是不同的。<br><br>final 关键字<br>final 关键字表示不可变，一旦被赋值就不能再改变其值。在 Java 中，final 可以用于修饰变量、方法和类：<br><br>1.修饰变量：被 final 修饰的变量是一个常量，只能被赋值一次。一般用于定义不可变的常量，如数学中的 π 常量。<br><br>2.修饰方法：被 final 修饰的方法不能被子类重写，但是可以被子类继承。<br><br>3.修饰类：被 final 修饰的类不能被继承，即该类不能有子类。<br><br>static 关键字<br>static 关键字表示静态的，可以用于修饰变量、方法和代码块（静态初始化块）：<br><br>1.修饰变量：被 static 修饰的变量是类变量，即静态变量，它们属于类，而不属于类的实例对象。可以通过类名直接访问，不需要实例化对象。<br><br>2.修饰方法：被 static 修饰的方法是类方法，即静态方法，它们属于类，而不属于类的实例对象。可以通过类名直接调用，不需要实例化对象。<br><br>3.代码块：被 static 修饰的代码块是类初始化块，它们在类被加载时执行，只执行一次。<br><br>因此，final 和 static 关键字的作用不同，final 表示不可变，static 表示静态。而且，final 修饰的变量必须在声明时或者构造函数中进行初始化，而 static 修饰的变量只需要在声明时进行初始化。</p>
+</blockquote>
+<h3 id="4-3-HashSet和HashMap的区别"><a href="#4-3-HashSet和HashMap的区别" class="headerlink" title="4.3 HashSet和HashMap的区别?"></a>4.3 HashSet和HashMap的区别?</h3><blockquote>
+<p>HashSet 和 HashMap 是 Java 中常用的集合类，它们都实现了 Set 接口和 Map 接口，但是它们的用法和作用是不同的。<br><br>HashSet<br>HashSet 是一个基于哈希表实现的集合类，它不允许集合中有重复的元素，存储的元素是无序的。HashSet 内部通过 HashMap 实现，将所有元素都存储在 HashMap 的键中，而值则是一个静态的 Object 常量。<br><br>HashSet 的主要方法有 add、remove、contains 等，它们都是基于 HashMap 的方法实现的。因此，HashSet 的操作速度非常快，通常用于需要快速判断某个元素是否存在的场景。<br><br>HashMap<br>HashMap 是一个基于哈希表实现的 Map 类，它允许存储键值对，键和值都可以为 null，存储的键值对是无序的。HashMap 通过数组和链表结合的方式实现，其中数组存储了所有的键值对，而链表则解决了哈希冲突问题。<br><br>HashMap 的主要方法有 put、get、remove、containsKey、containsValue 等，它们都是用于操作键值对的方法。因此，HashMap 通常用于存储键值对，并且需要通过键来快速访问值的场景。<br><br>总的来说，HashSet 和 HashMap 都是基于哈希表实现的集合类，但是 HashSet 用于存储唯一元素的无序集合，而 HashMap 用于存储键值对的无序映射表。</p>
+</blockquote>
+<h3 id="4-4-Java有哪几种创建新线程的方法及区别？"><a href="#4-4-Java有哪几种创建新线程的方法及区别？" class="headerlink" title="4.4 Java有哪几种创建新线程的方法及区别？"></a>4.4 Java有哪几种创建新线程的方法及区别？</h3><blockquote>
+<p>在Java中，创建新线程的方法主要有以下几种：<br><br>1.继承Thread类并重写run()方法。<br>2.实现Runnable接口并将其作为Thread的构造方法参数。<br>3.实现Callable接口并使用ExecutorService启动线程。<br><br>这三种方式都可以用来创建新线程，但在使用时需要注意一些区别：<br><br>1.继承Thread类创建新线程的方式通常不太推荐，因为它会破坏类的继承关系，同时也不太灵活。如果需要自定义线程类，应该实现Runnable接口。<br><br>2.实现Runnable接口并将其作为Thread的构造方法参数创建新线程的方式比较常用，这样可以将线程类和任务分离，使得代码更加清晰易懂。此外，实现Runnable接口的线程类可以被多个线程共享，也可以被线程池管理。<br><br>3.实现Callable接口并使用ExecutorService启动线程的方式通常用于需要返回结果的线程操作，Callable接口允许我们在线程执行完毕后返回一个结果对象。与Runnable不同，Callable接口的call()方法可以抛出异常，这也是需要注意的地方。<br><br>总之，在Java中创建新线程的方式有很多，我们需要根据实际情况选择最合适的方式，同时需要注意线程安全和代码清晰易懂的原则。在Android中，我们通常会使用Thread类或AsyncTask类来创建新线程，从而实现耗时操作不阻塞UI线程的目的。</p>
+</blockquote>
+<h3 id="4-5-static修饰的方法可以被子类重写吗？为什么？"><a href="#4-5-static修饰的方法可以被子类重写吗？为什么？" class="headerlink" title="4.5 static修饰的方法可以被子类重写吗？为什么？"></a>4.5 static修饰的方法可以被子类重写吗？为什么？</h3><blockquote>
+<p>在Java中，使用static关键字修饰的方法是类级别的方法，可以直接通过类名调用，而不需要实例化对象。由于静态方法与具体的实例对象无关，因此它们不涉及多态的概念，因此不能被重写。<br><br>子类可以定义与父类具有相同签名的静态方法，但是在使用时，子类和父类的静态方法都可以通过类名直接调用，但是它们并不构成方法的重写。<br><br>需要注意的是，静态方法可以被继承，但是不能被重写。子类中的静态方法与父类中的静态方法同名时，只是在子类中增加了一个新的静态方法，并没有覆盖父类中的方法。<br><br>在Java中，如果需要实现方法的重写，需要在方法前不加static关键字，这样的方法是实例级别的方法，可以实现多态特性。</p>
+</blockquote>
+<h3 id="4-6-ThreadLocal的理解？"><a href="#4-6-ThreadLocal的理解？" class="headerlink" title="4.6 ThreadLocal的理解？"></a>4.6 ThreadLocal的理解？</h3><blockquote>
+<p>ThreadLocal是Java中的一个线程本地变量，它提供了一种在多线程环境下，为每个线程都分配独立的变量副本的机制。简单来说，它可以让多个线程访问同一个变量，但是每个线程都拥有自己独立的副本，互不影响。<br><br>ThreadLocal的主要作用是解决多线程并发访问时，数据的隔离性问题。在多线程环境下，如果多个线程共享同一个变量，就可能会出现数据竞争的情况，导致程序出现不可预料的结果。而ThreadLocal通过为每个线程都分配独立的变量副本，就可以避免这种情况的发生。<br><br>在Java中，ThreadLocal通常用于解决以下两类问题：<br>1.保存线程相关的数据：有些数据是线程相关的，比如用户信息、事务上下文等，如果每个线程都需要使用这些数据，那么就可以将这些数据保存到ThreadLocal中，这样就可以避免在多个线程之间进行传递。<br><br>2.提高程序性能：在一些需要频繁创建、销毁对象的场景下，可以使用ThreadLocal来避免创建过多的对象，从而提高程序性能。比如，使用ThreadLocal来保存SimpleDateFormat对象，就可以避免在每次使用时都创建一个新的SimpleDateFormat对象，从而提高程序性能。<br><br>需要注意的是，使用ThreadLocal也会存在一些问题。由于ThreadLocal为每个线程都分配了独立的变量副本，因此可能会导致内存泄漏问题。如果某个ThreadLocal变量没有被清理，那么在程序运行过程中就会一直存在，从而占用大量内存。因此，使用ThreadLocal时需要注意及时清理不再使用的变量。</p>
+</blockquote>
+<h3 id="4-7-HashMap-HashSet-HashTable的区别？"><a href="#4-7-HashMap-HashSet-HashTable的区别？" class="headerlink" title="4.7 HashMap HashSet HashTable的区别？"></a>4.7 HashMap HashSet HashTable的区别？</h3><blockquote>
+<p>HashMap, HashSet和HashTable是Java中的三个不同的数据结构，它们具有以下不同点：<br><br>1.实现方式：HashMap和HashSet是基于哈希表的数据结构，而HashTable是早期Java版本中提供的哈希表实现。<br><br>2.线程安全：HashTable是线程安全的，而HashMap和HashSet是非线程安全的。如果需要在多线程环境中使用HashMap或HashSet，可以使用ConcurrentHashMap或ConcurrentHashSet。<br><br>3.元素允许性：HashSet只允许存储唯一元素，而HashMap和HashTable则可以存储键值对。<br><br>4.null值的处理：HashMap和HashSet可以存储null值，而HashTable不允许存储null键或null值。<br><br>5.排序：HashMap和HashSet不保证元素的顺序，而HashTable是按照插入顺序排序的。<br><br>总之，HashMap和HashSet是非线程安全的哈希表实现，HashMap用于存储键值对，HashSet用于存储唯一元素；而HashTable是线程安全的哈希表实现，只用于存储键值对。</p>
+</blockquote>
+<h3 id="4-8-Integer类对int的优化"><a href="#4-8-Integer类对int的优化" class="headerlink" title="4.8 Integer类对int的优化?"></a>4.8 Integer类对int的优化?</h3><blockquote>
+<p>在Java中，Integer是一个类，它是int的包装类。Integer类提供了一些方法来操作int类型的值，包括将int类型的值转换为字符串、将字符串转换为int类型的值、比较两个int类型的值等。<br><br>Integer类对int的优化在以下几个方面：<br><br>对象化：Java中的int是一种基本数据类型，它是按值传递的。但是，有些时候需要将int类型的值作为对象来处理，例如需要将int类型的值作为方法的参数或返回值。在这种情况下，就需要将int类型的值封装在Integer对象中，以便于处理。<br><br>提供更多的功能：Integer类提供了一些方法来操作int类型的值，例如将int类型的值转换为字符串、将字符串转换为int类型的值、比较两个int类型的值等。这些方法可以使得对int类型的操作更加灵活方便。<br><br>缓存：为了提高性能，Java虚拟机会缓存一定范围内的Integer对象。这些对象的值是预先创建的，当需要创建这些值的时候，虚拟机会直接返回缓存中的对象，而不是重新创建一个新的对象。这样可以避免频繁的创建和销毁对象，从而提高程序的性能。<br><br>自动装箱和拆箱：Java提供了自动装箱和拆箱功能，这使得程序员可以将基本类型和包装类型互相转换，而不需要显式地调用相应的方法。自动装箱将基本类型转换为对应的包装类型，自动拆箱将包装类型转换为对应的基本类型。这样可以使得代码更加简洁、易读，并且减少了一些繁琐的操作。</p>
+</blockquote>
+<h3 id="4-9-synchronized-volatile关键字有什么区别？"><a href="#4-9-synchronized-volatile关键字有什么区别？" class="headerlink" title="4.9 synchronized volatile关键字有什么区别？"></a>4.9 synchronized volatile关键字有什么区别？</h3><blockquote>
+<p>synchronized和volatile关键字都是Java中用于实现多线程同步和可见性的关键字，但是它们的作用和使用方式是不同的。<br><br>synchronized关键字<br>synchronized关键字用于实现线程间的互斥同步，它可以将代码块或方法标记为同步代码块或同步方法，从而保证同一时刻只能有一个线程访问同步代码块或同步方法，其他线程需要等待。同时，synchronized还具有可见性的作用，即在退出同步代码块或同步方法之前，会将本地内存中的修改刷新到主内存中，从而保证了可见性。<br><br>volatile关键字<br>volatile关键字用于实现变量的可见性，即保证一个线程对该变量的修改能够被其他线程立即看到。使用volatile修饰的变量，每次读取时都会从主内存中获取最新的值，每次写入时都会将修改的值立即刷新到主内存中，从而保证了变量的可见性。以及它具有防止指令重排序的功能。但是，它并不能保证变量的原子性。如果要保证原子性，可以用CAS操作的AtomicInteger。<br><br>其他同样功能的关键字<br>除了synchronized和volatile关键字，Java中还有其他的同步关键字和类，用于实现多线程同步和可见性，例如：<br><br>ReentrantLock：一个可重入锁，提供了比synchronized更多的功能，例如可中断锁、公平锁等等。<br>AtomicXXX类：提供了一组原子操作的类，包括原子更新基本类型、原子更新数组、原子更新引用类型等。<br>CountDownLatch：一个倒计时门闩，用于线程间的等待和同步。<br>CyclicBarrier：一个循环屏障，用于多个线程之间的同步。<br>Semaphore：一个信号量，用于控制同时访问某个资源的线程数量。</p>
+</blockquote>
+<h2 id="5-Java-进阶"><a href="#5-Java-进阶" class="headerlink" title="5 Java 进阶"></a>5 Java 进阶</h2><h3 id="5-1-深拷贝和浅拷贝的区别？"><a href="#5-1-深拷贝和浅拷贝的区别？" class="headerlink" title="5.1 深拷贝和浅拷贝的区别？"></a>5.1 深拷贝和浅拷贝的区别？</h3><blockquote>
+<p>深拷贝（Deep Copy）和浅拷贝（Shallow Copy）都是在对象复制时使用的概念。它们之间的主要区别在于复制的程度。<br><br>浅拷贝是指将对象复制一份，其中的基本数据类型的属性会被直接复制，而引用类型的属性只会复制引用地址，而不会复制对象本身。因此，在浅拷贝中，原始对象和复制对象之间共享引用类型的属性。<br><br>深拷贝是指将对象复制一份，其中的基本数据类型和引用类型的属性都会被复制，并且复制出的新对象和原始对象之间不存在任何引用关系。因此，在深拷贝中，原始对象和复制对象之间不共享任何属性。<br><br>默认是浅拷贝，如果要实现深拷贝，就需要自己在实现Cloneable结果，重写clone方法，将内部对象重新拷贝一份。（需要注意死循环问题）</p>
+</blockquote>
+<h3 id="5-2-Java的动态代理和静态代理？"><a href="#5-2-Java的动态代理和静态代理？" class="headerlink" title="5.2 Java的动态代理和静态代理？"></a>5.2 Java的动态代理和静态代理？</h3><blockquote>
+<p>代理模式是一种常用的设计模式，它允许一个对象（代理对象）来代表另一个对象（被代理对象）进行一些操作，从而可以在不改变被代理对象的前提下，增强或者改变被代理对象的行为。<br><br>在 Java 中，代理模式有两种实现方式：静态代理和动态代理。<br><br>静态代理需要手动编写代理类，在代理类中实现被代理对象的方法，并在方法中调用被代理对象相应的方法，从而实现对被代理对象的代理。<br><br>相比于静态代理，动态代理更加灵活，因为它可以在运行时动态生成代理类。在 Java 中，动态代理可以通过 java.lang.reflect.Proxy 类来实现。<br><br>总的来说，静态代理和动态代理的区别在于代理类的生成方式不同。静态代理需要手动编写代理类，在代理类中实现被代理对象的方法，从而实现对被代理对象的代理。而动态代理是在运行时动态生成代理类，因此更加灵活。动态代理要求被代理类必须实现一个接口，而静态代理则没有这个限制。</p>
+</blockquote>
+<h3 id="5-3-JVM的内存分布及垃圾回收机制"><a href="#5-3-JVM的内存分布及垃圾回收机制" class="headerlink" title="5.3 JVM的内存分布及垃圾回收机制?"></a>5.3 JVM的内存分布及垃圾回收机制?</h3><blockquote>
+<p>VM（Java Virtual Machine）是Java程序运行的虚拟机。JVM的内存分布可以分为以下几个部分：<br><br>1.程序计数器（Program Counter Register）：记录当前线程执行的字节码指令的地址。<br>2.Java虚拟机栈（Java Virtual Machine Stacks）：保存每个线程执行方法时的局部变量表、操作数栈、动态链接、方法出口等信息。<br>3.本地方法栈（Native Method Stack）：与Java虚拟机栈类似，但是是为虚拟机执行Native方法服务的。<br>4.Java堆（Java Heap）：Java虚拟机中最大的一块内存，用于存放对象实例。<br>5.方法区（Method Area）：存储类的元数据信息，包括类的名称、方法信息、字段信息、常量池等。<br>元空间是JVM的一部分，用于存储类的元数据。元空间和方法区都属于JVM内存的一部分。在Java 8之前，方法区（PermGen）是JVM内存的一部分，用于存储类的元数据、静态变量、常量等信息；而在Java 8之后，方法区被废弃，被Metaspace（元空间）所取代。元空间是JVM内存的一部分，但它不是传统意义上的堆、栈等区域。元空间使用本地内存而不是虚拟机内存来实现，这样可以根据应用程序的需要动态调整大小，避免由于方法区溢出导致的内存泄漏和崩溃等问题。<br><br>JVM的垃圾回收机制是自动的，它通过GC算法检查对象是否仍然被引用来决定哪些对象需要被回收。JVM中的垃圾收集器通常是分代式的，即将Java堆分为新生代和老年代两个部分。<br><br>新生代中通常采用复制算法（Copying），将堆空间分为两部分，一部分为存活对象，一部分为空闲空间。在垃圾收集时，将存活对象复制到另一部分空间，然后清空原来的空间。<br><br>老年代中通常采用标记-清除算法（Mark-Sweep）或标记-整理算法（Mark-Compact），对不再被引用的对象进行回收。<br><br>垃圾回收机制具体的实现和算法取决于JVM的不同实现和配置，例如，HotSpot JVM中使用了分代式垃圾收集器、标记-整理算法和可达性分析等技术来实现垃圾回收。</p>
+</blockquote>
+<h3 id="5-4-ThreadLocal实现原理？"><a href="#5-4-ThreadLocal实现原理？" class="headerlink" title="5.4 ThreadLocal实现原理？"></a>5.4 ThreadLocal实现原理？</h3><blockquote>
+<p>ThreadLocal的实现原理其实并不复杂，它的核心是一个ThreadLocalMap类。每个ThreadLocal对象都有一个对应的ThreadLocalMap对象，用于保存当前线程的变量副本。当我们调用ThreadLocal的get()方法时，实际上是在当前线程的ThreadLocalMap中查找当前ThreadLocal对象对应的变量副本。如果没有找到，则会调用ThreadLocal的initialValue()方法创建一个新的变量副本，并保存到ThreadLocalMap中。而当我们调用ThreadLocal的remove()方法时，则会从当前线程的ThreadLocalMap中移除当前ThreadLocal对象对应的变量副本。</p>
+</blockquote>
+<h3 id="5-5-如何让HashMap可以线程安全？"><a href="#5-5-如何让HashMap可以线程安全？" class="headerlink" title="5.5 如何让HashMap可以线程安全？"></a>5.5 如何让HashMap可以线程安全？</h3><blockquote>
+<p>HashMap是一种非线程安全的数据结构，如果需要在多线程环境中使用，可以使用以下方法使其线程安全：<br><br>1.使用Collections.synchronizedMap方法：可以通过调用Collections类中的synchronizedMap方法来获取一个线程安全的Map对象。synchronizedMap是一个线程安全的HashMap实例，但需要注意的是，虽然synchronizedMap的所有操作都是同步的，但如果多个线程同时访问并修改同一个键值对，可能会发生竞态条件问题。<br><br>2.使用ConcurrentHashMap：Java 5以后提供了ConcurrentHashMap，这是一种高效的线程安全的哈希表实现。ConcurrentHashMap通过使用分段锁和CAS算法来实现线程安全，可以在高并发情况下提供更好的性能表现。concurrentMap是一个线程安全的ConcurrentHashMap实例，可以在多线程环境中安全地使用。</p>
+</blockquote>
+<h3 id="5-6-Java多线程之间如何通信"><a href="#5-6-Java多线程之间如何通信" class="headerlink" title="5.6 Java多线程之间如何通信?"></a>5.6 Java多线程之间如何通信?</h3><blockquote>
+<p>Java多线程之间可以通过以下几种方式进行通信：<br><br>共享内存：多个线程可以访问同一个共享内存区域，通过读写共享内存中的变量来进行通信。但需要注意的是，共享内存可能会出现竞态条件问题，需要使用同步机制来保证线程安全。<br><br>管道通信：管道是一种单向通信机制，一个线程可以向管道中写入数据，另一个线程可以从管道中读取数据。Java中通过PipedOutputStream和PipedInputStream类来实现管道通信。<br><br>消息传递：消息传递是一种通过发送消息来进行通信的机制，可以使用Java中的wait()、notify()和notifyAll()方法来实现。一个线程可以通过调用wait()方法来等待另一个线程发送消息，当另一个线程发送消息时，可以调用notify()或notifyAll()方法来唤醒等待的线程。<br><br>信号量：信号量是一种用于多线程之间同步的机制，可以通过Java中的Semaphore类来实现。Semaphore中有一个计数器，每当一个线程获取一个许可时，计数器就会减少，当计数器为0时，其他线程就需要等待。通过调整Semaphore的许可数量，可以控制多个线程之间的同步行为。<br><br>屏障：屏障是一种多线程同步机制，可以用于控制多个线程在某个点上同步执行。Java中通过CyclicBarrier类来实现屏障。每个线程在到达屏障前都需要等待其他线程，当所有线程都到达屏障后，屏障才会打开，所有线程可以继续执行。<br><br>需要注意的是，多线程之间的通信需要注意线程安全问题，需要使用同步机制来保证线程安全。此外，不同的通信机制适用于不同的场景，需要根据具体情况选择适合的通信方式。</p>
+</blockquote>
+<h3 id="5-7-线程池的实现机制？"><a href="#5-7-线程池的实现机制？" class="headerlink" title="5.7 线程池的实现机制？"></a>5.7 线程池的实现机制？</h3><blockquote>
+<p>Java线程池是Java提供的一个高效的多线程处理工具，它可以有效地管理和重用线程资源，避免了线程创建和销毁的开销，同时还可以提高多线程处理的效率和性能。Java线程池的实现机制包括以下几个方面：<br><br>线程池的核心接口和实现类：Java线程池的核心接口是Executor和ExecutorService，其中Executor是一个简单的接口，只包含一个execute()方法，用于执行一个任务。而ExecutorService是一个更完整的接口，它继承自Executor，同时提供了一系列更完整的线程池管理方法和扩展功能。Java线程池的实现类包括ThreadPoolExecutor和ScheduledThreadPoolExecutor等。<br><br>线程池的构成元素：Java线程池由若干个线程、工作队列、拒绝处理策略、线程工厂等构成。其中，线程池中的线程数量是动态变化的，根据实际情况动态增加或减少；工作队列用于存储还未执行的任务；拒绝处理策略用于处理无法处理的任务；线程工厂用于创建新的线程对象。<br><br>线程池的工作流程：当一个任务被提交到线程池时，线程池会按照以下步骤处理该任务：首先，线程池会判断是否有空闲线程可用，如果有，则将任务分配给空闲线程执行；如果没有，则将任务存储到工作队列中等待执行；如果工作队列已满，则根据设置的拒绝处理策略来处理该任务。<br><br>线程池的参数配置：Java线程池提供了多种参数配置选项，例如核心线程数、最大线程数、工作队列类型和大小、拒绝处理策略等。这些参数可以根据实际需要进行调整，以满足不同的性能和功能要求。<br><br>综上所述，Java线程池的实现机制包括线程池的核心接口和实现类、线程池的构成元素、线程池的工作流程和参数配置等方面。Java线程池是一个非常实用和高效的多线程处理工具，可以大大提高多线程处理的效率和性能，同时也需要注意一些线程安全和性能调优的问题。</p>
+</blockquote>
+<h2 id="6-设计模式"><a href="#6-设计模式" class="headerlink" title="6 设计模式"></a>6 设计模式</h2><h3 id="6-1-单例模式有哪些实现方式？"><a href="#6-1-单例模式有哪些实现方式？" class="headerlink" title="6.1 单例模式有哪些实现方式？"></a>6.1 单例模式有哪些实现方式？</h3><p>Java单例模式是一种设计模式，旨在确保某个类只能被实例化一次。以下是几种Java单例模式的实现方式：<br><br>1.饿汉式单例模式：在类被加载时即创建唯一实例，且在整个程序运行期间只存在一个实例。</p>
+<pre><code class="line-numbers language-Java">public class Singleton &#123;
+    private static final Singleton instance = new Singleton();
+
+    private Singleton() &#123;
+        // 私有构造函数
+    &#125;
+
+    public static Singleton getInstance() &#123;
+        return instance;
+    &#125;
+&#125;
+</code></pre>
+<p>2.懒汉式单例模式：只有在第一次使用时才创建唯一实例。</p>
+<pre><code class="line-numbers language-Java">public class Singleton &#123;
+    private static Singleton instance;
+
+    private Singleton() &#123;
+        // 私有构造函数
+    &#125;
+
+    public static synchronized Singleton getInstance() &#123;
+        if (instance == null) &#123;
+            instance = new Singleton();
+        &#125;
+        return instance;
+    &#125;
+&#125;
+</code></pre>
+<p>3.双重检验锁单例模式：避免了每次都加锁的性能问题。</p>
+<pre><code class="line-numbers language-Java">public class Singleton &#123;
+    private static volatile Singleton instance;
+
+    private Singleton() &#123;
+        // 私有构造函数
+    &#125;
+
+    public static Singleton getInstance() &#123;
+        if (instance == null) &#123;
+            synchronized (Singleton.class) &#123;
+                if (instance == null) &#123;
+                    instance = new Singleton();
+                &#125;
+            &#125;
+        &#125;
+        return instance;
+    &#125;
+&#125;
+</code></pre>
+<p>4.静态内部类单例模式：延迟加载，且线程安全。</p>
+<pre><code class="line-numbers language-Java">public class Singleton &#123;
+    private Singleton() &#123;
+        // 私有构造函数
+    &#125;
+
+    private static class SingletonHolder &#123;
+        private static final Singleton instance = new Singleton();
+    &#125;
+
+    public static Singleton getInstance() &#123;
+        return SingletonHolder.instance;
+    &#125;
+&#125;
+</code></pre>
+<p>5.枚举单例模式：在Java 1.5之后引入的一种方式，可以避免反射攻击。</p>
+<pre><code class="line-numbers language-Java">public enum Singleton &#123;
+    INSTANCE;
+
+    public void doSomething() &#123;
+        // 实例方法
+    &#125;
+&#125;
+</code></pre>
+<h2 id="7-网络和操作系统相关"><a href="#7-网络和操作系统相关" class="headerlink" title="7 网络和操作系统相关"></a>7 网络和操作系统相关</h2><h3 id="7-1-操作系统进程间通信有哪些方法？"><a href="#7-1-操作系统进程间通信有哪些方法？" class="headerlink" title="7.1 操作系统进程间通信有哪些方法？"></a>7.1 操作系统进程间通信有哪些方法？</h3><blockquote>
+<p>操作系统进程间通信的方法主要包括以下几种：<br><br>1.管道（Pipe）：管道是一种半双工的通信方式，只能在具有公共祖先-子孙进程之间使用，只能用于相互通信的两个进程。通常将管道定义为文件描述符，一个进程写入数据到管道，另一个进程从管道中读取数据。<br><br>2.消息队列（Message Queue）：消息队列是消息的链表，存在于内核中，通常由进程名和标识符来标识。不同进程可以通过向队列发送消息进行通信，可以实现任意进程之间的通信。<br><br>3.共享内存（Shared Memory）：共享内存是最快的一种IPC方式，多个进程可以访问同一个物理内存，从而实现高速数据传输。但需要注意共享内存的访问必须同步，否则会产生竞争条件。<br><br>4.信号量（Semaphore）：信号量是用来保证同步的一种方式。在访问共享资源时，必须先获得信号量，操作完成后再释放信号量。可以通过信号量来实现多个进程的互斥、同步和通信等。<br><br>5.套接字（Socket）：套接字是一种网络通信协议，也可以用于进程间通信。通过套接字可以实现不同主机或同一主机上不同进程之间的通信。<br><br>6.Remote Procedure Call（RPC）：远程过程调用是一种分布式计算技术，可以通过网络实现不同计算机之间的进程间通信，使得分布在不同计算机上的进程像本地进程一样进行通信和调用。<br><br>上述进程间通信方法各有优缺点，开发者可以根据自己的需求来选择合适的通信方式。</p>
+</blockquote>
+<h3 id="7-2-谈谈对Socket的理解"><a href="#7-2-谈谈对Socket的理解" class="headerlink" title="7.2 谈谈对Socket的理解?"></a>7.2 谈谈对Socket的理解?</h3><blockquote>
+<p>Socket（套接字）是一种在计算机之间进行通信的API（应用程序编程接口）。Socket可以理解为一组程序接口，它们使得应用程序可以通过网络连接发送和接收数据。它是实现网络通信的基础。<br><br>Socket通常被用于创建客户端和服务器之间的网络连接，它使用IP地址和端口号来唯一标识连接的两端。在客户端和服务器之间建立Socket连接后，它们可以通过Socket传输数据，包括文件、图像、视频和音频等。<br><br>在Socket编程中，通常使用TCP（传输控制协议）和UDP（用户数据报协议）两种协议。TCP协议是一种可靠的、面向连接的协议，确保数据的传输和接收的完整性。UDP协议则是一种无连接的协议，它允许数据包在网络上传输时不进行确认，因此传输速度比TCP更快，但也不太可靠。<br><br>Socket编程的基本流程是：创建Socket、绑定IP地址和端口号、监听连接请求、接受连接请求、建立连接、发送数据、接收数据、关闭连接。在实际编程中，Socket编程还需要考虑一些网络安全和性能优化的问题。<br><br>总的来说，Socket是一种非常重要的网络编程技术，它使得计算机之间的通信变得更加简单、高效和可靠。在现代互联网应用中，Socket已经成为了必不可少的一部分，被广泛应用于各种网络通信场景。</p>
+</blockquote>
+<h3 id="7-3-不同架构的机器有何不同（如x86等）"><a href="#7-3-不同架构的机器有何不同（如x86等）" class="headerlink" title="7.3 不同架构的机器有何不同（如x86等）"></a>7.3 不同架构的机器有何不同（如x86等）</h3><blockquote>
+<p>不同架构的机器指的是在计算机硬件和指令集设计上的不同。常见的计算机架构有x86、ARM、MIPS、PowerPC等。这些不同的架构在计算机硬件和指令集方面的设计不同，因此在使用和编程时会有一些差异。<br><br>下面是一些不同架构的机器的主要特点和差异：<br><br>x86架构：x86是目前PC和服务器领域最广泛使用的架构之一，其指令集包括x86-16、x86-32和x86-64。x86架构的主要特点是指令集复杂，支持大量的寄存器和广泛的指令集，具有高性能和灵活性，但也相对较复杂。<br><br>ARM架构：ARM架构主要应用于嵌入式系统和移动设备领域，其指令集比x86简单，更加节能，具有低功耗、高效率的特点。ARM架构的处理器在功耗、成本和可靠性方面表现良好，因此广泛用于手机、平板电脑、智能家居和汽车等领域。<br><br>MIPS架构：MIPS架构主要应用于嵌入式系统和网络设备领域，具有高性能、低功耗的特点。MIPS架构的处理器在网络处理、路由器、交换机等设备中应用广泛。<br><br>PowerPC架构：PowerPC架构是IBM、苹果和摩托罗拉等公司共同开发的，主要应用于服务器和嵌入式系统领域，具有高性能、可靠性和可扩展性的特点。PowerPC架构的处理器在高性能计算、工业控制和航空航天等领域应用广泛。<br><br>不同架构的机器在使用和编程时需要考虑其特点和差异，尤其是在跨平台开发和移植软件时更为重要。例如，跨平台开发需要考虑不同的编译器和库的兼容性，移植软件需要考虑不同架构的处理器和操作系统的支持情况。因此，在进行跨平台开发和移植软件时，需要对不同架构的机器有一定的了解。</p>
+</blockquote>
+<h3 id="7-4-TCP-x2F-UDP比较"><a href="#7-4-TCP-x2F-UDP比较" class="headerlink" title="7.4 TCP&#x2F;UDP比较?"></a>7.4 TCP&#x2F;UDP比较?</h3><blockquote>
+<p>TCP（传输控制协议）和UDP（用户数据报协议）是两种不同的网络传输协议。它们有不同的特点和适用场景，下面是它们的比较：<br><br>1.连接方式：TCP是面向连接的协议，需要在传输前进行三次握手建立连接，建立后才能进行数据传输。UDP则是无连接的协议，数据包在发送前不需要建立连接，直接发送即可。<br><br>2.数据可靠性：TCP是一种可靠的协议，它保证数据的传输和接收的完整性，确保数据的准确性和可靠性。UDP则是一种不可靠的协议，数据包在网络上传输时不进行确认，因此传输速度比TCP更快，但也不太可靠。<br><br>3.数据量和速度：TCP适用于传输大量数据和对数据传输有严格要求的应用场景，如文件传输、电子邮件、网页浏览等。UDP则适用于传输数据量小、对实时性和传输速度有要求的应用场景，如音频、视频、游戏等。<br><br>4.带宽控制：TCP采用流量控制和拥塞控制机制，可以根据网络拥塞情况自适应调整发送速度，以避免网络拥塞。UDP则没有拥塞控制机制，发送方会一直以最大速度发送数据，可能会导致网络拥塞。<br><br>5.应用场景：TCP适用于对数据传输质量要求比较高的应用场景，如文件传输、远程登录等。UDP则适用于对传输速度和实时性要求比较高的应用场景，如音视频传输、实时游戏等。<br><br>总的来说，TCP和UDP各有优缺点，应根据具体的应用场景来选择使用哪种协议。如果需要保证数据传输的可靠性和完整性，应选择TCP协议；如果需要传输速度快、实时性高的数据，应选择UDP协议。</p>
+</blockquote>
+<h3 id="7-5-什么时候会发生死锁"><a href="#7-5-什么时候会发生死锁" class="headerlink" title="7.5 什么时候会发生死锁?"></a>7.5 什么时候会发生死锁?</h3><blockquote>
+<p>死锁指的是多个进程或线程因为互相等待资源而陷入一种无法继续执行的状态，导致系统无法前进。以下是死锁发生的四个必要条件：<br><br>1.互斥条件：资源只能被一个进程或线程占用，其他的进程或线程必须等待该资源释放。<br><br>2.请求与保持条件：进程或线程持有一个资源并请求其他资源，但在等待其他资源的同时仍继续占有已有资源。<br><br>3.不剥夺条件：资源不能被其他进程或线程强行抢占，只能由持有该资源的进程或线程主动释放。<br><br>4.循环等待条件：存在一种进程或线程的等待链，每个进程或线程都在等待下一个进程或线程所持有的资源。<br><br>当这四个条件同时满足时，就可能会发生死锁。</p>
+</blockquote>
+<h3 id="7-6-操作系统层面上，线程可以加哪些锁"><a href="#7-6-操作系统层面上，线程可以加哪些锁" class="headerlink" title="7.6 操作系统层面上，线程可以加哪些锁?"></a>7.6 操作系统层面上，线程可以加哪些锁?</h3><blockquote>
+<p>线程在操作系统层面上可以加如下几种锁：<br><br>1.互斥锁（Mutex）：一种最常见的锁类型，用于确保在任何时候只有一个线程可以访问共享资源。当一个线程获得互斥锁时，其他线程就必须等待直到该线程释放锁。<br><br>2.读写锁（Read-Write Lock）：允许多个线程同时访问同一个资源，但是对于写入操作，必须要保证只有一个线程在访问。读写锁可以提高并发性能，因为读操作通常比写操作更频繁，读写锁可以允许多个线程同时进行读操作。<br><br>3.条件变量（Condition Variable）：用于在线程之间同步共享资源。当一个线程需要等待某个条件发生时，可以通过条件变量进行等待，而不是通过轮询来等待条件发生。<br><br>4.信号量（Semaphore）：一种计数器，用于控制对共享资源的访问。当一个线程需要访问共享资源时，它必须先获得信号量。如果信号量的值为0，线程就必须等待直到其他线程释放资源并增加信号量的值。<br><br>以上这些锁都可以用于线程之间同步和保证对共享资源的访问。不同类型的锁适用于不同的情况，选择合适的锁类型可以提高程序的性能和并发性能。</p>
+</blockquote>
+<h3 id="7-7-栈在系统中的方向是怎样的？为什么？"><a href="#7-7-栈在系统中的方向是怎样的？为什么？" class="headerlink" title="7.7 栈在系统中的方向是怎样的？为什么？"></a>7.7 栈在系统中的方向是怎样的？为什么？</h3><blockquote>
+<p>栈（stack）是一种后进先出（LIFO）的数据结构，它通常被用于存储和管理函数的调用和返回，以及存储局部变量和临时变量等。在计算机系统中，栈的方向通常是从高地址向低地址增长的，也就是说，栈顶的地址比栈底的地址低。<br><br>这种栈向低地址增长的方向是由计算机体系结构的实现决定的。当一个函数被调用时，它的返回地址和一些参数需要被压入栈中，以便在函数执行完成后能够正确地返回到调用者。由于栈是从高地址向低地址增长的，所以每次压入栈中的数据都会被放置在已有数据的顶部，这样可以保证最新的数据总是在栈顶，而最老的数据总是在栈底。当函数返回时，栈顶的数据会被弹出，返回地址被取出并跳转到该地址，这样函数调用的堆栈就能够正确地管理。<br><br>此外，由于栈的方向是固定的，所以在访问栈中的数据时，程序可以直接使用偏移地址和栈指针来访问，而不需要进行任何复杂的计算。这样可以提高访问速度和效率，并且使得栈在计算机体系结构中的实现变得更加简单和可靠。<br><br>总之，栈在计算机系统中的方向通常是从高地址向低地址增长的，这是由计算机体系结构的实现决定的。这种方向使得栈能够有效地管理函数调用和返回，并且能够快速地访问栈中的数据。</p>
+</blockquote>
+<h2 id="8-算法相关"><a href="#8-算法相关" class="headerlink" title="8 算法相关"></a>8 算法相关</h2><h3 id="8-1-求二叉树第n层节点数"><a href="#8-1-求二叉树第n层节点数" class="headerlink" title="8.1 求二叉树第n层节点数?"></a>8.1 求二叉树第n层节点数?</h3><pre><code class="line-numbers language-Java">public static int getNodesAtLevel(TreeNode root, int level) &#123;
+    if (root == null) &#123;
+        return 0;
+    &#125;
+    if (level == 1) &#123;
+        return 1;
+    &#125;
+    int leftNodes = getNodesAtLevel(root.left, level - 1);
+    int rightNodes = getNodesAtLevel(root.right, level - 1);
+    return leftNodes + rightNodes;
+&#125;
+</code></pre>
+<h3 id="8-2-两个有序链表合并？"><a href="#8-2-两个有序链表合并？" class="headerlink" title="8.2 两个有序链表合并？"></a>8.2 两个有序链表合并？</h3><pre><code class="line-numbers language-Java">class ListNode &#123;
+    int val;
+    ListNode next;
+    ListNode(int val) &#123;
+        this.val = val;
+    &#125;
+&#125;
+
+public class MergeTwoSortedLists &#123;
+    public ListNode mergeTwoLists(ListNode l1, ListNode l2) &#123;
+        ListNode dummy = new ListNode(0);
+        ListNode current = dummy;
+        while (l1 != null &amp;&amp; l2 != null) &#123;
+            if (l1.val &lt; l2.val) &#123;
+                current.next = l1;
+                l1 = l1.next;
+            &#125; else &#123;
+                current.next = l2;
+                l2 = l2.next;
+            &#125;
+            current = current.next;
+        &#125;
+        if (l1 != null) &#123;
+            current.next = l1;
+        &#125; else &#123;
+            current.next = l2;
+        &#125;
+        return dummy.next;
+    &#125;
+&#125;
+</code></pre>
+<h3 id="8-3-求无序数组中的中位数-快速选择算法"><a href="#8-3-求无序数组中的中位数-快速选择算法" class="headerlink" title="8.3 求无序数组中的中位数?(快速选择算法)"></a>8.3 求无序数组中的中位数?(快速选择算法)</h3><pre><code class="line-numbers language-Java">import java.util.Arrays;
+
+public class MedianOfUnsortedArray &#123;
+
+    public static double findMedian(int[] nums) &#123;
+        int n = nums.length;
+        int k = n / 2;
+
+        int left = 0;
+        int right = n - 1;
+
+        while (left &lt;= right) &#123;
+            int pivotIndex = partition(nums, left, right);
+            if (pivotIndex == k) &#123;
+                break;
+            &#125; else if (pivotIndex &lt; k) &#123;
+                left = pivotIndex + 1;
+            &#125; else &#123;
+                right = pivotIndex - 1;
+            &#125;
+        &#125;
+
+        if (n % 2 == 0) &#123;
+            return (nums[k] + nums[k-1]) / 2.0;
+        &#125; else &#123;
+            return nums[k];
+        &#125;
+    &#125;
+
+    private static int partition(int[] nums, int left, int right) &#123;
+        int pivot = nums[right];
+        int i = left;
+        for (int j = left; j &lt; right; j++) &#123;
+            if (nums[j] &lt; pivot) &#123;
+                swap(nums, i, j);
+                i++;
+            &#125;
+        &#125;
+        swap(nums, i, right);
+        return i;
+    &#125;
+
+    private static void swap(int[] nums, int i, int j) &#123;
+        int temp = nums[i];
+        nums[i] = nums[j];
+        nums[j] = temp;
+    &#125;
+
+    public static void main(String[] args) &#123;
+        int[] nums = &#123;5, 2, 4, 1, 3&#125;;
+        System.out.println(findMedian(nums)); // 3.0
+    &#125;
+&#125;
+</code></pre>
+<h3 id="8-4-二叉树深度算法"><a href="#8-4-二叉树深度算法" class="headerlink" title="8.4 二叉树深度算法?"></a>8.4 二叉树深度算法?</h3><pre><code class="line-numbers language-Java">class TreeNode &#123;
+    int val;
+    TreeNode left;
+    TreeNode right;
+    TreeNode(int x) &#123; val = x; &#125;
+&#125;
+
+public int maxDepth(TreeNode root) &#123;
+    if (root == null) &#123;
+        return 0;
+    &#125;
+    int leftDepth = maxDepth(root.left);
+    int rightDepth = maxDepth(root.right);
+    return Math.max(leftDepth, rightDepth) + 1;
+&#125;
+</code></pre>
+
+            </div>
+            <hr />
+
+            
+            <style>
+    #reward {
+        margin: 40px 0;
+        text-align: center;
+    }
+
+    #reward .reward-link {
+        font-size: 1.88rem;
+    }
+
+    #reward .btn-floating:hover {
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2), 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    #rewardModal {
+        width: 320px;
+        height: 350px;
+    }
+
+    #rewardModal .reward-title {
+        margin: 15px auto;
+        padding-bottom: 5px;
+    }
+
+    #rewardModal .modal-content {
+        padding: 10px;
+    }
+
+    #rewardModal .close {
+        position: absolute;
+        right: 15px;
+        top: 15px;
+        color: rgba(0, 0, 0, 0.5);
+        font-size: 1.3rem;
+        line-height: 20px;
+        cursor: pointer;
+    }
+
+    #rewardModal .close:hover {
+        color: #ef5350;
+        transform: scale(1.3);
+        -moz-transform:scale(1.3);
+        -webkit-transform:scale(1.3);
+        -o-transform:scale(1.3);
+    }
+
+    #rewardModal .reward-tabs {
+        margin: 0 auto;
+        width: 210px;
+    }
+
+    .reward-tabs .tabs {
+        height: 38px;
+        margin: 10px auto;
+        padding-left: 0;
+    }
+
+    .reward-content ul {
+        padding-left: 0 !important;
+    }
+
+    .reward-tabs .tabs .tab {
+        height: 38px;
+        line-height: 38px;
+    }
+
+    .reward-tabs .tab a {
+        color: #fff;
+        background-color: #ccc;
+    }
+
+    .reward-tabs .tab a:hover {
+        background-color: #ccc;
+        color: #fff;
+    }
+
+    .reward-tabs .wechat-tab .active {
+        color: #fff !important;
+        background-color: #22AB38 !important;
+    }
+
+    .reward-tabs .alipay-tab .active {
+        color: #fff !important;
+        background-color: #019FE8 !important;
+    }
+
+    .reward-tabs .reward-img {
+        width: 210px;
+        height: 210px;
+    }
+</style>
+
+<div id="reward">
+    <a href="#rewardModal" class="reward-link modal-trigger btn-floating btn-large waves-effect waves-light red">赏</a>
+
+    <!-- Modal Structure -->
+    <div id="rewardModal" class="modal">
+        <div class="modal-content">
+            <a class="close modal-close"><i class="fa fa-close"></i></a>
+            <h4 class="reward-title">写作不易，客官能否打赏一杯奶茶？</h4>
+            <div class="reward-content">
+                <div class="reward-tabs">
+                    <ul class="tabs row">
+                        <li class="tab col s6 alipay-tab waves-effect waves-light"><a href="#alipay">支付宝</a></li>
+                        <li class="tab col s6 wechat-tab waves-effect waves-light"><a href="#wechat">微 信</a></li>
+                    </ul>
+                    <div id="alipay">
+                        <img src="/medias/reward/alipay.jpg" class="reward-img" alt="支付宝打赏二维码">
+                    </div>
+                    <div id="wechat">
+                        <img src="/medias/reward/wechat.png" class="reward-img" alt="微信打赏二维码">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $('.tabs').tabs();
+    });
+</script>
+            
+
+            <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+
+<div id="article-share">
+    
+    <div class="social-share" data-disabled="qzone" data-wechat-qrcode-helper="<p>微信里点“发现”->“扫一扫”二维码便可查看分享。</p>"></div>
+    
+</div>
+
+<script src="/libs/share/js/social-share.min.js"></script>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        <p class="reprint-tip">
+            <i class="fa fa-exclamation-triangle"></i>&nbsp;&nbsp;
+            <span>转载规则</span>
+        </p>
+        
+            <div class="center-align">
+                <a rel="license noopener" target="_blank" href="https://creativecommons.org/licenses/by/4.0/deed.zh">
+                    <img alt=""
+                         style="border-width:0"
+                         src="https://i.creativecommons.org/l/by/4.0/88x31.png"/>
+                </a>
+            </div>
+            <br/>
+            <span xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/Text"
+                  property="dct:title" rel="dct:type">
+                    《Android 阿里+腾讯+小米 2019面经》
+                </span> 由
+            <a xmlns:cc="http://creativecommons.org/ns#" href="/2023/01/03/Android-%E9%98%BF%E9%87%8C-%E8%85%BE%E8%AE%AF-%E5%B0%8F%E7%B1%B3-2019%E9%9D%A2%E7%BB%8F/" property="cc:attributionName"
+               rel="cc:attributionURL">
+                Jason
+            </a> 采用
+            <a rel="license noopener" target="_blank" href="https://creativecommons.org/licenses/by/4.0/deed.zh">
+                知识共享署名 4.0 国际许可协议
+            </a>进行许可。
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+        </div>
+    </div>
+
+    
+    <link rel="stylesheet" href="/libs/gitalk/gitalk.css">
+<link rel="stylesheet" href="/css/my-gitalk.css">
+
+<div class="card gitalk-card" data-aos="fade-up">
+    <div id="gitalk-container" class="card-content"></div>
+</div>
+
+<script src="/libs/gitalk/gitalk.min.js"></script>
+<script>
+    let gitalk = new Gitalk({
+        clientID: 'fe0ccf043e8b41eb62ea',
+        clientSecret: '9ca1dd3be79bdf6123d4aa8ca81753570fe870e1',
+        repo: 'jasontojan.github.io',
+        owner: 'jasontojan',
+        admin: "jasontojan",
+        id: '2023/01/03/Android-阿里-腾讯-小米-2019面经/',
+        distractionFreeMode: false  // Facebook-like distraction free mode
+    });
+
+    gitalk.render('gitalk-container');
+</script>
+    
+
+    
+
+    
+
+    
+
+    
+    <style>
+    .valine-card {
+        margin: 1.5rem auto;
+    }
+
+    .valine-card .card-content {
+        padding: 20px 20px 5px 20px;
+    }
+
+    #vcomments input[type=text],
+    #vcomments input[type=email],
+    #vcomments input[type=url],
+    #vcomments textarea {
+        box-sizing: border-box;
+    }
+
+    #vcomments p {
+        margin: 2px 2px 10px;
+        font-size: 1.05rem;
+        line-height: 1.78rem;
+    }
+
+    #vcomments blockquote p {
+        text-indent: 0.2rem;
+    }
+
+    #vcomments a {
+        padding: 0 2px;
+        color: #42b983;
+        font-weight: 500;
+        text-decoration: underline;
+    }
+
+    #vcomments img {
+        max-width: 100%;
+        height: auto;
+        cursor: pointer;
+    }
+
+    #vcomments ol li {
+        list-style-type: decimal;
+    }
+
+    #vcomments ol,
+    ul {
+        display: block;
+        padding-left: 2em;
+        word-spacing: 0.05rem;
+    }
+
+    #vcomments ul li,
+    ol li {
+        display: list-item;
+        line-height: 1.8rem;
+        font-size: 1rem;
+    }
+
+    #vcomments ul li {
+        list-style-type: disc;
+    }
+
+    #vcomments ul ul li {
+        list-style-type: circle;
+    }
+
+    #vcomments table, th, td {
+        padding: 12px 13px;
+        border: 1px solid #dfe2e5;
+    }
+
+    #vcomments table, th, td {
+        border: 0;
+    }
+
+    table tr:nth-child(2n), thead {
+        background-color: #fafafa;
+    }
+
+    #vcomments table th {
+        background-color: #f2f2f2;
+        min-width: 80px;
+    }
+
+    #vcomments table td {
+        min-width: 80px;
+    }
+
+    #vcomments h1 {
+        font-size: 1.85rem;
+        font-weight: bold;
+        line-height: 2.2rem;
+    }
+
+    #vcomments h2 {
+        font-size: 1.65rem;
+        font-weight: bold;
+        line-height: 1.9rem;
+    }
+
+    #vcomments h3 {
+        font-size: 1.45rem;
+        font-weight: bold;
+        line-height: 1.7rem;
+    }
+
+    #vcomments h4 {
+        font-size: 1.25rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    #vcomments h5 {
+        font-size: 1.1rem;
+        font-weight: bold;
+        line-height: 1.4rem;
+    }
+
+    #vcomments h6 {
+        font-size: 1rem;
+        line-height: 1.3rem;
+    }
+
+    #vcomments p {
+        font-size: 1rem;
+        line-height: 1.5rem;
+    }
+
+    #vcomments hr {
+        margin: 12px 0;
+        border: 0;
+        border-top: 1px solid #ccc;
+    }
+
+    #vcomments blockquote {
+        margin: 15px 0;
+        border-left: 5px solid #42b983;
+        padding: 1rem 0.8rem 0.3rem 0.8rem;
+        color: #666;
+        background-color: rgba(66, 185, 131, .1);
+    }
+
+    #vcomments pre {
+        font-family: monospace, monospace;
+        padding: 1.2em;
+        margin: .5em 0;
+        background: #272822;
+        overflow: auto;
+        border-radius: 0.3em;
+        tab-size: 4;
+    }
+
+    #vcomments code {
+        font-family: monospace, monospace;
+        padding: 1px 3px;
+        font-size: 0.92rem;
+        color: #e96900;
+        background-color: #f8f8f8;
+        border-radius: 2px;
+    }
+
+    #vcomments pre code {
+        font-family: monospace, monospace;
+        padding: 0;
+        color: #e8eaf6;
+        background-color: #272822;
+    }
+
+    #vcomments pre[class*="language-"] {
+        padding: 1.2em;
+        margin: .5em 0;
+    }
+
+    #vcomments code[class*="language-"],
+    pre[class*="language-"] {
+        color: #e8eaf6;
+    }
+
+    #vcomments [type="checkbox"]:not(:checked), [type="checkbox"]:checked {
+        position: inherit;
+        margin-left: -1.3rem;
+        margin-right: 0.4rem;
+        margin-top: -1px;
+        vertical-align: middle;
+        left: unset;
+        visibility: visible;
+    }
+
+    #vcomments b,
+    strong {
+        font-weight: bold;
+    }
+
+    #vcomments dfn {
+        font-style: italic;
+    }
+
+    #vcomments small {
+        font-size: 85%;
+    }
+
+    #vcomments cite {
+        font-style: normal;
+    }
+
+    #vcomments mark {
+        background-color: #fcf8e3;
+        padding: .2em;
+    }
+
+    #vcomments table, th, td {
+        padding: 12px 13px;
+        border: 1px solid #dfe2e5;
+    }
+
+    table tr:nth-child(2n), thead {
+        background-color: #fafafa;
+    }
+
+    #vcomments table th {
+        background-color: #f2f2f2;
+        min-width: 80px;
+    }
+
+    #vcomments table td {
+        min-width: 80px;
+    }
+
+    #vcomments [type="checkbox"]:not(:checked), [type="checkbox"]:checked {
+        position: inherit;
+        margin-left: -1.3rem;
+        margin-right: 0.4rem;
+        margin-top: -1px;
+        vertical-align: middle;
+        left: unset;
+        visibility: visible;
+    }
+</style>
+
+<div class="card valine-card" data-aos="fade-up">
+    <div id="vcomments" class="card-content"></div>
+</div>
+
+<script src="/libs/valine/av-min.js"></script>
+<script src="/libs/valine/Valine.min.js"></script>
+<!-- <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script> -->
+
+<script>
+    new Valine({
+        el: '#vcomments',
+        appId: '查教程获取',
+        appKey: '查教程获取',
+        notify: 'false' === 'true',
+        verify: 'false' === 'true',
+        visitor: 'false' === 'true',
+        avatar: 'wavatar',
+        pageSize: '10',
+        lang: 'zh-cn',
+        placeholder: '如果你没有GitHub账号，还可以在这里评论啦！'
+    });
+</script>
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fa fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/2023/01/04/Android-2022%E5%A4%B4%E6%9D%A1%E9%9D%A2%E7%BB%8F/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/9.jpg" class="responsive-img" alt="Android 2022头条面经">
+                        
+                        <span class="card-title">Android 2022头条面经</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            1 Android基础1.1 请简述Android事件传递机制， ACTION_CANCEL事件何时触发？
+本质： 将点击事件MotionEvent传递到某个具体的View，并消费事件。传递对象：Activity-&gt;ViewGroup
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="fa fa-clock-o fa-fw icon-date"></i>2023-01-04
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fa fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/Android/" class="post-category" target="_blank">
+                                    Android
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/Android-%E9%9D%A2%E8%AF%95%E9%A2%98/" target="_blank">
+                        <span class="chip bg-color">Android 面试题</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fa fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2023/01/02/Android-2020%E5%BC%80%E6%98%A5%E5%A4%B4%E6%9D%A1%E9%9D%A2%E7%BB%8F/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/21.jpg" class="responsive-img" alt="Android 2020开春头条面经">
+                        
+                        <span class="card-title">Android 2020开春头条面经</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            1.Android基础1.1 如何适配？
+Android适配主要指的是针对不同的设备、屏幕尺寸、分辨率、系统版本等因素，使得应用程序在各种环境下都能够正常运行和显示。以下是一些常见的Android适配技术：1.使用布局文件：使用相对布局、线
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2023-01-02
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fa fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/Android/" class="post-category" target="_blank">
+                                    Android
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/Android-%E9%9D%A2%E8%AF%95%E9%A2%98/" target="_blank">
+                        <span class="chip bg-color">Android 面试题</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+</div>
+
+
+<script>
+    $('#articleContent').on('copy', function (e) {
+        // IE8 or earlier browser is 'undefined'
+        if (typeof window.getSelection === 'undefined') return;
+
+        var selection = window.getSelection();
+        // if the selection is short let's not annoy our users.
+        if (('' + selection).length < Number.parseInt('120')) {
+            return;
+        }
+
+        // create a div outside of the visible area and fill it with the selected text.
+        var bodyElement = document.getElementsByTagName('body')[0];
+        var newdiv = document.createElement('div');
+        newdiv.style.position = 'absolute';
+        newdiv.style.left = '-99999px';
+        bodyElement.appendChild(newdiv);
+        newdiv.appendChild(selection.getRangeAt(0).cloneContents());
+
+        // we need a <pre> tag workaround.
+        // otherwise the text inside "pre" loses all the line breaks!
+        if (selection.getRangeAt(0).commonAncestorContainer.nodeName === 'PRE') {
+            newdiv.innerHTML = "<pre>" + newdiv.innerHTML + "</pre>";
+        }
+
+        var url = document.location.href;
+        newdiv.innerHTML += '<br />'
+            + '来源: JasonToJan's Blog<br />'
+            + '作者: Jason<br />'
+            + '链接: <a href="' + url + '">' + url + '</a><br />'
+            + '本文章著作权归作者所有，任何形式的转载都请注明出处。';
+
+        selection.selectAllChildren(newdiv);
+        window.setTimeout(function () { bodyElement.removeChild(newdiv); }, 200);
+    });
+</script>
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget">
+            <div class="toc-title"><i class="fa fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fa fa-list"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            // headingsOffset: -205,
+            headingSelector: 'h1, h2, h3, h4'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h1, h2, h3, h4').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).slideUp(500);
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).slideDown(500);
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+    
+
+</main>
+
+
+<script src="https://cdn.bootcss.com/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script>
+    MathJax.Hub.Config({
+        tex2jax: {inlineMath: [['$', '$'], ['\(', '\)']]}
+    });
+</script>
+
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+<!-- 代码语言 -->
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+<!-- 代码块复制 -->
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+<script type="text/javascript" src="/libs/codeBlock/clipboard.min.js"></script>
+<!-- 代码块收缩 -->
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script> 
+<!-- 代码块折行 -->
+<style type="text/css">code[class*="language-"], pre[class*="language-"] { white-space: pre !important; }</style>
+
+
+    <footer class="page-footer bg-color">
+    <div class="container row center-align">
+        <div class="col s12 m8 l8 copy-right">
+            &copy; 2023-2023 JasonJan. 版权所有
+
+            
+            &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
+            <span class="white-color">274.7k</span>
+            
+
+            <br>
+            <span id="sitetime"></span>
+
+            
+            
+            <br>
+            
+            <span id="busuanzi_container_site_pv" style='display:none'>
+                <i class="fa fa-heart-o"></i>
+                本站总访问量 <span id="busuanzi_value_site_pv" class="white-color"></span>
+            </span>
+            
+            
+            <span id="busuanzi_container_site_uv" style='display:none'>
+                人次,&nbsp;访客数 <span id="busuanzi_value_site_uv" class="white-color"></span> 人.
+            </span>
+            
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/JasonToJan" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fa fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:jason1211241203@gmail.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fa fa-envelope-open"></i>
+    </a>
+
+
+
+    <a href="https://zhihu.com/people/JasonJan" class="tooltipped" target="_blank" data-tooltip="访问我的知乎" data-position="top" data-delay="50">
+        <i class="fa fa-inverse">知</i>
+    </a>
+
+
+
+    <a href="http://wpa.qq.com/msgrd?v=3&uin=1211241203&site=qq&menu=yes" class="tooltipped" target="_blank" data-tooltip="访问我的知乎" data-position="top" data-delay="50">
+        <i class="fa fa-qq"></i>
+    </a>
+
+
+
+    <a href="https://weibo.com/JasonJan" class="tooltipped" target="_blank" data-tooltip="关注我的微博" data-position="top" data-delay="50">
+        <i class="fa fa-weibo"></i>
+    </a>
+
+
+
+    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
+        <i class="fa fa-rss"></i>
+    </a>
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+<!-- 不蒜子计数初始值纠正 -->
+<script>
+    $(document).ready(function () {
+
+        var int = setInterval(fixCount, 50);
+        var pvcountOffset = 80000;
+        var uvcountOffset = 20000;
+
+        function fixCount() {
+            if (document.getElementById("busuanzi_container_site_pv").style.display != "none") {
+                $("#busuanzi_value_site_pv").html(parseInt($("#busuanzi_value_site_pv").html()) + pvcountOffset);
+                clearInterval(int);
+            }
+            if ($("#busuanzi_container_site_pv").css("display") != "none") {
+                $("#busuanzi_value_site_uv").html(parseInt($("#busuanzi_value_site_uv").html()) + uvcountOffset); // 加上初始数据 
+                clearInterval(int);
+            }
+        }
+    });
+</script>
+
+<script language=javascript>
+    function siteTime() {
+        window.setTimeout("siteTime()", 1000);
+        var seconds = 1000;
+        var minutes = seconds * 60;
+        var hours = minutes * 60;
+        var days = hours * 24;
+        var years = days * 365;
+        var today = new Date();
+        var todayYear = today.getFullYear();
+        var todayMonth = today.getMonth() + 1;
+        var todayDate = today.getDate();
+        var todayHour = today.getHours();
+        var todayMinute = today.getMinutes();
+        var todaySecond = today.getSeconds();
+        /* Date.UTC() -- 返回date对象距世界标准时间(UTC)1970年1月1日午夜之间的毫秒数(时间戳)
+        year - 作为date对象的年份，为4位年份值
+        month - 0-11之间的整数，做为date对象的月份
+        day - 1-31之间的整数，做为date对象的天数
+        hours - 0(午夜24点)-23之间的整数，做为date对象的小时数
+        minutes - 0-59之间的整数，做为date对象的分钟数
+        seconds - 0-59之间的整数，做为date对象的秒数
+        microseconds - 0-999之间的整数，做为date对象的毫秒数 */
+        var t1 = Date.UTC(2017, 09, 11, 00, 00, 00); //北京时间2018-2-13 00:00:00
+        var t2 = Date.UTC(todayYear, todayMonth, todayDate, todayHour, todayMinute, todaySecond);
+        var diff = t2 - t1;
+        var diffYears = Math.floor(diff / years);
+        var diffDays = Math.floor((diff / days) - diffYears * 365);
+        var diffHours = Math.floor((diff - (diffYears * 365 + diffDays) * days) / hours);
+        var diffMinutes = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours) / minutes);
+        var diffSeconds = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours - diffMinutes * minutes) / seconds);
+        document.getElementById("sitetime").innerHTML = "本站已运行 " + diffYears + " 年 " + diffDays + " 天 " + diffHours + " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+    }/*因为建站时间还没有一年，就将之注释掉了。需要的可以取消*/
+    siteTime();
+</script>
+
+<link rel="stylesheet" href="/css/prism.css">
+<script src="/js/prism.js" async></script>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fa fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script src="/js/search.js"></script>
+<script type="text/javascript">
+$(function () {
+    searchFunc("/" + "search.xml", 'searchInput', 'searchResult');
+});
+</script>
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fa fa-angle-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    <script type="text/javascript"> var OriginTitile = document.title, st; document.addEventListener("visibilitychange", function () { document.hidden ? (document.title = "Σ(っ °Д °;)っ喔哟，崩溃啦！", clearTimeout(st)) : (document.title = "φ(゜▽゜*)♪咦，又好了！", st = setTimeout(function () { document.title = OriginTitile }, 3e3)) })
+    </script>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=查教程获取"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+        dataLayer.push(arguments);
+    }
+
+    gtag('js', new Date());
+    gtag('config', '查教程获取');
+</script>
+
+
+
+    
+    <script src="/libs/others/clicklove.js"></script>
+    
+
+    
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    <!-- 雪花特效 -->
+    
+
+</body>
+
+</html>
